@@ -19,7 +19,6 @@ body {
 
 h1 {
   font-size:28px;
-  margin-bottom:20px;
 }
 
 .card {
@@ -37,6 +36,14 @@ h1 {
   border-radius:12px;
   background: #1f3a4d;
 }
+
+input {
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  border-radius:8px;
+  border:none;
+}
 </style>
 </head>
 
@@ -46,13 +53,51 @@ h1 {
 
 <h1>XA Fermentation</h1>
 
-<div class="card">pH: 3.28</div>
-<div class="card">Gravity: 1.030</div>
-<div class="card">Temp: 18°C</div>
+<div class="button" onclick="newBatch()">+ New Batch</div>
 
-<div class="button">+ New Batch</div>
+<div id="list"></div>
 
 </div>
+
+<script>
+
+let batches = JSON.parse(localStorage.getItem("xa_batches")) || [];
+
+function save(){
+  localStorage.setItem("xa_batches", JSON.stringify(batches));
+}
+
+function render(){
+  let html = "";
+  batches.forEach(b => {
+    html += `
+      <div class="card">
+        <b>${b.name}</b><br>
+        Type: ${b.type}<br>
+        pH: ${b.ph}<br>
+        Gravity: ${b.gravity}<br>
+        Temp: ${b.temp}°C
+      </div>
+    `;
+  });
+  document.getElementById("list").innerHTML = html;
+}
+
+function newBatch(){
+  let name = prompt("Batch name:");
+  let type = prompt("Type (cider, lactic, kombucha):");
+  let ph = prompt("pH:");
+  let gravity = prompt("Gravity:");
+  let temp = prompt("Temperature:");
+
+  batches.push({name, type, ph, gravity, temp});
+  save();
+  render();
+}
+
+render();
+
+</script>
 
 </body>
 </html>
