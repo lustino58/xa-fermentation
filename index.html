@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,120 +7,102 @@
 
 <style>
 body {
+  background:#05080c;
+  color:white;
+  font-family:sans-serif;
   margin:0;
-  font-family: Arial;
-  background: #0b0f14;
-  color: white;
-}
-
-.container {
   padding:20px;
 }
 
 h1 {
-  font-size:28px;
-  margin-bottom:20px;
+  font-size:32px;
+}
+
+button {
+  width:100%;
+  padding:18px;
+  margin:15px 0;
+  border:none;
+  border-radius:16px;
+  background:#2a3f52;
+  color:white;
+  font-size:18px;
 }
 
 .card {
-  background: #111a22;
-  padding:15px;
-  border-radius:12px;
+  background:#0b1118;
+  padding:20px;
+  border-radius:18px;
   margin-bottom:15px;
-  box-shadow: 0 0 15px rgba(0,150,255,0.2);
+  box-shadow:0 0 20px rgba(0,150,255,0.15);
 }
 
-.badge {
-  display:inline-block;
-  padding:5px 10px;
-  border-radius:20px;
-  background:#1f3a4d;
-  margin-right:5px;
-  font-size:12px;
-}
-
-.button {
-  margin-bottom:20px;
-  padding:15px;
-  text-align:center;
-  border-radius:12px;
-  background: #1f3a4d;
-}
-
-.small {
-  font-size:12px;
-  opacity:0.7;
+.name {
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
 <h1>XA Fermentation</h1>
 
-<div class="button" onclick="newBatch()">+ New Batch</div>
+<button onclick="addBatch()">+ New Batch</button>
 
 <div id="list"></div>
 
-</div>
-
 <script>
-
-let batches = JSON.parse(localStorage.getItem("xa_batches")) || [];
+let batches = JSON.parse(localStorage.getItem("batches")) || [];
 
 function save(){
-  localStorage.setItem("xa_batches", JSON.stringify(batches));
+  localStorage.setItem("batches", JSON.stringify(batches));
 }
 
-function daysPassed(date){
-  let start = new Date(date);
-  let now = new Date();
-  let diff = now - start;
-  return Math.floor(diff / (1000 * 60 * 60 * 24));
+function formatTemp(t){
+  if(!t) return "-";
+  return t + "°C";
+}
+
+function formatValue(v){
+  if(!v) return "-";
+  return v;
 }
 
 function render(){
   let html = "";
 
-  batches.forEach(b => {
-
-    let day = daysPassed(b.date);
-
+  batches.forEach((b,i)=>{
     html += `
-      <div class="card">
-        <b>${b.name}</b><br>
-        <div class="small">Day ${day}</div>
-
-        <div class="badge">${b.type}</div>
-
-        <br><br>
-
-        pH: ${b.ph}<br>
-        Gravity: ${b.gravity}<br>
-        Temp: ${b.temp}°C
-      </div>
+    <div class="card">
+      <div class="name">${b.name}</div>
+      Type: ${b.type.toUpperCase()}<br>
+      pH: ${formatValue(b.ph)}<br>
+      Gravity: ${formatValue(b.gravity)}<br>
+      Temp: ${formatTemp(b.temp)}
+    </div>
     `;
   });
 
   document.getElementById("list").innerHTML = html;
 }
 
-function newBatch(){
-  let name = prompt("Batch name:") || "Unnamed";
-  let type = prompt("Type (cider, lactic, kombucha):") || "unknown";
-  let ph = prompt("pH:") || "-";
-  let gravity = prompt("Gravity:") || "-";
-  let temp = prompt("Temperature:") || "-";
+function addBatch(){
+  let name = prompt("Nome batch:");
+  if(!name) return;
+
+  let type = prompt("Tipo (cider, beer, tea):");
+  let ph = prompt("pH:");
+  let gravity = prompt("Gravity:");
+  let temp = prompt("Temperatura °C:");
 
   batches.push({
     name,
     type,
     ph,
     gravity,
-    temp,
-    date: new Date()
+    temp
   });
 
   save();
@@ -128,7 +110,6 @@ function newBatch(){
 }
 
 render();
-
 </script>
 
 </body>
