@@ -75,7 +75,7 @@ function render(){
 
   batches.forEach((b,i)=>{
     html += `
-    <div class="card">
+    <div class="card" onclick="manageBatch(${i})">
       <div class="name">${b.name}</div>
       Type: ${b.type.toUpperCase()}<br>
       pH: ${formatValue(b.ph)}<br>
@@ -92,18 +92,34 @@ function addBatch(){
   let name = prompt("Nome batch:");
   if(!name) return;
 
-  let type = prompt("Tipo (cider, beer, tea):");
+  let type = prompt("Tipo:");
   let ph = prompt("pH:");
   let gravity = prompt("Gravity:");
   let temp = prompt("Temperatura °C:");
 
-  batches.push({
-    name,
-    type,
-    ph,
-    gravity,
-    temp
-  });
+  batches.push({ name, type, ph, gravity, temp });
+
+  save();
+  render();
+}
+
+function manageBatch(i){
+  let action = prompt("Scrivi:\n1 = modifica\n2 = cancella");
+
+  if(action == "1"){
+    let b = batches[i];
+
+    b.name = prompt("Nome:", b.name);
+    b.type = prompt("Tipo:", b.type);
+    b.ph = prompt("pH:", b.ph);
+    b.gravity = prompt("Gravity:", b.gravity);
+    b.temp = prompt("Temp:", b.temp);
+
+  } else if(action == "2"){
+    if(confirm("Sicuro di cancellare?")){
+      batches.splice(i,1);
+    }
+  }
 
   save();
   render();
