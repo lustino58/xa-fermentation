@@ -16,6 +16,10 @@
       --purple:#c17aff;
       --red:#ff7e7e;
       --yellow:#ffd36b;
+      --panel:#0b1218;
+      --panel2:#081018;
+      --card1:#09111a;
+      --card2:#060d15;
     }
 
     *{
@@ -35,7 +39,7 @@
     }
 
     .app{
-      max-width:760px;
+      max-width:860px;
       margin:0 auto;
     }
 
@@ -82,7 +86,7 @@
     .dashboard{
       background:
         linear-gradient(180deg, rgba(130,145,160,.14), rgba(48,59,70,.10)),
-        linear-gradient(180deg, #0b1218, #081018);
+        linear-gradient(180deg, var(--panel), var(--panel2));
       border:1px solid rgba(255,255,255,.08);
       border-radius:32px;
       padding:18px;
@@ -295,7 +299,6 @@
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.06),
         0 0 24px rgba(0,110,210,.10);
-      cursor:pointer;
     }
 
     .batch-top{
@@ -361,6 +364,7 @@
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:12px;
+      margin-bottom:14px;
     }
 
     .metric{
@@ -382,6 +386,114 @@
     .metric-value{
       font-size:20px;
       font-weight:700;
+    }
+
+    .actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .small-btn{
+      border:none;
+      border-radius:18px;
+      padding:14px 12px;
+      font-size:15px;
+      color:#eff7ff;
+      cursor:pointer;
+      background:
+        linear-gradient(180deg, rgba(130,150,170,.15), rgba(42,61,78,.10)),
+        linear-gradient(180deg, #254055, #1a2e3f);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    .chart-card{
+      background:linear-gradient(180deg, #0e1721 0%, #0a1118 100%);
+      border:1px solid rgba(143,164,182,.09);
+      border-radius:20px;
+      padding:14px 12px;
+      margin-bottom:12px;
+    }
+
+    .chart-title{
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:1.6px;
+      margin-bottom:10px;
+    }
+
+    .chart-box{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .mini-chart{
+      background:linear-gradient(180deg, #0b131b, #081018);
+      border:1px solid rgba(143,164,182,.08);
+      border-radius:16px;
+      padding:10px;
+    }
+
+    .mini-chart svg{
+      width:100%;
+      height:120px;
+      display:block;
+    }
+
+    .legend{
+      margin-top:8px;
+      font-size:12px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    .measurements{
+      background:linear-gradient(180deg, #0e1721 0%, #0a1118 100%);
+      border:1px solid rgba(143,164,182,.09);
+      border-radius:20px;
+      padding:14px 12px;
+    }
+
+    .measurements-title{
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:1.6px;
+      margin-bottom:10px;
+    }
+
+    .m-row{
+      display:grid;
+      grid-template-columns:70px 1fr 1fr 1fr;
+      gap:8px;
+      padding:10px 0;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      font-size:14px;
+    }
+
+    .m-row:last-child{
+      border-bottom:none;
+    }
+
+    .m-head{
+      color:#dfeaf5;
+      font-weight:700;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1.3px;
+    }
+
+    .m-muted{
+      color:var(--muted);
+    }
+
+    @media (max-width:700px){
+      .chart-box{
+        grid-template-columns:1fr;
+      }
     }
 
     @media (max-width:600px){
@@ -411,6 +523,11 @@
       .batch-name{
         font-size:22px;
       }
+
+      .m-row{
+        grid-template-columns:58px 1fr 1fr 1fr;
+        font-size:13px;
+      }
     }
   </style>
 </head>
@@ -435,7 +552,7 @@
             <div class="needle" id="needlePh"></div>
           </div>
           <div class="g-value" id="topPh">-</div>
-          <div class="g-sub">0–7 scale</div>
+          <div class="g-sub">latest measurement</div>
         </div>
 
         <div class="gauge-card gravity">
@@ -445,7 +562,7 @@
             <div class="needle" id="needleGravity"></div>
           </div>
           <div class="g-value" id="topGravity">-</div>
-          <div class="g-sub">latest gravity</div>
+          <div class="g-sub">latest measurement</div>
         </div>
 
         <div class="gauge-card temp">
@@ -471,7 +588,7 @@
       </div>
 
       <button class="main-btn" onclick="addBatch()">+ New Batch</button>
-      <div class="hint">Tap a batch card to edit or delete it</div>
+      <div class="hint">Use the buttons inside each batch to add measurements, edit or delete</div>
     </div>
 
     <div class="section-title">Fermentation Archive</div>
@@ -540,9 +657,41 @@
       return Math.max(1, Math.floor(diff / 86400000) + 1);
     }
 
+    function getMeasurements(b){
+      if(!Array.isArray(b.measurements)) b.measurements = [];
+
+      if(b.measurements.length === 0){
+        const gravity = b.gravity ?? "-";
+        const ph = b.ph ?? "-";
+        const temp = b.temp ?? "-";
+        const pressure = b.pressure ?? "-";
+
+        if(gravity !== "-" || ph !== "-" || temp !== "-" || pressure !== "-"){
+          b.measurements.push({
+            day: getDay(b),
+            gravity: gravity,
+            ph: ph,
+            temp: temp,
+            pressure: pressure,
+            createdAt: b.createdAt || new Date().toISOString()
+          });
+        }
+      }
+
+      return b.measurements;
+    }
+
+    function getLatestMeasurement(b){
+      const list = getMeasurements(b);
+      if(list.length === 0) return null;
+      return list[list.length - 1];
+    }
+
     function getABV(b){
       const og = parseNum(b.og);
-      const current = parseNum(b.gravity);
+      const latest = getLatestMeasurement(b);
+      const current = latest ? parseNum(latest.gravity) : parseNum(b.gravity);
+
       if(og === null || current === null) return "-";
       const abv = (og - current) * 131;
       if(isNaN(abv)) return "-";
@@ -550,10 +699,11 @@
     }
 
     function getStatus(b){
+      const latest = getLatestMeasurement(b);
       const og = parseNum(b.og);
-      const current = parseNum(b.gravity);
-      const temp = parseNum(b.temp);
-      const ph = parseNum(b.ph);
+      const current = latest ? parseNum(latest.gravity) : parseNum(b.gravity);
+      const temp = latest ? parseNum(latest.temp) : parseNum(b.temp);
+      const ph = latest ? parseNum(latest.ph) : parseNum(b.ph);
 
       if(temp !== null && (temp < 5 || temp > 40)) return { text:"Critical", cls:"status-critical" };
       if(ph !== null && (ph < 2.8 || ph > 4.6)) return { text:"Critical", cls:"status-critical" };
@@ -575,18 +725,19 @@
 
       if(count > 0){
         const b = batches[batches.length - 1];
+        const latest = getLatestMeasurement(b);
 
-        document.getElementById("topPh").textContent = formatValue(b.ph);
-        document.getElementById("topGravity").textContent = formatValue(b.gravity);
-        document.getElementById("topTemp").textContent = formatTemp(b.temp);
+        const ph = latest ? latest.ph : "-";
+        const gravity = latest ? latest.gravity : "-";
+        const temp = latest ? latest.temp : "-";
 
-        const ph = parseNum(b.ph) ?? 0;
-        const gravity = parseNum(b.gravity) ?? 1.000;
-        const temp = parseNum(b.temp) ?? 0;
+        document.getElementById("topPh").textContent = formatValue(ph);
+        document.getElementById("topGravity").textContent = formatValue(gravity);
+        document.getElementById("topTemp").textContent = formatTemp(temp);
 
-        setNeedle("needlePh", mapValue(ph, 0, 7, -60, 60));
-        setNeedle("needleGravity", mapValue(gravity, 1.000, 1.080, -60, 60));
-        setNeedle("needleTemp", mapValue(temp, 0, 50, -60, 60));
+        setNeedle("needlePh", mapValue(parseNum(ph) ?? 0, 0, 7, -60, 60));
+        setNeedle("needleGravity", mapValue(parseNum(gravity) ?? 1.000, 1.000, 1.080, -60, 60));
+        setNeedle("needleTemp", mapValue(parseNum(temp) ?? 0, 0, 50, -60, 60));
       } else {
         document.getElementById("topPh").textContent = "-";
         document.getElementById("topGravity").textContent = "-";
@@ -597,6 +748,84 @@
       }
     }
 
+    function makePath(points, width, height, minVal, maxVal){
+      if(points.length === 0) return "";
+      if(points.length === 1){
+        const y = height - ((points[0] - minVal) / (maxVal - minVal)) * height;
+        return `M 10 ${y.toFixed(1)} L ${width - 10} ${y.toFixed(1)}`;
+      }
+
+      const usableW = width - 20;
+      const usableH = height - 20;
+
+      return points.map((val, idx) => {
+        const x = 10 + (usableW / (points.length - 1)) * idx;
+        const norm = (val - minVal) / (maxVal - minVal);
+        const y = 10 + (usableH - (norm * usableH));
+        return `${idx === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`;
+      }).join(" ");
+    }
+
+    function renderMiniChart(values, minVal, maxVal, color){
+      const nums = values
+        .map(v => parseNum(v))
+        .filter(v => v !== null);
+
+      const width = 280;
+      const height = 120;
+      const path = makePath(nums, width, height, minVal, maxVal);
+
+      let dots = "";
+      if(nums.length > 0){
+        const usableW = width - 20;
+        const usableH = height - 20;
+        nums.forEach((val, idx) => {
+          const x = nums.length === 1 ? width / 2 : 10 + (usableW / (nums.length - 1)) * idx;
+          const norm = (val - minVal) / (maxVal - minVal);
+          const y = 10 + (usableH - (norm * usableH));
+          dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5" fill="${color}" />`;
+        });
+      }
+
+      return `
+        <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
+          <line x1="10" y1="10" x2="10" y2="${height-10}" stroke="rgba(255,255,255,.08)" />
+          <line x1="10" y1="${height-10}" x2="${width-10}" y2="${height-10}" stroke="rgba(255,255,255,.08)" />
+          <path d="${path}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          ${dots}
+        </svg>
+      `;
+    }
+
+    function measurementTable(b){
+      const list = [...getMeasurements(b)].reverse();
+      if(list.length === 0){
+        return `<div class="m-muted">No measurements yet.</div>`;
+      }
+
+      let html = `
+        <div class="m-row m-head">
+          <div>Day</div>
+          <div>pH</div>
+          <div>Gravity</div>
+          <div>Temp</div>
+        </div>
+      `;
+
+      list.forEach(m => {
+        html += `
+          <div class="m-row">
+            <div>${formatValue(m.day)}</div>
+            <div>${formatValue(m.ph)}</div>
+            <div>${formatValue(m.gravity)}</div>
+            <div>${formatTemp(m.temp)}</div>
+          </div>
+        `;
+      });
+
+      return html;
+    }
+
     function render(){
       let html = "";
 
@@ -605,8 +834,13 @@
       } else {
         batches.forEach((b, i) => {
           const status = getStatus(b);
+          const latest = getLatestMeasurement(b);
+          const measures = getMeasurements(b);
+          const phValues = measures.map(m => m.ph);
+          const gravityValues = measures.map(m => m.gravity);
+
           html += `
-            <div class="batch-card" onclick="manageBatch(${i})">
+            <div class="batch-card">
               <div class="batch-top">
                 <div class="batch-name">${b.name || "Unnamed"}</div>
                 <div class="right-stack">
@@ -627,13 +861,13 @@
                 </div>
 
                 <div class="metric">
-                  <div class="metric-label">pH</div>
-                  <div class="metric-value">${formatValue(b.ph)}</div>
+                  <div class="metric-label">Latest pH</div>
+                  <div class="metric-value">${latest ? formatValue(latest.ph) : "-"}</div>
                 </div>
 
                 <div class="metric">
-                  <div class="metric-label">Current Gravity</div>
-                  <div class="metric-value">${formatValue(b.gravity)}</div>
+                  <div class="metric-label">Latest Gravity</div>
+                  <div class="metric-value">${latest ? formatValue(latest.gravity) : "-"}</div>
                 </div>
 
                 <div class="metric">
@@ -647,14 +881,38 @@
                 </div>
 
                 <div class="metric">
-                  <div class="metric-label">Temp</div>
-                  <div class="metric-value">${formatTemp(b.temp)}</div>
+                  <div class="metric-label">Latest Temp</div>
+                  <div class="metric-value">${latest ? formatTemp(latest.temp) : "-"}</div>
                 </div>
 
                 <div class="metric">
-                  <div class="metric-label">Pressure</div>
-                  <div class="metric-value">${formatPressure(b.pressure)}</div>
+                  <div class="metric-label">Latest Pressure</div>
+                  <div class="metric-value">${latest ? formatPressure(latest.pressure) : "-"}</div>
                 </div>
+              </div>
+
+              <div class="actions">
+                <button class="small-btn" onclick="event.stopPropagation(); addMeasurement(${i})">+ Add Measurement</button>
+                <button class="small-btn" onclick="event.stopPropagation(); manageBatch(${i})">Edit / Delete</button>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-title">Lab Charts</div>
+                <div class="chart-box">
+                  <div class="mini-chart">
+                    ${renderMiniChart(phValues, 0, 7, "#62f2a2")}
+                    <div class="legend">pH trend</div>
+                  </div>
+                  <div class="mini-chart">
+                    ${renderMiniChart(gravityValues, 1.000, 1.080, "#69b8ff")}
+                    <div class="legend">Gravity trend</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="measurements">
+                <div class="measurements-title">Daily Measurements</div>
+                ${measurementTable(b)}
               </div>
             </div>
           `;
@@ -671,19 +929,50 @@
 
       const type = prompt("Type (cider, kombucha, lactic, mixed):") || "unknown";
       const culture = prompt("Culture (yeast, kveik, L. plantarum, SCOBY...):") || "-";
-      const ph = prompt("pH:") || "-";
-      const gravity = prompt("Current Gravity:") || "-";
-      const og = prompt("OG (optional):") || "-";
-      const temp = prompt("Temperature °C (0-50):") || "-";
-      const pressure = prompt("Pressure bar (optional):") || "-";
+      const ph = prompt("Initial pH:") || "-";
+      const gravity = prompt("Initial Gravity:") || "-";
+      const og = prompt("OG (optional):") || gravity || "-";
+      const temp = prompt("Initial Temperature °C (0-50):") || "-";
+      const pressure = prompt("Initial Pressure bar (optional):") || "-";
+
+      const createdAt = new Date().toISOString();
 
       batches.push({
         name,
         type,
         culture,
+        og,
+        createdAt,
+        measurements: [{
+          day: 1,
+          ph,
+          gravity,
+          temp,
+          pressure,
+          createdAt
+        }]
+      });
+
+      save();
+      render();
+    }
+
+    function addMeasurement(i){
+      const b = batches[i];
+      const latest = getLatestMeasurement(b) || {};
+
+      const day = prompt("Day number:", String(getDay(b))) || String(getDay(b));
+      const ph = prompt("pH:", latest.ph || "-") || latest.ph || "-";
+      const gravity = prompt("Gravity:", latest.gravity || "-") || latest.gravity || "-";
+      const temp = prompt("Temperature °C:", latest.temp || "-") || latest.temp || "-";
+      const pressure = prompt("Pressure bar:", latest.pressure || "-") || latest.pressure || "-";
+
+      if(!Array.isArray(b.measurements)) b.measurements = [];
+
+      b.measurements.push({
+        day,
         ph,
         gravity,
-        og,
         temp,
         pressure,
         createdAt: new Date().toISOString()
@@ -694,18 +983,14 @@
     }
 
     function manageBatch(i){
-      let action = prompt("Write:\n1 = edit\n2 = delete");
+      let action = prompt("Write:\n1 = edit batch\n2 = delete batch");
 
       if(action == "1"){
         let b = batches[i];
         b.name = prompt("Batch name:", b.name) || b.name;
         b.type = prompt("Type:", b.type) || b.type;
         b.culture = prompt("Culture:", b.culture) || b.culture;
-        b.ph = prompt("pH:", b.ph) || b.ph;
-        b.gravity = prompt("Current Gravity:", b.gravity) || b.gravity;
-        b.og = prompt("OG (optional):", b.og) || b.og;
-        b.temp = prompt("Temperature °C (0-50):", b.temp) || b.temp;
-        b.pressure = prompt("Pressure bar:", b.pressure) || b.pressure;
+        b.og = prompt("OG:", b.og) || b.og;
       } else if(action == "2"){
         if(confirm("Delete this batch?")){
           batches.splice(i, 1);
