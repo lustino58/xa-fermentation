@@ -1,434 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation</title>
-  <style>
-    :root{
-      --bg:#03070c;
-      --panel:#0a121b;
-      --panel-2:#101a25;
-      --steel-1:#8b96a2;
-      --steel-2:#48535f;
-      --line:#2f95dd;
-      --glow:rgba(44,150,255,.22);
-      --text:#f2f6fa;
-      --muted:#aebbc7;
-      --accent:#7dc3ff;
-      --card:#09111a;
-      --card2:#060d15;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XA Fermentation</title>
 
-    *{
-      box-sizing:border-box;
-      -webkit-tap-highlight-color:transparent;
-    }
+<style>
+:root{
+  --bg:#03070c;
+  --panel:#0a121b;
+  --text:#f2f6fa;
+  --muted:#aebbc7;
+}
 
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, rgba(35,87,133,.18), transparent 28%),
-        linear-gradient(180deg, #02060b 0%, #050a10 100%);
-      padding:24px 18px 40px;
-    }
+body{
+  margin:0;
+  font-family:Arial;
+  background:linear-gradient(180deg,#02060b,#050a10);
+  color:white;
+  padding:20px;
+}
 
-    .app{
-      max-width:760px;
-      margin:0 auto;
-    }
+.app{
+  max-width:700px;
+  margin:auto;
+}
 
-    .header{
-      margin-bottom:18px;
-    }
+h1{
+  margin:0 0 20px;
+}
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:16px;
-    }
+.top-panel{
+  padding:20px;
+  border-radius:30px;
+  background:#0b1219;
+  box-shadow:0 0 30px rgba(0,100,200,.1);
+}
 
-    .xa-badge{
-      width:86px;
-      height:86px;
-      border-radius:26px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:700;
-      font-size:40px;
-      color:#eef5fb;
-      background:
-        linear-gradient(145deg, rgba(160,175,190,.30), rgba(60,72,84,.16)),
-        linear-gradient(180deg, #16212c 0%, #0b1219 100%);
-      border:1px solid rgba(173,193,211,.18);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.12),
-        0 0 24px rgba(35,125,210,.16);
-    }
+.gauges{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
 
-    .title-wrap h1{
-      margin:0;
-      font-size:32px;
-      line-height:1;
-      letter-spacing:.3px;
-    }
+.gauge{
+  padding:15px;
+  border-radius:25px;
+  background:#0c141d;
+  text-align:center;
+  position:relative;
+}
 
-    .title-wrap p{
-      margin:10px 0 0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.35;
-      max-width:460px;
-    }
+/* COLORI DIVERSI */
 
-    .top-panel{
-      background:
-        linear-gradient(180deg, rgba(123,139,154,.18), rgba(50,62,73,.10)),
-        linear-gradient(180deg, #0b1219 0%, #081018 100%);
-      border:1px solid rgba(169,187,205,.14);
-      border-radius:30px;
-      padding:18px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.08),
-        0 0 30px rgba(0,100,200,.10);
-      margin-bottom:20px;
-    }
+.ph{
+  box-shadow:0 0 20px rgba(0,255,120,.2);
+}
+.gravity{
+  box-shadow:0 0 20px rgba(0,150,255,.2);
+}
+.temp{
+  box-shadow:0 0 20px rgba(255,140,0,.2);
+}
+.count{
+  box-shadow:0 0 20px rgba(180,0,255,.2);
+}
 
-    .gauges{
-      display:grid;
-      grid-template-columns:repeat(2, 1fr);
-      gap:14px;
-      margin-bottom:18px;
-    }
+.label{
+  font-size:12px;
+  letter-spacing:2px;
+  color:#aaa;
+}
 
-    .gauge{
-      background:
-        radial-gradient(circle at 50% 35%, rgba(255,255,255,.05), transparent 38%),
-        linear-gradient(180deg, #0d161f 0%, #0a1118 100%);
-      border-radius:26px;
-      padding:14px 12px;
-      border:1px solid rgba(140,159,176,.10);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 0 22px rgba(0,120,255,.08);
-      text-align:center;
-      position:relative;
-      overflow:hidden;
-    }
+.dial{
+  width:110px;
+  height:110px;
+  margin:10px auto;
+  border-radius:50%;
+  position:relative;
+  background:#08111a;
+}
 
-    .gauge .label{
-      color:var(--muted);
-      font-size:12px;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      margin-bottom:8px;
-    }
+/* LANCETTE COLORATE */
 
-    .dial{
-      width:124px;
-      height:124px;
-      margin:0 auto 10px;
-      border-radius:50%;
-      position:relative;
-      background:
-        radial-gradient(circle at center, #08111a 0 40%, #101a25 40% 58%, #0a1118 58% 100%);
-      border:1px solid rgba(171,191,209,.12);
-      box-shadow:
-        inset 0 1px 10px rgba(255,255,255,.05),
-        0 0 18px rgba(0,110,255,.10);
-      overflow:hidden;
-    }
+.needle{
+  position:absolute;
+  left:50%;
+  bottom:50%;
+  width:4px;
+  height:45px;
+  transform-origin:bottom;
+  transform:translateX(-50%) rotate(-60deg);
+}
 
-    .dial::before{
-      content:"";
-      position:absolute;
-      inset:10px;
-      border-radius:50%;
-      border:1px dashed rgba(160,185,210,.10);
-    }
+/* COLORI PER STRUMENTO */
+.ph .needle{
+  background:linear-gradient(#7CFFB2,#00ff88);
+  box-shadow:0 0 10px #00ff88;
+}
+.gravity .needle{
+  background:linear-gradient(#9ad4ff,#4da6ff);
+  box-shadow:0 0 10px #4da6ff;
+}
+.temp .needle{
+  background:linear-gradient(#ffc47a,#ff8c00);
+  box-shadow:0 0 10px #ff8c00;
+}
+.count .needle{
+  background:linear-gradient(#e0a8ff,#b84dff);
+  box-shadow:0 0 10px #b84dff;
+}
 
-    .dial::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      top:50%;
-      width:84px;
-      height:84px;
-      margin-left:-42px;
-      margin-top:-42px;
-      border-radius:50%;
-      border:1px solid rgba(110,150,190,.08);
-      box-shadow:0 0 18px rgba(40,120,255,.06);
-    }
+.value{
+  font-size:26px;
+  font-weight:bold;
+}
 
-    .needle{
-      position:absolute;
-      left:50%;
-      bottom:50%;
-      width:4px;
-      height:46px;
-      background:linear-gradient(180deg, #b8e2ff 0%, #5db4f2 100%);
-      transform-origin:bottom center;
-      transform:translateX(-50%) rotate(-60deg);
-      border-radius:4px;
-      box-shadow:0 0 12px rgba(95,174,227,.45);
-      transition:transform .45s ease;
-      z-index:3;
-    }
+.main-btn{
+  width:100%;
+  margin-top:20px;
+  padding:18px;
+  font-size:22px;
+  border:none;
+  border-radius:20px;
+  background:#2c4a60;
+  color:white;
+}
 
-    .needle::after{
-      content:"";
-      position:absolute;
-      bottom:-8px;
-      left:50%;
-      width:16px;
-      height:16px;
-      margin-left:-8px;
-      border-radius:50%;
-      background:#d9edf9;
-      box-shadow:0 0 10px rgba(160,220,255,.35);
-    }
+.card{
+  margin-top:15px;
+  padding:15px;
+  border-radius:20px;
+  background:#09111a;
+  box-shadow:0 0 15px rgba(0,100,200,.1);
+}
 
-    .value{
-      font-size:30px;
-      font-weight:700;
-      line-height:1;
-      margin-bottom:4px;
-    }
-
-    .sub{
-      color:var(--muted);
-      font-size:12px;
-    }
-
-    .main-btn{
-      width:100%;
-      border:none;
-      border-radius:22px;
-      padding:18px 16px;
-      font-size:22px;
-      color:#eef6fd;
-      background:
-        linear-gradient(180deg, rgba(120,140,160,.18), rgba(35,55,72,.16)),
-        linear-gradient(180deg, #243d53 0%, #1b3043 100%);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.10),
-        0 0 20px rgba(60,140,220,.16);
-      cursor:pointer;
-    }
-
-    .main-btn:active{
-      transform:scale(.99);
-    }
-
-    .hint{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:12px;
-      text-align:center;
-    }
-
-    .section-title{
-      margin:20px 0 12px;
-      color:#dfeaf5;
-      font-size:13px;
-      letter-spacing:3px;
-      text-transform:uppercase;
-      opacity:.9;
-    }
-
-    .empty{
-      background:
-        linear-gradient(180deg, rgba(130,147,163,.10), rgba(47,58,68,.06)),
-        linear-gradient(180deg, #09111a 0%, #060d15 100%);
-      border:1px solid rgba(167,187,204,.08);
-      padding:20px;
-      border-radius:24px;
-      color:var(--muted);
-      text-align:center;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.05),
-        0 0 20px rgba(0,110,210,.07);
-    }
-
-    .card{
-      background:
-        linear-gradient(180deg, rgba(130,147,163,.12), rgba(47,58,68,.08)),
-        linear-gradient(180deg, #09111a 0%, #060d15 100%);
-      border:1px solid rgba(167,187,204,.10);
-      padding:18px;
-      border-radius:24px;
-      margin-bottom:14px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 0 24px rgba(0,110,210,.10);
-      cursor:pointer;
-    }
-
-    .card-head{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:12px;
-    }
-
-    .name{
-      font-size:28px;
-      font-weight:700;
-      line-height:1;
-    }
-
-    .type-badge{
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:12px;
-      letter-spacing:1.6px;
-      text-transform:uppercase;
-      color:#eaf5ff;
-      background:
-        linear-gradient(180deg, rgba(120,138,153,.16), rgba(40,55,68,.12)),
-        linear-gradient(180deg, #1c3246 0%, #152535 100%);
-      border:1px solid rgba(164,185,203,.12);
-      white-space:nowrap;
-    }
-
-    .metrics{
-      display:grid;
-      grid-template-columns:repeat(2, 1fr);
-      gap:12px;
-    }
-
-    .metric{
-      background:linear-gradient(180deg, #0f1822 0%, #0a121a 100%);
-      border:1px solid rgba(143,164,182,.09);
-      border-radius:18px;
-      padding:14px 12px;
-      min-height:86px;
-    }
-
-    .metric-label{
-      font-size:12px;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:1.3px;
-      margin-bottom:8px;
-    }
-
-    .metric-value{
-      font-size:20px;
-      font-weight:700;
-    }
-
-    @media (max-width:600px){
-      .brand{
-        align-items:flex-start;
-      }
-
-      .xa-badge{
-        width:74px;
-        height:74px;
-        font-size:34px;
-      }
-
-      .title-wrap h1{
-        font-size:29px;
-      }
-
-      .dial{
-        width:112px;
-        height:112px;
-      }
-
-      .value{
-        font-size:26px;
-      }
-
-      .name{
-        font-size:22px;
-      }
-    }
-  </style>
+</style>
 </head>
+
 <body>
-  <div class="app">
-    <div class="header">
-      <div class="brand">
-        <div class="xa-badge">XA</div>
-        <div class="title-wrap">
-          <h1>XA Fermentation</h1>
-          <p>Control panel for cider, tea ferments, lactic cultures and experimental batches</p>
-        </div>
-      </div>
-    </div>
 
-    <div class="top-panel">
-      <div class="gauges">
-        <div class="gauge">
-          <div class="label">pH</div>
-          <div class="dial">
-            <div class="needle" id="needlePh"></div>
-          </div>
-          <div class="value" id="topPh">-</div>
-          <div class="sub">latest batch</div>
-        </div>
+<div class="app">
 
-        <div class="gauge">
-          <div class="label">Gravity</div>
-          <div class="dial">
-            <div class="needle" id="needleGravity"></div>
-          </div>
-          <div class="value" id="topGravity">-</div>
-          <div class="sub">latest batch</div>
-        </div>
+<h1>XA Fermentation</h1>
 
-        <div class="gauge">
-          <div class="label">Temp</div>
-          <div class="dial">
-            <div class="needle" id="needleTemp"></div>
-          </div>
-          <div class="value" id="topTemp">-</div>
-          <div class="sub">0–50°C scale</div>
-        </div>
+<div class="top-panel">
 
-        <div class="gauge">
-          <div class="label">Batches</div>
-          <div class="dial">
-            <div class="needle" id="needleCount"></div>
-          </div>
-          <div class="value" id="topCount">0</div>
-          <div class="sub">stored</div>
-        </div>
-      </div>
+<div class="gauges">
 
-      <button class="main-btn" onclick="addBatch()">+ New Batch</button>
-      <div class="hint">Tap a batch card to edit or delete it</div>
-    </div>
+<div class="gauge ph">
+<div class="label">PH</div>
+<div class="dial"><div class="needle" id="needlePh"></div></div>
+<div class="value" id="topPh">-</div>
+</div>
 
-    <div class="section-title">Fermentation Archive</div>
-    <div id="list"></div>
-  </div>
+<div class="gauge gravity">
+<div class="label">GRAVITY</div>
+<div class="dial"><div class="needle" id="needleGravity"></div></div>
+<div class="value" id="topGravity">-</div>
+</div>
 
-  <script>
-    let batches = JSON.parse(localStorage.getItem("batches")) || [];
+<div class="gauge temp">
+<div class="label">TEMP</div>
+<div class="dial"><div class="needle" id="needleTemp"></div></div>
+<div class="value" id="topTemp">-</div>
+</div>
 
-    function save(){
-      localStorage.setItem("batches", JSON.stringify(batches));
-    }
+<div class="gauge count">
+<div class="label">BATCHES</div>
+<div class="dial"><div class="needle" id="needleCount"></div></div>
+<div class="value" id="topCount">0</div>
+</div>
 
-    function formatTemp(t){
-      if(t === undefined || t === null || t === "") return "-";
-      return t + "°C";
-    }
+</div>
 
-    function formatValue(v){
-      if(v === undefined || v === null || v === "") return "-";
-      return v;
-    }
+<button class="main-btn" onclick="addBatch()">+ New Batch</button>
 
-    function mapValue(value, inMin, inMax, outMin, outMax){
-      if(isNa
+</div>
+
+<div id="list"></div>
+
+</div>
+
+<script>
+
+let batches = JSON.parse(localStorage.getItem("batches")) || [];
+
+function save(){
+  localStorage.setItem("batches", JSON.stringify(batches));
+}
+
+function map(v,min,max){
+  if(!v) return -60;
+  return ((v-min)/(max-min))*120 -60;
+}
+
+function setNeedle(id,val){
+  document.getElementById(id).style.transform =
+    `translateX(-50%) rotate(${val}deg)`;
+}
+
+function updateTop(){
+
+  document.getElementById("topCount").innerText=batches.length;
+  setNeedle("needleCount", map(batches.length,0,20));
+
+  if(batches.length>0){
+    let b=batches[batches.length-1];
+
+    document.getElementById("topPh").innerText=b.ph;
+    document.getElementById("topGravity").innerText=b.gravity;
+    document.getElementById("topTemp").innerText=b.temp+"°C";
+
+    setNeedle("needlePh", map(parseFloat(b.ph),0,7));
+    setNeedle("needleGravity", map(parseFloat(b.gravity),1,1.08));
+    setNeedle("needleTemp", map(parseFloat(b.temp),0,50));
+  }
+
+}
+
+function render(){
+  let html="";
+  batches.forEach((b,i)=>{
+    html+=`
+    <div class="card" onclick="edit(${i})">
+      <b>${b.name}</b><br>
+      ${b.type}<br>
+      pH: ${b.ph}<br>
+      Gravity: ${b.gravity}<br>
+      Temp: ${b.temp}°C
+    </div>`;
+  });
+
+  document.getElementById("list").innerHTML=html;
+  updateTop();
+}
+
+function addBatch(){
+  let name=prompt("Name");
+  if(!name)return;
+
+  let type=prompt("Type");
+  let ph=prompt("pH");
+  let gravity=prompt("Gravity");
+  let temp=prompt("Temp °C");
+
+  batches.push({name,type,ph,gravity,temp});
+  save();
+  render();
+}
+
+function edit(i){
+  if(confirm("Delete batch?")){
+    batches.splice(i,1);
+    save();
+    render();
+  }
+}
+
+render();
+
+</script>
+
+</body>
+</html>
