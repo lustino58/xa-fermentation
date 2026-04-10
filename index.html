@@ -8,16 +8,14 @@
     :root{
       --bg1:#02060b;
       --bg2:#07101a;
-      --panel:#0a121b;
-      --panel2:#0d1823;
-      --steel1:#7f8c98;
-      --steel2:#3a4651;
       --text:#f2f6fa;
       --muted:#aab7c4;
       --blue:#69b8ff;
       --green:#62f2a2;
       --orange:#ffb25c;
       --purple:#c17aff;
+      --red:#ff7e7e;
+      --yellow:#ffd36b;
     }
 
     *{
@@ -314,18 +312,49 @@
       line-height:1;
     }
 
-    .type-badge{
+    .right-stack{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:flex-end;
+    }
+
+    .type-badge,
+    .status-badge{
       padding:8px 12px;
       border-radius:999px;
       font-size:12px;
       letter-spacing:1.5px;
       text-transform:uppercase;
+      white-space:nowrap;
+      border:1px solid rgba(164,185,203,.12);
+    }
+
+    .type-badge{
       color:#eaf5ff;
       background:
         linear-gradient(180deg, rgba(120,138,153,.16), rgba(40,55,68,.12)),
         linear-gradient(180deg, #1c3246 0%, #152535 100%);
-      border:1px solid rgba(164,185,203,.12);
-      white-space:nowrap;
+    }
+
+    .status-active{
+      color:#dbffe9;
+      background:linear-gradient(180deg, rgba(78,160,112,.22), rgba(30,87,52,.20));
+    }
+
+    .status-slow{
+      color:#fff4d1;
+      background:linear-gradient(180deg, rgba(185,142,44,.24), rgba(108,78,18,.20));
+    }
+
+    .status-critical{
+      color:#ffe0e0;
+      background:linear-gradient(180deg, rgba(170,66,66,.24), rgba(100,30,30,.20));
+    }
+
+    .status-complete{
+      color:#e0f1ff;
+      background:linear-gradient(180deg, rgba(58,110,170,.24), rgba(29,57,94,.20));
     }
 
     .metrics{
@@ -416,7 +445,7 @@
             <div class="needle" id="needleGravity"></div>
           </div>
           <div class="g-value" id="topGravity">-</div>
-          <div class="g-sub">1.000–1.080</div>
+          <div class="g-sub">latest gravity</div>
         </div>
 
         <div class="gauge-card temp">
@@ -467,6 +496,16 @@
       return v;
     }
 
+    function formatPressure(v){
+      if(v === undefined || v === null || v === "") return "-";
+      return v + " bar";
+    }
+
+    function parseNum(v){
+      const n = parseFloat(String(v).replace(",", "."));
+      return isNaN(n) ? null : n;
+    }
+
     function mapValue(value, inMin, inMax, outMin, outMax){
       if(isNaN(value)) return outMin;
       if(value < inMin) value = inMin;
@@ -493,11 +532,46 @@
       }
     }
 
+    function getDay(b){
+      if(!b.createdAt) return "-";
+      const start = new Date(b.createdAt);
+      const now = new Date();
+      const diff = now - start;
+      return Math.max(1, Math.floor(diff / 86400000) + 1);
+    }
+
+    function getABV(b){
+      const og = parseNum(b.og);
+      const current = parseNum(b.gravity);
+      if(og === null || current === null) return "-";
+      const abv = (og - current) * 131;
+      if(isNaN(abv)) return "-";
+      return abv.toFixed(2) + "%";
+    }
+
+    function getStatus(b){
+      const og = parseNum(b.og);
+      const current = parseNum(b.gravity);
+      const temp = parseNum(b.temp);
+      const ph = parseNum(b.ph);
+
+      if(temp !== null && (temp < 5 || temp > 40)) return { text:"Critical", cls:"status-critical" };
+      if(ph !== null && (ph < 2.8 || ph > 4.6)) return { text:"Critical", cls:"status-critical" };
+
+      if(og !== null && current !== null){
+        const diff = og - current;
+        if(diff >= 0.030) return { text:"Complete", cls:"status-complete" };
+        if(diff >= 0.010) return { text:"Active", cls:"status-active" };
+        return { text:"Slow", cls:"status-slow" };
+      }
+
+      return { text:"Active", cls:"status-active" };
+    }
+
     function updateTopPanel(){
       const count = batches.length;
       document.getElementById("topCount").textContent = count;
-      const countDeg = mapValue(count, 0, 20, -60, 60);
-      setNeedle("needleCount", countDeg);
+      setNeedle("needleCount", mapValue(count, 0, 20, -60, 60));
 
       if(count > 0){
         const b = batches[batches.length - 1];
@@ -506,17 +580,13 @@
         document.getElementById("topGravity").textContent = formatValue(b.gravity);
         document.getElementById("topTemp").textContent = formatTemp(b.temp);
 
-        const ph = parseFloat(String(b.ph).replace(",", ".")) || 0;
-        const gravity = parseFloat(String(b.gravity).replace(",", ".")) || 1.000;
-        const temp = parseFloat(String(b.temp).replace(",", ".")) || 0;
+        const ph = parseNum(b.ph) ?? 0;
+        const gravity = parseNum(b.gravity) ?? 1.000;
+        const temp = parseNum(b.temp) ?? 0;
 
-        const phDeg = mapValue(ph, 0, 7, -60, 60);
-        const gravityDeg = mapValue(gravity, 1.000, 1.080, -60, 60);
-        const tempDeg = mapValue(temp, 0, 50, -60, 60);
-
-        setNeedle("needlePh", phDeg);
-        setNeedle("needleGravity", gravityDeg);
-        setNeedle("needleTemp", tempDeg);
+        setNeedle("needlePh", mapValue(ph, 0, 7, -60, 60));
+        setNeedle("needleGravity", mapValue(gravity, 1.000, 1.080, -60, 60));
+        setNeedle("needleTemp", mapValue(temp, 0, 50, -60, 60));
       } else {
         document.getElementById("topPh").textContent = "-";
         document.getElementById("topGravity").textContent = "-";
@@ -534,6 +604,123 @@
         html = `<div class="empty">No batches yet. Tap <b>+ New Batch</b> to add your first fermentation.</div>`;
       } else {
         batches.forEach((b, i) => {
+          const status = getStatus(b);
           html += `
             <div class="batch-card" onclick="manageBatch(${i})">
-              <
+              <div class="batch-top">
+                <div class="batch-name">${b.name || "Unnamed"}</div>
+                <div class="right-stack">
+                  <div class="type-badge">${(b.type || "unknown").toUpperCase()}</div>
+                  <div class="status-badge ${status.cls}">${status.text}</div>
+                </div>
+              </div>
+
+              <div class="metrics">
+                <div class="metric">
+                  <div class="metric-label">Day</div>
+                  <div class="metric-value">${getDay(b)}</div>
+                </div>
+
+                <div class="metric">
+                  <div class="metric-label">Culture</div>
+                  <div class="metric-value">${formatValue(b.culture)}</div>
+                </div>
+
+                <div class="metric">
+                  <div class="metric-label">pH</div>
+                  <div class="metric-value">${formatValue(b.ph)}</div>
+                </div>
+
+                <div class="metric">
+                  <div class="metric-label">Current Gravity</div>
+                  <div class="metric-value">${formatValue(b.gravity)}</div>
+                </div>
+
+                <div class="metric">
+                  <div class="metric-label">OG</div>
+                  <div class="metric-value">${formatValue(b.og)}</div>
+                </div>
+
+                <div class="metric">
+                  <div class="metric-label">ABV</div>
+                  <div class="metric-value">${getABV(b)}</div>
+                </div>
+
+                <div class="metric">
+                  <div class="metric-label">Temp</div>
+                  <div class="metric-value">${formatTemp(b.temp)}</div>
+                </div>
+
+                <div class="metric">
+                  <div class="metric-label">Pressure</div>
+                  <div class="metric-value">${formatPressure(b.pressure)}</div>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      document.getElementById("list").innerHTML = html;
+      updateTopPanel();
+    }
+
+    function addBatch(){
+      const name = prompt("Batch name:");
+      if(!name) return;
+
+      const type = prompt("Type (cider, kombucha, lactic, mixed):") || "unknown";
+      const culture = prompt("Culture (yeast, kveik, L. plantarum, SCOBY...):") || "-";
+      const ph = prompt("pH:") || "-";
+      const gravity = prompt("Current Gravity:") || "-";
+      const og = prompt("OG (optional):") || "-";
+      const temp = prompt("Temperature °C (0-50):") || "-";
+      const pressure = prompt("Pressure bar (optional):") || "-";
+
+      batches.push({
+        name,
+        type,
+        culture,
+        ph,
+        gravity,
+        og,
+        temp,
+        pressure,
+        createdAt: new Date().toISOString()
+      });
+
+      save();
+      render();
+    }
+
+    function manageBatch(i){
+      let action = prompt("Write:\n1 = edit\n2 = delete");
+
+      if(action == "1"){
+        let b = batches[i];
+        b.name = prompt("Batch name:", b.name) || b.name;
+        b.type = prompt("Type:", b.type) || b.type;
+        b.culture = prompt("Culture:", b.culture) || b.culture;
+        b.ph = prompt("pH:", b.ph) || b.ph;
+        b.gravity = prompt("Current Gravity:", b.gravity) || b.gravity;
+        b.og = prompt("OG (optional):", b.og) || b.og;
+        b.temp = prompt("Temperature °C (0-50):", b.temp) || b.temp;
+        b.pressure = prompt("Pressure bar:", b.pressure) || b.pressure;
+      } else if(action == "2"){
+        if(confirm("Delete this batch?")){
+          batches.splice(i, 1);
+        }
+      }
+
+      save();
+      render();
+    }
+
+    buildTicks("ticksPh");
+    buildTicks("ticksGravity");
+    buildTicks("ticksTemp");
+    buildTicks("ticksCount");
+    render();
+  </script>
+</body>
+</html>
