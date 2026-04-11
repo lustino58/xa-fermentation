@@ -9,129 +9,72 @@
 body{
   margin:0;
   font-family:Arial;
-  background:linear-gradient(#05090f,#0b1622);
+  background:#0b1622;
   color:white;
-  padding:20px;
-}
-
-.header{
   display:flex;
+  justify-content:center;
   align-items:center;
-  gap:15px;
-  margin-bottom:20px;
+  height:100vh;
 }
 
-.logo{
-  width:80px;height:80px;border-radius:20px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:34px;font-weight:bold;
-  background:linear-gradient(#1e2a36,#0c131b);
-}
-
-.panel{
-  background:linear-gradient(#f0f4f7,#b8c0c7,#e4e9ee,#8d98a3);
-  border-radius:30px;
-  padding:30px;
-}
-
-.card{
-  background:linear-gradient(#646d77,#232930);
-  border-radius:30px;
-  padding:20px;
+.container{
+  width:320px;
   text-align:center;
 }
 
 .title{
-  letter-spacing:6px;
-  margin-bottom:10px;
+  margin-bottom:20px;
+}
+
+svg{
+  width:100%;
 }
 
 .value{
-  font-size:60px;
-}
-
-.sub{
-  color:#aaa;
-}
-
-.dial{
-  width:100%;
-  max-width:420px;
-  margin:auto;
+  font-size:48px;
+  margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <div class="logo">XA</div>
-  <div>
-    <h1>XA Fermentation</h1>
-    <div>Step PRO: quadrante realistico vintage</div>
-  </div>
-</div>
+<div class="container">
 
-<div class="panel">
-  <div class="card">
+<div class="title">PH</div>
 
-    <div class="title">P H</div>
-
-    <div class="dial">
 <svg viewBox="0 0 400 400">
 
 <defs>
-
 <radialGradient id="bezel">
 <stop offset="0%" stop-color="#fff"/>
-<stop offset="40%" stop-color="#bbb"/>
-<stop offset="100%" stop-color="#222"/>
+<stop offset="100%" stop-color="#333"/>
 </radialGradient>
 
 <radialGradient id="face">
-<stop offset="0%" stop-color="#2b2f34"/>
+<stop offset="0%" stop-color="#222"/>
 <stop offset="100%" stop-color="#000"/>
 </radialGradient>
-
 </defs>
 
 <!-- ghiera -->
 <circle cx="200" cy="200" r="160" fill="url(#bezel)"/>
 
 <!-- interno -->
-<circle cx="200" cy="200" r="135" fill="url(#face)"/>
+<circle cx="200" cy="200" r="130" fill="url(#face)"/>
 
-<!-- arco scala -->
-<path d="M80 250 A150 150 0 0 1 320 250"
-stroke="#d8d2b0"
-stroke-width="3"
-fill="none"/>
-
-<!-- tacche radiali -->
-<g stroke="#d8d2b0" stroke-width="3">
-<line x1="120" y1="240" x2="110" y2="255"/>
-<line x1="150" y1="210" x2="140" y2="220"/>
-<line x1="200" y1="200" x2="200" y2="180"/>
-<line x1="250" y1="210" x2="260" y2="220"/>
-<line x1="280" y1="240" x2="290" y2="255"/>
-</g>
-
-<!-- lancetta realistica -->
+<!-- lancetta -->
 <g transform="rotate(35 200 200)">
-<polygon points="198,200 202,200 200,85" fill="red"/>
-<circle cx="200" cy="200" r="6" fill="white"/>
+<polygon points="198,200 202,200 200,80" fill="red"/>
 </g>
 
-<!-- perno -->
-<circle cx="200" cy="200" r="25" fill="#bbb"/>
+<!-- centro -->
+<circle cx="200" cy="200" r="20" fill="white"/>
 
 </svg>
-    </div>
 
-    <div class="value">3.50</div>
-    <div class="sub">ultima misurazione</div>
+<div class="value">3.50</div>
 
-  </div>
 </div>
 
 </body>
