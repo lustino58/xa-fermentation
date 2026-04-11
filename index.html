@@ -1,340 +1,184 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation</title>
-  <style>
-    :root{
-      --bg1:#03070c;
-      --bg2:#0a121b;
-      --text:#eef5fb;
-      --muted:#b8c4cf;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XA Fermentation</title>
 
-      --steel1:#f3f6f8;
-      --steel2:#d5dce2;
-      --steel3:#a5afb8;
-      --steel4:#737d88;
-      --steel5:#444c55;
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:linear-gradient(#05090f,#0b1622);
+  color:white;
+  padding:20px;
+}
 
-      --panelDark1:#4a525c;
-      --panelDark2:#20262d;
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px;
+}
+.logo{
+  width:80px;
+  height:80px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  font-weight:bold;
+  background:linear-gradient(#1e2a36,#0c131b);
+}
+h1{margin:0;font-size:28px}
+.sub{font-size:14px;color:#9fb0c0}
 
-      --ring1:#d9e0e6;
-      --ring2:#9aa4ae;
-      --ring3:#5f6872;
-      --ring4:#2f353c;
+/* PANNELLO ACCIAIO */
+.panel{
+  position:relative;
+  border-radius:30px;
+  padding:30px;
+  background:
+    repeating-linear-gradient(90deg,#ffffff10 0px,#00000008 3px),
+    linear-gradient(#f0f4f7,#b8c0c7,#e4e9ee,#8d98a3);
+  box-shadow:
+    inset 0 2px 6px #ffffff50,
+    inset 0 -20px 30px #00000030,
+    0 20px 40px #00000050;
+}
 
-      --face1:#10141a;
-      --face2:#06090d;
-    }
+/* VITI */
+.screw{
+  position:absolute;
+  width:22px;height:22px;border-radius:50%;
+  background:radial-gradient(#fff,#999,#444);
+}
+.tl{top:10px;left:10px}
+.tr{top:10px;right:10px}
+.bl{bottom:10px;left:10px}
+.br{bottom:10px;right:10px}
 
-    *{
-      box-sizing:border-box;
-      -webkit-tap-highlight-color:transparent;
-    }
+/* CARD */
+.card{
+  background:linear-gradient(#5b646f,#20262d);
+  border-radius:30px;
+  padding:25px;
+  text-align:center;
+  box-shadow:
+    inset 0 2px 4px #ffffff20,
+    inset 0 -20px 30px #00000060;
+}
 
-    html,body{
-      margin:0;
-      min-height:100vh;
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, rgba(70,120,180,.14), transparent 28%),
-        linear-gradient(180deg,var(--bg1),var(--bg2));
-    }
+.title{
+  letter-spacing:8px;
+  margin-bottom:20px;
+  color:#dfe6ee;
+}
 
-    body{
-      padding:18px 12px 34px;
-    }
+/* QUADRANTE */
+.dial{
+  width:260px;
+  height:260px;
+  margin:auto;
+  position:relative;
+}
 
-    .app{
-      max-width:900px;
-      margin:0 auto;
-    }
+/* GHIERA METALLO */
+.ring{
+  position:absolute;
+  width:100%;height:100%;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 30%,#ffffff,#999,#444);
+  box-shadow:
+    inset 0 3px 6px #ffffff40,
+    inset 0 -8px 10px #00000090,
+    0 10px 20px #00000080;
+}
 
-    .hero{
-      display:flex;
-      gap:14px;
-      align-items:center;
-      margin-bottom:18px;
-    }
+/* INCASSO */
+.inner{
+  position:absolute;
+  top:20px;left:20px;
+  right:20px;bottom:20px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 40%,#3a4046,#1b2026);
+  box-shadow:
+    inset 0 10px 20px #000000cc,
+    inset 0 -2px 6px #ffffff10;
+}
 
-    .xa-logo{
-      width:82px;
-      height:82px;
-      border-radius:24px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:38px;
-      font-weight:700;
-      color:#f4f8fb;
-      background:
-        linear-gradient(145deg, rgba(210,220,228,.18), rgba(70,80,90,.08)),
-        linear-gradient(180deg, #1c2732, #0c131b);
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.16),
-        inset 0 -10px 16px rgba(0,0,0,.42),
-        0 0 20px rgba(70,140,220,.10);
-      flex:0 0 auto;
-    }
+/* CENTRO */
+.center{
+  position:absolute;
+  width:60px;height:60px;
+  border-radius:50%;
+  background:#e6edf4;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  box-shadow:inset 0 2px 4px #00000040;
+}
 
-    h1{
-      margin:0;
-      font-size:30px;
-      line-height:1;
-    }
+/* VETRO */
+.glass{
+  position:absolute;
+  width:100%;height:100%;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 20%,#ffffff30,transparent 60%);
+  pointer-events:none;
+}
 
-    .subhead{
-      margin:8px 0 0;
-      font-size:14px;
-      line-height:1.35;
-      color:var(--muted);
-    }
+/* TESTO */
+.value{
+  font-size:60px;
+  margin-top:20px;
+}
+.subtext{
+  color:#aebbc7;
+}
 
-    .panel{
-      position:relative;
-      border-radius:36px;
-      min-height:720px;
-      padding:26px 16px 30px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.18);
-      background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,.05) 0px,
-          rgba(0,0,0,.03) 3px
-        ),
-        linear-gradient(180deg,#eef2f5,#aeb7c0,#dde3e8,#8a949f);
-      box-shadow:
-        inset 0 2px 5px rgba(255,255,255,.22),
-        inset 0 -24px 36px rgba(0,0,0,.18),
-        0 18px 38px rgba(0,0,0,.28);
-    }
-
-    .panel::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius:36px;
-      background:
-        linear-gradient(90deg,
-          rgba(255,255,255,.06) 0%,
-          transparent 12%,
-          rgba(255,255,255,.03) 24%,
-          transparent 42%,
-          rgba(0,0,0,.04) 56%,
-          transparent 74%,
-          rgba(255,255,255,.03) 100%);
-      pointer-events:none;
-    }
-
-    .screw{
-      position:absolute;
-      width:22px;
-      height:22px;
-      border-radius:50%;
-      background:
-        radial-gradient(circle at 30% 30%, #ffffff 0%, #dce3e9 18%, #99a3ad 46%, #5f6973 72%, #363d45 100%);
-      border:1px solid rgba(255,255,255,.22);
-      box-shadow:
-        inset 0 1px 1px rgba(255,255,255,.42),
-        0 2px 4px rgba(0,0,0,.35);
-      z-index:3;
-    }
-
-    .screw::after{
-      content:"";
-      position:absolute;
-      left:5px;
-      right:5px;
-      top:11px;
-      height:1.6px;
-      background:#2f3740;
-      transform:rotate(-18deg);
-      border-radius:2px;
-    }
-
-    .tl{top:12px;left:12px}
-    .tr{top:12px;right:12px}
-    .bl{bottom:12px;left:12px}
-    .br{bottom:12px;right:12px}
-
-    .meter-card{
-      position:relative;
-      z-index:2;
-      max-width:620px;
-      margin:0 auto;
-      padding:26px 16px 28px;
-      border-radius:34px;
-      text-align:center;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)),
-        linear-gradient(180deg, var(--panelDark1), var(--panelDark2));
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.05),
-        inset 0 -20px 28px rgba(0,0,0,.28),
-        0 10px 20px rgba(0,0,0,.16);
-    }
-
-    .meter-title{
-      margin:0 0 18px;
-      font-size:18px;
-      letter-spacing:8px;
-      color:#e8edf3;
-    }
-
-    .dial-wrap{
-      width:min(86vw, 430px);
-      aspect-ratio:1 / 1;
-      margin:0 auto 18px;
-    }
-
-    .dial-svg{
-      width:100%;
-      height:100%;
-      display:block;
-      filter:drop-shadow(0 14px 16px rgba(0,0,0,.28));
-    }
-
-    .value{
-      font-size:clamp(48px, 10vw, 78px);
-      line-height:1;
-      font-weight:700;
-      margin-bottom:8px;
-    }
-
-    .value-sub{
-      font-size:clamp(18px, 4vw, 30px);
-      color:var(--muted);
-      line-height:1.2;
-    }
-
-    .bottom-note{
-      margin-top:18px;
-      text-align:center;
-      font-size:14px;
-      color:#d4e0ea;
-      opacity:.92;
-      line-height:1.4;
-    }
-
-    @media (max-width:600px){
-      .hero{
-        align-items:flex-start;
-      }
-
-      .xa-logo{
-        width:72px;
-        height:72px;
-        font-size:34px;
-        border-radius:22px;
-      }
-
-      h1{
-        font-size:28px;
-      }
-
-      .subhead{
-        font-size:13px;
-      }
-
-      .panel{
-        min-height:620px;
-        padding:24px 12px 24px;
-      }
-
-      .meter-card{
-        padding:22px 10px 24px;
-      }
-
-      .meter-title{
-        font-size:16px;
-        letter-spacing:6px;
-      }
-    }
-  </style>
+/* MOBILE */
+@media(max-width:600px){
+  .dial{width:220px;height:220px}
+  .value{font-size:50px}
+}
+</style>
 </head>
+
 <body>
-  <div class="app">
-    <div class="hero">
-      <div class="xa-logo">XA</div>
-      <div>
-        <h1>XA Fermentation</h1>
-        <div class="subhead">Base pulita: solo strumento tondo incassato, senza numeri e senza tacche</div>
-      </div>
-    </div>
 
-    <div class="panel">
-      <div class="screw tl"></div>
-      <div class="screw tr"></div>
-      <div class="screw bl"></div>
-      <div class="screw br"></div>
-
-      <div class="meter-card">
-        <div class="meter-title">P H</div>
-
-        <div class="dial-wrap">
-          <svg class="dial-svg" viewBox="0 0 500 500" aria-hidden="true">
-            <defs>
-              <radialGradient id="bezelGrad" cx="34%" cy="28%">
-                <stop offset="0%" stop-color="var(--ring1)"/>
-                <stop offset="20%" stop-color="var(--ring2)"/>
-                <stop offset="58%" stop-color="var(--ring3)"/>
-                <stop offset="100%" stop-color="var(--ring4)"/>
-              </radialGradient>
-
-              <radialGradient id="faceGrad" cx="50%" cy="40%">
-                <stop offset="0%" stop-color="var(--face1)"/>
-                <stop offset="65%" stop-color="#0b0f14"/>
-                <stop offset="100%" stop-color="var(--face2)"/>
-              </radialGradient>
-
-              <radialGradient id="innerShadow" cx="50%" cy="50%">
-                <stop offset="0%" stop-color="rgba(255,255,255,.03)"/>
-                <stop offset="55%" stop-color="rgba(255,255,255,.01)"/>
-                <stop offset="100%" stop-color="rgba(0,0,0,.25)"/>
-              </radialGradient>
-
-              <filter id="glassBlur" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="1.6"/>
-              </filter>
-            </defs>
-
-            <!-- ghiera metallica -->
-            <circle cx="250" cy="250" r="182" fill="url(#bezelGrad)"/>
-            <circle cx="250" cy="250" r="168" fill="#242a31" opacity=".42"/>
-            <circle cx="250" cy="250" r="154" fill="url(#faceGrad)"/>
-
-            <!-- filetto interno -->
-            <circle cx="250" cy="250" r="148" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.8"/>
-
-            <!-- ombra morbida interna -->
-            <circle cx="250" cy="250" r="150" fill="url(#innerShadow)" opacity=".95"/>
-
-            <!-- tondo centrale -->
-            <circle cx="250" cy="250" r="76" fill="#12171d"/>
-            <circle cx="250" cy="250" r="42" fill="#e6ecf2"/>
-            <circle cx="250" cy="250" r="42" fill="none" stroke="rgba(0,0,0,.16)" stroke-width="1.4"/>
-
-            <!-- vetro -->
-            <ellipse cx="196" cy="155" rx="82" ry="24" fill="rgba(255,255,255,.12)" transform="rotate(-18 196 155)" filter="url(#glassBlur)"/>
-            <ellipse cx="318" cy="334" rx="38" ry="12" fill="rgba(255,255,255,.05)" transform="rotate(20 318 334)" filter="url(#glassBlur)"/>
-            <circle cx="250" cy="250" r="154" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.2"/>
-          </svg>
-        </div>
-
-        <div class="value">3.50</div>
-        <div class="value-sub">ultima misurazione</div>
-      </div>
-    </div>
-
-    <div class="bottom-note">
-      Quando questa forma base è giusta, aggiungiamo solo la lancetta. Dopo, solo le tacche. Dopo, solo i numeri.
-    </div>
+<div class="header">
+  <div class="logo">XA</div>
+  <div>
+    <h1>XA Fermentation</h1>
+    <div class="sub">Step 2: quadrante realistico (no numeri)</div>
   </div>
+</div>
+
+<div class="panel">
+  <div class="screw tl"></div>
+  <div class="screw tr"></div>
+  <div class="screw bl"></div>
+  <div class="screw br"></div>
+
+  <div class="card">
+    <div class="title">P H</div>
+
+    <div class="dial">
+      <div class="ring"></div>
+      <div class="inner"></div>
+      <div class="center"></div>
+      <div class="glass"></div>
+    </div>
+
+    <div class="value">3.50</div>
+    <div class="subtext">ultima misurazione</div>
+  </div>
+</div>
+
 </body>
 </html>
