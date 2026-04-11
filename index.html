@@ -16,8 +16,6 @@
       --purple:#c17aff;
       --red:#ff6f7a;
       --yellow:#ffd36a;
-      --panel:#0b1218;
-      --panel2:#081018;
     }
 
     *{
@@ -132,7 +130,6 @@
       overflow:hidden;
     }
 
-    /* METAL PANEL */
     .metal-panel{
       position:relative;
       border-radius:28px;
@@ -260,7 +257,7 @@
       margin:0 auto 10px;
       border-radius:50%;
       position:relative;
-      overflow:hidden;
+      overflow:visible;
       background:
         radial-gradient(circle at 50% 50%, rgba(0,0,0,.98) 0 28%, rgba(3,9,15,.98) 28% 48%, rgba(7,14,23,1) 48% 100%);
       border:2px solid rgba(215,230,245,.10);
@@ -269,41 +266,48 @@
         inset 0 -8px 18px rgba(0,0,0,.48);
     }
 
-    .dial::before{
-      content:"";
+    /* BORDO ILLUMINATO ESTERNO BEN VISIBILE */
+    .dial-ring-light{
       position:absolute;
-      inset:2px;
+      inset:-5px;
       border-radius:50%;
-      border:2px solid rgba(255,255,255,.08);
+      z-index:0;
+      pointer-events:none;
     }
 
-    .dial::after{
+    .dial-ring-light::before{
       content:"";
       position:absolute;
-      inset:17px;
+      inset:0;
       border-radius:50%;
-      border:1px dashed rgba(255,255,255,.08);
-      opacity:.65;
+      border:2.5px solid rgba(255,255,255,.28);
+      box-shadow:
+        0 0 5px rgba(255,255,255,.20),
+        0 0 12px rgba(255,255,255,.16),
+        0 0 24px rgba(255,255,255,.12),
+        inset 0 0 6px rgba(255,255,255,.08);
     }
 
+    /* ALONE ESTERNO MORBIDO */
     .dial-glow{
       position:absolute;
-      inset:-8px;
+      inset:-12px;
       border-radius:50%;
       z-index:0;
       pointer-events:none;
-      filter:blur(7px);
-      opacity:.42;
+      filter:blur(8px);
+      opacity:.60;
     }
 
+    /* LUCE INTERNA SOFFUSA STILE QUADRO AUTO */
     .dial-inner-glow{
       position:absolute;
-      inset:12px;
+      inset:16px;
       border-radius:50%;
       z-index:0;
       pointer-events:none;
-      filter:blur(11px);
-      opacity:.16;
+      filter:blur(13px);
+      opacity:.30;
     }
 
     .dial-core{
@@ -333,14 +337,15 @@
       height:16px;
       margin-left:-1.5px;
       border-radius:4px;
-      opacity:.9;
+      opacity:.95;
       transform-origin:50% 60px;
+      box-shadow:0 0 6px currentColor;
     }
 
     .tick.small{
       height:10px;
       top:10px;
-      opacity:.55;
+      opacity:.70;
     }
 
     .needle{
@@ -367,85 +372,105 @@
       border-radius:50%;
       background:#dbeffc;
       box-shadow:
-        0 0 10px rgba(180,220,255,.18),
+        0 0 10px rgba(180,220,255,.24),
         inset 0 1px 1px rgba(255,255,255,.4);
     }
 
+    /* PH: lancetta verde, bordo ghiaccio/celeste, interno celestino */
+    .ph .dial-ring-light::before{
+      border-color:rgba(164,231,255,.72);
+      box-shadow:
+        0 0 6px rgba(175,235,255,.44),
+        0 0 14px rgba(145,223,255,.34),
+        0 0 28px rgba(120,210,255,.24),
+        inset 0 0 6px rgba(220,248,255,.16);
+    }
     .ph .dial-glow{
-      background:radial-gradient(circle, rgba(98,242,162,.24) 0%, rgba(98,242,162,.10) 42%, transparent 70%);
+      background:radial-gradient(circle, rgba(145,223,255,.34) 0%, rgba(145,223,255,.18) 45%, transparent 72%);
     }
     .ph .dial-inner-glow{
-      background:radial-gradient(circle, rgba(98,242,162,.22) 0%, rgba(98,242,162,.10) 38%, transparent 70%);
-    }
-    .ph .dial::before{
-      box-shadow:
-        0 0 8px rgba(98,242,162,.10),
-        0 0 20px rgba(98,242,162,.10),
-        inset 0 0 10px rgba(98,242,162,.04);
-      border-color:rgba(140,255,196,.12);
+      background:radial-gradient(circle, rgba(213,246,255,.28) 0%, rgba(189,235,255,.16) 38%, transparent 72%);
     }
     .ph .needle{
       background:linear-gradient(180deg, #c6ffe0, var(--green));
-      box-shadow:0 0 12px rgba(98,242,162,.20);
+      box-shadow:0 0 12px rgba(98,242,162,.22);
     }
-    .ph .tick{ background:rgba(98,242,162,.65); }
+    .ph .tick{
+      background:rgba(162,231,255,.88);
+      color:rgba(162,231,255,.88);
+    }
 
+    /* DENSITA: lancetta azzurra, bordo blu freddo, interno ghiaccio chiarissimo */
+    .gravity .dial-ring-light::before{
+      border-color:rgba(114,183,255,.76);
+      box-shadow:
+        0 0 6px rgba(135,198,255,.44),
+        0 0 14px rgba(105,184,255,.34),
+        0 0 28px rgba(72,155,255,.24),
+        inset 0 0 6px rgba(210,240,255,.16);
+    }
     .gravity .dial-glow{
-      background:radial-gradient(circle, rgba(105,184,255,.24) 0%, rgba(105,184,255,.10) 42%, transparent 70%);
+      background:radial-gradient(circle, rgba(105,184,255,.34) 0%, rgba(105,184,255,.18) 44%, transparent 72%);
     }
     .gravity .dial-inner-glow{
-      background:radial-gradient(circle, rgba(105,184,255,.22) 0%, rgba(105,184,255,.10) 38%, transparent 70%);
-    }
-    .gravity .dial::before{
-      box-shadow:
-        0 0 8px rgba(105,184,255,.10),
-        0 0 20px rgba(105,184,255,.10),
-        inset 0 0 10px rgba(105,184,255,.04);
-      border-color:rgba(160,214,255,.12);
+      background:radial-gradient(circle, rgba(221,242,255,.26) 0%, rgba(190,226,255,.15) 38%, transparent 72%);
     }
     .gravity .needle{
       background:linear-gradient(180deg, #e1f3ff, var(--blue));
-      box-shadow:0 0 12px rgba(105,184,255,.22);
+      box-shadow:0 0 12px rgba(105,184,255,.24);
     }
-    .gravity .tick{ background:rgba(105,184,255,.65); }
+    .gravity .tick{
+      background:rgba(105,184,255,.92);
+      color:rgba(105,184,255,.92);
+    }
 
+    /* TEMP: lancetta arancio, bordo ambra, interno avorio caldo */
+    .temp .dial-ring-light::before{
+      border-color:rgba(255,196,112,.76);
+      box-shadow:
+        0 0 6px rgba(255,207,138,.46),
+        0 0 14px rgba(255,178,92,.36),
+        0 0 28px rgba(255,160,68,.24),
+        inset 0 0 6px rgba(255,239,211,.18);
+    }
     .temp .dial-glow{
-      background:radial-gradient(circle, rgba(255,178,92,.20) 0%, rgba(255,178,92,.08) 42%, transparent 70%);
+      background:radial-gradient(circle, rgba(255,178,92,.30) 0%, rgba(255,178,92,.16) 44%, transparent 72%);
     }
     .temp .dial-inner-glow{
-      background:radial-gradient(circle, rgba(255,178,92,.20) 0%, rgba(255,178,92,.09) 38%, transparent 70%);
-    }
-    .temp .dial::before{
-      box-shadow:
-        0 0 8px rgba(255,178,92,.09),
-        0 0 18px rgba(255,178,92,.08),
-        inset 0 0 10px rgba(255,178,92,.03);
-      border-color:rgba(255,211,158,.12);
+      background:radial-gradient(circle, rgba(255,241,214,.28) 0%, rgba(255,224,176,.16) 38%, transparent 72%);
     }
     .temp .needle{
       background:linear-gradient(180deg, #ffe7c8, #ffb25c);
-      box-shadow:0 0 12px rgba(255,178,92,.20);
+      box-shadow:0 0 12px rgba(255,178,92,.24);
     }
-    .temp .tick{ background:rgba(255,178,92,.65); }
+    .temp .tick{
+      background:rgba(255,184,96,.92);
+      color:rgba(255,184,96,.92);
+    }
 
+    /* LOTTI: lancetta viola, bordo lilla freddo, interno azzurrino chiaro */
+    .count .dial-ring-light::before{
+      border-color:rgba(213,162,255,.76);
+      box-shadow:
+        0 0 6px rgba(221,184,255,.42),
+        0 0 14px rgba(193,122,255,.34),
+        0 0 28px rgba(176,96,255,.22),
+        inset 0 0 6px rgba(226,242,255,.14);
+    }
     .count .dial-glow{
-      background:radial-gradient(circle, rgba(193,122,255,.20) 0%, rgba(193,122,255,.08) 42%, transparent 70%);
+      background:radial-gradient(circle, rgba(193,122,255,.30) 0%, rgba(193,122,255,.16) 44%, transparent 72%);
     }
     .count .dial-inner-glow{
-      background:radial-gradient(circle, rgba(193,122,255,.22) 0%, rgba(193,122,255,.10) 38%, transparent 70%);
-    }
-    .count .dial::before{
-      box-shadow:
-        0 0 8px rgba(193,122,255,.10),
-        0 0 18px rgba(193,122,255,.08),
-        inset 0 0 10px rgba(193,122,255,.03);
-      border-color:rgba(223,181,255,.12);
+      background:radial-gradient(circle, rgba(216,236,255,.24) 0%, rgba(188,221,255,.13) 38%, transparent 72%);
     }
     .count .needle{
       background:linear-gradient(180deg, #f2ddff, var(--purple));
-      box-shadow:0 0 12px rgba(193,122,255,.20);
+      box-shadow:0 0 12px rgba(193,122,255,.24);
     }
-    .count .tick{ background:rgba(193,122,255,.65); }
+    .count .tick{
+      background:rgba(193,122,255,.92);
+      color:rgba(193,122,255,.92);
+    }
 
     .g-value{
       font-size:32px;
@@ -1788,6 +1813,7 @@
         <div class="gauge-card ${typeClass} ${alertClass}">
           <div class="g-label">${label.toUpperCase()}</div>
           <div class="dial">
+            <div class="dial-ring-light"></div>
             <div class="dial-glow"></div>
             <div class="dial-inner-glow"></div>
             <div class="dial-core"></div>
