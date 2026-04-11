@@ -23,11 +23,6 @@ body{
   text-align:center;
 }
 
-canvas{
-  display:block;
-  margin:auto;
-}
-
 .value{
   font-size:60px;
   margin-top:10px;
@@ -51,7 +46,7 @@ canvas{
 </div>
 
 <script>
-var gauge = new RadialGauge({
+new RadialGauge({
   renderTo: 'gauge',
 
   width: 300,
@@ -61,8 +56,8 @@ var gauge = new RadialGauge({
   maxValue: 5.0,
   value: 3.5,
 
-  startAngle: 135,
-  ticksAngle: 270,
+  startAngle: 180,   // SINISTRA
+  ticksAngle: 180,   // SEMICERCHIO PERFETTO
 
   majorTicks: ["2.8","3.5","4.2","5.0"],
   minorTicks: 4,
@@ -90,6 +85,8 @@ var gauge = new RadialGauge({
   colorBorderOuter: "#555",
   colorBorderMiddle: "#222",
   colorBorderInner: "#000",
+
+  valueBox: false,   // 🔥 TOGLIE IL DISPLAY INTERNO
 
   animationDuration: 500,
   animationRule: "linear"
