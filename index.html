@@ -1,73 +1,91 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XA Fermentation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XA Fermentation</title>
+  <style>
+    :root{
+      --bg:#071629;
+      --card:rgba(255,255,255,0.05);
+      --text:#f3f4f6;
+      --muted:#9aa3ad;
+      --tick:#e6dcc5;
+      --needle:#ff3b3b;
+    }
 
-<style>
-:root{
-  --bg:#071629;
-  --glass:rgba(255,255,255,0.05);
-  --text:#f3f4f6;
-  --muted:#9aa3ad;
-  --tick:#e6dcc5;
-  --needle:#ff3b3b;
-}
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
+    }
 
-*{margin:0;padding:0;box-sizing:border-box;}
+    html,body{
+      width:100%;
+      min-height:100vh;
+      background:radial-gradient(circle at center, #0a223d, #071629 70%);
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+    }
 
-body{
-  background:radial-gradient(circle at center, #0a223d, #071629 70%);
-  font-family:Arial, Helvetica, sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  color:var(--text);
-}
+    body{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:24px 16px;
+    }
 
-.container{
-  text-align:center;
-  width:100%;
-  max-width:420px;
-}
+    .container{
+      width:min(420px,100%);
+      text-align:center;
+    }
 
-h1{
-  letter-spacing:6px;
-  font-weight:300;
-  margin-bottom:30px;
-}
+    h1{
+      letter-spacing:6px;
+      font-weight:300;
+      margin-bottom:28px;
+      font-size:28px;
+    }
 
-.card{
-  background:var(--glass);
-  backdrop-filter:blur(20px);
-  border-radius:30px;
-  padding:30px;
-  box-shadow:
-    0 20px 60px rgba(0,0,0,0.7),
-    inset 0 0 40px rgba(255,255,255,0.03);
-}
+    .card{
+      background:var(--card);
+      backdrop-filter:blur(20px);
+      border-radius:30px;
+      padding:30px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.7),
+        inset 0 0 40px rgba(255,255,255,0.03);
+    }
 
-canvas{
-  width:100%;
-  max-width:300px;
-}
+    canvas{
+      width:100%;
+      max-width:300px;
+      height:auto;
+      display:block;
+      margin:0 auto;
+    }
 
-.value{
-  font-size:64px;
-  margin-top:20px;
-  font-weight:200;
-}
+    .value{
+      font-size:64px;
+      margin-top:20px;
+      font-weight:200;
+      line-height:1;
+    }
 
-.sub{
-  color:var(--muted);
-  margin-top:10px;
-  font-size:18px;
-}
-</style>
+    .sub{
+      color:var(--muted);
+      margin-top:10px;
+      font-size:18px;
+    }
+
+    @media (max-width:480px){
+      h1{font-size:24px;}
+      .value{font-size:56px;}
+      .sub{font-size:16px;}
+    }
+  </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -84,100 +102,126 @@ canvas{
 const canvas = document.getElementById("gauge");
 const ctx = canvas.getContext("2d");
 
-const cx = canvas.width/2;
-const cy = canvas.height/2;
-const r = 110;
+const cx = canvas.width / 2;
+const cy = canvas.height / 2;
+const r  = 110;
 
 const min = 2.8;
 const max = 5.0;
 
-// ⚠️ NON TOCCO PIÙ QUESTA (scala giusta)
-const startAngle = -135;
-const endAngle = 135;
+/* SCALA APPROVATA */
+const startAngle = 135;
+const endAngle   = 405;
 
 const value = 3.5;
 
-function toRad(deg){ return deg*Math.PI/180; }
+function toRad(deg){
+  return deg * Math.PI / 180;
+}
 
 function valueToAngle(v){
-  const ratio = (v-min)/(max-min);
-  return toRad(startAngle + ratio*(endAngle-startAngle));
+  const ratio = (v - min) / (max - min);
+  return toRad(startAngle + ratio * (endAngle - startAngle));
+}
+
+function drawLine(x1,y1,x2,y2,width,color){
+  ctx.beginPath();
+  ctx.moveTo(x1,y1);
+  ctx.lineTo(x2,y2);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineCap = "round";
+  ctx.stroke();
 }
 
 function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  ctx.clearRect(0,0,300,300);
-
-  // base nera
-  const grad = ctx.createRadialGradient(cx,cy,20,cx,cy,r);
-  grad.addColorStop(0,"#0a0a0a");
-  grad.addColorStop(1,"#000");
+  /* quadrante nero */
+  const faceGrad = ctx.createRadialGradient(cx, cy, 20, cx, cy, r);
+  faceGrad.addColorStop(0, "#111");
+  faceGrad.addColorStop(1, "#000");
   ctx.beginPath();
-  ctx.arc(cx,cy,r,0,Math.PI*2);
-  ctx.fillStyle=grad;
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.fillStyle = faceGrad;
   ctx.fill();
 
-  // vetro riflesso
+  /* riflesso vetro */
   ctx.beginPath();
-  ctx.ellipse(cx-30,cy-40,60,30,0,0,Math.PI*2);
-  ctx.fillStyle="rgba(255,255,255,0.05)";
+  ctx.ellipse(cx - 28, cy - 42, 58, 28, -0.2, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(255,255,255,0.05)";
   ctx.fill();
 
-  // arco scala
+  /* arco scala */
   ctx.beginPath();
-  ctx.arc(cx,cy,r-10,toRad(startAngle),toRad(endAngle));
-  ctx.strokeStyle="#e6dcc5";
-  ctx.lineWidth=6;
-  ctx.lineCap="round";
+  ctx.arc(cx, cy, r - 10, toRad(startAngle), toRad(endAngle));
+  ctx.strokeStyle = "#e6dcc5";
+  ctx.lineWidth = 6;
+  ctx.lineCap = "round";
   ctx.stroke();
 
-  // tacche
-  for(let i=0;i<=20;i++){
-    let a = toRad(startAngle + i*(endAngle-startAngle)/20);
+  /* tacche */
+  for(let i = 0; i <= 20; i++){
+    const angle = toRad(startAngle + i * (endAngle - startAngle) / 20);
+    const isMajor = i % 5 === 0;
+    const inner = isMajor ? r - 24 : r - 18;
+    const outer = r - 10;
 
-    ctx.beginPath();
-    ctx.moveTo(cx+(r-20)*Math.cos(a),cy+(r-20)*Math.sin(a));
-    ctx.lineTo(cx+(r-10)*Math.cos(a),cy+(r-10)*Math.sin(a));
-
-    ctx.strokeStyle="#e6dcc5";
-    ctx.lineWidth = (i%5===0)?5:2;
-    ctx.stroke();
+    drawLine(
+      cx + inner * Math.cos(angle),
+      cy + inner * Math.sin(angle),
+      cx + outer * Math.cos(angle),
+      cy + outer * Math.sin(angle),
+      isMajor ? 5 : 2.5,
+      "#e6dcc5"
+    );
   }
 
-  // numeri
-  [2.8,3.5,4.2,5.0].forEach(v=>{
-    let a = valueToAngle(v);
+  /* numeri corretti */
+  const labels = [
+    { value: 2.8, radius: r - 28, dx: -2, dy:  8 },
+    { value: 3.5, radius: r - 34, dx:  0, dy: -8 },
+    { value: 4.2, radius: r - 34, dx:  0, dy: -8 },
+    { value: 5.0, radius: r - 28, dx:  2, dy:  8 }
+  ];
 
-    ctx.fillStyle="#e6dcc5";
-    ctx.font="bold 16px Arial";
-    ctx.textAlign="center";
+  ctx.fillStyle = "#e6dcc5";
+  ctx.font = "bold 16px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
 
-    ctx.fillText(v,cx+(r-38)*Math.cos(a),cy+(r-38)*Math.sin(a)+5);
+  labels.forEach(label => {
+    const a = valueToAngle(label.value);
+    const x = cx + label.radius * Math.cos(a) + label.dx;
+    const y = cy + label.radius * Math.sin(a) + label.dy;
+    const text = label.value === 5.0 ? "5.0" : label.value.toFixed(1);
+    ctx.fillText(text, x, y);
   });
 
-  // lancetta glow
-  let a = valueToAngle(value);
+  /* glow lancetta */
+  const a = valueToAngle(value);
+  ctx.shadowColor = "#ff3b3b";
+  ctx.shadowBlur = 10;
 
-  ctx.shadowColor="#ff3b3b";
-  ctx.shadowBlur=10;
+  drawLine(
+    cx,
+    cy,
+    cx + (r - 30) * Math.cos(a),
+    cy + (r - 30) * Math.sin(a),
+    5,
+    "#ff3b3b"
+  );
+
+  ctx.shadowBlur = 0;
+
+  /* centro metallico */
+  const metal = ctx.createRadialGradient(cx - 2, cy - 2, 2, cx, cy, 10);
+  metal.addColorStop(0, "#fff");
+  metal.addColorStop(1, "#777");
 
   ctx.beginPath();
-  ctx.moveTo(cx,cy);
-  ctx.lineTo(cx+(r-30)*Math.cos(a),cy+(r-30)*Math.sin(a));
-  ctx.strokeStyle="#ff3b3b";
-  ctx.lineWidth=5;
-  ctx.stroke();
-
-  ctx.shadowBlur=0;
-
-  // centro metallico
-  const metal = ctx.createRadialGradient(cx,cy,2,cx,cy,10);
-  metal.addColorStop(0,"#fff");
-  metal.addColorStop(1,"#777");
-
-  ctx.beginPath();
-  ctx.arc(cx,cy,9,0,Math.PI*2);
-  ctx.fillStyle=metal;
+  ctx.arc(cx, cy, 9, 0, Math.PI * 2);
+  ctx.fillStyle = metal;
   ctx.fill();
 }
 
