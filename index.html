@@ -35,7 +35,7 @@
     }
 
     .app{
-      max-width:960px;
+      max-width:1080px;
       margin:0 auto;
     }
 
@@ -315,7 +315,8 @@
     .chart-card,
     .measurements,
     .process-card,
-    .templates-card{
+    .templates-card,
+    .additions-card{
       background:
         linear-gradient(180deg, rgba(130,147,163,.12), rgba(47,58,68,.08)),
         linear-gradient(180deg, #09111a 0%, #060d15 100%);
@@ -335,7 +336,8 @@
     .batch-card,
     .detail-card,
     .process-card,
-    .templates-card{
+    .templates-card,
+    .additions-card{
       padding:18px;
       margin-bottom:14px;
     }
@@ -428,7 +430,8 @@
     .templates-title,
     .chart-title,
     .measurements-title,
-    .process-title{
+    .process-title,
+    .additions-title{
       font-size:12px;
       color:var(--muted);
       text-transform:uppercase;
@@ -511,20 +514,30 @@
       line-height:1.35;
     }
 
-    .m-row{
+    .m-row,
+    .a-row{
       display:grid;
-      grid-template-columns:70px 1fr 1fr 1fr 1fr;
       gap:8px;
       padding:10px 0;
       border-bottom:1px solid rgba(255,255,255,.06);
       font-size:14px;
     }
 
-    .m-row:last-child{
+    .m-row{
+      grid-template-columns:70px 1fr 1fr 1fr 1fr;
+    }
+
+    .a-row{
+      grid-template-columns:60px 1fr 1fr 1fr 1fr 1.3fr;
+    }
+
+    .m-row:last-child,
+    .a-row:last-child{
       border-bottom:none;
     }
 
-    .m-head{
+    .m-head,
+    .a-head{
       color:#dfeaf5;
       font-weight:700;
       font-size:12px;
@@ -534,6 +547,12 @@
 
     .m-muted{
       color:var(--muted);
+    }
+
+    @media (max-width:900px){
+      .a-row{
+        grid-template-columns:60px 1fr 1fr 1fr 1fr 1fr;
+      }
     }
 
     @media (max-width:700px){
@@ -578,6 +597,11 @@
 
       .m-row{
         grid-template-columns:58px 1fr 1fr 1fr 1fr;
+        font-size:13px;
+      }
+
+      .a-row{
+        grid-template-columns:58px 1fr 1fr 1fr 1fr 1fr;
         font-size:13px;
       }
 
@@ -640,6 +664,7 @@
         addMeasurement: "+ Add Measurement",
         editBatch: "Edit Batch",
         deleteBatch: "Delete Batch",
+        addAddition: "+ Add Addition",
         labCharts: "Lab Charts",
         phTrend: "pH trend",
         gravityTrend: "Gravity trend",
@@ -655,6 +680,12 @@
         botanicals: "Botanicals",
         dryAdjunct: "Dry Adjunct",
         otherAdditions: "Other Additions",
+        additionsLog: "Additions Log",
+        additionType: "Addition Type",
+        ingredient: "Ingredient",
+        quantity: "Quantity",
+        stage: "Stage",
+        notes: "Notes",
         dailyMeasurements: "Daily Measurements",
         pressure: "Pressure",
         type: "Type",
@@ -688,6 +719,12 @@
         gravityPrompt: "Gravity:",
         tempPrompt: "Temperature °C:",
         pressurePrompt: "Pressure bar:",
+        additionDayPrompt: "Addition day:",
+        additionTypePrompt: "Addition type (sugar, fruit, botanicals, dry adjunct...):",
+        additionIngredientPrompt: "Ingredient:",
+        additionQuantityPrompt: "Quantity:",
+        additionStagePrompt: "Process stage (primary, secondary, dry adjunct, priming...):",
+        additionNotesPrompt: "Notes (optional):",
         editNamePrompt: "Batch name:",
         editTypePrompt: "Type:",
         editCulturePrompt: "Culture:",
@@ -704,6 +741,7 @@
         editProcessNotesPrompt: "Process notes:",
         editSensoryNotesPrompt: "Sensory notes:",
         noMeasurements: "No measurements yet.",
+        noAdditions: "No additions logged yet.",
         templates: "Recipes / Templates",
         useButtons: "Use the buttons inside each batch to add measurements, edit or delete",
         ciderBase: "Cider Base",
@@ -742,6 +780,7 @@
         addMeasurement: "+ Aggiungi Misura",
         editBatch: "Modifica Lotto",
         deleteBatch: "Elimina Lotto",
+        addAddition: "+ Aggiungi Aggiunta",
         labCharts: "Grafici Lab",
         phTrend: "andamento pH",
         gravityTrend: "andamento densità",
@@ -757,6 +796,12 @@
         botanicals: "Botaniche",
         dryAdjunct: "Dry Adjunct",
         otherAdditions: "Altre Aggiunte",
+        additionsLog: "Registro Aggiunte",
+        additionType: "Tipo Aggiunta",
+        ingredient: "Ingrediente",
+        quantity: "Quantità",
+        stage: "Fase",
+        notes: "Note",
         dailyMeasurements: "Misurazioni Giornaliere",
         pressure: "Pressione",
         type: "Tipo",
@@ -790,6 +835,12 @@
         gravityPrompt: "Densità:",
         tempPrompt: "Temperatura °C:",
         pressurePrompt: "Pressione bar:",
+        additionDayPrompt: "Giorno aggiunta:",
+        additionTypePrompt: "Tipo aggiunta (zucchero, frutta, botaniche, dry adjunct...):",
+        additionIngredientPrompt: "Ingrediente:",
+        additionQuantityPrompt: "Quantità:",
+        additionStagePrompt: "Fase processo (primaria, secondaria, dry adjunct, priming...):",
+        additionNotesPrompt: "Note (opzionale):",
         editNamePrompt: "Nome lotto:",
         editTypePrompt: "Tipo:",
         editCulturePrompt: "Coltura:",
@@ -806,6 +857,7 @@
         editProcessNotesPrompt: "Note di processo:",
         editSensoryNotesPrompt: "Note sensoriali:",
         noMeasurements: "Nessuna misurazione ancora.",
+        noAdditions: "Nessuna aggiunta registrata ancora.",
         templates: "Ricette / Template",
         useButtons: "Usa i pulsanti dentro ogni lotto per aggiungere misure, modificare o eliminare",
         ciderBase: "Sidro Base",
@@ -900,6 +952,7 @@
       if(!b.targetPressure) b.targetPressure = "-";
       if(!b.processNotes) b.processNotes = "-";
       if(!b.sensoryNotes) b.sensoryNotes = "-";
+      if(!Array.isArray(b.additionsLog)) b.additionsLog = [];
     }
 
     function getMeasurements(b){
@@ -1042,6 +1095,41 @@
       return html;
     }
 
+    function additionsTable(b){
+      ensureBatchFields(b);
+      const list = [...b.additionsLog].reverse();
+
+      if(list.length === 0){
+        return `<div class="m-muted">${t("noAdditions")}</div>`;
+      }
+
+      let html = `
+        <div class="a-row a-head">
+          <div>${t("day")}</div>
+          <div>${t("additionType")}</div>
+          <div>${t("ingredient")}</div>
+          <div>${t("quantity")}</div>
+          <div>${t("stage")}</div>
+          <div>${t("notes")}</div>
+        </div>
+      `;
+
+      list.forEach(a => {
+        html += `
+          <div class="a-row">
+            <div>${formatValue(a.day)}</div>
+            <div>${formatValue(a.type)}</div>
+            <div>${formatValue(a.ingredient)}</div>
+            <div>${formatValue(a.quantity)}</div>
+            <div>${formatValue(a.stage)}</div>
+            <div>${formatValue(a.notes)}</div>
+          </div>
+        `;
+      });
+
+      return html;
+    }
+
     function getTopBatch(){
       if(selectedBatchIndex !== null && batches[selectedBatchIndex]){
         return batches[selectedBatchIndex];
@@ -1072,6 +1160,7 @@
           sensoryNotes: appLang === "it" ? "Profilo fresco, mela pulita." : "Fresh profile, clean apple.",
           og: "1.045",
           createdAt,
+          additionsLog: [],
           measurements: [{
             day: 1,
             ph: "3.50",
@@ -1101,6 +1190,7 @@
           sensoryNotes: appLang === "it" ? "Acidità equilibrata." : "Balanced acidity.",
           og: "1.030",
           createdAt,
+          additionsLog: [],
           measurements: [{
             day: 1,
             ph: "4.20",
@@ -1130,6 +1220,7 @@
           sensoryNotes: appLang === "it" ? "Acido, pulito, elegante." : "Acidic, clean, elegant.",
           og: "1.040",
           createdAt,
+          additionsLog: [],
           measurements: [{
             day: 1,
             ph: "3.80",
@@ -1159,6 +1250,7 @@
           sensoryNotes: appLang === "it" ? "Complessità fermentativa." : "Fermentative complexity.",
           og: "1.042",
           createdAt,
+          additionsLog: [],
           measurements: [{
             day: 1,
             ph: "3.90",
@@ -1385,7 +1477,11 @@
 
           <div class="detail-actions">
             <button class="small-btn" onclick="addMeasurement(${i})">${t("addMeasurement")}</button>
+            <button class="small-btn" onclick="addAddition(${i})">${t("addAddition")}</button>
             <button class="small-btn" onclick="editBatch(${i})">${t("editBatch")}</button>
+          </div>
+
+          <div class="detail-actions" style="margin-top:-4px;">
             <button class="small-btn" onclick="deleteBatch(${i})">${t("deleteBatch")}</button>
           </div>
 
@@ -1461,6 +1557,11 @@
                 <div class="process-value">${formatValue(b.sensoryNotes)}</div>
               </div>
             </div>
+          </div>
+
+          <div class="additions-card">
+            <div class="additions-title">${t("additionsLog")}</div>
+            ${additionsTable(b)}
           </div>
 
           <div class="measurements">
@@ -1575,6 +1676,7 @@
         sensoryNotes,
         og,
         createdAt,
+        additionsLog: [],
         measurements: [{
           day: 1,
           ph,
@@ -1607,6 +1709,31 @@
         gravity,
         temp,
         pressure,
+        createdAt: new Date().toISOString()
+      });
+
+      save();
+      render();
+    }
+
+    function addAddition(i){
+      const b = batches[i];
+      ensureBatchFields(b);
+
+      const day = prompt(t("additionDayPrompt"), String(getDay(b))) || String(getDay(b));
+      const type = prompt(t("additionTypePrompt")) || "-";
+      const ingredient = prompt(t("additionIngredientPrompt")) || "-";
+      const quantity = prompt(t("additionQuantityPrompt")) || "-";
+      const stage = prompt(t("additionStagePrompt")) || "-";
+      const notes = prompt(t("additionNotesPrompt")) || "-";
+
+      b.additionsLog.push({
+        day,
+        type,
+        ingredient,
+        quantity,
+        stage,
+        notes,
         createdAt: new Date().toISOString()
       });
 
