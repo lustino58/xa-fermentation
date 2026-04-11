@@ -6,34 +6,49 @@
   <title>XA Fermentation</title>
   <style>
     :root{
-      --bg:#071629;
-      --panel:#0d1b2b;
-      --panel-2:#102235;
-      --ring:#cfd6dd;
-      --ring-dark:#66707a;
-      --face:#0b1016;
-      --face-2:#151c24;
-      --tick:#d8d0b5;
-      --text:#f4f6f8;
-      --muted:#9aa7b3;
-      --needle:#e13333;
-      --needle-hi:#ffb0b0;
-      --accent:#8ec5ff;
+      --bg1:#071629;
+      --bg2:#081b2f;
+      --card1:#10243a;
+      --card2:#0b1b2c;
+      --stroke:rgba(255,255,255,.06);
+      --text:#f4f7fb;
+      --muted:#95a8bb;
+
+      --ring1:#eef3f7;
+      --ring2:#9ca8b3;
+      --ring3:#4d5863;
+      --ring4:#232830;
+
+      --face1:#202933;
+      --face2:#10161d;
+      --face3:#05070a;
+
+      --scale:#d8d0b5;
+      --accent:#9ad6ff;
+      --accentGlow:rgba(154,214,255,.28);
+
+      --needle:#e33a3a;
+      --needleHi:#ffd0d0;
+      --needleGlow:rgba(227,58,58,.35);
+
+      --hub1:#ffffff;
+      --hub2:#b8c1ca;
+      --hub3:#4f5a65;
     }
 
     *{
       box-sizing:border-box;
-      -webkit-tap-highlight-color: transparent;
+      -webkit-tap-highlight-color:transparent;
     }
 
-    html, body{
+    html,body{
       margin:0;
       min-height:100vh;
-      background:
-        radial-gradient(circle at top, rgba(40,90,150,.18), transparent 28%),
-        linear-gradient(180deg, #071629 0%, #061322 100%);
+      font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
-      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(70,130,210,.16), transparent 28%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
     }
 
     body{
@@ -43,7 +58,7 @@
     }
 
     .app{
-      width:min(430px, 100%);
+      width:min(430px,100%);
       text-align:center;
     }
 
@@ -51,19 +66,18 @@
       font-size:28px;
       letter-spacing:2px;
       margin:8px 0 18px;
-      color:var(--text);
     }
 
     .card{
+      border-radius:30px;
+      padding:22px 16px 24px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)),
-        linear-gradient(180deg, var(--panel-2), var(--panel));
-      border:1px solid rgba(255,255,255,.05);
-      border-radius:28px;
-      padding:22px 14px 22px;
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        linear-gradient(180deg, var(--card1), var(--card2));
+      border:1px solid var(--stroke);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.05),
-        0 18px 36px rgba(0,0,0,.35);
+        inset 0 1px 0 rgba(255,255,255,.04),
+        0 18px 36px rgba(0,0,0,.32);
     }
 
     .gauge-wrap{
@@ -76,22 +90,41 @@
       width:100%;
       height:auto;
       display:block;
-      filter: drop-shadow(0 18px 24px rgba(0,0,0,.35));
+      filter:drop-shadow(0 16px 24px rgba(0,0,0,.34));
     }
 
     .value{
       margin-top:14px;
-      font-size:64px;
+      font-size:66px;
       line-height:1;
       font-weight:300;
       letter-spacing:1px;
-      color:var(--text);
     }
 
     .sub{
       margin-top:10px;
       font-size:18px;
       color:var(--muted);
+    }
+
+    .unit-label{
+      font-size:14px;
+      fill:rgba(255,255,255,.82);
+      letter-spacing:2px;
+      font-weight:700;
+    }
+
+    .tick{
+      stroke:var(--scale);
+      stroke-linecap:round;
+    }
+
+    .num{
+      fill:var(--scale);
+      font-size:18px;
+      font-weight:700;
+      text-anchor:middle;
+      dominant-baseline:middle;
     }
 
     @media (max-width:480px){
@@ -107,26 +140,25 @@
 
     <div class="card">
       <div class="gauge-wrap">
-        <svg class="gauge" viewBox="0 0 400 400" aria-hidden="true">
+        <svg class="gauge" id="gauge" viewBox="0 0 400 320" aria-hidden="true">
           <defs>
-            <radialGradient id="ringGrad" cx="32%" cy="28%">
-              <stop offset="0%" stop-color="#eef2f5"/>
-              <stop offset="28%" stop-color="var(--ring)"/>
-              <stop offset="72%" stop-color="var(--ring-dark)"/>
-              <stop offset="100%" stop-color="#2b3138"/>
+            <radialGradient id="ringGrad" cx="30%" cy="26%">
+              <stop offset="0%" stop-color="var(--ring1)"/>
+              <stop offset="32%" stop-color="var(--ring2)"/>
+              <stop offset="72%" stop-color="var(--ring3)"/>
+              <stop offset="100%" stop-color="var(--ring4)"/>
             </radialGradient>
 
             <radialGradient id="faceGrad" cx="45%" cy="38%">
-              <stop offset="0%" stop-color="#202a35"/>
-              <stop offset="45%" stop-color="var(--face-2)"/>
-              <stop offset="100%" stop-color="var(--face)"/>
+              <stop offset="0%" stop-color="var(--face1)"/>
+              <stop offset="56%" stop-color="var(--face2)"/>
+              <stop offset="100%" stop-color="var(--face3)"/>
             </radialGradient>
 
             <radialGradient id="hubGrad" cx="35%" cy="35%">
-              <stop offset="0%" stop-color="#ffffff"/>
-              <stop offset="35%" stop-color="#d7dde4"/>
-              <stop offset="75%" stop-color="#8d98a2"/>
-              <stop offset="100%" stop-color="#525a63"/>
+              <stop offset="0%" stop-color="var(--hub1)"/>
+              <stop offset="38%" stop-color="var(--hub2)"/>
+              <stop offset="100%" stop-color="var(--hub3)"/>
             </radialGradient>
 
             <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
@@ -136,89 +168,224 @@
             <filter id="needleShadow" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur stdDeviation="2.2"/>
             </filter>
+
+            <filter id="blueGlow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="6"/>
+            </filter>
           </defs>
 
           <!-- ombra -->
-          <ellipse cx="200" cy="206" rx="136" ry="136" fill="rgba(0,0,0,.35)" filter="url(#shadow)"/>
+          <ellipse cx="200" cy="206" rx="138" ry="138" fill="rgba(0,0,0,.34)" filter="url(#shadow)"/>
 
           <!-- ghiera -->
-          <circle cx="200" cy="190" r="148" fill="url(#ringGrad)"/>
+          <circle cx="200" cy="190" r="150" fill="url(#ringGrad)"/>
 
           <!-- quadrante -->
-          <circle cx="200" cy="190" r="124" fill="#0b1016"/>
-          <circle cx="200" cy="190" r="120" fill="url(#faceGrad)"/>
-          <circle cx="200" cy="190" r="119" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.2"/>
-
-          <!-- arco principale -->
-          <path
-            d="M 88 246 A 116 116 0 0 1 312 246"
-            fill="none"
-            stroke="var(--tick)"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
-
-          <!-- tacche -->
-          <g stroke="var(--tick)" stroke-width="5" stroke-linecap="round">
-            <line x1="95"  y1="241" x2="76"  y2="255"/>
-            <line x1="128" y1="203" x2="111" y2="191"/>
-            <line x1="171" y1="180" x2="164" y2="158"/>
-            <line x1="200" y1="174" x2="200" y2="150"/>
-            <line x1="229" y1="180" x2="236" y2="158"/>
-            <line x1="272" y1="203" x2="289" y2="191"/>
-            <line x1="305" y1="241" x2="324" y2="255"/>
-          </g>
-
-          <!-- numeri -->
-          <g fill="var(--tick)" font-size="18" font-weight="700" text-anchor="middle">
-            <text x="96"  y="278">2.8</text>
-            <text x="150" y="154">3.5</text>
-            <text x="250" y="154">4.2</text>
-            <text x="304" y="278">5.0</text>
-          </g>
-
-          <!-- sottile arco accent -->
-          <path
-            d="M 129 170 A 80 80 0 0 1 271 170"
-            fill="none"
-            stroke="rgba(142,197,255,.18)"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-
-          <!-- ombra lancetta -->
-          <g transform="rotate(34 200 190)">
-            <polygon
-              points="196,190 204,190 202,86 198,86"
-              fill="rgba(0,0,0,.45)"
-              filter="url(#needleShadow)"
-              transform="translate(3,2)"
-            />
-          </g>
-
-          <!-- lancetta -->
-          <g transform="rotate(34 200 190)">
-            <polygon points="194,190 206,190 202,88 198,88" fill="var(--needle)"/>
-            <rect x="199.15" y="92" width="1.7" height="90" rx="0.85" fill="var(--needle-hi)" opacity=".78"/>
-          </g>
-
-          <!-- base -->
-          <circle cx="200" cy="190" r="34" fill="#171d24"/>
-
-          <!-- perno -->
-          <circle cx="200" cy="190" r="28" fill="url(#hubGrad)"/>
-          <circle cx="200" cy="190" r="28" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-          <circle cx="200" cy="190" r="8" fill="rgba(255,255,255,.20)"/>
+          <circle cx="200" cy="190" r="126" fill="#0d1319"/>
+          <circle cx="200" cy="190" r="122" fill="url(#faceGrad)"/>
+          <circle cx="200" cy="190" r="121" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.2"/>
 
           <!-- riflessi vetro -->
-          <ellipse cx="148" cy="116" rx="52" ry="16" fill="rgba(255,255,255,.13)" transform="rotate(-18 148 116)"/>
+          <ellipse cx="148" cy="116" rx="52" ry="16" fill="rgba(255,255,255,.12)" transform="rotate(-18 148 116)"/>
           <ellipse cx="258" cy="266" rx="22" ry="7" fill="rgba(255,255,255,.05)" transform="rotate(20 258 266)"/>
+
+          <!-- gruppi dinamici -->
+          <g id="glowArc"></g>
+          <g id="baseArc"></g>
+          <g id="ticks"></g>
+          <g id="numbers"></g>
+          <g id="needleShadowGroup"></g>
+          <g id="needleGroup"></g>
+
+          <!-- mozzo -->
+          <circle cx="200" cy="190" r="34" fill="#151b22"/>
+          <circle cx="200" cy="190" r="28" fill="url(#hubGrad)"/>
+          <circle cx="200" cy="190" r="28" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+          <circle cx="200" cy="190" r="8" fill="rgba(255,255,255,.18)"/>
+
+          <text x="200" y="72" class="unit-label" text-anchor="middle">PH</text>
         </svg>
       </div>
 
-      <div class="value">3.50</div>
+      <div class="value" id="valueText">3.50</div>
       <div class="sub">ultima misurazione</div>
     </div>
   </div>
+
+  <script>
+    const config = {
+      min: 2.8,
+      max: 5.0,
+      value: 3.50,
+      numbers: [2.8, 3.5, 4.2, 5.0],
+
+      cx: 200,
+      cy: 190,
+
+      arcRadius: 118,
+      tickOuter: 118,
+      tickInnerMinor: 100,
+      tickInnerMajor: 93,
+      numberRadius: 142,
+
+      startAngle: -150,
+      endAngle: -30,
+
+      needleLength: 94,
+      needleBaseHalf: 6
+    };
+
+    const svgNS = "http://www.w3.org/2000/svg";
+
+    function polarToCartesian(cx, cy, r, angleDeg) {
+      const rad = (angleDeg - 90) * Math.PI / 180;
+      return {
+        x: cx + r * Math.cos(rad),
+        y: cy + r * Math.sin(rad)
+      };
+    }
+
+    function valueToAngle(value) {
+      const ratio = (value - config.min) / (config.max - config.min);
+      return config.startAngle + ratio * (config.endAngle - config.startAngle);
+    }
+
+    function arcPath(cx, cy, r, startAngle, endAngle) {
+      const start = polarToCartesian(cx, cy, r, endAngle);
+      const end = polarToCartesian(cx, cy, r, startAngle);
+      const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+      return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`;
+    }
+
+    function createSVG(tag, attrs = {}) {
+      const el = document.createElementNS(svgNS, tag);
+      for (const [k, v] of Object.entries(attrs)) {
+        el.setAttribute(k, v);
+      }
+      return el;
+    }
+
+    function drawGauge() {
+      const glowArc = document.getElementById("glowArc");
+      const baseArc = document.getElementById("baseArc");
+      const ticks = document.getElementById("ticks");
+      const numbers = document.getElementById("numbers");
+      const needleShadowGroup = document.getElementById("needleShadowGroup");
+      const needleGroup = document.getElementById("needleGroup");
+      const valueText = document.getElementById("valueText");
+
+      glowArc.innerHTML = "";
+      baseArc.innerHTML = "";
+      ticks.innerHTML = "";
+      numbers.innerHTML = "";
+      needleShadowGroup.innerHTML = "";
+      needleGroup.innerHTML = "";
+
+      valueText.textContent = config.value.toFixed(2);
+
+      const arcGlow = createSVG("path", {
+        d: arcPath(config.cx, config.cy, config.arcRadius, config.startAngle, config.endAngle),
+        fill: "none",
+        stroke: "rgba(154,214,255,.28)",
+        "stroke-width": "14",
+        "stroke-linecap": "round",
+        filter: "url(#blueGlow)",
+        opacity: ".55"
+      });
+
+      const arcBase = createSVG("path", {
+        d: arcPath(config.cx, config.cy, config.arcRadius, config.startAngle, config.endAngle),
+        fill: "none",
+        stroke: "#d8d0b5",
+        "stroke-width": "4",
+        "stroke-linecap": "round"
+      });
+
+      glowArc.appendChild(arcGlow);
+      baseArc.appendChild(arcBase);
+
+      const majorValues = [config.min, 3.5, 3.9, 4.2, config.max];
+      const minorCount = 2;
+
+      for (let i = 0; i < majorValues.length; i++) {
+        const majorAngle = valueToAngle(majorValues[i]);
+        const majorOuter = polarToCartesian(config.cx, config.cy, config.tickOuter, majorAngle);
+        const majorInner = polarToCartesian(config.cx, config.cy, config.tickInnerMajor, majorAngle);
+
+        ticks.appendChild(createSVG("line", {
+          x1: majorOuter.x,
+          y1: majorOuter.y,
+          x2: majorInner.x,
+          y2: majorInner.y,
+          class: "tick",
+          "stroke-width": "5"
+        }));
+
+        if (i < majorValues.length - 1) {
+          const next = majorValues[i + 1];
+          for (let m = 1; m <= minorCount; m++) {
+            const val = majorValues[i] + (next - majorValues[i]) * (m / (minorCount + 1));
+            const ang = valueToAngle(val);
+            const outer = polarToCartesian(config.cx, config.cy, config.tickOuter, ang);
+            const inner = polarToCartesian(config.cx, config.cy, config.tickInnerMinor, ang);
+
+            ticks.appendChild(createSVG("line", {
+              x1: outer.x,
+              y1: outer.y,
+              x2: inner.x,
+              y2: inner.y,
+              class: "tick",
+              "stroke-width": "4"
+            }));
+          }
+        }
+      }
+
+      config.numbers.forEach((num) => {
+        const ang = valueToAngle(num);
+        const pos = polarToCartesian(config.cx, config.cy, config.numberRadius, ang);
+
+        const text = createSVG("text", {
+          x: pos.x,
+          y: pos.y,
+          class: "num"
+        });
+        text.textContent = num.toFixed(1);
+        numbers.appendChild(text);
+      });
+
+      const angle = valueToAngle(config.value);
+
+      const shadow = createSVG("g", {
+        transform: `rotate(${angle} ${config.cx} ${config.cy}) translate(3 2)`,
+        filter: "url(#needleShadow)"
+      });
+      shadow.appendChild(createSVG("polygon", {
+        points: `${config.cx - 4},${config.cy} ${config.cx + 4},${config.cy} ${config.cx + 2},${config.cy - config.needleLength} ${config.cx - 2},${config.cy - config.needleLength}`,
+        fill: "rgba(0,0,0,.42)"
+      }));
+      needleShadowGroup.appendChild(shadow);
+
+      const needle = createSVG("g", {
+        transform: `rotate(${angle} ${config.cx} ${config.cy})`
+      });
+      needle.appendChild(createSVG("polygon", {
+        points: `${config.cx - config.needleBaseHalf},${config.cy} ${config.cx + config.needleBaseHalf},${config.cy} ${config.cx + 2},${config.cy - config.needleLength} ${config.cx - 2},${config.cy - config.needleLength}`,
+        fill: "#e33a3a"
+      }));
+      needle.appendChild(createSVG("rect", {
+        x: config.cx - 0.8,
+        y: config.cy - config.needleLength + 6,
+        width: 1.6,
+        height: config.needleLength - 12,
+        rx: 0.8,
+        fill: "#ffd0d0",
+        opacity: ".82"
+      }));
+      needleGroup.appendChild(needle);
+    }
+
+    drawGauge();
+  </script>
 </body>
 </html>
