@@ -14,8 +14,6 @@
       --green:#62f2a2;
       --orange:#ffb25c;
       --purple:#c17aff;
-      --red:#ff7e7e;
-      --yellow:#ffd36b;
       --panel:#0b1218;
       --panel2:#081018;
     }
@@ -37,8 +35,27 @@
     }
 
     .app{
-      max-width:900px;
+      max-width:960px;
       margin:0 auto;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:flex-end;
+      margin-bottom:12px;
+    }
+
+    .lang-btn{
+      border:none;
+      border-radius:16px;
+      padding:10px 14px;
+      font-size:14px;
+      color:#eef6fd;
+      cursor:pointer;
+      background:
+        linear-gradient(180deg, rgba(155,173,190,.18), rgba(42,61,78,.14)),
+        linear-gradient(180deg, #3d5f7d, #2b445a);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.10), 0 0 12px rgba(70,140,220,.16);
     }
 
     .hero{
@@ -293,7 +310,8 @@
     .batch-card,
     .detail-card,
     .chart-card,
-    .measurements{
+    .measurements,
+    .process-card{
       background:
         linear-gradient(180deg, rgba(130,147,163,.12), rgba(47,58,68,.08)),
         linear-gradient(180deg, #09111a 0%, #060d15 100%);
@@ -311,7 +329,8 @@
     }
 
     .batch-card,
-    .detail-card{
+    .detail-card,
+    .process-card{
       padding:18px;
       margin-bottom:14px;
     }
@@ -381,14 +400,16 @@
       background:linear-gradient(180deg, rgba(58,110,170,.24), rgba(29,57,94,.20));
     }
 
-    .metrics{
+    .metrics,
+    .process-grid{
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:12px;
       margin-bottom:14px;
     }
 
-    .metric{
+    .metric,
+    .process-item{
       background:linear-gradient(180deg, #0f1822 0%, #0a121a 100%);
       border:1px solid rgba(143,164,182,.09);
       border-radius:18px;
@@ -396,7 +417,8 @@
       min-height:84px;
     }
 
-    .metric-label{
+    .metric-label,
+    .process-label{
       font-size:12px;
       color:var(--muted);
       text-transform:uppercase;
@@ -404,9 +426,13 @@
       margin-bottom:8px;
     }
 
-    .metric-value{
+    .metric-value,
+    .process-value{
       font-size:20px;
       font-weight:700;
+      line-height:1.25;
+      white-space:pre-wrap;
+      word-break:break-word;
     }
 
     .actions{
@@ -430,7 +456,8 @@
     }
 
     .chart-title,
-    .measurements-title{
+    .measurements-title,
+    .process-title{
       font-size:12px;
       color:var(--muted);
       text-transform:uppercase;
@@ -532,17 +559,26 @@
         grid-template-columns:58px 1fr 1fr 1fr 1fr;
         font-size:13px;
       }
+
+      .metrics,
+      .process-grid{
+        grid-template-columns:1fr;
+      }
     }
   </style>
 </head>
 <body>
   <div class="app">
 
+    <div class="topbar">
+      <button class="lang-btn" onclick="toggleLanguage()" id="langButton">IT</button>
+    </div>
+
     <div class="hero">
       <div class="xa-logo">XA</div>
       <div class="hero-text">
         <h1>XA Fermentation</h1>
-        <p>Control panel for cider, tea ferments, lactic cultures and experimental batches</p>
+        <p id="heroSubtitle">Control panel for cider, tea ferments, lactic cultures and experimental batches</p>
       </div>
     </div>
 
@@ -553,6 +589,179 @@
   <script>
     let batches = JSON.parse(localStorage.getItem("batches")) || [];
     let selectedBatchIndex = null;
+    let appLang = localStorage.getItem("xa_lang") || "en";
+
+    const i18n = {
+      en: {
+        heroSubtitle: "Control panel for cider, tea ferments, lactic cultures and experimental batches",
+        ph: "pH",
+        gravity: "Gravity",
+        temp: "Temp",
+        batches: "Batches",
+        latestMeasurement: "latest measurement",
+        tempScale: "0–50°C scale",
+        stored: "stored",
+        newBatch: "+ New Batch",
+        tapBatchOpen: "Tap a batch card to open its dedicated page",
+        backArchive: "← Back to Archive",
+        dashboardSelected: "Dashboard now follows the selected batch",
+        archive: "Fermentation Archive",
+        noBatches: "No batches yet. Tap + New Batch to add your first fermentation.",
+        day: "Day",
+        culture: "Culture",
+        latestPh: "Latest pH",
+        latestGravity: "Latest Gravity",
+        batchDetail: "Batch Detail",
+        og: "OG",
+        abv: "ABV",
+        latestTemp: "Latest Temp",
+        latestPressure: "Latest Pressure",
+        addMeasurement: "+ Add Measurement",
+        editBatch: "Edit Batch",
+        deleteBatch: "Delete Batch",
+        labCharts: "Lab Charts",
+        phTrend: "pH trend",
+        gravityTrend: "Gravity trend",
+        processIngredients: "Process / Ingredients",
+        baseFermentable: "Base Fermentable",
+        liters: "Liters",
+        nutrients: "Nutrients",
+        targetPressure: "Target Pressure",
+        processNotes: "Process Notes",
+        sensoryNotes: "Sensory Notes",
+        dailyMeasurements: "Daily Measurements",
+        pressure: "Pressure",
+        type: "Type",
+        statusActive: "Active",
+        statusSlow: "Slow",
+        statusCritical: "Critical",
+        statusComplete: "Complete",
+        typeUnknown: "unknown",
+        writeAction: "Write:\n1 = edit batch\n2 = delete batch",
+        deleteConfirm: "Delete this batch?",
+        batchNamePrompt: "Batch name:",
+        typePrompt: "Type (cider, kombucha, lactic, mixed):",
+        culturePrompt: "Culture (yeast, kveik, L. plantarum, SCOBY...):",
+        basePrompt: "Base fermentable (apple juice, tea, wort...):",
+        litersPrompt: "Liters:",
+        nutrientsPrompt: "Nutrients (optional):",
+        initialPhPrompt: "Initial pH:",
+        initialGravityPrompt: "Initial Gravity:",
+        ogPrompt: "OG (optional):",
+        initialTempPrompt: "Initial Temperature °C (0-50):",
+        initialPressurePrompt: "Initial Pressure bar (optional):",
+        targetPressurePrompt: "Target pressure (optional):",
+        processNotesPrompt: "Process notes (optional):",
+        sensoryNotesPrompt: "Sensory notes (optional):",
+        dayNumberPrompt: "Day number:",
+        phPrompt: "pH:",
+        gravityPrompt: "Gravity:",
+        tempPrompt: "Temperature °C:",
+        pressurePrompt: "Pressure bar:",
+        editNamePrompt: "Batch name:",
+        editTypePrompt: "Type:",
+        editCulturePrompt: "Culture:",
+        editBasePrompt: "Base fermentable:",
+        editLitersPrompt: "Liters:",
+        editNutrientsPrompt: "Nutrients:",
+        editOGPrompt: "OG:",
+        editTargetPressurePrompt: "Target pressure:",
+        editProcessNotesPrompt: "Process notes:",
+        editSensoryNotesPrompt: "Sensory notes:",
+        noMeasurements: "No measurements yet.",
+        useButtons: "Use the buttons inside each batch to add measurements, edit or delete"
+      },
+      it: {
+        heroSubtitle: "Pannello di controllo per sidro, fermentati di tè, colture lattiche e lotti sperimentali",
+        ph: "pH",
+        gravity: "Densità",
+        temp: "Temp",
+        batches: "Lotti",
+        latestMeasurement: "ultima misurazione",
+        tempScale: "scala 0–50°C",
+        stored: "salvati",
+        newBatch: "+ Nuovo Lotto",
+        tapBatchOpen: "Tocca una card lotto per aprire la sua scheda dedicata",
+        backArchive: "← Torna all'Archivio",
+        dashboardSelected: "La dashboard ora segue il lotto selezionato",
+        archive: "Archivio Fermentazioni",
+        noBatches: "Nessun lotto ancora. Tocca + Nuovo Lotto per aggiungere la tua prima fermentazione.",
+        day: "Giorno",
+        culture: "Coltura",
+        latestPh: "Ultimo pH",
+        latestGravity: "Ultima Densità",
+        batchDetail: "Scheda Lotto",
+        og: "OG",
+        abv: "ABV",
+        latestTemp: "Ultima Temp",
+        latestPressure: "Ultima Pressione",
+        addMeasurement: "+ Aggiungi Misura",
+        editBatch: "Modifica Lotto",
+        deleteBatch: "Elimina Lotto",
+        labCharts: "Grafici Lab",
+        phTrend: "andamento pH",
+        gravityTrend: "andamento densità",
+        processIngredients: "Processo / Ingredienti",
+        baseFermentable: "Base Fermentabile",
+        liters: "Litri",
+        nutrients: "Nutrienti",
+        targetPressure: "Pressione Target",
+        processNotes: "Note di Processo",
+        sensoryNotes: "Note Sensoriali",
+        dailyMeasurements: "Misurazioni Giornaliere",
+        pressure: "Pressione",
+        type: "Tipo",
+        statusActive: "Attivo",
+        statusSlow: "Lento",
+        statusCritical: "Critico",
+        statusComplete: "Completo",
+        typeUnknown: "sconosciuto",
+        writeAction: "Scrivi:\n1 = modifica lotto\n2 = elimina lotto",
+        deleteConfirm: "Eliminare questo lotto?",
+        batchNamePrompt: "Nome lotto:",
+        typePrompt: "Tipo (sidro, kombucha, lattico, misto):",
+        culturePrompt: "Coltura (lievito, kveik, L. plantarum, SCOBY...):",
+        basePrompt: "Base fermentabile (succo di mela, tè, mosto...):",
+        litersPrompt: "Litri:",
+        nutrientsPrompt: "Nutrienti (opzionale):",
+        initialPhPrompt: "pH iniziale:",
+        initialGravityPrompt: "Densità iniziale:",
+        ogPrompt: "OG (opzionale):",
+        initialTempPrompt: "Temperatura iniziale °C (0-50):",
+        initialPressurePrompt: "Pressione iniziale bar (opzionale):",
+        targetPressurePrompt: "Pressione target (opzionale):",
+        processNotesPrompt: "Note di processo (opzionale):",
+        sensoryNotesPrompt: "Note sensoriali (opzionale):",
+        dayNumberPrompt: "Numero giorno:",
+        phPrompt: "pH:",
+        gravityPrompt: "Densità:",
+        tempPrompt: "Temperatura °C:",
+        pressurePrompt: "Pressione bar:",
+        editNamePrompt: "Nome lotto:",
+        editTypePrompt: "Tipo:",
+        editCulturePrompt: "Coltura:",
+        editBasePrompt: "Base fermentabile:",
+        editLitersPrompt: "Litri:",
+        editNutrientsPrompt: "Nutrienti:",
+        editOGPrompt: "OG:",
+        editTargetPressurePrompt: "Pressione target:",
+        editProcessNotesPrompt: "Note di processo:",
+        editSensoryNotesPrompt: "Note sensoriali:",
+        noMeasurements: "Nessuna misurazione ancora.",
+        useButtons: "Usa i pulsanti dentro ogni lotto per aggiungere misure, modificare o eliminare"
+      }
+    };
+
+    function t(key){
+      return (i18n[appLang] && i18n[appLang][key]) || key;
+    }
+
+    function toggleLanguage(){
+      appLang = appLang === "en" ? "it" : "en";
+      localStorage.setItem("xa_lang", appLang);
+      document.documentElement.lang = appLang;
+      render();
+    }
 
     function save(){
       localStorage.setItem("batches", JSON.stringify(batches));
@@ -612,7 +821,18 @@
       return Math.max(1, Math.floor(diff / 86400000) + 1);
     }
 
+    function ensureBatchFields(b){
+      if(!b.baseFermentable) b.baseFermentable = "-";
+      if(!b.liters) b.liters = "-";
+      if(!b.nutrients) b.nutrients = "-";
+      if(!b.targetPressure) b.targetPressure = "-";
+      if(!b.processNotes) b.processNotes = "-";
+      if(!b.sensoryNotes) b.sensoryNotes = "-";
+    }
+
     function getMeasurements(b){
+      ensureBatchFields(b);
+
       if(!Array.isArray(b.measurements)) b.measurements = [];
 
       if(b.measurements.length === 0){
@@ -660,17 +880,17 @@
       const temp = latest ? parseNum(latest.temp) : parseNum(b.temp);
       const ph = latest ? parseNum(latest.ph) : parseNum(b.ph);
 
-      if(temp !== null && (temp < 5 || temp > 40)) return { text:"Critical", cls:"status-critical" };
-      if(ph !== null && (ph < 2.8 || ph > 4.6)) return { text:"Critical", cls:"status-critical" };
+      if(temp !== null && (temp < 5 || temp > 40)) return { text:t("statusCritical"), cls:"status-critical" };
+      if(ph !== null && (ph < 2.8 || ph > 4.6)) return { text:t("statusCritical"), cls:"status-critical" };
 
       if(og !== null && current !== null){
         const diff = og - current;
-        if(diff >= 0.030) return { text:"Complete", cls:"status-complete" };
-        if(diff >= 0.010) return { text:"Active", cls:"status-active" };
-        return { text:"Slow", cls:"status-slow" };
+        if(diff >= 0.030) return { text:t("statusComplete"), cls:"status-complete" };
+        if(diff >= 0.010) return { text:t("statusActive"), cls:"status-active" };
+        return { text:t("statusSlow"), cls:"status-slow" };
       }
 
-      return { text:"Active", cls:"status-active" };
+      return { text:t("statusActive"), cls:"status-active" };
     }
 
     function makePath(points, width, height, minVal, maxVal){
@@ -710,9 +930,9 @@
       }
 
       return `
-        <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
-          <line x1="10" y1="10" x2="10" y2="${height-10}" stroke="rgba(255,255,255,.08)" />
-          <line x1="10" y1="${height-10}" x2="${width-10}" y2="${height-10}" stroke="rgba(255,255,255,.08)" />
+        <svg viewBox="0 0 280 120" preserveAspectRatio="none">
+          <line x1="10" y1="10" x2="10" y2="110" stroke="rgba(255,255,255,.08)" />
+          <line x1="10" y1="110" x2="270" y2="110" stroke="rgba(255,255,255,.08)" />
           <path d="${path}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
           ${dots}
         </svg>
@@ -722,16 +942,16 @@
     function measurementTable(b){
       const list = [...getMeasurements(b)].reverse();
       if(list.length === 0){
-        return `<div class="m-muted">No measurements yet.</div>`;
+        return `<div class="m-muted">${t("noMeasurements")}</div>`;
       }
 
       let html = `
         <div class="m-row m-head">
-          <div>Day</div>
-          <div>pH</div>
-          <div>Gravity</div>
-          <div>Temp</div>
-          <div>Pressure</div>
+          <div>${t("day")}</div>
+          <div>${t("ph")}</div>
+          <div>${t("gravity")}</div>
+          <div>${t("temp")}</div>
+          <div>${t("pressure")}</div>
         </div>
       `;
 
@@ -764,52 +984,52 @@
           <div class="gauges">
 
             <div class="gauge-card ph">
-              <div class="g-label">PH</div>
+              <div class="g-label">${t("ph").toUpperCase()}</div>
               <div class="dial">
                 <div class="ticks" id="ticksPh"></div>
                 <div class="needle" id="needlePh"></div>
               </div>
               <div class="g-value" id="topPh">-</div>
-              <div class="g-sub">latest measurement</div>
+              <div class="g-sub">${t("latestMeasurement")}</div>
             </div>
 
             <div class="gauge-card gravity">
-              <div class="g-label">GRAVITY</div>
+              <div class="g-label">${t("gravity").toUpperCase()}</div>
               <div class="dial">
                 <div class="ticks" id="ticksGravity"></div>
                 <div class="needle" id="needleGravity"></div>
               </div>
               <div class="g-value" id="topGravity">-</div>
-              <div class="g-sub">latest measurement</div>
+              <div class="g-sub">${t("latestMeasurement")}</div>
             </div>
 
             <div class="gauge-card temp">
-              <div class="g-label">TEMP</div>
+              <div class="g-label">${t("temp").toUpperCase()}</div>
               <div class="dial">
                 <div class="ticks" id="ticksTemp"></div>
                 <div class="needle" id="needleTemp"></div>
               </div>
               <div class="g-value" id="topTemp">-</div>
-              <div class="g-sub">0–50°C scale</div>
+              <div class="g-sub">${t("tempScale")}</div>
             </div>
 
             <div class="gauge-card count">
-              <div class="g-label">BATCHES</div>
+              <div class="g-label">${t("batches").toUpperCase()}</div>
               <div class="dial">
                 <div class="ticks" id="ticksCount"></div>
                 <div class="needle" id="needleCount"></div>
               </div>
               <div class="g-value" id="topCount">0</div>
-              <div class="g-sub">stored</div>
+              <div class="g-sub">${t("stored")}</div>
             </div>
 
           </div>
 
           ${selectedBatchIndex === null
-            ? `<button class="main-btn" onclick="addBatch()">+ New Batch</button>
-               <div class="hint">Tap a batch card to open its dedicated page</div>`
-            : `<button class="nav-btn" onclick="backToArchive()">← Back to Archive</button>
-               <div class="hint">Dashboard now follows the selected batch</div>`
+            ? `<button class="main-btn" onclick="addBatch()">${t("newBatch")}</button>
+               <div class="hint">${t("tapBatchOpen")}</div>`
+            : `<button class="nav-btn" onclick="backToArchive()">${t("backArchive")}</button>
+               <div class="hint">${t("dashboardSelected")}</div>`
           }
         </div>
       `;
@@ -817,12 +1037,13 @@
 
     function archiveHTML(){
       let html = dashboardHTML();
-      html += `<div class="section-title">Fermentation Archive</div>`;
+      html += `<div class="section-title">${t("archive")}</div>`;
 
       if(batches.length === 0){
-        html += `<div class="empty">No batches yet. Tap <b>+ New Batch</b> to add your first fermentation.</div>`;
+        html += `<div class="empty">${t("noBatches")}</div>`;
       } else {
         batches.forEach((b, i) => {
+          ensureBatchFields(b);
           const status = getStatus(b);
           const latest = getLatestMeasurement(b);
 
@@ -831,29 +1052,29 @@
               <div class="batch-top">
                 <div class="batch-name">${b.name || "Unnamed"}</div>
                 <div class="right-stack">
-                  <div class="type-badge">${(b.type || "unknown").toUpperCase()}</div>
+                  <div class="type-badge">${(b.type || t("typeUnknown")).toUpperCase()}</div>
                   <div class="status-badge ${status.cls}">${status.text}</div>
                 </div>
               </div>
 
               <div class="metrics">
                 <div class="metric">
-                  <div class="metric-label">Day</div>
+                  <div class="metric-label">${t("day")}</div>
                   <div class="metric-value">${getDay(b)}</div>
                 </div>
 
                 <div class="metric">
-                  <div class="metric-label">Culture</div>
+                  <div class="metric-label">${t("culture")}</div>
                   <div class="metric-value">${formatValue(b.culture)}</div>
                 </div>
 
                 <div class="metric">
-                  <div class="metric-label">Latest pH</div>
+                  <div class="metric-label">${t("latestPh")}</div>
                   <div class="metric-value">${latest ? formatValue(latest.ph) : "-"}</div>
                 </div>
 
                 <div class="metric">
-                  <div class="metric-label">Latest Gravity</div>
+                  <div class="metric-label">${t("latestGravity")}</div>
                   <div class="metric-value">${latest ? formatValue(latest.gravity) : "-"}</div>
                 </div>
               </div>
@@ -869,6 +1090,7 @@
       const b = batches[i];
       if(!b) return archiveHTML();
 
+      ensureBatchFields(b);
       const status = getStatus(b);
       const latest = getLatestMeasurement(b);
       const measures = getMeasurements(b);
@@ -878,81 +1100,116 @@
       return `
         ${dashboardHTML()}
 
-        <div class="section-title">Batch Detail</div>
+        <div class="section-title">${t("batchDetail")}</div>
 
         <div class="detail-card">
           <div class="detail-top">
             <div class="detail-name">${b.name || "Unnamed"}</div>
             <div class="right-stack">
-              <div class="type-badge">${(b.type || "unknown").toUpperCase()}</div>
+              <div class="type-badge">${(b.type || t("typeUnknown")).toUpperCase()}</div>
               <div class="status-badge ${status.cls}">${status.text}</div>
             </div>
           </div>
 
           <div class="metrics">
             <div class="metric">
-              <div class="metric-label">Day</div>
+              <div class="metric-label">${t("day")}</div>
               <div class="metric-value">${getDay(b)}</div>
             </div>
 
             <div class="metric">
-              <div class="metric-label">Culture</div>
+              <div class="metric-label">${t("culture")}</div>
               <div class="metric-value">${formatValue(b.culture)}</div>
             </div>
 
             <div class="metric">
-              <div class="metric-label">OG</div>
+              <div class="metric-label">${t("og")}</div>
               <div class="metric-value">${formatValue(b.og)}</div>
             </div>
 
             <div class="metric">
-              <div class="metric-label">ABV</div>
+              <div class="metric-label">${t("abv")}</div>
               <div class="metric-value">${getABV(b)}</div>
             </div>
 
             <div class="metric">
-              <div class="metric-label">Latest pH</div>
+              <div class="metric-label">${t("latestPh")}</div>
               <div class="metric-value">${latest ? formatValue(latest.ph) : "-"}</div>
             </div>
 
             <div class="metric">
-              <div class="metric-label">Latest Gravity</div>
+              <div class="metric-label">${t("latestGravity")}</div>
               <div class="metric-value">${latest ? formatValue(latest.gravity) : "-"}</div>
             </div>
 
             <div class="metric">
-              <div class="metric-label">Latest Temp</div>
+              <div class="metric-label">${t("latestTemp")}</div>
               <div class="metric-value">${latest ? formatTemp(latest.temp) : "-"}</div>
             </div>
 
             <div class="metric">
-              <div class="metric-label">Latest Pressure</div>
+              <div class="metric-label">${t("latestPressure")}</div>
               <div class="metric-value">${latest ? formatPressure(latest.pressure) : "-"}</div>
             </div>
           </div>
 
           <div class="detail-actions">
-            <button class="small-btn" onclick="addMeasurement(${i})">+ Add Measurement</button>
-            <button class="small-btn" onclick="editBatch(${i})">Edit Batch</button>
-            <button class="small-btn" onclick="deleteBatch(${i})">Delete Batch</button>
+            <button class="small-btn" onclick="addMeasurement(${i})">${t("addMeasurement")}</button>
+            <button class="small-btn" onclick="editBatch(${i})">${t("editBatch")}</button>
+            <button class="small-btn" onclick="deleteBatch(${i})">${t("deleteBatch")}</button>
           </div>
 
           <div class="chart-card">
-            <div class="chart-title">Lab Charts</div>
+            <div class="chart-title">${t("labCharts")}</div>
             <div class="chart-box">
               <div class="mini-chart">
                 ${renderMiniChart(phValues, 0, 7, "#62f2a2")}
-                <div class="legend">pH trend</div>
+                <div class="legend">${t("phTrend")}</div>
               </div>
               <div class="mini-chart">
                 ${renderMiniChart(gravityValues, 1.000, 1.080, "#69b8ff")}
-                <div class="legend">Gravity trend</div>
+                <div class="legend">${t("gravityTrend")}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="process-card">
+            <div class="process-title">${t("processIngredients")}</div>
+            <div class="process-grid">
+              <div class="process-item">
+                <div class="process-label">${t("baseFermentable")}</div>
+                <div class="process-value">${formatValue(b.baseFermentable)}</div>
+              </div>
+
+              <div class="process-item">
+                <div class="process-label">${t("liters")}</div>
+                <div class="process-value">${formatValue(b.liters)}</div>
+              </div>
+
+              <div class="process-item">
+                <div class="process-label">${t("nutrients")}</div>
+                <div class="process-value">${formatValue(b.nutrients)}</div>
+              </div>
+
+              <div class="process-item">
+                <div class="process-label">${t("targetPressure")}</div>
+                <div class="process-value">${formatValue(b.targetPressure)}</div>
+              </div>
+
+              <div class="process-item">
+                <div class="process-label">${t("processNotes")}</div>
+                <div class="process-value">${formatValue(b.processNotes)}</div>
+              </div>
+
+              <div class="process-item">
+                <div class="process-label">${t("sensoryNotes")}</div>
+                <div class="process-value">${formatValue(b.sensoryNotes)}</div>
               </div>
             </div>
           </div>
 
           <div class="measurements">
-            <div class="measurements-title">Daily Measurements</div>
+            <div class="measurements-title">${t("dailyMeasurements")}</div>
             ${measurementTable(b)}
           </div>
         </div>
@@ -1000,7 +1257,13 @@
     }
 
     function render(){
+      document.documentElement.lang = appLang;
       const app = document.getElementById("appContent");
+      const subtitle = document.getElementById("heroSubtitle");
+      const langButton = document.getElementById("langButton");
+
+      if(subtitle) subtitle.textContent = t("heroSubtitle");
+      if(langButton) langButton.textContent = appLang === "en" ? "IT" : "EN";
 
       if(selectedBatchIndex === null){
         app.innerHTML = archiveHTML();
@@ -1016,16 +1279,22 @@
     }
 
     function addBatch(){
-      const name = prompt("Batch name:");
+      const name = prompt(t("batchNamePrompt"));
       if(!name) return;
 
-      const type = prompt("Type (cider, kombucha, lactic, mixed):") || "unknown";
-      const culture = prompt("Culture (yeast, kveik, L. plantarum, SCOBY...):") || "-";
-      const ph = prompt("Initial pH:") || "-";
-      const gravity = prompt("Initial Gravity:") || "-";
-      const og = prompt("OG (optional):") || gravity || "-";
-      const temp = prompt("Initial Temperature °C (0-50):") || "-";
-      const pressure = prompt("Initial Pressure bar (optional):") || "-";
+      const type = prompt(t("typePrompt")) || t("typeUnknown");
+      const culture = prompt(t("culturePrompt")) || "-";
+      const baseFermentable = prompt(t("basePrompt")) || "-";
+      const liters = prompt(t("litersPrompt")) || "-";
+      const nutrients = prompt(t("nutrientsPrompt")) || "-";
+      const ph = prompt(t("initialPhPrompt")) || "-";
+      const gravity = prompt(t("initialGravityPrompt")) || "-";
+      const og = prompt(t("ogPrompt")) || gravity || "-";
+      const temp = prompt(t("initialTempPrompt")) || "-";
+      const pressure = prompt(t("initialPressurePrompt")) || "-";
+      const targetPressure = prompt(t("targetPressurePrompt")) || "-";
+      const processNotes = prompt(t("processNotesPrompt")) || "-";
+      const sensoryNotes = prompt(t("sensoryNotesPrompt")) || "-";
 
       const createdAt = new Date().toISOString();
 
@@ -1033,6 +1302,12 @@
         name,
         type,
         culture,
+        baseFermentable,
+        liters,
+        nutrients,
+        targetPressure,
+        processNotes,
+        sensoryNotes,
         og,
         createdAt,
         measurements: [{
@@ -1053,11 +1328,11 @@
       const b = batches[i];
       const latest = getLatestMeasurement(b) || {};
 
-      const day = prompt("Day number:", String(getDay(b))) || String(getDay(b));
-      const ph = prompt("pH:", latest.ph || "-") || latest.ph || "-";
-      const gravity = prompt("Gravity:", latest.gravity || "-") || latest.gravity || "-";
-      const temp = prompt("Temperature °C:", latest.temp || "-") || latest.temp || "-";
-      const pressure = prompt("Pressure bar:", latest.pressure || "-") || latest.pressure || "-";
+      const day = prompt(t("dayNumberPrompt"), String(getDay(b))) || String(getDay(b));
+      const ph = prompt(t("phPrompt"), latest.ph || "-") || latest.ph || "-";
+      const gravity = prompt(t("gravityPrompt"), latest.gravity || "-") || latest.gravity || "-";
+      const temp = prompt(t("tempPrompt"), latest.temp || "-") || latest.temp || "-";
+      const pressure = prompt(t("pressurePrompt"), latest.pressure || "-") || latest.pressure || "-";
 
       if(!Array.isArray(b.measurements)) b.measurements = [];
 
@@ -1076,16 +1351,25 @@
 
     function editBatch(i){
       let b = batches[i];
-      b.name = prompt("Batch name:", b.name) || b.name;
-      b.type = prompt("Type:", b.type) || b.type;
-      b.culture = prompt("Culture:", b.culture) || b.culture;
-      b.og = prompt("OG:", b.og) || b.og;
+      ensureBatchFields(b);
+
+      b.name = prompt(t("editNamePrompt"), b.name) || b.name;
+      b.type = prompt(t("editTypePrompt"), b.type) || b.type;
+      b.culture = prompt(t("editCulturePrompt"), b.culture) || b.culture;
+      b.baseFermentable = prompt(t("editBasePrompt"), b.baseFermentable) || b.baseFermentable;
+      b.liters = prompt(t("editLitersPrompt"), b.liters) || b.liters;
+      b.nutrients = prompt(t("editNutrientsPrompt"), b.nutrients) || b.nutrients;
+      b.og = prompt(t("editOGPrompt"), b.og) || b.og;
+      b.targetPressure = prompt(t("editTargetPressurePrompt"), b.targetPressure) || b.targetPressure;
+      b.processNotes = prompt(t("editProcessNotesPrompt"), b.processNotes) || b.processNotes;
+      b.sensoryNotes = prompt(t("editSensoryNotesPrompt"), b.sensoryNotes) || b.sensoryNotes;
+
       save();
       render();
     }
 
     function deleteBatch(i){
-      if(confirm("Delete this batch?")){
+      if(confirm(t("deleteConfirm"))){
         batches.splice(i, 1);
         selectedBatchIndex = null;
         save();
