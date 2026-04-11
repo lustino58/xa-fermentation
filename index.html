@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PH</title>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-gauges/gauge.min.js"></script>
+
 <style>
 body{
   margin:0;
@@ -41,92 +43,57 @@ canvas{
 
 <div class="container">
   <h1>PH</h1>
-  <canvas id="c" width="300" height="300"></canvas>
+
+  <canvas id="gauge"></canvas>
+
   <div class="value">3.50</div>
   <div class="sub">ultima misurazione</div>
 </div>
 
 <script>
-const ctx = document.getElementById("c").getContext("2d");
+var gauge = new RadialGauge({
+  renderTo: 'gauge',
 
-const cx = 150;
-const cy = 150;
+  width: 300,
+  height: 300,
 
-const min = 2.8;
-const max = 5.0;
-const value = 3.5;
+  minValue: 2.8,
+  maxValue: 5.0,
+  value: 3.5,
 
-const start = 135;
-const end = 405;
+  startAngle: 135,
+  ticksAngle: 270,
 
-function rad(d){ return d*Math.PI/180; }
+  majorTicks: ["2.8","3.5","4.2","5.0"],
+  minorTicks: 4,
 
-function angle(v){
-  return rad(start + (v-min)/(max-min)*(end-start));
-}
+  strokeTicks: true,
 
-function polar(r,a){
-  return {
-    x: cx + r*Math.cos(a),
-    y: cy + r*Math.sin(a)
-  };
-}
+  highlights: [],
 
-// fondo
-ctx.beginPath();
-ctx.arc(cx,cy,120,0,Math.PI*2);
-ctx.fillStyle="#000";
-ctx.fill();
+  colorPlate: "#000",
+  colorMajorTicks: "#e6dcc5",
+  colorMinorTicks: "#e6dcc5",
+  colorNumbers: "#e6dcc5",
 
-// arco
-ctx.beginPath();
-ctx.arc(cx,cy,100,rad(start),rad(end));
-ctx.strokeStyle="#e6dcc5";
-ctx.lineWidth=6;
-ctx.stroke();
+  colorNeedle: "#ff3b3b",
+  colorNeedleEnd: "#ff3b3b",
 
-// tacche
-for(let i=0;i<=20;i++){
-  let a = rad(start + i*(end-start)/20);
-  let p1 = polar(80,a);
-  let p2 = polar(100,a);
+  needleType: "arrow",
+  needleWidth: 4,
 
-  ctx.beginPath();
-  ctx.moveTo(p1.x,p1.y);
-  ctx.lineTo(p2.x,p2.y);
-  ctx.strokeStyle="#e6dcc5";
-  ctx.lineWidth = i%5==0 ? 4 : 2;
-  ctx.stroke();
-}
+  borders: true,
+  borderOuterWidth: 8,
+  borderMiddleWidth: 4,
+  borderInnerWidth: 2,
 
-// numeri
-const vals=[2.8,3.5,4.2,5.0];
-ctx.fillStyle="#e6dcc5";
-ctx.font="14px Arial";
-ctx.textAlign="center";
+  colorBorderOuter: "#555",
+  colorBorderMiddle: "#222",
+  colorBorderInner: "#000",
 
-vals.forEach(v=>{
-  let a = angle(v);
-  let p = polar(115,a);
-  ctx.fillText(v.toFixed(1),p.x,p.y);
-});
-
-// lancetta
-let a = angle(value);
-let tip = polar(85,a);
-
-ctx.beginPath();
-ctx.moveTo(cx,cy);
-ctx.lineTo(tip.x,tip.y);
-ctx.strokeStyle="red";
-ctx.lineWidth=4;
-ctx.stroke();
-
-// centro
-ctx.beginPath();
-ctx.arc(cx,cy,6,0,Math.PI*2);
-ctx.fillStyle="white";
-ctx.fill();
+  animationDuration: 500,
+  animationRule: "linear"
+}).draw();
 </script>
 
 </body>
