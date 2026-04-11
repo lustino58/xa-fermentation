@@ -316,7 +316,8 @@
     .measurements,
     .process-card,
     .templates-card,
-    .additions-card{
+    .additions-card,
+    .filters-card{
       background:
         linear-gradient(180deg, rgba(130,147,163,.12), rgba(47,58,68,.08)),
         linear-gradient(180deg, #09111a 0%, #060d15 100%);
@@ -337,7 +338,8 @@
     .detail-card,
     .process-card,
     .templates-card,
-    .additions-card{
+    .additions-card,
+    .filters-card{
       padding:18px;
       margin-bottom:14px;
     }
@@ -431,7 +433,8 @@
     .chart-title,
     .measurements-title,
     .process-title,
-    .additions-title{
+    .additions-title,
+    .filters-title{
       font-size:12px;
       color:var(--muted);
       text-transform:uppercase;
@@ -549,9 +552,30 @@
       color:var(--muted);
     }
 
+    .filters-grid{
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      gap:10px;
+    }
+
+    .filter-input,
+    .filter-select{
+      width:100%;
+      padding:14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:#0d1620;
+      color:#eef6fd;
+      font-size:14px;
+      outline:none;
+    }
+
     @media (max-width:900px){
       .a-row{
         grid-template-columns:60px 1fr 1fr 1fr 1fr 1fr;
+      }
+      .filters-grid{
+        grid-template-columns:1fr;
       }
     }
 
@@ -635,6 +659,9 @@
     let batches = JSON.parse(localStorage.getItem("batches")) || [];
     let selectedBatchIndex = null;
     let appLang = localStorage.getItem("xa_lang") || "en";
+    let archiveSearch = "";
+    let archiveTypeFilter = "";
+    let archiveStatusFilter = "";
 
     const i18n = {
       en: {
@@ -652,6 +679,7 @@
         dashboardSelected: "Dashboard now follows the selected batch",
         archive: "Fermentation Archive",
         noBatches: "No batches yet. Tap + New Batch to add your first fermentation.",
+        noFilteredBatches: "No batches found with the current filters.",
         day: "Day",
         culture: "Culture",
         latestPh: "Latest pH",
@@ -689,6 +717,15 @@
         dailyMeasurements: "Daily Measurements",
         pressure: "Pressure",
         type: "Type",
+        status: "Status",
+        search: "Search",
+        searchPlaceholder: "Search batch name, culture, ingredient...",
+        allTypes: "All types",
+        allStatuses: "All statuses",
+        typeCider: "Cider",
+        typeKombucha: "Kombucha",
+        typeLactic: "Lactic",
+        typeMixed: "Mixed",
         statusActive: "Active",
         statusSlow: "Slow",
         statusCritical: "Critical",
@@ -743,6 +780,7 @@
         noMeasurements: "No measurements yet.",
         noAdditions: "No additions logged yet.",
         templates: "Recipes / Templates",
+        filters: "Search / Filters",
         useButtons: "Use the buttons inside each batch to add measurements, edit or delete",
         ciderBase: "Cider Base",
         ciderBaseDesc: "Apple juice, yeast fermentation, clean profile",
@@ -768,6 +806,7 @@
         dashboardSelected: "La dashboard ora segue il lotto selezionato",
         archive: "Archivio Fermentazioni",
         noBatches: "Nessun lotto ancora. Tocca + Nuovo Lotto per aggiungere la tua prima fermentazione.",
+        noFilteredBatches: "Nessun lotto trovato con i filtri attuali.",
         day: "Giorno",
         culture: "Coltura",
         latestPh: "Ultimo pH",
@@ -805,6 +844,15 @@
         dailyMeasurements: "Misurazioni Giornaliere",
         pressure: "Pressione",
         type: "Tipo",
+        status: "Stato",
+        search: "Cerca",
+        searchPlaceholder: "Cerca nome lotto, coltura, ingrediente...",
+        allTypes: "Tutti i tipi",
+        allStatuses: "Tutti gli stati",
+        typeCider: "Sidro",
+        typeKombucha: "Kombucha",
+        typeLactic: "Lattico",
+        typeMixed: "Misto",
         statusActive: "Attivo",
         statusSlow: "Lento",
         statusCritical: "Critico",
@@ -859,6 +907,7 @@
         noMeasurements: "Nessuna misurazione ancora.",
         noAdditions: "Nessuna aggiunta registrata ancora.",
         templates: "Ricette / Template",
+        filters: "Ricerca / Filtri",
         useButtons: "Usa i pulsanti dentro ogni lotto per aggiungere misure, modificare o eliminare",
         ciderBase: "Sidro Base",
         ciderBaseDesc: "Succo di mela, fermentazione con lievito, profilo pulito",
@@ -1005,17 +1054,52 @@
       const temp = latest ? parseNum(latest.temp) : parseNum(b.temp);
       const ph = latest ? parseNum(latest.ph) : parseNum(b.ph);
 
-      if(temp !== null && (temp < 5 || temp > 40)) return { text:t("statusCritical"), cls:"status-critical" };
-      if(ph !== null && (ph < 2.8 || ph > 4.6)) return { text:t("statusCritical"), cls:"status-critical" };
+      if(temp !== null && (temp < 5 || temp > 40)) return { text:t("statusCritical"), cls:"status-critical", key:"critical" };
+      if(ph !== null && (ph < 2.8 || ph > 4.6)) return { text:t("statusCritical"), cls:"status-critical", key:"critical" };
 
       if(og !== null && current !== null){
         const diff = og - current;
-        if(diff >= 0.030) return { text:t("statusComplete"), cls:"status-complete" };
-        if(diff >= 0.010) return { text:t("statusActive"), cls:"status-active" };
-        return { text:t("statusSlow"), cls:"status-slow" };
+        if(diff >= 0.030) return { text:t("statusComplete"), cls:"status-complete", key:"complete" };
+        if(diff >= 0.010) return { text:t("statusActive"), cls:"status-active", key:"active" };
+        return { text:t("statusSlow"), cls:"status-slow", key:"slow" };
       }
 
-      return { text:t("statusActive"), cls:"status-active" };
+      return { text:t("statusActive"), cls:"status-active", key:"active" };
+    }
+
+    function matchesArchiveFilters(b){
+      const status = getStatus(b);
+      const search = archiveSearch.trim().toLowerCase();
+
+      if(archiveTypeFilter){
+        const typeValue = String(b.type || "").toLowerCase();
+        if(typeValue !== archiveTypeFilter.toLowerCase()) return false;
+      }
+
+      if(archiveStatusFilter){
+        if(status.key !== archiveStatusFilter) return false;
+      }
+
+      if(search){
+        const haystack = [
+          b.name,
+          b.type,
+          b.culture,
+          b.baseFermentable,
+          b.nutrients,
+          b.sugar,
+          b.fruit,
+          b.botanicals,
+          b.dryAdjunct,
+          b.otherAdditions,
+          b.processNotes,
+          b.sensoryNotes
+        ].join(" ").toLowerCase();
+
+        if(!haystack.includes(search)) return false;
+      }
+
+      return true;
     }
 
     function makePath(points, width, height, minVal, maxVal){
@@ -1134,6 +1218,8 @@
       if(selectedBatchIndex !== null && batches[selectedBatchIndex]){
         return batches[selectedBatchIndex];
       }
+      const filtered = batches.filter(matchesArchiveFilters);
+      if(filtered.length > 0) return filtered[filtered.length - 1];
       if(batches.length > 0) return batches[batches.length - 1];
       return null;
     }
@@ -1299,6 +1385,42 @@
       `;
     }
 
+    function filtersHTML(){
+      return `
+        <div class="filters-card">
+          <div class="filters-title">${t("filters")}</div>
+          <div class="filters-grid">
+            <input
+              class="filter-input"
+              type="text"
+              placeholder="${t("searchPlaceholder")}"
+              value="${archiveSearch.replace(/"/g, '&quot;')}"
+              oninput="archiveSearch = this.value; render();"
+            />
+
+            <select class="filter-select" onchange="archiveTypeFilter = this.value; render();">
+              <option value="" ${archiveTypeFilter === "" ? "selected" : ""}>${t("allTypes")}</option>
+              <option value="cider" ${archiveTypeFilter === "cider" ? "selected" : ""}>${t("typeCider")}</option>
+              <option value="kombucha" ${archiveTypeFilter === "kombucha" ? "selected" : ""}>${t("typeKombucha")}</option>
+              <option value="lactic" ${archiveTypeFilter === "lactic" ? "selected" : ""}>${t("typeLactic")}</option>
+              <option value="mixed" ${archiveTypeFilter === "mixed" ? "selected" : ""}>${t("typeMixed")}</option>
+              <option value="sidro" ${archiveTypeFilter === "sidro" ? "selected" : ""}>${t("typeCider")}</option>
+              <option value="lattico" ${archiveTypeFilter === "lattico" ? "selected" : ""}>${t("typeLactic")}</option>
+              <option value="misto" ${archiveTypeFilter === "misto" ? "selected" : ""}>${t("typeMixed")}</option>
+            </select>
+
+            <select class="filter-select" onchange="archiveStatusFilter = this.value; render();">
+              <option value="" ${archiveStatusFilter === "" ? "selected" : ""}>${t("allStatuses")}</option>
+              <option value="active" ${archiveStatusFilter === "active" ? "selected" : ""}>${t("statusActive")}</option>
+              <option value="slow" ${archiveStatusFilter === "slow" ? "selected" : ""}>${t("statusSlow")}</option>
+              <option value="critical" ${archiveStatusFilter === "critical" ? "selected" : ""}>${t("statusCritical")}</option>
+              <option value="complete" ${archiveStatusFilter === "complete" ? "selected" : ""}>${t("statusComplete")}</option>
+            </select>
+          </div>
+        </div>
+      `;
+    }
+
     function dashboardHTML(){
       return `
         <div class="dashboard">
@@ -1359,12 +1481,18 @@
     function archiveHTML(){
       let html = dashboardHTML();
       html += templatesHTML();
+      html += filtersHTML();
       html += `<div class="section-title">${t("archive")}</div>`;
+
+      const filtered = batches.filter(matchesArchiveFilters);
 
       if(batches.length === 0){
         html += `<div class="empty">${t("noBatches")}</div>`;
+      } else if(filtered.length === 0){
+        html += `<div class="empty">${t("noFilteredBatches")}</div>`;
       } else {
-        batches.forEach((b, i) => {
+        filtered.forEach((b) => {
+          const i = batches.indexOf(b);
           ensureBatchFields(b);
           const status = getStatus(b);
           const latest = getLatestMeasurement(b);
