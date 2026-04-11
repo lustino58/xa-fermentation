@@ -6,19 +6,10 @@
 <title>XA Fermentation</title>
 
 <style>
-:root{
-  --bg1:#071629;
-  --bg2:#081b2f;
-  --card1:#10243a;
-  --card2:#0b1b2c;
-  --text:#f4f7fb;
-  --muted:#95a8bb;
-}
-
 body{
   margin:0;
   font-family:Arial;
-  background:linear-gradient(180deg,var(--bg1),var(--bg2));
+  background:linear-gradient(#071629,#081b2f);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -38,10 +29,9 @@ body{
 }
 
 .card{
-  background:linear-gradient(180deg,var(--card1),var(--card2));
+  background:#10243a;
   border-radius:30px;
   padding:25px;
-  box-shadow:0 20px 60px rgba(0,0,0,.6);
 }
 
 svg{
@@ -55,7 +45,7 @@ svg{
 }
 
 .sub{
-  color:var(--muted);
+  color:#95a8bb;
 }
 </style>
 </head>
@@ -69,26 +59,22 @@ svg{
 
 <svg id="gauge" viewBox="0 0 360 260">
 
-<!-- cerchio -->
+<!-- quadrante -->
 <circle cx="180" cy="140" r="100" fill="#000"/>
 
 <!-- arco -->
-<path id="arc"
-      d="M60 140 A120 120 0 0 1 300 140"
+<path d="M60 140 A120 120 0 0 1 300 140"
       stroke="#e6dcc5"
       stroke-width="6"
       fill="none"/>
 
-<!-- tacche -->
 <g id="ticks"></g>
-
-<!-- numeri -->
 <g id="labels"></g>
 
 <!-- lancetta -->
 <line id="needle"
       x1="180" y1="140"
-      x2="180" y2="70"
+      x2="180" y2="80"
       stroke="red"
       stroke-width="5"
       stroke-linecap="round"/>
@@ -123,14 +109,15 @@ const max=5.0;
 
 const cx=180;
 const cy=140;
-const r=100;
 
 let current=3.5;
 
+// conversione valore → angolo (perfetta)
 function deg(v){
   return 180 + (v-min)/(max-min)*180;
 }
 
+// coordinate
 function polar(angle, radius){
   const a=angle*Math.PI/180;
   return {
@@ -141,34 +128,48 @@ function polar(angle, radius){
 
 // TACCHETTE
 const ticks=document.getElementById("ticks");
+
 for(let i=0;i<=12;i++){
   let a=180+i*180/12;
-  let p1=polar(a,80);
+
+  let p1=polar(a,85);
   let p2=polar(a,100);
 
   let line=document.createElementNS("http://www.w3.org/2000/svg","line");
+
   line.setAttribute("x1",p1.x);
   line.setAttribute("y1",p1.y);
   line.setAttribute("x2",p2.x);
   line.setAttribute("y2",p2.y);
+
   line.setAttribute("stroke","#e6dcc5");
   line.setAttribute("stroke-width", i%4==0?4:2);
+
   ticks.appendChild(line);
 }
 
-// NUMERI
+// NUMERI (🔥 FIX QUI)
 const labels=document.getElementById("labels");
+
 [2.8,3.5,4.2,5.0].forEach(v=>{
+
   let a=deg(v);
-  let p=polar(a,120);
+
+  // 👉 QUESTO È IL FIX IMPORTANTE
+  let p=polar(a,112); // prima era 120 → troppo fuori
 
   let t=document.createElementNS("http://www.w3.org/2000/svg","text");
+
   t.setAttribute("x",p.x);
   t.setAttribute("y",p.y);
+
   t.setAttribute("text-anchor","middle");
   t.setAttribute("fill","#e6dcc5");
   t.setAttribute("font-size","16");
+  t.setAttribute("font-weight","bold");
+
   t.textContent=v.toFixed(1);
+
   labels.appendChild(t);
 });
 
@@ -195,6 +196,7 @@ function animate(target){
   function step(t){
     let p=Math.min((t-t0)/600,1);
     let val=start+(target-start)*p;
+
     setValue(val);
 
     if(p<1) requestAnimationFrame(step);
@@ -203,7 +205,7 @@ function animate(target){
   requestAnimationFrame(step);
 }
 
-// TAP → cambia valore
+// CLICK → MUOVE
 document.getElementById("gauge").onclick=()=>{
   let v=min+Math.random()*(max-min);
   animate(v);
