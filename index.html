@@ -88,6 +88,24 @@
       color:var(--muted);
     }
 
+    .tick{
+      stroke:var(--scale);
+      stroke-linecap:round;
+    }
+
+    .label{
+      fill:var(--scale);
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:16px;
+      font-weight:700;
+      text-anchor:middle;
+      dominant-baseline:middle;
+      paint-order:stroke;
+      stroke:rgba(0,0,0,.55);
+      stroke-width:5px;
+      stroke-linejoin:round;
+    }
+
     @media (max-width:480px){
       .title{font-size:24px;}
       .value{font-size:56px;}
@@ -145,7 +163,7 @@
         <ellipse cx="125" cy="122" rx="56" ry="24" fill="rgba(255,255,255,.07)" transform="rotate(-16 125 122)"/>
         <ellipse cx="205" cy="214" rx="24" ry="8" fill="rgba(255,255,255,.04)" transform="rotate(18 205 214)"/>
 
-        <!-- arco scala -->
+        <!-- arco -->
         <path d="M 56 208 A 106 106 0 0 1 264 208"
               fill="none"
               stroke="#e6dcc5"
@@ -153,7 +171,7 @@
               stroke-linecap="round"/>
 
         <!-- tacche grandi -->
-        <g stroke="#e6dcc5" stroke-width="5" stroke-linecap="round">
+        <g class="tick" stroke-width="5">
           <line x1="66"  y1="202" x2="48"  y2="216"/>
           <line x1="106" y1="142" x2="90"  y2="130"/>
           <line x1="160" y1="120" x2="160" y2="98"/>
@@ -162,7 +180,7 @@
         </g>
 
         <!-- tacche piccole -->
-        <g stroke="#e6dcc5" stroke-width="2.5" stroke-linecap="round">
+        <g class="tick" stroke-width="2.5">
           <line x1="82"  y1="175" x2="71"  y2="167"/>
           <line x1="95"  y1="156" x2="84"  y2="147"/>
           <line x1="121" y1="130" x2="115" y2="117"/>
@@ -173,23 +191,19 @@
           <line x1="238" y1="175" x2="249" y2="167"/>
         </g>
 
-        <!-- numeri: messi a mano nei punti giusti -->
-        <g fill="#e6dcc5" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" text-anchor="middle">
-          <text x="78"  y="228">2.8</text>
-          <text x="106" y="112">3.5</text>
-          <text x="214" y="112">4.2</text>
-          <text x="242" y="228">5.0</text>
-        </g>
+        <!-- numeri fissi -->
+        <text class="label" x="74"  y="226">2.8</text>
+        <text class="label" x="104" y="108">3.5</text>
+        <text class="label" x="216" y="108">4.2</text>
+        <text class="label" x="246" y="226">5.0</text>
 
-        <!-- glow lancetta -->
-        <line x1="160" y1="160" x2="92" y2="102"
+        <!-- lancetta su 3.50 -->
+        <line x1="160" y1="160" x2="95" y2="105"
               stroke="rgba(255,59,59,.35)" stroke-width="10" stroke-linecap="round"
               filter="url(#needleGlow)"/>
-
-        <!-- lancetta -->
-        <line x1="160" y1="160" x2="92" y2="102"
+        <line x1="160" y1="160" x2="95" y2="105"
               stroke="#ff3b3b" stroke-width="5" stroke-linecap="round"/>
-        <line x1="161.5" y1="158.5" x2="93.5" y2="100.5"
+        <line x1="161.5" y1="158.5" x2="96.5" y2="103.5"
               stroke="#ffd0d0" stroke-width="1.6" stroke-linecap="round" opacity=".85"/>
 
         <!-- centro -->
