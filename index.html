@@ -1,186 +1,198 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XA Fermentation</title>
+  <style>
+    :root{
+      --bg:#071629;
+      --text:#f4f6f8;
+      --muted:#b9c4cf;
+      --bezel-hi:#f3f4f6;
+      --bezel-mid:#8d939b;
+      --bezel-lo:#2b2f35;
+      --face-hi:#2b3036;
+      --face-mid:#13171c;
+      --face-lo:#050708;
+      --scale:#ddd4b7;
+      --needle:#db2f2f;
+      --needle-hi:#ffb0b0;
+      --hub-hi:#ffffff;
+      --hub-mid:#b9bec5;
+      --hub-lo:#565c63;
+    }
 
-<title>XA Fermentation</title>
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
+    }
 
-<style>
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#071629;
-  color:white;
-  text-align:center;
-}
+    html,body{
+      margin:0;
+      min-height:100vh;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Arial, Helvetica, sans-serif;
+    }
 
-h1{
-  margin-top:40px;
-  font-size:28px;
-  letter-spacing:2px;
-}
+    body{
+      display:flex;
+      justify-content:center;
+      padding:28px 16px 40px;
+    }
 
-.container{
-  margin-top:40px;
-}
+    .app{
+      width:min(430px,100%);
+      text-align:center;
+    }
 
-/* CONTACHILOMETRI */
-.gauge{
-  width:260px;
-  height:260px;
-  margin:auto;
-  position:relative;
-}
+    .title{
+      font-size:26px;
+      letter-spacing:2px;
+      margin:6px 0 22px;
+    }
 
-/* ESTERNO METALLO */
-.outer{
-  width:100%;
-  height:100%;
-  border-radius:50%;
-  background:linear-gradient(145deg,#999,#444);
-  box-shadow:
-    inset 0 3px 10px rgba(255,255,255,0.2),
-    inset 0 -6px 20px rgba(0,0,0,0.8),
-    0 10px 30px rgba(0,0,0,0.8);
-}
+    .gauge-wrap{
+      width:100%;
+      max-width:390px;
+      margin:0 auto;
+    }
 
-/* VETRO */
-.glass{
-  position:absolute;
-  top:10px;
-  left:10px;
-  width:240px;
-  height:240px;
-  border-radius:50%;
-  background:radial-gradient(circle at 30% 30%, #1b1b1b, #000);
-  box-shadow:
-    inset 0 10px 20px rgba(255,255,255,0.1),
-    inset 0 -10px 25px rgba(0,0,0,0.9);
-}
+    .gauge{
+      width:100%;
+      height:auto;
+      display:block;
+      filter:drop-shadow(0 20px 26px rgba(0,0,0,.42));
+    }
 
-/* RIFLESSO VETRO */
-.glass:after{
-  content:"";
-  position:absolute;
-  top:25px;
-  left:40px;
-  width:120px;
-  height:50px;
-  background:rgba(255,255,255,0.15);
-  border-radius:50%;
-  transform:rotate(-20deg);
-}
+    .value{
+      margin-top:18px;
+      font-size:64px;
+      line-height:1;
+      font-weight:300;
+      letter-spacing:1px;
+    }
 
-/* SCALA */
-.scale{
-  position:absolute;
-  width:100%;
-  height:100%;
-  transform:rotate(-90deg);
-}
+    .sub{
+      margin-top:10px;
+      font-size:18px;
+      color:var(--muted);
+    }
 
-/* LINEA ARCO */
-.arc{
-  fill:none;
-  stroke:#e7dcc0;
-  stroke-width:4;
-  stroke-linecap:round;
-}
-
-/* TACCHETTE */
-.tick{
-  stroke:#e7dcc0;
-  stroke-width:3;
-  stroke-linecap:round;
-}
-
-/* NUMERI */
-.num{
-  fill:#e7dcc0;
-  font-size:14px;
-  transform:rotate(90deg);
-}
-
-/* LANCETTA */
-.needle{
-  position:absolute;
-  width:4px;
-  height:100px;
-  background:#e53935;
-  top:80px;
-  left:128px;
-  transform-origin:bottom center;
-  transform:rotate(35deg);
-  box-shadow:0 0 10px rgba(255,0,0,0.6);
-}
-
-/* PERNO */
-.center{
-  position:absolute;
-  width:26px;
-  height:26px;
-  border-radius:50%;
-  background:radial-gradient(circle,#ddd,#555);
-  top:117px;
-  left:117px;
-  box-shadow:0 0 8px black;
-}
-
-/* TESTO */
-.value{
-  margin-top:30px;
-  font-size:42px;
-  font-weight:300;
-}
-
-.sub{
-  color:#9fb3c8;
-}
-</style>
+    @media (max-width:480px){
+      .title{font-size:24px;}
+      .value{font-size:56px;}
+      .sub{font-size:16px;}
+    }
+  </style>
 </head>
-
 <body>
+  <div class="app">
+    <div class="title">PH</div>
 
-<h1>PH</h1>
+    <div class="gauge-wrap">
+      <svg class="gauge" viewBox="0 0 400 400" aria-hidden="true">
+        <defs>
+          <radialGradient id="bezelGrad" cx="32%" cy="28%">
+            <stop offset="0%" stop-color="var(--bezel-hi)"/>
+            <stop offset="34%" stop-color="var(--bezel-mid)"/>
+            <stop offset="78%" stop-color="#4a5058"/>
+            <stop offset="100%" stop-color="var(--bezel-lo)"/>
+          </radialGradient>
 
-<div class="container">
+          <radialGradient id="faceGrad" cx="42%" cy="40%">
+            <stop offset="0%" stop-color="var(--face-hi)"/>
+            <stop offset="52%" stop-color="var(--face-mid)"/>
+            <stop offset="100%" stop-color="var(--face-lo)"/>
+          </radialGradient>
 
-<div class="gauge">
+          <radialGradient id="hubGrad" cx="35%" cy="35%">
+            <stop offset="0%" stop-color="var(--hub-hi)"/>
+            <stop offset="34%" stop-color="var(--hub-mid)"/>
+            <stop offset="100%" stop-color="var(--hub-lo)"/>
+          </radialGradient>
 
-<div class="outer"></div>
+          <filter id="shadowBlur" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="8"/>
+          </filter>
 
-<div class="glass"></div>
+          <filter id="needleShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="2.4"/>
+          </filter>
+        </defs>
 
-<svg class="scale" viewBox="0 0 200 200">
+        <!-- ombra -->
+        <ellipse cx="200" cy="218" rx="135" ry="135" fill="rgba(0,0,0,.34)" filter="url(#shadowBlur)"/>
 
-<!-- arco -->
-<path d="M20 150 A80 80 0 0 1 180 150" class="arc"/>
+        <!-- ghiera -->
+        <circle cx="200" cy="200" r="150" fill="url(#bezelGrad)"/>
 
-<!-- tacche -->
-<line x1="40" y1="140" x2="35" y2="150" class="tick"/>
-<line x1="70" y1="120" x2="65" y2="130" class="tick"/>
-<line x1="100" y1="115" x2="100" y2="130" class="tick"/>
-<line x1="130" y1="120" x2="135" y2="130" class="tick"/>
-<line x1="160" y1="140" x2="165" y2="150" class="tick"/>
+        <!-- anello interno -->
+        <circle cx="200" cy="200" r="126" fill="#12161b"/>
+        <circle cx="200" cy="200" r="122" fill="url(#faceGrad)"/>
+        <circle cx="200" cy="200" r="121" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.2"/>
 
-<!-- numeri -->
-<text x="28" y="160" class="num">2.8</text>
-<text x="78" y="110" class="num">3.5</text>
-<text x="115" y="110" class="num">4.2</text>
-<text x="150" y="160" class="num">5.0</text>
+        <!-- arco scala -->
+        <path
+          d="M 78 258 A 128 128 0 0 1 322 258"
+          fill="none"
+          stroke="var(--scale)"
+          stroke-width="4"
+          stroke-linecap="round"
+        />
 
-</svg>
+        <!-- tacche -->
+        <g stroke="var(--scale)" stroke-width="5" stroke-linecap="round">
+          <line x1="84"  y1="252" x2="58"  y2="270"/>
+          <line x1="118" y1="205" x2="96"  y2="190"/>
+          <line x1="164" y1="173" x2="154" y2="146"/>
+          <line x1="200" y1="166" x2="200" y2="138"/>
+          <line x1="236" y1="173" x2="246" y2="146"/>
+          <line x1="282" y1="205" x2="304" y2="190"/>
+          <line x1="316" y1="252" x2="342" y2="270"/>
+        </g>
 
-<div class="needle"></div>
-<div class="center"></div>
+        <!-- numeri -->
+        <g fill="var(--scale)" font-size="18" font-weight="700" text-anchor="middle">
+          <text x="86"  y="288">2.8</text>
+          <text x="148" y="162">3.5</text>
+          <text x="252" y="162">4.2</text>
+          <text x="314" y="288">5.0</text>
+        </g>
 
-</div>
+        <!-- ombra lancetta -->
+        <g transform="rotate(34 200 200)">
+          <polygon
+            points="196,200 204,200 202,88 198,88"
+            fill="rgba(0,0,0,.44)"
+            filter="url(#needleShadow)"
+            transform="translate(3,2)"
+          />
+        </g>
 
-<div class="value">3.50</div>
-<div class="sub">ultima misurazione</div>
+        <!-- lancetta -->
+        <g transform="rotate(34 200 200)">
+          <polygon points="194,200 206,200 202,90 198,90" fill="var(--needle)"/>
+          <rect x="199.15" y="94" width="1.7" height="95" rx="0.85" fill="var(--needle-hi)" opacity=".78"/>
+        </g>
 
-</div>
+        <!-- base -->
+        <circle cx="200" cy="200" r="34" fill="#171b20"/>
 
+        <!-- perno -->
+        <circle cx="200" cy="200" r="28" fill="url(#hubGrad)"/>
+        <circle cx="200" cy="200" r="28" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="1"/>
+        <circle cx="200" cy="200" r="8" fill="rgba(255,255,255,.20)"/>
+
+        <!-- riflessi vetro -->
+        <ellipse cx="148" cy="126" rx="56" ry="18" fill="rgba(255,255,255,.15)" transform="rotate(-18 148 126)"/>
+        <ellipse cx="256" cy="286" rx="24" ry="8" fill="rgba(255,255,255,.05)" transform="rotate(20 256 286)"/>
+      </svg>
+    </div>
+
+    <div class="value">3.50</div>
+    <div class="sub">ultima misurazione</div>
+  </div>
 </body>
 </html>
