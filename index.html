@@ -6,12 +6,17 @@
   <title>XA Fermentation</title>
   <style>
     :root{
-      --bg:#071629;
-      --card:rgba(255,255,255,0.05);
-      --text:#f3f4f6;
-      --muted:#9aa3ad;
-      --tick:#e6dcc5;
+      --bg1:#071629;
+      --bg2:#081b2f;
+      --card1:#10243a;
+      --card2:#0b1b2c;
+      --stroke:rgba(255,255,255,.06);
+      --text:#f4f7fb;
+      --muted:#95a8bb;
+
+      --scale:#e6dcc5;
       --needle:#ff3b3b;
+      --needleGlow:rgba(255,59,59,.35);
     }
 
     *{
@@ -22,11 +27,12 @@
     }
 
     html,body{
-      width:100%;
       min-height:100vh;
-      background:radial-gradient(circle at center, #0a223d, #071629 70%);
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(70,130,210,.16), transparent 28%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
     }
 
     body{
@@ -36,197 +42,273 @@
       padding:24px 16px;
     }
 
-    .container{
-      width:min(420px,100%);
+    .app{
+      width:min(430px,100%);
       text-align:center;
     }
 
-    h1{
+    .title{
+      font-size:28px;
       letter-spacing:6px;
       font-weight:300;
-      margin-bottom:28px;
-      font-size:28px;
+      margin-bottom:22px;
     }
 
     .card{
-      background:var(--card);
-      backdrop-filter:blur(20px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        linear-gradient(180deg, var(--card1), var(--card2));
+      border:1px solid var(--stroke);
       border-radius:30px;
-      padding:30px;
+      padding:28px 20px 26px;
       box-shadow:
-        0 20px 60px rgba(0,0,0,0.7),
-        inset 0 0 40px rgba(255,255,255,0.03);
+        inset 0 1px 0 rgba(255,255,255,.04),
+        0 20px 60px rgba(0,0,0,.55);
+      backdrop-filter: blur(16px);
     }
 
     canvas{
       width:100%;
-      max-width:300px;
+      max-width:320px;
       height:auto;
       display:block;
       margin:0 auto;
     }
 
     .value{
+      margin-top:18px;
       font-size:64px;
-      margin-top:20px;
-      font-weight:200;
       line-height:1;
+      font-weight:200;
+      letter-spacing:1px;
     }
 
     .sub{
-      color:var(--muted);
       margin-top:10px;
       font-size:18px;
+      color:var(--muted);
     }
 
     @media (max-width:480px){
-      h1{font-size:24px;}
+      .title{font-size:24px;}
       .value{font-size:56px;}
       .sub{font-size:16px;}
     }
   </style>
 </head>
 <body>
+  <div class="app">
+    <div class="title">PH</div>
 
-<div class="container">
-  <h1>PH</h1>
-
-  <div class="card">
-    <canvas id="gauge" width="300" height="300"></canvas>
-    <div class="value">3.50</div>
-    <div class="sub">ultima misurazione</div>
+    <div class="card">
+      <canvas id="gauge" width="320" height="320"></canvas>
+      <div class="value">3.50</div>
+      <div class="sub">ultima misurazione</div>
+    </div>
   </div>
-</div>
 
-<script>
-const canvas = document.getElementById("gauge");
-const ctx = canvas.getContext("2d");
+  <script>
+    const canvas = document.getElementById("gauge");
+    const ctx = canvas.getContext("2d");
 
-const cx = canvas.width / 2;
-const cy = canvas.height / 2;
-const r  = 110;
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2 + 6;
 
-const min = 2.8;
-const max = 5.0;
+    const cfg = {
+      min: 2.8,
+      max: 5.0,
+      value: 3.5,
 
-/* SCALA APPROVATA */
-const startAngle = 135;
-const endAngle   = 405;
+      // Questa è la scala che hai approvato:
+      // 2.8 in basso a sinistra, 3.5 alto-sinistra, 4.2 alto-destra, 5.0 basso-destra
+      startDeg: 135,
+      endDeg: 405,
 
-const value = 3.5;
+      faceRadius: 104,
+      arcRadius: 96,
+      tickOuter: 96,
+      tickInnerMinor: 82,
+      tickInnerMajor: 74,
+      labelRadius: 120,
 
-function toRad(deg){
-  return deg * Math.PI / 180;
-}
+      majorValues: [2.8, 3.5, 4.2, 5.0],
 
-function valueToAngle(v){
-  const ratio = (v - min) / (max - min);
-  return toRad(startAngle + ratio * (endAngle - startAngle));
-}
+      // piccoli aggiustamenti solo per tenere i numeri ben leggibili
+      labelOffsets: {
+        "2.8": { dx: -2, dy: 4, a: 0 },
+        "3.5": { dx: 0,  dy: -6, a: 0 },
+        "4.2": { dx: 0,  dy: -6, a: 0 },
+        "5.0": { dx: 2,  dy: 4, a: 0 }
+      }
+    };
 
-function drawLine(x1,y1,x2,y2,width,color){
-  ctx.beginPath();
-  ctx.moveTo(x1,y1);
-  ctx.lineTo(x2,y2);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width;
-  ctx.lineCap = "round";
-  ctx.stroke();
-}
+    function toRad(deg){
+      return deg * Math.PI / 180;
+    }
 
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+    function valueToAngle(value){
+      const ratio = (value - cfg.min) / (cfg.max - cfg.min);
+      return toRad(cfg.startDeg + ratio * (cfg.endDeg - cfg.startDeg));
+    }
 
-  /* quadrante nero */
-  const faceGrad = ctx.createRadialGradient(cx, cy, 20, cx, cy, r);
-  faceGrad.addColorStop(0, "#111");
-  faceGrad.addColorStop(1, "#000");
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.fillStyle = faceGrad;
-  ctx.fill();
+    function polar(r, angle){
+      return {
+        x: cx + r * Math.cos(angle),
+        y: cy + r * Math.sin(angle)
+      };
+    }
 
-  /* riflesso vetro */
-  ctx.beginPath();
-  ctx.ellipse(cx - 28, cy - 42, 58, 28, -0.2, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(255,255,255,0.05)";
-  ctx.fill();
+    function drawLine(p1, p2, width, color){
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.lineCap = "round";
+      ctx.stroke();
+    }
 
-  /* arco scala */
-  ctx.beginPath();
-  ctx.arc(cx, cy, r - 10, toRad(startAngle), toRad(endAngle));
-  ctx.strokeStyle = "#e6dcc5";
-  ctx.lineWidth = 6;
-  ctx.lineCap = "round";
-  ctx.stroke();
+    function drawFace(){
+      // ombra esterna
+      ctx.save();
+      ctx.shadowColor = "rgba(0,0,0,.45)";
+      ctx.shadowBlur = 28;
+      ctx.beginPath();
+      ctx.arc(cx, cy, cfg.faceRadius + 10, 0, Math.PI * 2);
+      ctx.fillStyle = "#0c1218";
+      ctx.fill();
+      ctx.restore();
 
-  /* tacche */
-  for(let i = 0; i <= 20; i++){
-    const angle = toRad(startAngle + i * (endAngle - startAngle) / 20);
-    const isMajor = i % 5 === 0;
-    const inner = isMajor ? r - 24 : r - 18;
-    const outer = r - 10;
+      // ghiera
+      const bezel = ctx.createRadialGradient(cx - 28, cy - 28, 8, cx, cy, cfg.faceRadius + 12);
+      bezel.addColorStop(0, "#eef2f5");
+      bezel.addColorStop(0.30, "#9ea7b0");
+      bezel.addColorStop(0.68, "#4d5660");
+      bezel.addColorStop(1, "#232830");
 
-    drawLine(
-      cx + inner * Math.cos(angle),
-      cy + inner * Math.sin(angle),
-      cx + outer * Math.cos(angle),
-      cy + outer * Math.sin(angle),
-      isMajor ? 5 : 2.5,
-      "#e6dcc5"
-    );
-  }
+      ctx.beginPath();
+      ctx.arc(cx, cy, cfg.faceRadius + 12, 0, Math.PI * 2);
+      ctx.fillStyle = bezel;
+      ctx.fill();
 
-  /* numeri corretti */
-  const labels = [
-    { value: 2.8, radius: r - 28, dx: -2, dy:  8 },
-    { value: 3.5, radius: r - 34, dx:  0, dy: -8 },
-    { value: 4.2, radius: r - 34, dx:  0, dy: -8 },
-    { value: 5.0, radius: r - 28, dx:  2, dy:  8 }
-  ];
+      // quadrante
+      const face = ctx.createRadialGradient(cx - 14, cy - 16, 12, cx, cy, cfg.faceRadius);
+      face.addColorStop(0, "#20262d");
+      face.addColorStop(0.55, "#0f1419");
+      face.addColorStop(1, "#000000");
 
-  ctx.fillStyle = "#e6dcc5";
-  ctx.font = "bold 16px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
+      ctx.beginPath();
+      ctx.arc(cx, cy, cfg.faceRadius, 0, Math.PI * 2);
+      ctx.fillStyle = face;
+      ctx.fill();
 
-  labels.forEach(label => {
-    const a = valueToAngle(label.value);
-    const x = cx + label.radius * Math.cos(a) + label.dx;
-    const y = cy + label.radius * Math.sin(a) + label.dy;
-    const text = label.value === 5.0 ? "5.0" : label.value.toFixed(1);
-    ctx.fillText(text, x, y);
-  });
+      // bordo interno
+      ctx.beginPath();
+      ctx.arc(cx, cy, cfg.faceRadius - 2, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(255,255,255,.08)";
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
 
-  /* glow lancetta */
-  const a = valueToAngle(value);
-  ctx.shadowColor = "#ff3b3b";
-  ctx.shadowBlur = 10;
+      // riflessi vetro
+      ctx.beginPath();
+      ctx.ellipse(cx - 34, cy - 40, 58, 24, -0.25, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,.08)";
+      ctx.fill();
 
-  drawLine(
-    cx,
-    cy,
-    cx + (r - 30) * Math.cos(a),
-    cy + (r - 30) * Math.sin(a),
-    5,
-    "#ff3b3b"
-  );
+      ctx.beginPath();
+      ctx.ellipse(cx + 42, cy + 46, 22, 8, 0.25, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,.04)";
+      ctx.fill();
+    }
 
-  ctx.shadowBlur = 0;
+    function drawScale(){
+      // arco principale
+      ctx.beginPath();
+      ctx.arc(cx, cy, cfg.arcRadius, toRad(cfg.startDeg), toRad(cfg.endDeg));
+      ctx.strokeStyle = "#e6dcc5";
+      ctx.lineWidth = 6;
+      ctx.lineCap = "round";
+      ctx.stroke();
 
-  /* centro metallico */
-  const metal = ctx.createRadialGradient(cx - 2, cy - 2, 2, cx, cy, 10);
-  metal.addColorStop(0, "#fff");
-  metal.addColorStop(1, "#777");
+      // tacche: 21 suddivisioni
+      for(let i = 0; i <= 20; i++){
+        const a = toRad(cfg.startDeg + i * (cfg.endDeg - cfg.startDeg) / 20);
+        const major = i % 5 === 0;
 
-  ctx.beginPath();
-  ctx.arc(cx, cy, 9, 0, Math.PI * 2);
-  ctx.fillStyle = metal;
-  ctx.fill();
-}
+        const p1 = polar(major ? cfg.tickInnerMajor : cfg.tickInnerMinor, a);
+        const p2 = polar(cfg.tickOuter, a);
 
-draw();
-</script>
+        drawLine(p1, p2, major ? 5 : 2.5, "#e6dcc5");
+      }
+    }
 
+    function drawNeedle(){
+      const a = valueToAngle(cfg.value);
+      const tip = polar(cfg.arcRadius - 16, a);
+
+      // glow
+      ctx.save();
+      ctx.shadowColor = "rgba(255,59,59,.35)";
+      ctx.shadowBlur = 12;
+      drawLine({x:cx, y:cy}, tip, 6, "#ff3b3b");
+      ctx.restore();
+
+      // highlight
+      ctx.save();
+      ctx.strokeStyle = "#ffd0d0";
+      ctx.lineWidth = 1.8;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(cx + 1.2, cy - 1.2);
+      ctx.lineTo(tip.x + 1.2, tip.y - 1.2);
+      ctx.stroke();
+      ctx.restore();
+
+      // centro metallico
+      const hub = ctx.createRadialGradient(cx - 3, cy - 3, 2, cx, cy, 13);
+      hub.addColorStop(0, "#ffffff");
+      hub.addColorStop(0.35, "#d7dde4");
+      hub.addColorStop(1, "#666f79");
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+      ctx.fillStyle = hub;
+      ctx.fill();
+    }
+
+    function drawLabels(){
+      ctx.save();
+      ctx.fillStyle = "#e6dcc5";
+      ctx.font = "bold 16px Arial";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      cfg.majorValues.forEach(v => {
+        const key = v.toFixed(1);
+        const off = cfg.labelOffsets[key] || { dx: 0, dy: 0, a: 0 };
+        const a = valueToAngle(v) + toRad(off.a);
+        const p = polar(cfg.labelRadius, a);
+
+        // halo nero dietro al testo, così non viene mai coperto visivamente
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "rgba(0,0,0,.45)";
+        ctx.strokeText(key, p.x + off.dx, p.y + off.dy);
+
+        ctx.fillText(key, p.x + off.dx, p.y + off.dy);
+      });
+
+      ctx.restore();
+    }
+
+    function draw(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawFace();
+      drawScale();
+      drawNeedle();
+      drawLabels();
+    }
+
+    draw();
+  </script>
 </body>
 </html>
