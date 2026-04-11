@@ -32,8 +32,6 @@ body{
   background:linear-gradient(#f0f4f7,#b8c0c7,#e4e9ee,#8d98a3);
   border-radius:30px;
   padding:30px;
-  box-shadow:inset 0 2px 6px rgba(255,255,255,.3),
-             inset 0 -20px 30px rgba(0,0,0,.2);
 }
 
 .card{
@@ -70,7 +68,7 @@ body{
   <div class="logo">XA</div>
   <div>
     <h1>XA Fermentation</h1>
-    <div>Step definitivo: quadrante grande corretto</div>
+    <div>Step PRO: quadrante realistico vintage</div>
   </div>
 </div>
 
@@ -83,50 +81,49 @@ body{
 <svg viewBox="0 0 400 400">
 
 <defs>
+
 <radialGradient id="bezel">
-<stop offset="0%" stop-color="#ffffff"/>
-<stop offset="50%" stop-color="#9ca6b0"/>
-<stop offset="100%" stop-color="#2a2a2a"/>
+<stop offset="0%" stop-color="#fff"/>
+<stop offset="40%" stop-color="#bbb"/>
+<stop offset="100%" stop-color="#222"/>
 </radialGradient>
 
 <radialGradient id="face">
-<stop offset="0%" stop-color="#2c3136"/>
-<stop offset="100%" stop-color="#050708"/>
+<stop offset="0%" stop-color="#2b2f34"/>
+<stop offset="100%" stop-color="#000"/>
 </radialGradient>
 
-<radialGradient id="center">
-<stop offset="0%" stop-color="#ffffff"/>
-<stop offset="100%" stop-color="#888"/>
-</radialGradient>
 </defs>
 
 <!-- ghiera -->
-<circle cx="200" cy="200" r="170" fill="url(#bezel)"/>
+<circle cx="200" cy="200" r="160" fill="url(#bezel)"/>
 
 <!-- interno -->
-<circle cx="200" cy="200" r="140" fill="url(#face)"/>
+<circle cx="200" cy="200" r="135" fill="url(#face)"/>
 
-<!-- tacche (pulite, poche) -->
-<g stroke="#d8d2b0" stroke-width="4">
-<line x1="200" y1="60" x2="200" y2="90"/>
-<line x1="260" y1="80" x2="240" y2="110"/>
-<line x1="300" y1="140" x2="270" y2="150"/>
-<line x1="300" y1="260" x2="270" y2="250"/>
-<line x1="260" y1="320" x2="240" y2="290"/>
-<line x1="140" y1="320" x2="160" y2="290"/>
-<line x1="100" y1="260" x2="130" y2="250"/>
-<line x1="100" y1="140" x2="130" y2="150"/>
-<line x1="140" y1="80" x2="160" y2="110"/>
+<!-- arco scala -->
+<path d="M80 250 A150 150 0 0 1 320 250"
+stroke="#d8d2b0"
+stroke-width="3"
+fill="none"/>
+
+<!-- tacche radiali -->
+<g stroke="#d8d2b0" stroke-width="3">
+<line x1="120" y1="240" x2="110" y2="255"/>
+<line x1="150" y1="210" x2="140" y2="220"/>
+<line x1="200" y1="200" x2="200" y2="180"/>
+<line x1="250" y1="210" x2="260" y2="220"/>
+<line x1="280" y1="240" x2="290" y2="255"/>
 </g>
 
-<!-- lancetta -->
-<g transform="rotate(32 200 200)">
-<polygon points="195,200 205,200 202,70 198,70" fill="red"/>
-<rect x="199" y="75" width="2" height="110" fill="white"/>
+<!-- lancetta realistica -->
+<g transform="rotate(35 200 200)">
+<polygon points="198,200 202,200 200,85" fill="red"/>
+<circle cx="200" cy="200" r="6" fill="white"/>
 </g>
 
 <!-- perno -->
-<circle cx="200" cy="200" r="30" fill="url(#center)"/>
+<circle cx="200" cy="200" r="25" fill="#bbb"/>
 
 </svg>
     </div>
