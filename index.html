@@ -1,272 +1,140 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation</title>
-  <style>
-    :root{
-      --bg1:#04080e;
-      --bg2:#0b1622;
-      --steel1:#f4f7f9;
-      --steel2:#d7dee4;
-      --steel3:#9ca6b0;
-      --steel4:#646d77;
-      --steel5:#333941;
-      --panel1:#646d77;
-      --panel2:#232930;
-      --text:#eef4fa;
-      --muted:#b2bfcb;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XA Fermentation</title>
 
-    *{
-      box-sizing:border-box;
-      -webkit-tap-highlight-color:transparent;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:linear-gradient(#05090f,#0b1622);
+  color:white;
+  padding:20px;
+}
 
-    html,body{
-      margin:0;
-      min-height:100vh;
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, rgba(70,120,180,.12), transparent 28%),
-        linear-gradient(180deg,var(--bg1),var(--bg2));
-    }
+/* HEADER */
+.header{display:flex;align-items:center;gap:15px;margin-bottom:20px}
+.logo{
+  width:80px;height:80px;border-radius:20px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:34px;font-weight:bold;
+  background:linear-gradient(#1e2a36,#0c131b);
+}
+h1{margin:0;font-size:28px}
+.sub{font-size:14px;color:#9fb0c0}
 
-    body{
-      padding:18px 12px 34px;
-    }
+/* PANNELLO */
+.panel{
+  position:relative;
+  border-radius:30px;
+  padding:30px;
+  background:
+    repeating-linear-gradient(90deg,#ffffff10 0px,#00000008 3px),
+    linear-gradient(#f0f4f7,#b8c0c7,#e4e9ee,#8d98a3);
+  box-shadow:
+    inset 0 2px 6px #ffffff50,
+    inset 0 -20px 30px #00000030,
+    0 20px 40px #00000050;
+}
 
-    .app{
-      max-width:900px;
-      margin:0 auto;
-    }
+/* VITI */
+.screw{
+  position:absolute;
+  width:22px;height:22px;border-radius:50%;
+  background:radial-gradient(#fff,#999,#444);
+}
+.tl{top:10px;left:10px}
+.tr{top:10px;right:10px}
+.bl{bottom:10px;left:10px}
+.br{bottom:10px;right:10px}
 
-    .header{
-      display:flex;
-      align-items:center;
-      gap:15px;
-      margin-bottom:20px;
-    }
+/* CARD */
+.card{
+  background:linear-gradient(#5b646f,#20262d);
+  border-radius:30px;
+  padding:30px 20px 30px;
+  text-align:center;
+  box-shadow:
+    inset 0 2px 4px #ffffff20,
+    inset 0 -30px 40px #00000070;
+}
 
-    .logo{
-      width:80px;
-      height:80px;
-      border-radius:20px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:34px;
-      font-weight:bold;
-      color:#f5f9fc;
-      background:linear-gradient(#1e2a36,#0c131b);
-      box-shadow:
-        inset 0 2px 8px rgba(255,255,255,.08),
-        0 10px 20px rgba(0,0,0,.22);
-      flex:0 0 auto;
-    }
+.title{
+  letter-spacing:8px;
+  margin-bottom:10px;
+  color:#dfe6ee;
+}
 
-    h1{
-      margin:0;
-      font-size:28px;
-      line-height:1;
-    }
+/* QUADRANTE GRANDE */
+.dial{
+  width:100%;
+  max-width:420px;
+  aspect-ratio:1;
+  margin:0 auto;
+}
 
-    .sub{
-      font-size:14px;
-      color:#9fb0c0;
-      margin-top:8px;
-      line-height:1.35;
-    }
+/* TESTO */
+.value{
+  font-size:60px;
+  margin-top:10px;
+}
+.subtext{
+  color:#aebbc7;
+}
 
-    .panel{
-      position:relative;
-      border-radius:30px;
-      padding:30px;
-      background:
-        repeating-linear-gradient(90deg,#ffffff10 0px,#00000008 3px),
-        linear-gradient(#f0f4f7,#b8c0c7,#e4e9ee,#8d98a3);
-      box-shadow:
-        inset 0 2px 6px rgba(255,255,255,.35),
-        inset 0 -20px 30px rgba(0,0,0,.18),
-        0 20px 40px rgba(0,0,0,.32);
-    }
-
-    .screw{
-      position:absolute;
-      width:22px;
-      height:22px;
-      border-radius:50%;
-      background:radial-gradient(circle at 35% 35%, #fff 0%, #bbb 35%, #777 65%, #444 100%);
-      box-shadow:
-        inset 0 1px 2px rgba(255,255,255,.35),
-        0 2px 4px rgba(0,0,0,.35);
-    }
-
-    .tl{top:10px;left:10px}
-    .tr{top:10px;right:10px}
-    .bl{bottom:10px;left:10px}
-    .br{bottom:10px;right:10px}
-
-    .card{
-      background:linear-gradient(var(--panel1),var(--panel2));
-      border-radius:30px;
-      padding:25px;
-      text-align:center;
-      box-shadow:
-        inset 0 2px 4px rgba(255,255,255,.12),
-        inset 0 -20px 30px rgba(0,0,0,.42);
-    }
-
-    .title{
-      letter-spacing:8px;
-      margin-bottom:18px;
-      color:#dfe6ee;
-      font-size:18px;
-    }
-
-    .dial-wrap{
-      width:min(88vw, 430px);
-      aspect-ratio:1 / 1;
-      margin:0 auto 18px;
-    }
-
-    .dial-svg{
-      width:100%;
-      height:100%;
-      display:block;
-      filter:drop-shadow(0 18px 18px rgba(0,0,0,.28));
-    }
-
-    .value{
-      font-size:60px;
-      margin-top:20px;
-      line-height:1;
-      font-weight:700;
-    }
-
-    .subtext{
-      color:var(--muted);
-      font-size:18px;
-      margin-top:6px;
-    }
-
-    @media(max-width:600px){
-      .dial-wrap{width:220px}
-      .value{font-size:50px}
-      .subtext{font-size:16px}
-      h1{font-size:26px}
-      .logo{width:74px;height:74px;font-size:32px}
-      .panel{padding:24px}
-    }
-  </style>
+/* MOBILE */
+@media(max-width:600px){
+  .value{font-size:50px}
+}
+</style>
 </head>
+
 <body>
-  <div class="app">
-    <div class="header">
-      <div class="logo">XA</div>
-      <div>
-        <h1>XA Fermentation</h1>
-        <div class="sub">Step 7: quadrante rifatto in SVG unico, più meccanico e credibile</div>
-      </div>
-    </div>
 
-    <div class="panel">
-      <div class="screw tl"></div>
-      <div class="screw tr"></div>
-      <div class="screw bl"></div>
-      <div class="screw br"></div>
-
-      <div class="card">
-        <div class="title">P H</div>
-
-        <div class="dial-wrap">
-          <svg class="dial-svg" viewBox="0 0 400 400" aria-hidden="true">
-            <defs>
-              <radialGradient id="bezelGrad" cx="35%" cy="30%">
-                <stop offset="0%" stop-color="#f4f7f9"/>
-                <stop offset="18%" stop-color="#d7dee4"/>
-                <stop offset="52%" stop-color="#9ca6b0"/>
-                <stop offset="78%" stop-color="#646d77"/>
-                <stop offset="100%" stop-color="#333941"/>
-              </radialGradient>
-
-              <radialGradient id="faceGrad" cx="45%" cy="38%">
-                <stop offset="0%" stop-color="#3a4046"/>
-                <stop offset="48%" stop-color="#1b2025"/>
-                <stop offset="100%" stop-color="#07090c"/>
-              </radialGradient>
-
-              <radialGradient id="faceGlow" cx="50%" cy="46%">
-                <stop offset="0%" stop-color="rgba(255,255,255,.06)"/>
-                <stop offset="55%" stop-color="rgba(255,255,255,.015)"/>
-                <stop offset="100%" stop-color="rgba(0,0,0,.22)"/>
-              </radialGradient>
-
-              <linearGradient id="needleGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#ff9187"/>
-                <stop offset="55%" stop-color="#e1463f"/>
-                <stop offset="100%" stop-color="#912420"/>
-              </linearGradient>
-
-              <radialGradient id="hubGrad" cx="35%" cy="35%">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="30%" stop-color="#d7dfe6"/>
-                <stop offset="70%" stop-color="#96a1ab"/>
-                <stop offset="100%" stop-color="#4f5862"/>
-              </radialGradient>
-
-              <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="5"/>
-              </filter>
-
-              <filter id="needleShadow" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="2.5"/>
-              </filter>
-            </defs>
-
-            <!-- ombra strumento -->
-            <ellipse cx="200" cy="214" rx="120" ry="120" fill="rgba(0,0,0,.28)" filter="url(#softShadow)"/>
-
-            <!-- ghiera -->
-            <circle cx="200" cy="200" r="118" fill="url(#bezelGrad)"/>
-            <circle cx="200" cy="200" r="101" fill="#15191e"/>
-            <circle cx="200" cy="200" r="96" fill="url(#faceGrad)"/>
-            <circle cx="200" cy="200" r="96" fill="url(#faceGlow)"/>
-
-            <!-- leggerissimo filetto interno -->
-            <circle cx="200" cy="200" r="93" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.2"/>
-
-            <!-- ombra lancetta -->
-            <g transform="rotate(32 200 200)">
-              <polygon points="196,200 204,200 202,92 198,92" fill="rgba(0,0,0,.45)" filter="url(#needleShadow)" transform="translate(3,2)"/>
-            </g>
-
-            <!-- lancetta -->
-            <g transform="rotate(32 200 200)">
-              <polygon points="194,200 206,200 202,94 198,94" fill="url(#needleGrad)"/>
-              <rect x="198.9" y="97" width="2.2" height="95" rx="1.1" fill="rgba(255,255,255,.40)"/>
-            </g>
-
-            <!-- mozzo sotto -->
-            <circle cx="200" cy="200" r="34" fill="#161b20"/>
-
-            <!-- mozzo metallico -->
-            <circle cx="200" cy="200" r="29" fill="url(#hubGrad)"/>
-            <circle cx="200" cy="200" r="29" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
-            <circle cx="200" cy="200" r="8" fill="rgba(255,255,255,.18)"/>
-
-            <!-- vetro -->
-            <ellipse cx="154" cy="132" rx="58" ry="18" fill="rgba(255,255,255,.15)" transform="rotate(-18 154 132)"/>
-            <ellipse cx="256" cy="285" rx="26" ry="9" fill="rgba(255,255,255,.05)" transform="rotate(20 256 285)"/>
-          </svg>
-        </div>
-
-        <div class="value">3.50</div>
-        <div class="subtext">ultima misurazione</div>
-      </div>
-    </div>
+<div class="header">
+  <div class="logo">XA</div>
+  <div>
+    <h1>XA Fermentation</h1>
+    <div class="sub">Step 8: proporzioni reali strumento</div>
   </div>
+</div>
+
+<div class="panel">
+  <div class="screw tl"></div>
+  <div class="screw tr"></div>
+  <div class="screw bl"></div>
+  <div class="screw br"></div>
+
+  <div class="card">
+    <div class="title">P H</div>
+
+    <div class="dial">
+      <svg viewBox="0 0 400 400" width="100%" height="100%">
+        
+        <!-- GHIERA -->
+        <circle cx="200" cy="200" r="150" fill="url(#bezelGrad)"/>
+        
+        <!-- INTERNO -->
+        <circle cx="200" cy="200" r="125" fill="url(#faceGrad)"/>
+
+        <!-- LANCETTA -->
+        <g transform="rotate(32 200 200)">
+          <polygon points="195,200 205,200 202,80 198,80" fill="#e53935"/>
+          <rect x="199" y="85" width="2" height="100" fill="#fff"/>
+        </g>
+
+        <!-- PERNO -->
+        <circle cx="200" cy="200" r="30" fill="url(#hubGrad)"/>
+
+      </svg>
+    </div>
+
+    <div class="value">3.50</div>
+    <div class="subtext">ultima misurazione</div>
+  </div>
+</div>
+
 </body>
 </html>
