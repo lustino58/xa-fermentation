@@ -8,20 +8,25 @@
     :root{
       --bg1:#03070c;
       --bg2:#0a121b;
-      --steel1:#eef2f5;
-      --steel2:#cfd6dc;
-      --steel3:#9ca6af;
-      --steel4:#6c7580;
-      --steel5:#3f4750;
-      --card1:#3e454d;
-      --card2:#1e242b;
-      --face1:#191610;
-      --face2:#0f1012;
-      --tick:#e7d4a9;
-      --needle:#d65a45;
-      --needle2:#ff8e78;
-      --text:#f3f6f9;
-      --muted:#bcc7d1;
+      --text:#eef5fb;
+      --muted:#b8c4cf;
+
+      --steel1:#f3f6f8;
+      --steel2:#d5dce2;
+      --steel3:#a5afb8;
+      --steel4:#737d88;
+      --steel5:#444c55;
+
+      --panelDark1:#4a525c;
+      --panelDark2:#20262d;
+
+      --ring1:#d9e0e6;
+      --ring2:#9aa4ae;
+      --ring3:#5f6872;
+      --ring4:#2f353c;
+
+      --face1:#10141a;
+      --face2:#06090d;
     }
 
     *{
@@ -31,12 +36,12 @@
 
     html,body{
       margin:0;
-      min-height:100%;
+      min-height:100vh;
       font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
       background:
         radial-gradient(circle at top, rgba(70,120,180,.14), transparent 28%),
         linear-gradient(180deg,var(--bg1),var(--bg2));
-      color:var(--text);
     }
 
     body{
@@ -92,8 +97,8 @@
     .panel{
       position:relative;
       border-radius:36px;
-      padding:26px 16px 30px;
       min-height:720px;
+      padding:26px 16px 30px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.18);
       background:
@@ -167,7 +172,7 @@
       text-align:center;
       background:
         linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)),
-        linear-gradient(180deg, var(--card1), var(--card2));
+        linear-gradient(180deg, var(--panelDark1), var(--panelDark2));
       border:1px solid rgba(255,255,255,.10);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.05),
@@ -176,14 +181,14 @@
     }
 
     .meter-title{
-      margin:0 0 14px;
+      margin:0 0 18px;
       font-size:18px;
       letter-spacing:8px;
-      color:#eadab8;
+      color:#e8edf3;
     }
 
     .dial-wrap{
-      width:min(88vw, 500px);
+      width:min(86vw, 430px);
       aspect-ratio:1 / 1;
       margin:0 auto 18px;
     }
@@ -192,7 +197,7 @@
       width:100%;
       height:100%;
       display:block;
-      filter:drop-shadow(0 16px 18px rgba(0,0,0,.30));
+      filter:drop-shadow(0 14px 16px rgba(0,0,0,.28));
     }
 
     .value{
@@ -238,7 +243,7 @@
       }
 
       .panel{
-        min-height:640px;
+        min-height:620px;
         padding:24px 12px 24px;
       }
 
@@ -259,7 +264,7 @@
       <div class="xa-logo">XA</div>
       <div>
         <h1>XA Fermentation</h1>
-        <div class="subhead">Test singolo strumento tondo vintage, rifatto pulito da zero</div>
+        <div class="subhead">Base pulita: solo strumento tondo incassato, senza numeri e senza tacche</div>
       </div>
     </div>
 
@@ -276,100 +281,49 @@
           <svg class="dial-svg" viewBox="0 0 500 500" aria-hidden="true">
             <defs>
               <radialGradient id="bezelGrad" cx="34%" cy="28%">
-                <stop offset="0%" stop-color="#f1f4f7"/>
-                <stop offset="18%" stop-color="#d2d9df"/>
-                <stop offset="54%" stop-color="#8e98a2"/>
-                <stop offset="80%" stop-color="#525b64"/>
-                <stop offset="100%" stop-color="#2f353b"/>
+                <stop offset="0%" stop-color="var(--ring1)"/>
+                <stop offset="20%" stop-color="var(--ring2)"/>
+                <stop offset="58%" stop-color="var(--ring3)"/>
+                <stop offset="100%" stop-color="var(--ring4)"/>
               </radialGradient>
 
-              <radialGradient id="faceGrad" cx="50%" cy="42%">
-                <stop offset="0%" stop-color="#231d14"/>
-                <stop offset="55%" stop-color="#111115"/>
-                <stop offset="100%" stop-color="#090b0e"/>
+              <radialGradient id="faceGrad" cx="50%" cy="40%">
+                <stop offset="0%" stop-color="var(--face1)"/>
+                <stop offset="65%" stop-color="#0b0f14"/>
+                <stop offset="100%" stop-color="var(--face2)"/>
               </radialGradient>
 
-              <radialGradient id="warmGlow" cx="50%" cy="44%">
-                <stop offset="0%" stop-color="rgba(255,210,130,.10)"/>
-                <stop offset="42%" stop-color="rgba(255,210,130,.04)"/>
-                <stop offset="100%" stop-color="rgba(255,210,130,0)"/>
+              <radialGradient id="innerShadow" cx="50%" cy="50%">
+                <stop offset="0%" stop-color="rgba(255,255,255,.03)"/>
+                <stop offset="55%" stop-color="rgba(255,255,255,.01)"/>
+                <stop offset="100%" stop-color="rgba(0,0,0,.25)"/>
               </radialGradient>
-
-              <linearGradient id="needleGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#ffd2c8"/>
-                <stop offset="48%" stop-color="#ff8d77"/>
-                <stop offset="100%" stop-color="#d65a45"/>
-              </linearGradient>
-
-              <filter id="needleGlow" x="-60%" y="-60%" width="220%" height="220%">
-                <feGaussianBlur stdDeviation="3.8" result="blur"/>
-                <feMerge>
-                  <feMergeNode in="blur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
 
               <filter id="glassBlur" x="-20%" y="-20%" width="140%" height="140%">
                 <feGaussianBlur stdDeviation="1.6"/>
               </filter>
             </defs>
 
-            <!-- ghiera -->
+            <!-- ghiera metallica -->
             <circle cx="250" cy="250" r="182" fill="url(#bezelGrad)"/>
-            <circle cx="250" cy="250" r="166" fill="#242a31" opacity=".42"/>
-            <circle cx="250" cy="250" r="152" fill="url(#faceGrad)"/>
-
-            <!-- luce -->
-            <circle cx="250" cy="250" r="146" fill="url(#warmGlow)"/>
+            <circle cx="250" cy="250" r="168" fill="#242a31" opacity=".42"/>
+            <circle cx="250" cy="250" r="154" fill="url(#faceGrad)"/>
 
             <!-- filetto interno -->
-            <circle cx="250" cy="250" r="145" fill="none" stroke="rgba(255,240,210,.10)" stroke-width="2.4"/>
+            <circle cx="250" cy="250" r="148" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.8"/>
 
-            <!-- tacche principali -->
-            <g stroke="#e7d4a9" stroke-linecap="round">
-              <line x1="122" y1="172" x2="96" y2="156" stroke-width="10"/>
-              <line x1="160" y1="130" x2="142" y2="107" stroke-width="10"/>
-              <line x1="208" y1="103" x2="201" y2="75" stroke-width="10"/>
-              <line x1="260" y1="96" x2="260" y2="66" stroke-width="10"/>
-              <line x1="312" y1="104" x2="320" y2="76" stroke-width="10"/>
-              <line x1="359" y1="132" x2="377" y2="109" stroke-width="10"/>
-              <line x1="396" y1="174" x2="423" y2="159" stroke-width="10"/>
-              <line x1="417" y1="225" x2="447" y2="220" stroke-width="10"/>
-            </g>
+            <!-- ombra morbida interna -->
+            <circle cx="250" cy="250" r="150" fill="url(#innerShadow)" opacity=".95"/>
 
-            <!-- tacche secondarie -->
-            <g stroke="#d8c49a" stroke-linecap="round" opacity=".92">
-              <line x1="140" y1="150" x2="123" y2="132" stroke-width="6"/>
-              <line x1="183" y1="115" x2="171" y2="91" stroke-width="6"/>
-              <line x1="234" y1="98" x2="231" y2="70" stroke-width="6"/>
-              <line x1="286" y1="98" x2="290" y2="70" stroke-width="6"/>
-              <line x1="336" y1="115" x2="349" y2="91" stroke-width="6"/>
-              <line x1="379" y1="149" x2="398" y2="131" stroke-width="6"/>
-              <line x1="408" y1="198" x2="435" y2="188" stroke-width="6"/>
-            </g>
-
-            <!-- numeri -->
-            <g fill="#efe2c4" font-size="24" font-weight="700" text-anchor="middle">
-              <text x="112" y="154">2.8</text>
-              <text x="212" y="72">3.5</text>
-              <text x="319" y="74">4.2</text>
-              <text x="433" y="164">5.0</text>
-            </g>
-
-            <!-- lancetta -->
-            <g transform="rotate(-32 250 250)">
-              <line x1="250" y1="250" x2="250" y2="118" stroke="url(#needleGrad)" stroke-width="12" stroke-linecap="round" filter="url(#needleGlow)"/>
-            </g>
-
-            <!-- mozzo -->
-            <circle cx="250" cy="250" r="74" fill="#14181d"/>
-            <circle cx="250" cy="250" r="42" fill="#e5ebf2"/>
+            <!-- tondo centrale -->
+            <circle cx="250" cy="250" r="76" fill="#12171d"/>
+            <circle cx="250" cy="250" r="42" fill="#e6ecf2"/>
             <circle cx="250" cy="250" r="42" fill="none" stroke="rgba(0,0,0,.16)" stroke-width="1.4"/>
 
             <!-- vetro -->
-            <ellipse cx="196" cy="153" rx="78" ry="24" fill="rgba(255,255,255,.14)" transform="rotate(-18 196 153)" filter="url(#glassBlur)"/>
-            <ellipse cx="316" cy="334" rx="38" ry="12" fill="rgba(255,255,255,.05)" transform="rotate(20 316 334)" filter="url(#glassBlur)"/>
-            <circle cx="250" cy="250" r="152" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.4"/>
+            <ellipse cx="196" cy="155" rx="82" ry="24" fill="rgba(255,255,255,.12)" transform="rotate(-18 196 155)" filter="url(#glassBlur)"/>
+            <ellipse cx="318" cy="334" rx="38" ry="12" fill="rgba(255,255,255,.05)" transform="rotate(20 318 334)" filter="url(#glassBlur)"/>
+            <circle cx="250" cy="250" r="154" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.2"/>
           </svg>
         </div>
 
@@ -379,7 +333,7 @@
     </div>
 
     <div class="bottom-note">
-      Se la base di questo strumento finalmente ti convince, nel passo dopo lo trasformo in versione definitiva XA.
+      Quando questa forma base è giusta, aggiungiamo solo la lancetta. Dopo, solo le tacche. Dopo, solo i numeri.
     </div>
   </div>
 </body>
