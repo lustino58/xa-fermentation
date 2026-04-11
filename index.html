@@ -6,16 +6,16 @@
   <title>XA Fermentation</title>
   <style>
     :root{
-      --bg1:#02060b;
-      --bg2:#07101a;
-      --text:#f2f6fa;
-      --muted:#aab7c4;
-      --blue:#69b8ff;
-      --green:#62f2a2;
-      --orange:#ffb25c;
-      --purple:#c17aff;
-      --red:#ff6f7a;
-      --yellow:#ffd36a;
+      --bg1:#03070c;
+      --bg2:#08111a;
+      --text:#eef5fb;
+      --muted:#a9b8c6;
+      --blue:#6cbcff;
+      --green:#79f0b6;
+      --orange:#ffbf72;
+      --purple:#cd92ff;
+      --red:#ff717c;
+      --yellow:#ffd56f;
     }
 
     *{
@@ -29,23 +29,23 @@
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top, rgba(45,102,160,.14), transparent 28%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
+        radial-gradient(circle at top, rgba(50,110,170,.16), transparent 30%),
+        linear-gradient(180deg,var(--bg1),var(--bg2));
     }
 
     body{
-      padding:20px 14px 34px;
+      padding:18px 12px 34px;
     }
 
     .app{
-      max-width:1080px;
+      max-width:1100px;
       margin:0 auto;
     }
 
     .topbar{
       display:flex;
       justify-content:flex-end;
-      margin-bottom:12px;
+      margin-bottom:10px;
     }
 
     .lang-btn{
@@ -58,7 +58,9 @@
       background:
         linear-gradient(180deg, rgba(155,173,190,.18), rgba(42,61,78,.14)),
         linear-gradient(180deg, #3d5f7d, #2b445a);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.10), 0 0 12px rgba(70,140,220,.16);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.10),
+        0 0 12px rgba(70,140,220,.16);
     }
 
     .hero{
@@ -79,12 +81,13 @@
       font-weight:700;
       color:#eef5fb;
       background:
-        linear-gradient(145deg, rgba(150,166,180,.28), rgba(58,68,79,.12)),
-        linear-gradient(180deg, #16202b, #0a1118);
+        linear-gradient(145deg, rgba(180,196,210,.24), rgba(70,80,90,.08)),
+        linear-gradient(180deg, #192430, #0b1219);
       border:1px solid rgba(255,255,255,.08);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.14),
-        0 0 22px rgba(70,140,220,.12);
+        inset 0 1px 0 rgba(255,255,255,.16),
+        inset 0 -8px 14px rgba(0,0,0,.45),
+        0 0 20px rgba(70,140,220,.10);
       flex:0 0 auto;
     }
 
@@ -92,14 +95,13 @@
       margin:0;
       font-size:30px;
       line-height:1;
-      letter-spacing:.2px;
     }
 
     .hero-text p{
       margin:8px 0 0;
       font-size:14px;
-      color:var(--muted);
       line-height:1.35;
+      color:var(--muted);
     }
 
     .dashboard,
@@ -113,78 +115,95 @@
     .additions-card,
     .filters-card,
     .alert-box{
+      border-radius:26px;
+      border:1px solid rgba(180,196,210,.10);
       background:
         linear-gradient(180deg, rgba(130,147,163,.12), rgba(47,58,68,.08)),
         linear-gradient(180deg, #09111a 0%, #060d15 100%);
-      border:1px solid rgba(167,187,204,.10);
-      border-radius:24px;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 0 24px rgba(0,110,210,.10);
+        inset 0 1px 0 rgba(255,255,255,.05),
+        0 0 24px rgba(0,110,210,.08);
     }
 
     .dashboard{
       padding:18px;
       margin-bottom:20px;
-      position:relative;
-      overflow:hidden;
     }
 
+    /* PANNELLO ALLUMINIO SATINATO */
     .metal-panel{
       position:relative;
-      border-radius:30px;
-      padding:18px 16px 16px;
+      border-radius:34px;
+      padding:20px 16px 18px;
       margin-bottom:18px;
       background:
+        linear-gradient(180deg,
+          rgba(255,255,255,.16) 0%,
+          rgba(255,255,255,.06) 8%,
+          rgba(0,0,0,.10) 18%,
+          rgba(255,255,255,.05) 34%,
+          rgba(0,0,0,.10) 52%,
+          rgba(255,255,255,.05) 68%,
+          rgba(0,0,0,.12) 86%,
+          rgba(255,255,255,.08) 100%),
         repeating-linear-gradient(
           90deg,
-          rgba(255,255,255,.055) 0px,
-          rgba(255,255,255,.018) 2px,
-          rgba(0,0,0,.045) 4px,
-          rgba(255,255,255,.02) 6px
+          rgba(255,255,255,.050) 0px,
+          rgba(255,255,255,.022) 2px,
+          rgba(0,0,0,.040) 4px,
+          rgba(255,255,255,.018) 6px,
+          rgba(0,0,0,.035) 8px
         ),
-        linear-gradient(180deg, #76828d 0%, #3d4650 18%, #9aa7b2 46%, #353d46 74%, #697581 100%);
-      border:1px solid rgba(255,255,255,.22);
+        linear-gradient(180deg,#9aa5af 0%,#55606a 18%,#bcc6cf 48%,#48525c 74%,#87929d 100%);
+      border:1px solid rgba(255,255,255,.18);
       box-shadow:
-        inset 0 1px 1px rgba(255,255,255,.20),
-        inset 0 -14px 22px rgba(0,0,0,.36),
-        0 0 28px rgba(30,100,190,.08);
+        inset 0 2px 2px rgba(255,255,255,.18),
+        inset 0 -16px 26px rgba(0,0,0,.28),
+        0 12px 30px rgba(0,0,0,.28);
+      overflow:hidden;
     }
 
     .metal-panel::before{
       content:"";
       position:absolute;
       inset:0;
-      border-radius:30px;
+      border-radius:34px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.10), transparent 18%, transparent 82%, rgba(0,0,0,.12)),
-        linear-gradient(90deg, rgba(255,255,255,.03), transparent 12%, rgba(255,255,255,.04) 30%, transparent 48%, rgba(0,0,0,.05) 70%, transparent);
+        linear-gradient(90deg,
+          rgba(255,255,255,.05) 0%,
+          transparent 12%,
+          rgba(255,255,255,.05) 24%,
+          transparent 38%,
+          rgba(0,0,0,.06) 56%,
+          transparent 74%,
+          rgba(255,255,255,.04) 100%);
+      opacity:.9;
       pointer-events:none;
     }
 
     .screw{
       position:absolute;
-      width:18px;
-      height:18px;
+      width:20px;
+      height:20px;
       border-radius:50%;
       background:
-        radial-gradient(circle at 30% 30%, #f5f8fb 0%, #b6c0ca 18%, #7b8691 44%, #4a535c 70%, #2a3138 100%);
-      border:1px solid rgba(255,255,255,.18);
+        radial-gradient(circle at 30% 30%, #fbfdff 0%, #d0d8df 18%, #8d97a1 46%, #59616a 72%, #333941 100%);
+      border:1px solid rgba(255,255,255,.20);
       box-shadow:
-        inset 0 1px 1px rgba(255,255,255,.35),
-        0 1px 2px rgba(0,0,0,.45);
-      z-index:3;
+        inset 0 1px 1px rgba(255,255,255,.38),
+        0 1px 3px rgba(0,0,0,.45);
+      z-index:4;
     }
 
     .screw::after{
       content:"";
       position:absolute;
-      left:3px;
-      right:3px;
-      top:8px;
+      left:4px;
+      right:4px;
+      top:9px;
       height:1.5px;
-      background:rgba(30,35,40,.9);
-      transform:rotate(-18deg);
+      background:#313841;
+      transform:rotate(-20deg);
       border-radius:2px;
     }
 
@@ -202,87 +221,87 @@
     }
 
     .gauge-card{
-      border-radius:32px;
-      padding:16px 12px 18px;
+      border-radius:30px;
+      padding:14px 12px 18px;
+      min-width:0;
+      text-align:center;
       background:
-        radial-gradient(circle at 50% 18%, rgba(255,255,255,.03), transparent 38%),
-        linear-gradient(180deg, #071018, #050b12);
+        radial-gradient(circle at 50% 12%, rgba(255,255,255,.03), transparent 30%),
+        linear-gradient(180deg,#071018,#040a11);
       border:1px solid rgba(255,255,255,.08);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.04),
-        inset 0 -14px 24px rgba(0,0,0,.50),
-        0 0 18px rgba(20,90,180,.06);
-      text-align:center;
-      min-width:0;
-      transition:transform .2s ease, box-shadow .25s ease, border-color .25s ease;
+        inset 0 1px 0 rgba(255,255,255,.03),
+        inset 0 -16px 20px rgba(0,0,0,.48),
+        0 6px 18px rgba(0,0,0,.22);
     }
 
     .gauge-card.alert-warning{
-      border-color:rgba(255,211,106,.24);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.05),
-        inset 0 -14px 24px rgba(0,0,0,.50),
-        0 0 18px rgba(255,211,106,.10);
+      border-color:rgba(255,213,111,.24);
     }
 
     .gauge-card.alert-critical{
-      border-color:rgba(255,111,122,.28);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.05),
-        inset 0 -14px 24px rgba(0,0,0,.50),
-        0 0 18px rgba(255,111,122,.12);
+      border-color:rgba(255,113,124,.24);
     }
 
     .g-label{
       font-size:11px;
-      letter-spacing:4px;
-      color:#d7e1ea;
+      letter-spacing:5px;
+      color:#d9e4ee;
       margin-bottom:8px;
     }
 
     .dial-wrap{
-      position:relative;
-      width:166px;
-      height:166px;
+      width:188px;
+      height:188px;
       margin:0 auto 8px;
+      position:relative;
+    }
+
+    /* QUADRANTE IN RILIEVO */
+    .dial-housing{
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      background:
+        linear-gradient(145deg, rgba(210,220,228,.20), rgba(66,76,86,.20)),
+        linear-gradient(180deg,#39434d,#1f262d);
+      box-shadow:
+        inset 0 2px 2px rgba(255,255,255,.15),
+        inset 0 -10px 14px rgba(0,0,0,.42),
+        0 4px 14px rgba(0,0,0,.35);
+    }
+
+    .dial-bezel{
+      position:absolute;
+      inset:14px;
+      border-radius:50%;
+      background:
+        linear-gradient(145deg,#c5ced6,#7a8691 42%,#525d67 58%,#b5c0c9);
+      box-shadow:
+        inset 0 2px 2px rgba(255,255,255,.22),
+        inset 0 -7px 10px rgba(0,0,0,.36),
+        0 0 10px rgba(0,0,0,.22);
     }
 
     .dial{
-      width:136px;
-      height:136px;
       position:absolute;
-      left:15px;
-      top:15px;
+      inset:22px;
       border-radius:50%;
-      overflow:visible;
+      overflow:hidden;
       background:
-        radial-gradient(circle at 50% 52%, rgba(0,0,0,.98) 0 26%, rgba(4,10,16,.98) 26% 48%, rgba(7,14,23,1) 48% 100%);
-      border:2px solid rgba(215,230,245,.10);
+        radial-gradient(circle at 50% 55%, #081018 0 28%, #0b1620 28% 54%, #08111a 54% 100%);
+      border:2px solid rgba(200,220,240,.12);
       box-shadow:
-        inset 0 3px 14px rgba(255,255,255,.03),
-        inset 0 12px 24px rgba(0,0,0,.70),
-        inset 0 -8px 18px rgba(0,0,0,.58),
-        0 8px 18px rgba(0,0,0,.45);
-    }
-
-    .dial-frame{
-      position:absolute;
-      inset:7px;
-      border-radius:50%;
-      background:
-        linear-gradient(145deg, rgba(230,237,243,.30), rgba(72,82,92,.26));
-      box-shadow:
-        inset 0 2px 3px rgba(255,255,255,.15),
-        inset 0 -8px 10px rgba(0,0,0,.36),
-        0 2px 10px rgba(0,0,0,.35);
-      z-index:0;
+        inset 0 12px 22px rgba(0,0,0,.55),
+        inset 0 -8px 16px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.03);
     }
 
     .dial-ring-light{
       position:absolute;
-      inset:-5px;
+      inset:0;
       border-radius:50%;
-      z-index:0;
+      z-index:1;
       pointer-events:none;
     }
 
@@ -291,128 +310,62 @@
       position:absolute;
       inset:0;
       border-radius:50%;
-      border:2.5px solid rgba(255,255,255,.28);
+      border:3px solid rgba(255,255,255,.36);
       box-shadow:
-        0 0 5px rgba(255,255,255,.20),
-        0 0 12px rgba(255,255,255,.16),
-        0 0 24px rgba(255,255,255,.12),
+        0 0 6px rgba(255,255,255,.18),
+        0 0 14px rgba(255,255,255,.14),
+        0 0 28px rgba(255,255,255,.10),
         inset 0 0 6px rgba(255,255,255,.08);
-    }
-
-    .dial-glow{
-      position:absolute;
-      inset:-12px;
-      border-radius:50%;
-      z-index:0;
-      pointer-events:none;
-      filter:blur(8px);
-      opacity:.60;
     }
 
     .dial-inner-glow{
       position:absolute;
-      inset:16px;
+      inset:18px;
       border-radius:50%;
       z-index:1;
-      pointer-events:none;
-      filter:blur(13px);
+      filter:blur(14px);
       opacity:.30;
+      pointer-events:none;
     }
 
     .dial-core{
       position:absolute;
-      inset:30px;
+      inset:40px;
       border-radius:50%;
-      z-index:1;
+      z-index:2;
       background:
-        radial-gradient(circle at 50% 45%, rgba(8,14,24,.98) 0 48%, rgba(3,7,12,1) 48% 100%);
+        radial-gradient(circle at 50% 40%, rgba(7,12,18,.98) 0 52%, rgba(2,6,10,1) 52% 100%);
       box-shadow:
-        inset 0 8px 20px rgba(0,0,0,.55),
-        inset 0 -3px 8px rgba(255,255,255,.02);
-    }
-
-    .glass{
-      position:absolute;
-      inset:3px;
-      border-radius:50%;
-      z-index:5;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 32% 22%, rgba(255,255,255,.16), transparent 26%),
-        linear-gradient(140deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,.06) 18%, rgba(255,255,255,.00) 38%, rgba(255,255,255,.06) 70%, rgba(255,255,255,.10) 100%);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.10),
-        inset 0 -1px 0 rgba(255,255,255,.04);
-      opacity:.78;
-    }
-
-    .glass::after{
-      content:"";
-      position:absolute;
-      left:17%;
-      top:10%;
-      width:42%;
-      height:16%;
-      border-radius:999px;
-      background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.02));
-      transform:rotate(-16deg);
-      filter:blur(1px);
+        inset 0 8px 18px rgba(0,0,0,.56),
+        inset 0 -4px 8px rgba(255,255,255,.02);
     }
 
     .ticks{
       position:absolute;
       inset:0;
+      z-index:3;
       border-radius:50%;
-      z-index:2;
     }
 
     .tick{
       position:absolute;
       left:50%;
-      top:8px;
-      width:3px;
-      height:16px;
-      margin-left:-1.5px;
-      border-radius:4px;
+      top:12px;
+      width:4px;
+      height:20px;
+      margin-left:-2px;
+      border-radius:6px;
+      transform-origin:50% 72px;
       opacity:.95;
-      transform-origin:50% 60px;
-      box-shadow:0 0 6px currentColor;
     }
 
     .tick.small{
-      height:10px;
-      top:10px;
-      opacity:.70;
+      height:12px;
+      top:16px;
+      opacity:.74;
     }
 
-    .needle{
-      position:absolute;
-      left:50%;
-      bottom:50%;
-      width:6px;
-      height:56px;
-      transform-origin:bottom center;
-      transform:translateX(-50%) rotate(-60deg);
-      border-radius:999px;
-      z-index:4;
-      transition:transform .95s cubic-bezier(.18,1.3,.34,1);
-    }
-
-    .needle::after{
-      content:"";
-      position:absolute;
-      bottom:-11px;
-      left:50%;
-      width:20px;
-      height:20px;
-      margin-left:-10px;
-      border-radius:50%;
-      background:#dbeffc;
-      box-shadow:
-        0 0 10px rgba(180,220,255,.24),
-        inset 0 1px 1px rgba(255,255,255,.4);
-    }
-
+    /* NUMERI DENTRO IL QUADRANTE */
     .dial-numbers{
       position:absolute;
       inset:0;
@@ -423,104 +376,169 @@
     .dial-number{
       position:absolute;
       transform:translate(-50%,-50%);
-      font-size:11px;
+      font-size:10px;
       font-weight:700;
-      color:#d9e7f3;
-      text-shadow:0 0 6px rgba(255,255,255,.08);
-      letter-spacing:.2px;
+      color:#eef5fb;
+      text-shadow:0 0 6px rgba(255,255,255,.12);
       white-space:nowrap;
+      letter-spacing:.2px;
+      opacity:.96;
     }
 
-    .ph .dial-ring-light::before{
-      border-color:rgba(164,231,255,.72);
-      box-shadow:
-        0 0 6px rgba(175,235,255,.44),
-        0 0 14px rgba(145,223,255,.34),
-        0 0 28px rgba(120,210,255,.24),
-        inset 0 0 6px rgba(220,248,255,.16);
+    .needle{
+      position:absolute;
+      left:50%;
+      bottom:50%;
+      width:8px;
+      height:74px;
+      transform-origin:bottom center;
+      transform:translateX(-50%) rotate(-60deg);
+      border-radius:999px;
+      z-index:4;
+      transition:transform .95s cubic-bezier(.18,1.3,.34,1);
     }
-    .ph .dial-glow{
-      background:radial-gradient(circle, rgba(145,223,255,.34) 0%, rgba(145,223,255,.18) 45%, transparent 72%);
+
+    .needle::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      bottom:-13px;
+      width:22px;
+      height:22px;
+      margin-left:-11px;
+      border-radius:50%;
+      background:#dfefff;
+      box-shadow:
+        inset 0 1px 1px rgba(255,255,255,.45),
+        0 0 12px rgba(190,225,255,.18);
+    }
+
+    /* VETRO BEN VISIBILE */
+    .glass{
+      position:absolute;
+      inset:0;
+      z-index:5;
+      border-radius:50%;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 30% 18%, rgba(255,255,255,.22), transparent 22%),
+        linear-gradient(145deg,
+          rgba(255,255,255,.22) 0%,
+          rgba(255,255,255,.07) 16%,
+          rgba(255,255,255,.00) 34%,
+          rgba(255,255,255,.03) 56%,
+          rgba(255,255,255,.08) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.14),
+        inset 0 -1px 0 rgba(255,255,255,.05);
+      opacity:.92;
+    }
+
+    .glass::before{
+      content:"";
+      position:absolute;
+      left:18%;
+      top:8%;
+      width:42%;
+      height:14%;
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.02));
+      transform:rotate(-16deg);
+      filter:blur(1px);
+    }
+
+    .glass::after{
+      content:"";
+      position:absolute;
+      right:16%;
+      bottom:18%;
+      width:24%;
+      height:10%;
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.00));
+      transform:rotate(22deg);
+      filter:blur(1px);
+    }
+
+    /* COLORI */
+    .ph .dial-ring-light::before{
+      border-color:rgba(168,236,255,.72);
+      box-shadow:
+        0 0 8px rgba(160,230,255,.44),
+        0 0 20px rgba(140,220,255,.34),
+        0 0 34px rgba(125,210,255,.22),
+        inset 0 0 7px rgba(220,248,255,.16);
     }
     .ph .dial-inner-glow{
-      background:radial-gradient(circle, rgba(213,246,255,.28) 0%, rgba(189,235,255,.16) 38%, transparent 72%);
-    }
-    .ph .needle{
-      background:linear-gradient(180deg, #c6ffe0, var(--green));
-      box-shadow:0 0 12px rgba(98,242,162,.22);
+      background:radial-gradient(circle, rgba(210,246,255,.25) 0%, rgba(180,232,255,.15) 42%, transparent 76%);
     }
     .ph .tick{
-      background:rgba(162,231,255,.88);
-      color:rgba(162,231,255,.88);
+      background:rgba(167,235,255,.92);
+      box-shadow:0 0 8px rgba(167,235,255,.24);
+    }
+    .ph .needle{
+      background:linear-gradient(180deg,#d7ffe7,var(--green));
+      box-shadow:0 0 12px rgba(121,240,182,.18);
     }
 
     .gravity .dial-ring-light::before{
-      border-color:rgba(114,183,255,.76);
+      border-color:rgba(116,188,255,.78);
       box-shadow:
-        0 0 6px rgba(135,198,255,.44),
-        0 0 14px rgba(105,184,255,.34),
-        0 0 28px rgba(72,155,255,.24),
-        inset 0 0 6px rgba(210,240,255,.16);
-    }
-    .gravity .dial-glow{
-      background:radial-gradient(circle, rgba(105,184,255,.34) 0%, rgba(105,184,255,.18) 44%, transparent 72%);
+        0 0 8px rgba(125,193,255,.44),
+        0 0 20px rgba(100,182,255,.34),
+        0 0 34px rgba(75,156,255,.22),
+        inset 0 0 7px rgba(215,241,255,.16);
     }
     .gravity .dial-inner-glow{
-      background:radial-gradient(circle, rgba(221,242,255,.26) 0%, rgba(190,226,255,.15) 38%, transparent 72%);
-    }
-    .gravity .needle{
-      background:linear-gradient(180deg, #e1f3ff, var(--blue));
-      box-shadow:0 0 12px rgba(105,184,255,.24);
+      background:radial-gradient(circle, rgba(220,242,255,.22) 0%, rgba(185,225,255,.14) 42%, transparent 76%);
     }
     .gravity .tick{
-      background:rgba(105,184,255,.92);
-      color:rgba(105,184,255,.92);
+      background:rgba(108,188,255,.95);
+      box-shadow:0 0 8px rgba(108,188,255,.24);
+    }
+    .gravity .needle{
+      background:linear-gradient(180deg,#e8f6ff,var(--blue));
+      box-shadow:0 0 12px rgba(108,188,255,.20);
     }
 
     .temp .dial-ring-light::before{
-      border-color:rgba(255,196,112,.76);
+      border-color:rgba(255,194,108,.76);
       box-shadow:
-        0 0 6px rgba(255,207,138,.46),
-        0 0 14px rgba(255,178,92,.36),
-        0 0 28px rgba(255,160,68,.24),
-        inset 0 0 6px rgba(255,239,211,.18);
-    }
-    .temp .dial-glow{
-      background:radial-gradient(circle, rgba(255,178,92,.30) 0%, rgba(255,178,92,.16) 44%, transparent 72%);
+        0 0 8px rgba(255,202,126,.42),
+        0 0 20px rgba(255,184,98,.30),
+        0 0 34px rgba(255,166,72,.20),
+        inset 0 0 7px rgba(255,241,218,.16);
     }
     .temp .dial-inner-glow{
-      background:radial-gradient(circle, rgba(255,241,214,.28) 0%, rgba(255,224,176,.16) 38%, transparent 72%);
-    }
-    .temp .needle{
-      background:linear-gradient(180deg, #ffe7c8, #ffb25c);
-      box-shadow:0 0 12px rgba(255,178,92,.24);
+      background:radial-gradient(circle, rgba(255,239,210,.22) 0%, rgba(255,224,174,.14) 42%, transparent 76%);
     }
     .temp .tick{
-      background:rgba(255,184,96,.92);
-      color:rgba(255,184,96,.92);
+      background:rgba(255,192,104,.95);
+      box-shadow:0 0 8px rgba(255,192,104,.24);
+    }
+    .temp .needle{
+      background:linear-gradient(180deg,#ffe9cd,var(--orange));
+      box-shadow:0 0 12px rgba(255,191,114,.20);
     }
 
     .count .dial-ring-light::before{
-      border-color:rgba(213,162,255,.76);
+      border-color:rgba(211,158,255,.76);
       box-shadow:
-        0 0 6px rgba(221,184,255,.42),
-        0 0 14px rgba(193,122,255,.34),
-        0 0 28px rgba(176,96,255,.22),
-        inset 0 0 6px rgba(226,242,255,.14);
-    }
-    .count .dial-glow{
-      background:radial-gradient(circle, rgba(193,122,255,.30) 0%, rgba(193,122,255,.16) 44%, transparent 72%);
+        0 0 8px rgba(220,176,255,.42),
+        0 0 20px rgba(205,146,255,.32),
+        0 0 34px rgba(186,110,255,.20),
+        inset 0 0 7px rgba(226,242,255,.12);
     }
     .count .dial-inner-glow{
-      background:radial-gradient(circle, rgba(216,236,255,.24) 0%, rgba(188,221,255,.13) 38%, transparent 72%);
-    }
-    .count .needle{
-      background:linear-gradient(180deg, #f2ddff, var(--purple));
-      box-shadow:0 0 12px rgba(193,122,255,.24);
+      background:radial-gradient(circle, rgba(220,236,255,.20) 0%, rgba(194,222,255,.12) 42%, transparent 76%);
     }
     .count .tick{
-      background:rgba(193,122,255,.92);
-      color:rgba(193,122,255,.92);
+      background:rgba(205,146,255,.95);
+      box-shadow:0 0 8px rgba(205,146,255,.24);
+    }
+    .count .needle{
+      background:linear-gradient(180deg,#f2ddff,var(--purple));
+      box-shadow:0 0 12px rgba(205,146,255,.20);
     }
 
     .g-value{
@@ -544,9 +562,11 @@
       color:#eef6fd;
       cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(155,173,190,.18), rgba(42,61,78,.14)),
-        linear-gradient(180deg, #3d5f7d, #2b445a);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.10), 0 0 20px rgba(70,140,220,.16);
+        linear-gradient(180deg, rgba(170,188,204,.18), rgba(42,61,78,.14)),
+        linear-gradient(180deg, #4c6780, #2d465c);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        0 0 18px rgba(70,140,220,.14);
     }
 
     .main-btn{
@@ -613,20 +633,9 @@
       font-size:14px;
     }
 
-    .alert-box.ok{
-      border-color:rgba(98,242,162,.16);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 0 16px rgba(98,242,162,.06);
-    }
-
-    .alert-box.warning{
-      border-color:rgba(255,211,106,.18);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 0 16px rgba(255,211,106,.07);
-    }
-
-    .alert-box.critical{
-      border-color:rgba(255,111,122,.24);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 0 16px rgba(255,111,122,.08);
-    }
+    .alert-box.ok{ border-color:rgba(121,240,182,.16); }
+    .alert-box.warning{ border-color:rgba(255,213,111,.18); }
+    .alert-box.critical{ border-color:rgba(255,113,124,.22); }
 
     .alert-title{
       font-size:12px;
@@ -638,21 +647,14 @@
 
     .batch-card{
       cursor:pointer;
-      transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
     }
 
     .batch-card.status-card-critical{
-      border-color:rgba(255,111,122,.16);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 0 22px rgba(255,111,122,.06);
+      border-color:rgba(255,113,124,.16);
     }
 
     .batch-card.status-card-warning{
-      border-color:rgba(255,211,106,.14);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 0 22px rgba(255,211,106,.05);
+      border-color:rgba(255,213,111,.14);
     }
 
     .batch-top,
@@ -698,25 +700,10 @@
         linear-gradient(180deg, #1c3246 0%, #152535 100%);
     }
 
-    .status-active{
-      color:#dbffe9;
-      background:linear-gradient(180deg, rgba(78,160,112,.22), rgba(30,87,52,.20));
-    }
-
-    .status-slow{
-      color:#fff4d1;
-      background:linear-gradient(180deg, rgba(185,142,44,.24), rgba(108,78,18,.20));
-    }
-
-    .status-critical{
-      color:#ffe0e0;
-      background:linear-gradient(180deg, rgba(170,66,66,.24), rgba(100,30,30,.20));
-    }
-
-    .status-complete{
-      color:#e0f1ff;
-      background:linear-gradient(180deg, rgba(58,110,170,.24), rgba(29,57,94,.20));
-    }
+    .status-active{ color:#dbffe9; background:linear-gradient(180deg, rgba(78,160,112,.22), rgba(30,87,52,.20)); }
+    .status-slow{ color:#fff4d1; background:linear-gradient(180deg, rgba(185,142,44,.24), rgba(108,78,18,.20)); }
+    .status-critical{ color:#ffe0e0; background:linear-gradient(180deg, rgba(170,66,66,.24), rgba(100,30,30,.20)); }
+    .status-complete{ color:#e0f1ff; background:linear-gradient(180deg, rgba(58,110,170,.24), rgba(29,57,94,.20)); }
 
     .metrics,
     .process-grid,
@@ -890,43 +877,21 @@
       color:var(--muted);
     }
 
-    .measure-table th:nth-child(1),
-    .measure-table td:nth-child(1){ width:14%; }
+    .measure-table th:nth-child(1), .measure-table td:nth-child(1){ width:14%; }
+    .measure-table th:nth-child(2), .measure-table td:nth-child(2){ width:18%; }
+    .measure-table th:nth-child(3), .measure-table td:nth-child(3){ width:22%; }
+    .measure-table th:nth-child(4), .measure-table td:nth-child(4){ width:20%; }
+    .measure-table th:nth-child(5), .measure-table td:nth-child(5){ width:26%; }
 
-    .measure-table th:nth-child(2),
-    .measure-table td:nth-child(2){ width:18%; }
-
-    .measure-table th:nth-child(3),
-    .measure-table td:nth-child(3){ width:22%; }
-
-    .measure-table th:nth-child(4),
-    .measure-table td:nth-child(4){ width:20%; }
-
-    .measure-table th:nth-child(5),
-    .measure-table td:nth-child(5){ width:26%; }
-
-    .additions-table th:nth-child(1),
-    .additions-table td:nth-child(1){ width:12%; }
-
-    .additions-table th:nth-child(2),
-    .additions-table td:nth-child(2){ width:18%; }
-
-    .additions-table th:nth-child(3),
-    .additions-table td:nth-child(3){ width:20%; }
-
-    .additions-table th:nth-child(4),
-    .additions-table td:nth-child(4){ width:14%; }
-
-    .additions-table th:nth-child(5),
-    .additions-table td:nth-child(5){ width:16%; }
-
-    .additions-table th:nth-child(6),
-    .additions-table td:nth-child(6){ width:20%; }
+    .additions-table th:nth-child(1), .additions-table td:nth-child(1){ width:12%; }
+    .additions-table th:nth-child(2), .additions-table td:nth-child(2){ width:18%; }
+    .additions-table th:nth-child(3), .additions-table td:nth-child(3){ width:20%; }
+    .additions-table th:nth-child(4), .additions-table td:nth-child(4){ width:14%; }
+    .additions-table th:nth-child(5), .additions-table td:nth-child(5){ width:16%; }
+    .additions-table th:nth-child(6), .additions-table td:nth-child(6){ width:20%; }
 
     @media (max-width:900px){
-      .filters-grid{
-        grid-template-columns:1fr;
-      }
+      .filters-grid{ grid-template-columns:1fr; }
     }
 
     @media (max-width:700px){
@@ -966,27 +931,28 @@
       }
 
       .dial-wrap{
-        width:152px;
-        height:152px;
+        width:176px;
+        height:176px;
+      }
+
+      .dial-housing{
+        inset:0;
+      }
+
+      .dial-bezel{
+        inset:13px;
       }
 
       .dial{
-        width:124px;
-        height:124px;
-        left:14px;
-        top:14px;
-      }
-
-      .dial-frame{
-        inset:8px;
+        inset:21px;
       }
 
       .tick{
-        transform-origin:50% 54px;
+        transform-origin:50% 68px;
       }
 
-      .dial-number{
-        font-size:10px;
+      .needle{
+        height:70px;
       }
 
       .g-value{
@@ -1013,30 +979,13 @@
         grid-template-columns:1fr;
       }
 
-      th{
-        font-size:11px;
-        letter-spacing:1px;
-        padding:10px 8px;
-      }
-
-      td{
-        font-size:13px;
-        padding:10px 8px;
-      }
-
-      .measure-table{
-        min-width:520px;
-      }
-
-      .additions-table{
-        min-width:700px;
-      }
+      .measure-table{ min-width:520px; }
+      .additions-table{ min-width:700px; }
     }
   </style>
 </head>
 <body>
   <div class="app">
-
     <div class="topbar">
       <button class="lang-btn" onclick="toggleLanguage()" id="langButton">IT</button>
     </div>
@@ -1408,8 +1357,8 @@
       const box = document.getElementById(containerId);
       if(!box) return;
       box.innerHTML = "";
-      const center = 83;
-      const radius = 68;
+      const center = 94;
+      const radius = 58;
       labels.forEach(item => {
         const pos = polarPosition(center, center, radius, item.angle);
         const el = document.createElement("div");
@@ -1908,10 +1857,10 @@
         <div class="gauge-card ${typeClass} ${alertClass}">
           <div class="g-label">${label.toUpperCase()}</div>
           <div class="dial-wrap">
-            <div class="dial-frame"></div>
+            <div class="dial-housing"></div>
+            <div class="dial-bezel"></div>
             <div class="dial">
               <div class="dial-ring-light"></div>
-              <div class="dial-glow"></div>
               <div class="dial-inner-glow"></div>
               <div class="dial-core"></div>
               <div class="ticks" id="${ticksId}"></div>
@@ -2184,7 +2133,7 @@
         if(gravityEl) gravityEl.textContent = formatValue(gravity);
         if(tempEl) tempEl.textContent = formatTemp(temp);
 
-        animateNeedle("needlePh", mapValue(parseNum(ph) ?? 0, 2.8, 5.0, -60, 60));
+        animateNeedle("needlePh", mapValue(parseNum(ph) ?? 3.5, 2.8, 5.0, -60, 60));
         animateNeedle("needleGravity", mapValue(parseNum(gravity) ?? 1.000, 1.000, 1.060, -60, 60));
         animateNeedle("needleTemp", mapValue(parseNum(temp) ?? 0, 0, 50, -60, 60));
       } else {
@@ -2204,34 +2153,34 @@
 
     function buildAllNumbers(){
       buildDialNumbers("numbersPh", [
-        {label:"2.8", angle:-145},
-        {label:"3.5", angle:-95},
-        {label:"4.2", angle:-35},
-        {label:"5.0", angle:20}
+        {label:"2.8", angle:-132},
+        {label:"3.5", angle:-96},
+        {label:"4.2", angle:-58},
+        {label:"5.0", angle:-20}
       ]);
 
       buildDialNumbers("numbersGravity", [
-        {label:"1.000", angle:-145},
-        {label:"1.020", angle:-95},
-        {label:"1.040", angle:-35},
-        {label:"1.060", angle:20}
+        {label:"1.000", angle:-132},
+        {label:"1.020", angle:-96},
+        {label:"1.040", angle:-58},
+        {label:"1.060", angle:-20}
       ]);
 
       buildDialNumbers("numbersTemp", [
-        {label:"0", angle:-145},
-        {label:"10", angle:-115},
-        {label:"20", angle:-75},
-        {label:"30", angle:-35},
-        {label:"40", angle:-5},
-        {label:"50", angle:25}
+        {label:"0", angle:-132},
+        {label:"10", angle:-108},
+        {label:"20", angle:-82},
+        {label:"30", angle:-56},
+        {label:"40", angle:-30},
+        {label:"50", angle:-6}
       ]);
 
       buildDialNumbers("numbersCount", [
-        {label:"0", angle:-145},
-        {label:"5", angle:-110},
-        {label:"10", angle:-70},
-        {label:"15", angle:-30},
-        {label:"20", angle:15}
+        {label:"0", angle:-132},
+        {label:"5", angle:-100},
+        {label:"10", angle:-66},
+        {label:"15", angle:-34},
+        {label:"20", angle:-4}
       ]);
     }
 
