@@ -18,8 +18,6 @@
       --yellow:#ffd36b;
       --panel:#0b1218;
       --panel2:#081018;
-      --card1:#09111a;
-      --card2:#060d15;
     }
 
     *{
@@ -39,7 +37,7 @@
     }
 
     .app{
-      max-width:860px;
+      max-width:900px;
       margin:0 auto;
     }
 
@@ -243,20 +241,37 @@
       color:var(--muted);
     }
 
-    .main-btn{
-      width:100%;
+    .main-btn,
+    .nav-btn,
+    .small-btn{
       border:none;
-      border-radius:24px;
-      padding:18px;
-      font-size:22px;
       color:#eef6fd;
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(155,173,190,.18), rgba(42,61,78,.14)),
         linear-gradient(180deg, #3d5f7d, #2b445a);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.10),
-        0 0 20px rgba(70,140,220,.16);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.10), 0 0 20px rgba(70,140,220,.16);
+    }
+
+    .main-btn{
+      width:100%;
+      border-radius:24px;
+      padding:18px;
+      font-size:22px;
+    }
+
+    .nav-btn{
+      width:100%;
+      border-radius:20px;
+      padding:14px;
+      font-size:16px;
+      margin-bottom:14px;
+    }
+
+    .small-btn{
+      border-radius:18px;
+      padding:14px 12px;
+      font-size:15px;
     }
 
     .hint{
@@ -274,34 +289,39 @@
       text-transform:uppercase;
     }
 
-    .empty{
-      background:
-        linear-gradient(180deg, rgba(130,147,163,.10), rgba(47,58,68,.06)),
-        linear-gradient(180deg, #09111a 0%, #060d15 100%);
-      border:1px solid rgba(167,187,204,.08);
-      padding:20px;
-      border-radius:24px;
-      color:var(--muted);
-      text-align:center;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.05),
-        0 0 20px rgba(0,110,210,.07);
-    }
-
-    .batch-card{
+    .empty,
+    .batch-card,
+    .detail-card,
+    .chart-card,
+    .measurements{
       background:
         linear-gradient(180deg, rgba(130,147,163,.12), rgba(47,58,68,.08)),
         linear-gradient(180deg, #09111a 0%, #060d15 100%);
       border:1px solid rgba(167,187,204,.10);
-      padding:18px;
       border-radius:24px;
-      margin-bottom:14px;
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.06),
         0 0 24px rgba(0,110,210,.10);
     }
 
-    .batch-top{
+    .empty{
+      padding:20px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    .batch-card,
+    .detail-card{
+      padding:18px;
+      margin-bottom:14px;
+    }
+
+    .batch-card{
+      cursor:pointer;
+    }
+
+    .batch-top,
+    .detail-top{
       display:flex;
       justify-content:space-between;
       gap:12px;
@@ -309,7 +329,8 @@
       margin-bottom:12px;
     }
 
-    .batch-name{
+    .batch-name,
+    .detail-name{
       font-size:26px;
       font-weight:700;
       line-height:1;
@@ -395,28 +416,21 @@
       margin-bottom:14px;
     }
 
-    .small-btn{
-      border:none;
-      border-radius:18px;
-      padding:14px 12px;
-      font-size:15px;
-      color:#eff7ff;
-      cursor:pointer;
-      background:
-        linear-gradient(180deg, rgba(130,150,170,.15), rgba(42,61,78,.10)),
-        linear-gradient(180deg, #254055, #1a2e3f);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    .detail-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+      margin-bottom:14px;
     }
 
-    .chart-card{
-      background:linear-gradient(180deg, #0e1721 0%, #0a1118 100%);
-      border:1px solid rgba(143,164,182,.09);
-      border-radius:20px;
+    .chart-card,
+    .measurements{
       padding:14px 12px;
       margin-bottom:12px;
     }
 
-    .chart-title{
+    .chart-title,
+    .measurements-title{
       font-size:12px;
       color:var(--muted);
       text-transform:uppercase;
@@ -450,24 +464,9 @@
       text-align:center;
     }
 
-    .measurements{
-      background:linear-gradient(180deg, #0e1721 0%, #0a1118 100%);
-      border:1px solid rgba(143,164,182,.09);
-      border-radius:20px;
-      padding:14px 12px;
-    }
-
-    .measurements-title{
-      font-size:12px;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:1.6px;
-      margin-bottom:10px;
-    }
-
     .m-row{
       display:grid;
-      grid-template-columns:70px 1fr 1fr 1fr;
+      grid-template-columns:70px 1fr 1fr 1fr 1fr;
       gap:8px;
       padding:10px 0;
       border-bottom:1px solid rgba(255,255,255,.06);
@@ -492,6 +491,10 @@
 
     @media (max-width:700px){
       .chart-box{
+        grid-template-columns:1fr;
+      }
+
+      .detail-actions{
         grid-template-columns:1fr;
       }
     }
@@ -520,12 +523,13 @@
         font-size:28px;
       }
 
-      .batch-name{
+      .batch-name,
+      .detail-name{
         font-size:22px;
       }
 
       .m-row{
-        grid-template-columns:58px 1fr 1fr 1fr;
+        grid-template-columns:58px 1fr 1fr 1fr 1fr;
         font-size:13px;
       }
     }
@@ -542,62 +546,13 @@
       </div>
     </div>
 
-    <div class="dashboard">
-      <div class="gauges">
-
-        <div class="gauge-card ph">
-          <div class="g-label">PH</div>
-          <div class="dial">
-            <div class="ticks" id="ticksPh"></div>
-            <div class="needle" id="needlePh"></div>
-          </div>
-          <div class="g-value" id="topPh">-</div>
-          <div class="g-sub">latest measurement</div>
-        </div>
-
-        <div class="gauge-card gravity">
-          <div class="g-label">GRAVITY</div>
-          <div class="dial">
-            <div class="ticks" id="ticksGravity"></div>
-            <div class="needle" id="needleGravity"></div>
-          </div>
-          <div class="g-value" id="topGravity">-</div>
-          <div class="g-sub">latest measurement</div>
-        </div>
-
-        <div class="gauge-card temp">
-          <div class="g-label">TEMP</div>
-          <div class="dial">
-            <div class="ticks" id="ticksTemp"></div>
-            <div class="needle" id="needleTemp"></div>
-          </div>
-          <div class="g-value" id="topTemp">-</div>
-          <div class="g-sub">0–50°C scale</div>
-        </div>
-
-        <div class="gauge-card count">
-          <div class="g-label">BATCHES</div>
-          <div class="dial">
-            <div class="ticks" id="ticksCount"></div>
-            <div class="needle" id="needleCount"></div>
-          </div>
-          <div class="g-value" id="topCount">0</div>
-          <div class="g-sub">stored</div>
-        </div>
-
-      </div>
-
-      <button class="main-btn" onclick="addBatch()">+ New Batch</button>
-      <div class="hint">Use the buttons inside each batch to add measurements, edit or delete</div>
-    </div>
-
-    <div class="section-title">Fermentation Archive</div>
-    <div id="list"></div>
+    <div id="appContent"></div>
 
   </div>
 
   <script>
     let batches = JSON.parse(localStorage.getItem("batches")) || [];
+    let selectedBatchIndex = null;
 
     function save(){
       localStorage.setItem("batches", JSON.stringify(batches));
@@ -718,36 +673,6 @@
       return { text:"Active", cls:"status-active" };
     }
 
-    function updateTopPanel(){
-      const count = batches.length;
-      document.getElementById("topCount").textContent = count;
-      setNeedle("needleCount", mapValue(count, 0, 20, -60, 60));
-
-      if(count > 0){
-        const b = batches[batches.length - 1];
-        const latest = getLatestMeasurement(b);
-
-        const ph = latest ? latest.ph : "-";
-        const gravity = latest ? latest.gravity : "-";
-        const temp = latest ? latest.temp : "-";
-
-        document.getElementById("topPh").textContent = formatValue(ph);
-        document.getElementById("topGravity").textContent = formatValue(gravity);
-        document.getElementById("topTemp").textContent = formatTemp(temp);
-
-        setNeedle("needlePh", mapValue(parseNum(ph) ?? 0, 0, 7, -60, 60));
-        setNeedle("needleGravity", mapValue(parseNum(gravity) ?? 1.000, 1.000, 1.080, -60, 60));
-        setNeedle("needleTemp", mapValue(parseNum(temp) ?? 0, 0, 50, -60, 60));
-      } else {
-        document.getElementById("topPh").textContent = "-";
-        document.getElementById("topGravity").textContent = "-";
-        document.getElementById("topTemp").textContent = "-";
-        setNeedle("needlePh", -60);
-        setNeedle("needleGravity", -60);
-        setNeedle("needleTemp", -60);
-      }
-    }
-
     function makePath(points, width, height, minVal, maxVal){
       if(points.length === 0) return "";
       if(points.length === 1){
@@ -767,10 +692,7 @@
     }
 
     function renderMiniChart(values, minVal, maxVal, color){
-      const nums = values
-        .map(v => parseNum(v))
-        .filter(v => v !== null);
-
+      const nums = values.map(v => parseNum(v)).filter(v => v !== null);
       const width = 280;
       const height = 120;
       const path = makePath(nums, width, height, minVal, maxVal);
@@ -809,6 +731,7 @@
           <div>pH</div>
           <div>Gravity</div>
           <div>Temp</div>
+          <div>Pressure</div>
         </div>
       `;
 
@@ -819,6 +742,7 @@
             <div>${formatValue(m.ph)}</div>
             <div>${formatValue(m.gravity)}</div>
             <div>${formatTemp(m.temp)}</div>
+            <div>${formatPressure(m.pressure)}</div>
           </div>
         `;
       });
@@ -826,21 +750,84 @@
       return html;
     }
 
-    function render(){
-      let html = "";
+    function getTopBatch(){
+      if(selectedBatchIndex !== null && batches[selectedBatchIndex]){
+        return batches[selectedBatchIndex];
+      }
+      if(batches.length > 0) return batches[batches.length - 1];
+      return null;
+    }
+
+    function dashboardHTML(){
+      return `
+        <div class="dashboard">
+          <div class="gauges">
+
+            <div class="gauge-card ph">
+              <div class="g-label">PH</div>
+              <div class="dial">
+                <div class="ticks" id="ticksPh"></div>
+                <div class="needle" id="needlePh"></div>
+              </div>
+              <div class="g-value" id="topPh">-</div>
+              <div class="g-sub">latest measurement</div>
+            </div>
+
+            <div class="gauge-card gravity">
+              <div class="g-label">GRAVITY</div>
+              <div class="dial">
+                <div class="ticks" id="ticksGravity"></div>
+                <div class="needle" id="needleGravity"></div>
+              </div>
+              <div class="g-value" id="topGravity">-</div>
+              <div class="g-sub">latest measurement</div>
+            </div>
+
+            <div class="gauge-card temp">
+              <div class="g-label">TEMP</div>
+              <div class="dial">
+                <div class="ticks" id="ticksTemp"></div>
+                <div class="needle" id="needleTemp"></div>
+              </div>
+              <div class="g-value" id="topTemp">-</div>
+              <div class="g-sub">0–50°C scale</div>
+            </div>
+
+            <div class="gauge-card count">
+              <div class="g-label">BATCHES</div>
+              <div class="dial">
+                <div class="ticks" id="ticksCount"></div>
+                <div class="needle" id="needleCount"></div>
+              </div>
+              <div class="g-value" id="topCount">0</div>
+              <div class="g-sub">stored</div>
+            </div>
+
+          </div>
+
+          ${selectedBatchIndex === null
+            ? `<button class="main-btn" onclick="addBatch()">+ New Batch</button>
+               <div class="hint">Tap a batch card to open its dedicated page</div>`
+            : `<button class="nav-btn" onclick="backToArchive()">← Back to Archive</button>
+               <div class="hint">Dashboard now follows the selected batch</div>`
+          }
+        </div>
+      `;
+    }
+
+    function archiveHTML(){
+      let html = dashboardHTML();
+      html += `<div class="section-title">Fermentation Archive</div>`;
 
       if(batches.length === 0){
-        html = `<div class="empty">No batches yet. Tap <b>+ New Batch</b> to add your first fermentation.</div>`;
+        html += `<div class="empty">No batches yet. Tap <b>+ New Batch</b> to add your first fermentation.</div>`;
       } else {
         batches.forEach((b, i) => {
           const status = getStatus(b);
           const latest = getLatestMeasurement(b);
-          const measures = getMeasurements(b);
-          const phValues = measures.map(m => m.ph);
-          const gravityValues = measures.map(m => m.gravity);
 
           html += `
-            <div class="batch-card">
+            <div class="batch-card" onclick="openBatch(${i})">
               <div class="batch-top">
                 <div class="batch-name">${b.name || "Unnamed"}</div>
                 <div class="right-stack">
@@ -869,57 +856,162 @@
                   <div class="metric-label">Latest Gravity</div>
                   <div class="metric-value">${latest ? formatValue(latest.gravity) : "-"}</div>
                 </div>
-
-                <div class="metric">
-                  <div class="metric-label">OG</div>
-                  <div class="metric-value">${formatValue(b.og)}</div>
-                </div>
-
-                <div class="metric">
-                  <div class="metric-label">ABV</div>
-                  <div class="metric-value">${getABV(b)}</div>
-                </div>
-
-                <div class="metric">
-                  <div class="metric-label">Latest Temp</div>
-                  <div class="metric-value">${latest ? formatTemp(latest.temp) : "-"}</div>
-                </div>
-
-                <div class="metric">
-                  <div class="metric-label">Latest Pressure</div>
-                  <div class="metric-value">${latest ? formatPressure(latest.pressure) : "-"}</div>
-                </div>
-              </div>
-
-              <div class="actions">
-                <button class="small-btn" onclick="event.stopPropagation(); addMeasurement(${i})">+ Add Measurement</button>
-                <button class="small-btn" onclick="event.stopPropagation(); manageBatch(${i})">Edit / Delete</button>
-              </div>
-
-              <div class="chart-card">
-                <div class="chart-title">Lab Charts</div>
-                <div class="chart-box">
-                  <div class="mini-chart">
-                    ${renderMiniChart(phValues, 0, 7, "#62f2a2")}
-                    <div class="legend">pH trend</div>
-                  </div>
-                  <div class="mini-chart">
-                    ${renderMiniChart(gravityValues, 1.000, 1.080, "#69b8ff")}
-                    <div class="legend">Gravity trend</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="measurements">
-                <div class="measurements-title">Daily Measurements</div>
-                ${measurementTable(b)}
               </div>
             </div>
           `;
         });
       }
 
-      document.getElementById("list").innerHTML = html;
+      return html;
+    }
+
+    function detailHTML(i){
+      const b = batches[i];
+      if(!b) return archiveHTML();
+
+      const status = getStatus(b);
+      const latest = getLatestMeasurement(b);
+      const measures = getMeasurements(b);
+      const phValues = measures.map(m => m.ph);
+      const gravityValues = measures.map(m => m.gravity);
+
+      return `
+        ${dashboardHTML()}
+
+        <div class="section-title">Batch Detail</div>
+
+        <div class="detail-card">
+          <div class="detail-top">
+            <div class="detail-name">${b.name || "Unnamed"}</div>
+            <div class="right-stack">
+              <div class="type-badge">${(b.type || "unknown").toUpperCase()}</div>
+              <div class="status-badge ${status.cls}">${status.text}</div>
+            </div>
+          </div>
+
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-label">Day</div>
+              <div class="metric-value">${getDay(b)}</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Culture</div>
+              <div class="metric-value">${formatValue(b.culture)}</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">OG</div>
+              <div class="metric-value">${formatValue(b.og)}</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">ABV</div>
+              <div class="metric-value">${getABV(b)}</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Latest pH</div>
+              <div class="metric-value">${latest ? formatValue(latest.ph) : "-"}</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Latest Gravity</div>
+              <div class="metric-value">${latest ? formatValue(latest.gravity) : "-"}</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Latest Temp</div>
+              <div class="metric-value">${latest ? formatTemp(latest.temp) : "-"}</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Latest Pressure</div>
+              <div class="metric-value">${latest ? formatPressure(latest.pressure) : "-"}</div>
+            </div>
+          </div>
+
+          <div class="detail-actions">
+            <button class="small-btn" onclick="addMeasurement(${i})">+ Add Measurement</button>
+            <button class="small-btn" onclick="editBatch(${i})">Edit Batch</button>
+            <button class="small-btn" onclick="deleteBatch(${i})">Delete Batch</button>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-title">Lab Charts</div>
+            <div class="chart-box">
+              <div class="mini-chart">
+                ${renderMiniChart(phValues, 0, 7, "#62f2a2")}
+                <div class="legend">pH trend</div>
+              </div>
+              <div class="mini-chart">
+                ${renderMiniChart(gravityValues, 1.000, 1.080, "#69b8ff")}
+                <div class="legend">Gravity trend</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="measurements">
+            <div class="measurements-title">Daily Measurements</div>
+            ${measurementTable(b)}
+          </div>
+        </div>
+      `;
+    }
+
+    function updateTopPanel(){
+      const count = batches.length;
+      const topBatch = getTopBatch();
+
+      const topCountEl = document.getElementById("topCount");
+      if(topCountEl) topCountEl.textContent = count;
+      setNeedle("needleCount", mapValue(count, 0, 20, -60, 60));
+
+      if(topBatch){
+        const latest = getLatestMeasurement(topBatch);
+        const ph = latest ? latest.ph : "-";
+        const gravity = latest ? latest.gravity : "-";
+        const temp = latest ? latest.temp : "-";
+
+        const phEl = document.getElementById("topPh");
+        const gravityEl = document.getElementById("topGravity");
+        const tempEl = document.getElementById("topTemp");
+
+        if(phEl) phEl.textContent = formatValue(ph);
+        if(gravityEl) gravityEl.textContent = formatValue(gravity);
+        if(tempEl) tempEl.textContent = formatTemp(temp);
+
+        setNeedle("needlePh", mapValue(parseNum(ph) ?? 0, 0, 7, -60, 60));
+        setNeedle("needleGravity", mapValue(parseNum(gravity) ?? 1.000, 1.080, -60, 60));
+        setNeedle("needleTemp", mapValue(parseNum(temp) ?? 0, 0, 50, -60, 60));
+      } else {
+        const phEl = document.getElementById("topPh");
+        const gravityEl = document.getElementById("topGravity");
+        const tempEl = document.getElementById("topTemp");
+
+        if(phEl) phEl.textContent = "-";
+        if(gravityEl) gravityEl.textContent = "-";
+        if(tempEl) tempEl.textContent = "-";
+
+        setNeedle("needlePh", -60);
+        setNeedle("needleGravity", -60);
+        setNeedle("needleTemp", -60);
+      }
+    }
+
+    function render(){
+      const app = document.getElementById("appContent");
+
+      if(selectedBatchIndex === null){
+        app.innerHTML = archiveHTML();
+      } else {
+        app.innerHTML = detailHTML(selectedBatchIndex);
+      }
+
+      buildTicks("ticksPh");
+      buildTicks("ticksGravity");
+      buildTicks("ticksTemp");
+      buildTicks("ticksCount");
       updateTopPanel();
     }
 
@@ -982,29 +1074,35 @@
       render();
     }
 
-    function manageBatch(i){
-      let action = prompt("Write:\n1 = edit batch\n2 = delete batch");
-
-      if(action == "1"){
-        let b = batches[i];
-        b.name = prompt("Batch name:", b.name) || b.name;
-        b.type = prompt("Type:", b.type) || b.type;
-        b.culture = prompt("Culture:", b.culture) || b.culture;
-        b.og = prompt("OG:", b.og) || b.og;
-      } else if(action == "2"){
-        if(confirm("Delete this batch?")){
-          batches.splice(i, 1);
-        }
-      }
-
+    function editBatch(i){
+      let b = batches[i];
+      b.name = prompt("Batch name:", b.name) || b.name;
+      b.type = prompt("Type:", b.type) || b.type;
+      b.culture = prompt("Culture:", b.culture) || b.culture;
+      b.og = prompt("OG:", b.og) || b.og;
       save();
       render();
     }
 
-    buildTicks("ticksPh");
-    buildTicks("ticksGravity");
-    buildTicks("ticksTemp");
-    buildTicks("ticksCount");
+    function deleteBatch(i){
+      if(confirm("Delete this batch?")){
+        batches.splice(i, 1);
+        selectedBatchIndex = null;
+        save();
+        render();
+      }
+    }
+
+    function openBatch(i){
+      selectedBatchIndex = i;
+      render();
+    }
+
+    function backToArchive(){
+      selectedBatchIndex = null;
+      render();
+    }
+
     render();
   </script>
 </body>
