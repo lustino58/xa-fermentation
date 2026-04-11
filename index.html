@@ -7,21 +7,21 @@
   <style>
     :root{
       --bg:#071629;
-      --text:#f3f4f6;
-      --muted:#cfd5db;
+      --text:#f4f6f8;
+      --muted:#bcc7d2;
+      --bezel1:#f2f3f5;
+      --bezel2:#a0a6ae;
+      --bezel3:#4c525a;
+      --bezel4:#262a30;
+      --face1:#2a2f35;
+      --face2:#13171c;
+      --face3:#06080b;
       --scale:#ddd4b7;
-      --num:#e8dec3;
       --needle:#d92c2c;
-      --needle-hi:#ffb3b3;
-      --bezel-hi:#efefef;
-      --bezel-mid:#8f9399;
-      --bezel-lo:#2b2f35;
-      --face-hi:#2a2f35;
-      --face-mid:#12161b;
-      --face-lo:#050708;
-      --hub-hi:#ffffff;
-      --hub-mid:#b9bcc2;
-      --hub-lo:#555b62;
+      --needleHi:#ffb3b3;
+      --hub1:#ffffff;
+      --hub2:#b9bec5;
+      --hub3:#565c63;
     }
 
     *{
@@ -64,7 +64,7 @@
       width:100%;
       height:auto;
       display:block;
-      filter:drop-shadow(0 18px 24px rgba(0,0,0,.38));
+      filter:drop-shadow(0 18px 26px rgba(0,0,0,.42));
     }
 
     .value{
@@ -96,22 +96,22 @@
       <svg class="gauge" viewBox="0 0 400 400" aria-hidden="true">
         <defs>
           <radialGradient id="bezelGrad" cx="30%" cy="26%">
-            <stop offset="0%" stop-color="var(--bezel-hi)"/>
-            <stop offset="30%" stop-color="#bfc3c8"/>
-            <stop offset="68%" stop-color="var(--bezel-mid)"/>
-            <stop offset="100%" stop-color="var(--bezel-lo)"/>
+            <stop offset="0%" stop-color="var(--bezel1)"/>
+            <stop offset="32%" stop-color="var(--bezel2)"/>
+            <stop offset="72%" stop-color="var(--bezel3)"/>
+            <stop offset="100%" stop-color="var(--bezel4)"/>
           </radialGradient>
 
           <radialGradient id="faceGrad" cx="42%" cy="38%">
-            <stop offset="0%" stop-color="var(--face-hi)"/>
-            <stop offset="55%" stop-color="var(--face-mid)"/>
-            <stop offset="100%" stop-color="var(--face-lo)"/>
+            <stop offset="0%" stop-color="var(--face1)"/>
+            <stop offset="58%" stop-color="var(--face2)"/>
+            <stop offset="100%" stop-color="var(--face3)"/>
           </radialGradient>
 
           <radialGradient id="hubGrad" cx="35%" cy="35%">
-            <stop offset="0%" stop-color="var(--hub-hi)"/>
-            <stop offset="38%" stop-color="var(--hub-mid)"/>
-            <stop offset="100%" stop-color="var(--hub-lo)"/>
+            <stop offset="0%" stop-color="var(--hub1)"/>
+            <stop offset="38%" stop-color="var(--hub2)"/>
+            <stop offset="100%" stop-color="var(--hub3)"/>
           </radialGradient>
 
           <filter id="bigShadow" x="-30%" y="-30%" width="160%" height="160%">
@@ -129,43 +129,43 @@
         <!-- ghiera -->
         <circle cx="200" cy="200" r="150" fill="url(#bezelGrad)"/>
 
-        <!-- interno -->
+        <!-- quadrante -->
         <circle cx="200" cy="200" r="126" fill="#101419"/>
         <circle cx="200" cy="200" r="122" fill="url(#faceGrad)"/>
         <circle cx="200" cy="200" r="121" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.2"/>
 
-        <!-- arco scala -->
+        <!-- arco scala più basso -->
         <path
-          d="M 74 250 A 130 130 0 0 1 326 250"
+          d="M 84 246 A 128 128 0 0 1 316 246"
           fill="none"
           stroke="var(--scale)"
           stroke-width="4"
           stroke-linecap="round"
         />
 
-        <!-- tacche principali -->
+        <!-- tacche sicure -->
         <g stroke="var(--scale)" stroke-width="5" stroke-linecap="round">
-          <line x1="82"  y1="244" x2="58"  y2="262"/>
-          <line x1="124" y1="197" x2="104" y2="183"/>
-          <line x1="173" y1="168" x2="164" y2="143"/>
-          <line x1="200" y1="162" x2="200" y2="134"/>
-          <line x1="227" y1="168" x2="236" y2="143"/>
-          <line x1="276" y1="197" x2="296" y2="183"/>
-          <line x1="318" y1="244" x2="342" y2="262"/>
+          <line x1="92"  y1="239" x2="70"  y2="254"/>
+          <line x1="131" y1="195" x2="113" y2="182"/>
+          <line x1="177" y1="171" x2="170" y2="147"/>
+          <line x1="200" y1="166" x2="200" y2="140"/>
+          <line x1="223" y1="171" x2="230" y2="147"/>
+          <line x1="269" y1="195" x2="287" y2="182"/>
+          <line x1="308" y1="239" x2="330" y2="254"/>
         </g>
 
-        <!-- numeri -->
-        <g fill="var(--num)" font-size="18" font-weight="700" text-anchor="middle">
-          <text x="82"  y="285">2.8</text>
-          <text x="145" y="160">3.5</text>
-          <text x="255" y="160">4.2</text>
-          <text x="318" y="285">5.0</text>
+        <!-- numeri fuori dalla scala -->
+        <g fill="var(--scale)" font-size="18" font-weight="700" text-anchor="middle">
+          <text x="88"  y="276">2.8</text>
+          <text x="148" y="148">3.5</text>
+          <text x="252" y="148">4.2</text>
+          <text x="312" y="276">5.0</text>
         </g>
 
         <!-- ombra lancetta -->
         <g transform="rotate(34 200 200)">
           <polygon
-            points="196,200 204,200 202,88 198,88"
+            points="196,200 204,200 202,90 198,90"
             fill="rgba(0,0,0,.45)"
             filter="url(#needleShadow)"
             transform="translate(3,2)"
@@ -174,8 +174,8 @@
 
         <!-- lancetta -->
         <g transform="rotate(34 200 200)">
-          <polygon points="194,200 206,200 202,90 198,90" fill="var(--needle)"/>
-          <rect x="199.2" y="94" width="1.6" height="95" rx="0.8" fill="var(--needle-hi)" opacity=".8"/>
+          <polygon points="194,200 206,200 202,92 198,92" fill="var(--needle)"/>
+          <rect x="199.2" y="96" width="1.6" height="92" rx="0.8" fill="var(--needleHi)" opacity=".82"/>
         </g>
 
         <!-- base -->
