@@ -6,16 +6,22 @@
   <title>XA Fermentation</title>
   <style>
     :root{
-      --bg1:#03070c;
-      --bg2:#08111a;
-      --text:#eef5fb;
-      --muted:#a9b8c6;
-      --blue:#6cbcff;
-      --green:#79f0b6;
-      --orange:#ffbf72;
-      --purple:#cd92ff;
-      --red:#ff717c;
-      --yellow:#ffd56f;
+      --bg1:#02060b;
+      --bg2:#07101a;
+      --text:#eef4fa;
+      --muted:#a8b6c4;
+
+      --ph:#8af0bb;
+      --ph-ring:#a8e8ff;
+
+      --gravity:#79bfff;
+      --gravity-ring:#79bfff;
+
+      --temp:#ffc172;
+      --temp-ring:#ffc172;
+
+      --count:#d094ff;
+      --count-ring:#d094ff;
     }
 
     *{
@@ -29,7 +35,7 @@
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top, rgba(50,110,170,.16), transparent 30%),
+        radial-gradient(circle at top, rgba(70,120,180,.14), transparent 28%),
         linear-gradient(180deg,var(--bg1),var(--bg2));
     }
 
@@ -38,7 +44,7 @@
     }
 
     .app{
-      max-width:1100px;
+      max-width:1080px;
       margin:0 auto;
     }
 
@@ -56,11 +62,11 @@
       color:#eef6fd;
       cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(155,173,190,.18), rgba(42,61,78,.14)),
-        linear-gradient(180deg, #3d5f7d, #2b445a);
+        linear-gradient(180deg, rgba(170,188,204,.18), rgba(42,61,78,.14)),
+        linear-gradient(180deg, #4c6780, #2d465c);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.10),
-        0 0 12px rgba(70,140,220,.16);
+        inset 0 1px 0 rgba(255,255,255,.12),
+        0 0 18px rgba(70,140,220,.14);
     }
 
     .hero{
@@ -71,22 +77,22 @@
     }
 
     .xa-logo{
-      width:86px;
-      height:86px;
-      border-radius:26px;
+      width:84px;
+      height:84px;
+      border-radius:24px;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:40px;
+      font-size:38px;
       font-weight:700;
-      color:#eef5fb;
+      color:#f2f7fb;
       background:
-        linear-gradient(145deg, rgba(180,196,210,.24), rgba(70,80,90,.08)),
-        linear-gradient(180deg, #192430, #0b1219);
-      border:1px solid rgba(255,255,255,.08);
+        linear-gradient(145deg, rgba(210,220,228,.20), rgba(70,80,90,.08)),
+        linear-gradient(180deg, #1a2530, #0b1219);
+      border:1px solid rgba(255,255,255,.09);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.16),
-        inset 0 -8px 14px rgba(0,0,0,.45),
+        inset 0 -10px 16px rgba(0,0,0,.45),
         0 0 20px rgba(70,140,220,.10);
       flex:0 0 auto;
     }
@@ -130,37 +136,45 @@
       margin-bottom:20px;
     }
 
-    /* PANNELLO ALLUMINIO SATINATO */
+    /* PANNELLO ACCIAIO SATINATO REALE */
     .metal-panel{
       position:relative;
       border-radius:34px;
-      padding:20px 16px 18px;
+      padding:22px 16px 18px;
       margin-bottom:18px;
+      overflow:hidden;
       background:
         linear-gradient(180deg,
-          rgba(255,255,255,.16) 0%,
-          rgba(255,255,255,.06) 8%,
-          rgba(0,0,0,.10) 18%,
-          rgba(255,255,255,.05) 34%,
+          rgba(255,255,255,.22) 0%,
+          rgba(255,255,255,.08) 7%,
+          rgba(0,0,0,.08) 16%,
+          rgba(255,255,255,.05) 32%,
           rgba(0,0,0,.10) 52%,
-          rgba(255,255,255,.05) 68%,
-          rgba(0,0,0,.12) 86%,
-          rgba(255,255,255,.08) 100%),
+          rgba(255,255,255,.04) 72%,
+          rgba(0,0,0,.12) 88%,
+          rgba(255,255,255,.08) 100%
+        ),
         repeating-linear-gradient(
           90deg,
-          rgba(255,255,255,.050) 0px,
-          rgba(255,255,255,.022) 2px,
+          rgba(255,255,255,.060) 0px,
+          rgba(255,255,255,.024) 2px,
           rgba(0,0,0,.040) 4px,
           rgba(255,255,255,.018) 6px,
-          rgba(0,0,0,.035) 8px
+          rgba(0,0,0,.032) 8px
         ),
-        linear-gradient(180deg,#9aa5af 0%,#55606a 18%,#bcc6cf 48%,#48525c 74%,#87929d 100%);
-      border:1px solid rgba(255,255,255,.18);
+        linear-gradient(180deg,
+          #c8d0d7 0%,
+          #8d98a3 16%,
+          #d5dde4 36%,
+          #7c8792 58%,
+          #bcc5cc 78%,
+          #707b86 100%
+        );
+      border:1px solid rgba(255,255,255,.22);
       box-shadow:
-        inset 0 2px 2px rgba(255,255,255,.18),
-        inset 0 -16px 26px rgba(0,0,0,.28),
-        0 12px 30px rgba(0,0,0,.28);
-      overflow:hidden;
+        inset 0 2px 2px rgba(255,255,255,.20),
+        inset 0 -18px 28px rgba(0,0,0,.20),
+        0 12px 30px rgba(0,0,0,.24);
     }
 
     .metal-panel::before{
@@ -171,14 +185,14 @@
       background:
         linear-gradient(90deg,
           rgba(255,255,255,.05) 0%,
-          transparent 12%,
-          rgba(255,255,255,.05) 24%,
+          transparent 10%,
+          rgba(255,255,255,.04) 22%,
           transparent 38%,
-          rgba(0,0,0,.06) 56%,
-          transparent 74%,
-          rgba(255,255,255,.04) 100%);
-      opacity:.9;
+          rgba(0,0,0,.04) 54%,
+          transparent 70%,
+          rgba(255,255,255,.03) 100%);
       pointer-events:none;
+      opacity:.95;
     }
 
     .screw{
@@ -187,7 +201,7 @@
       height:20px;
       border-radius:50%;
       background:
-        radial-gradient(circle at 30% 30%, #fbfdff 0%, #d0d8df 18%, #8d97a1 46%, #59616a 72%, #333941 100%);
+        radial-gradient(circle at 30% 30%, #fcfeff 0%, #d3dbe2 18%, #909ba5 46%, #5a636d 72%, #343a42 100%);
       border:1px solid rgba(255,255,255,.20);
       box-shadow:
         inset 0 1px 1px rgba(255,255,255,.38),
@@ -202,7 +216,7 @@
       right:4px;
       top:9px;
       height:1.5px;
-      background:#313841;
+      background:#2f3640;
       transform:rotate(-20deg);
       border-radius:2px;
     }
@@ -220,325 +234,44 @@
       z-index:2;
     }
 
+    /* CARD PIÙ METALLICHE, NON NERE */
     .gauge-card{
       border-radius:30px;
       padding:14px 12px 18px;
-      min-width:0;
       text-align:center;
+      min-width:0;
       background:
-        radial-gradient(circle at 50% 12%, rgba(255,255,255,.03), transparent 30%),
-        linear-gradient(180deg,#071018,#040a11);
-      border:1px solid rgba(255,255,255,.08);
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.01)),
+        linear-gradient(180deg, rgba(20,28,36,.82), rgba(8,13,18,.88));
+      border:1px solid rgba(255,255,255,.12);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.03),
-        inset 0 -16px 20px rgba(0,0,0,.48),
-        0 6px 18px rgba(0,0,0,.22);
+        inset 0 1px 0 rgba(255,255,255,.04),
+        inset 0 -18px 26px rgba(0,0,0,.32),
+        0 4px 14px rgba(0,0,0,.18);
     }
 
-    .gauge-card.alert-warning{
-      border-color:rgba(255,213,111,.24);
-    }
-
-    .gauge-card.alert-critical{
-      border-color:rgba(255,113,124,.24);
-    }
+    .gauge-card.alert-warning{ border-color:rgba(255,213,111,.24); }
+    .gauge-card.alert-critical{ border-color:rgba(255,113,124,.24); }
 
     .g-label{
       font-size:11px;
       letter-spacing:5px;
-      color:#d9e4ee;
-      margin-bottom:8px;
+      color:#e5edf5;
+      margin-bottom:10px;
     }
 
     .dial-wrap{
-      width:188px;
-      height:188px;
+      width:220px;
+      height:220px;
       margin:0 auto 8px;
       position:relative;
     }
 
-    /* QUADRANTE IN RILIEVO */
-    .dial-housing{
-      position:absolute;
-      inset:0;
-      border-radius:50%;
-      background:
-        linear-gradient(145deg, rgba(210,220,228,.20), rgba(66,76,86,.20)),
-        linear-gradient(180deg,#39434d,#1f262d);
-      box-shadow:
-        inset 0 2px 2px rgba(255,255,255,.15),
-        inset 0 -10px 14px rgba(0,0,0,.42),
-        0 4px 14px rgba(0,0,0,.35);
-    }
-
-    .dial-bezel{
-      position:absolute;
-      inset:14px;
-      border-radius:50%;
-      background:
-        linear-gradient(145deg,#c5ced6,#7a8691 42%,#525d67 58%,#b5c0c9);
-      box-shadow:
-        inset 0 2px 2px rgba(255,255,255,.22),
-        inset 0 -7px 10px rgba(0,0,0,.36),
-        0 0 10px rgba(0,0,0,.22);
-    }
-
-    .dial{
-      position:absolute;
-      inset:22px;
-      border-radius:50%;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 50% 55%, #081018 0 28%, #0b1620 28% 54%, #08111a 54% 100%);
-      border:2px solid rgba(200,220,240,.12);
-      box-shadow:
-        inset 0 12px 22px rgba(0,0,0,.55),
-        inset 0 -8px 16px rgba(0,0,0,.55),
-        inset 0 1px 0 rgba(255,255,255,.03);
-    }
-
-    .dial-ring-light{
-      position:absolute;
-      inset:0;
-      border-radius:50%;
-      z-index:1;
-      pointer-events:none;
-    }
-
-    .dial-ring-light::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius:50%;
-      border:3px solid rgba(255,255,255,.36);
-      box-shadow:
-        0 0 6px rgba(255,255,255,.18),
-        0 0 14px rgba(255,255,255,.14),
-        0 0 28px rgba(255,255,255,.10),
-        inset 0 0 6px rgba(255,255,255,.08);
-    }
-
-    .dial-inner-glow{
-      position:absolute;
-      inset:18px;
-      border-radius:50%;
-      z-index:1;
-      filter:blur(14px);
-      opacity:.30;
-      pointer-events:none;
-    }
-
-    .dial-core{
-      position:absolute;
-      inset:40px;
-      border-radius:50%;
-      z-index:2;
-      background:
-        radial-gradient(circle at 50% 40%, rgba(7,12,18,.98) 0 52%, rgba(2,6,10,1) 52% 100%);
-      box-shadow:
-        inset 0 8px 18px rgba(0,0,0,.56),
-        inset 0 -4px 8px rgba(255,255,255,.02);
-    }
-
-    .ticks{
-      position:absolute;
-      inset:0;
-      z-index:3;
-      border-radius:50%;
-    }
-
-    .tick{
-      position:absolute;
-      left:50%;
-      top:12px;
-      width:4px;
-      height:20px;
-      margin-left:-2px;
-      border-radius:6px;
-      transform-origin:50% 72px;
-      opacity:.95;
-    }
-
-    .tick.small{
-      height:12px;
-      top:16px;
-      opacity:.74;
-    }
-
-    /* NUMERI DENTRO IL QUADRANTE */
-    .dial-numbers{
-      position:absolute;
-      inset:0;
-      z-index:3;
-      pointer-events:none;
-    }
-
-    .dial-number{
-      position:absolute;
-      transform:translate(-50%,-50%);
-      font-size:10px;
-      font-weight:700;
-      color:#eef5fb;
-      text-shadow:0 0 6px rgba(255,255,255,.12);
-      white-space:nowrap;
-      letter-spacing:.2px;
-      opacity:.96;
-    }
-
-    .needle{
-      position:absolute;
-      left:50%;
-      bottom:50%;
-      width:8px;
-      height:74px;
-      transform-origin:bottom center;
-      transform:translateX(-50%) rotate(-60deg);
-      border-radius:999px;
-      z-index:4;
-      transition:transform .95s cubic-bezier(.18,1.3,.34,1);
-    }
-
-    .needle::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      bottom:-13px;
-      width:22px;
-      height:22px;
-      margin-left:-11px;
-      border-radius:50%;
-      background:#dfefff;
-      box-shadow:
-        inset 0 1px 1px rgba(255,255,255,.45),
-        0 0 12px rgba(190,225,255,.18);
-    }
-
-    /* VETRO BEN VISIBILE */
-    .glass{
-      position:absolute;
-      inset:0;
-      z-index:5;
-      border-radius:50%;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 30% 18%, rgba(255,255,255,.22), transparent 22%),
-        linear-gradient(145deg,
-          rgba(255,255,255,.22) 0%,
-          rgba(255,255,255,.07) 16%,
-          rgba(255,255,255,.00) 34%,
-          rgba(255,255,255,.03) 56%,
-          rgba(255,255,255,.08) 100%);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.14),
-        inset 0 -1px 0 rgba(255,255,255,.05);
-      opacity:.92;
-    }
-
-    .glass::before{
-      content:"";
-      position:absolute;
-      left:18%;
-      top:8%;
-      width:42%;
-      height:14%;
-      border-radius:999px;
-      background:linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.02));
-      transform:rotate(-16deg);
-      filter:blur(1px);
-    }
-
-    .glass::after{
-      content:"";
-      position:absolute;
-      right:16%;
-      bottom:18%;
-      width:24%;
-      height:10%;
-      border-radius:999px;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.00));
-      transform:rotate(22deg);
-      filter:blur(1px);
-    }
-
-    /* COLORI */
-    .ph .dial-ring-light::before{
-      border-color:rgba(168,236,255,.72);
-      box-shadow:
-        0 0 8px rgba(160,230,255,.44),
-        0 0 20px rgba(140,220,255,.34),
-        0 0 34px rgba(125,210,255,.22),
-        inset 0 0 7px rgba(220,248,255,.16);
-    }
-    .ph .dial-inner-glow{
-      background:radial-gradient(circle, rgba(210,246,255,.25) 0%, rgba(180,232,255,.15) 42%, transparent 76%);
-    }
-    .ph .tick{
-      background:rgba(167,235,255,.92);
-      box-shadow:0 0 8px rgba(167,235,255,.24);
-    }
-    .ph .needle{
-      background:linear-gradient(180deg,#d7ffe7,var(--green));
-      box-shadow:0 0 12px rgba(121,240,182,.18);
-    }
-
-    .gravity .dial-ring-light::before{
-      border-color:rgba(116,188,255,.78);
-      box-shadow:
-        0 0 8px rgba(125,193,255,.44),
-        0 0 20px rgba(100,182,255,.34),
-        0 0 34px rgba(75,156,255,.22),
-        inset 0 0 7px rgba(215,241,255,.16);
-    }
-    .gravity .dial-inner-glow{
-      background:radial-gradient(circle, rgba(220,242,255,.22) 0%, rgba(185,225,255,.14) 42%, transparent 76%);
-    }
-    .gravity .tick{
-      background:rgba(108,188,255,.95);
-      box-shadow:0 0 8px rgba(108,188,255,.24);
-    }
-    .gravity .needle{
-      background:linear-gradient(180deg,#e8f6ff,var(--blue));
-      box-shadow:0 0 12px rgba(108,188,255,.20);
-    }
-
-    .temp .dial-ring-light::before{
-      border-color:rgba(255,194,108,.76);
-      box-shadow:
-        0 0 8px rgba(255,202,126,.42),
-        0 0 20px rgba(255,184,98,.30),
-        0 0 34px rgba(255,166,72,.20),
-        inset 0 0 7px rgba(255,241,218,.16);
-    }
-    .temp .dial-inner-glow{
-      background:radial-gradient(circle, rgba(255,239,210,.22) 0%, rgba(255,224,174,.14) 42%, transparent 76%);
-    }
-    .temp .tick{
-      background:rgba(255,192,104,.95);
-      box-shadow:0 0 8px rgba(255,192,104,.24);
-    }
-    .temp .needle{
-      background:linear-gradient(180deg,#ffe9cd,var(--orange));
-      box-shadow:0 0 12px rgba(255,191,114,.20);
-    }
-
-    .count .dial-ring-light::before{
-      border-color:rgba(211,158,255,.76);
-      box-shadow:
-        0 0 8px rgba(220,176,255,.42),
-        0 0 20px rgba(205,146,255,.32),
-        0 0 34px rgba(186,110,255,.20),
-        inset 0 0 7px rgba(226,242,255,.12);
-    }
-    .count .dial-inner-glow{
-      background:radial-gradient(circle, rgba(220,236,255,.20) 0%, rgba(194,222,255,.12) 42%, transparent 76%);
-    }
-    .count .tick{
-      background:rgba(205,146,255,.95);
-      box-shadow:0 0 8px rgba(205,146,255,.24);
-    }
-    .count .needle{
-      background:linear-gradient(180deg,#f2ddff,var(--purple));
-      box-shadow:0 0 12px rgba(205,146,255,.20);
+    .dial-svg{
+      width:100%;
+      height:100%;
+      display:block;
+      filter:drop-shadow(0 12px 16px rgba(0,0,0,.22));
     }
 
     .g-value{
@@ -645,17 +378,9 @@
       margin-bottom:8px;
     }
 
-    .batch-card{
-      cursor:pointer;
-    }
-
-    .batch-card.status-card-critical{
-      border-color:rgba(255,113,124,.16);
-    }
-
-    .batch-card.status-card-warning{
-      border-color:rgba(255,213,111,.14);
-    }
+    .batch-card{ cursor:pointer; }
+    .batch-card.status-card-critical{ border-color:rgba(255,113,124,.16); }
+    .batch-card.status-card-warning{ border-color:rgba(255,213,111,.14); }
 
     .batch-top,
     .detail-top{
@@ -931,28 +656,8 @@
       }
 
       .dial-wrap{
-        width:176px;
-        height:176px;
-      }
-
-      .dial-housing{
-        inset:0;
-      }
-
-      .dial-bezel{
-        inset:13px;
-      }
-
-      .dial{
-        inset:21px;
-      }
-
-      .tick{
-        transform-origin:50% 68px;
-      }
-
-      .needle{
-        height:70px;
+        width:200px;
+        height:200px;
       }
 
       .g-value{
@@ -1318,56 +1023,6 @@
       if(value < inMin) value = inMin;
       if(value > inMax) value = inMax;
       return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
-    }
-
-    function animateNeedle(id, deg){
-      const el = document.getElementById(id);
-      if(!el) return;
-      const current = el.dataset.deg ? parseFloat(el.dataset.deg) : -60;
-      const overshoot = deg > current ? Math.min(deg + 6, 66) : Math.max(deg - 6, -66);
-      el.style.transform = `translateX(-50%) rotate(${overshoot}deg)`;
-      clearTimeout(el._needleTimer);
-      el._needleTimer = setTimeout(() => {
-        el.style.transform = `translateX(-50%) rotate(${deg}deg)`;
-      }, 170);
-      el.dataset.deg = deg;
-    }
-
-    function buildTicks(containerId){
-      const box = document.getElementById(containerId);
-      if(!box) return;
-      box.innerHTML = "";
-      for(let i=0;i<=12;i++){
-        const tick = document.createElement("div");
-        tick.className = "tick" + ((i % 2 === 0) ? "" : " small");
-        tick.style.transform = `rotate(${-60 + i * 10}deg)`;
-        box.appendChild(tick);
-      }
-    }
-
-    function polarPosition(centerX, centerY, radius, angleDeg){
-      const rad = angleDeg * Math.PI / 180;
-      return {
-        x: centerX + Math.cos(rad) * radius,
-        y: centerY + Math.sin(rad) * radius
-      };
-    }
-
-    function buildDialNumbers(containerId, labels){
-      const box = document.getElementById(containerId);
-      if(!box) return;
-      box.innerHTML = "";
-      const center = 94;
-      const radius = 58;
-      labels.forEach(item => {
-        const pos = polarPosition(center, center, radius, item.angle);
-        const el = document.createElement("div");
-        el.className = "dial-number";
-        el.style.left = pos.x + "px";
-        el.style.top = pos.y + "px";
-        el.textContent = item.label;
-        box.appendChild(el);
-      });
     }
 
     function getDay(b){
@@ -1783,100 +1438,135 @@
       }
     }
 
-    function templatesHTML(){
+    function gaugeSVG({id,label,color,ringColor,value,display,subtitle,min,max,numbersMap}){
+      const angle = mapValue(value ?? min, min, max, -60, 60);
+      const cx = 110;
+      const cy = 110;
+      const rOuter = 94;
+      const rBezel = 84;
+      const rTick = 62;
+      const rNumber = 52;
+
+      let ticks = "";
+      for(let i=0;i<=12;i++){
+        const a = (-60 + i*10) * Math.PI/180;
+        const isSmall = i % 2 !== 0;
+        const r1 = isSmall ? rTick-8 : rTick-12;
+        const r2 = rTick + 7;
+        const x1 = cx + Math.cos(a)*r1;
+        const y1 = cy + Math.sin(a)*r1;
+        const x2 = cx + Math.cos(a)*r2;
+        const y2 = cy + Math.sin(a)*r2;
+        ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${ringColor}" stroke-width="${isSmall ? 5 : 6}" stroke-linecap="round" opacity="${isSmall ? .72 : .96}" />`;
+      }
+
+      let nums = "";
+      numbersMap.forEach(n => {
+        const a = n.angle * Math.PI/180;
+        const x = cx + Math.cos(a)*rNumber;
+        const y = cy + Math.sin(a)*rNumber;
+        nums += `<text x="${x}" y="${y}" fill="#eef5fb" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle">${n.label}</text>`;
+      });
+
       return `
-        <div class="templates-card">
-          <div class="templates-title">${t("templates")}</div>
-          <div class="templates-grid">
-            <button class="template-btn" onclick="createTemplateBatch('cider')">
-              <span class="template-name">${t("ciderBase")}</span>
-              <span class="template-desc">${t("ciderBaseDesc")}</span>
-            </button>
-            <button class="template-btn" onclick="createTemplateBatch('kombucha')">
-              <span class="template-name">${t("kombuchaBase")}</span>
-              <span class="template-desc">${t("kombuchaBaseDesc")}</span>
-            </button>
-            <button class="template-btn" onclick="createTemplateBatch('lactic')">
-              <span class="template-name">${t("lacticApple")}</span>
-              <span class="template-desc">${t("lacticAppleDesc")}</span>
-            </button>
-            <button class="template-btn" onclick="createTemplateBatch('mixed')">
-              <span class="template-name">${t("mixedFermentation")}</span>
-              <span class="template-desc">${t("mixedFermentationDesc")}</span>
-            </button>
-          </div>
-        </div>
-      `;
-    }
-
-    function filtersHTML(){
-      return `
-        <div class="filters-card">
-          <div class="filters-title">${t("filters")}</div>
-          <div class="filters-grid">
-            <input class="filter-input" type="text" placeholder="${t("searchPlaceholder")}"
-              value="${archiveSearch.replace(/"/g, "&quot;")}"
-              oninput="archiveSearch=this.value; render();">
-
-            <select class="filter-select" onchange="archiveTypeFilter=this.value; render();">
-              <option value="" ${archiveTypeFilter === "" ? "selected" : ""}>${t("allTypes")}</option>
-              <option value="cider" ${archiveTypeFilter === "cider" ? "selected" : ""}>${t("typeCider")}</option>
-              <option value="sidro" ${archiveTypeFilter === "sidro" ? "selected" : ""}>${t("typeCider")}</option>
-              <option value="kombucha" ${archiveTypeFilter === "kombucha" ? "selected" : ""}>${t("typeKombucha")}</option>
-              <option value="lactic" ${archiveTypeFilter === "lactic" ? "selected" : ""}>${t("typeLactic")}</option>
-              <option value="lattico" ${archiveTypeFilter === "lattico" ? "selected" : ""}>${t("typeLactic")}</option>
-              <option value="mixed" ${archiveTypeFilter === "mixed" ? "selected" : ""}>${t("typeMixed")}</option>
-              <option value="misto" ${archiveTypeFilter === "misto" ? "selected" : ""}>${t("typeMixed")}</option>
-            </select>
-
-            <select class="filter-select" onchange="archiveStatusFilter=this.value; render();">
-              <option value="" ${archiveStatusFilter === "" ? "selected" : ""}>${t("allStatuses")}</option>
-              <option value="active" ${archiveStatusFilter === "active" ? "selected" : ""}>${t("statusActive")}</option>
-              <option value="slow" ${archiveStatusFilter === "slow" ? "selected" : ""}>${t("statusSlow")}</option>
-              <option value="critical" ${archiveStatusFilter === "critical" ? "selected" : ""}>${t("statusCritical")}</option>
-              <option value="complete" ${archiveStatusFilter === "complete" ? "selected" : ""}>${t("statusComplete")}</option>
-            </select>
-          </div>
-        </div>
-      `;
-    }
-
-    function alertBoxHTML(batch){
-      if(!batch) return "";
-      const data = getBatchAlerts(batch);
-      return `
-        <div class="alert-box ${data.level}">
-          <div class="alert-title">${t("alerts")}</div>
-          ${data.messages.map(msg => `<div>${msg}</div>`).join("")}
-        </div>
-      `;
-    }
-
-    function dialHTML(typeClass, label, needleId, ticksId, numbersId, valueId, subtext, alertClass){
-      return `
-        <div class="gauge-card ${typeClass} ${alertClass}">
-          <div class="g-label">${label.toUpperCase()}</div>
+        <div class="gauge-card ${id}">
+          <div class="g-label">${label}</div>
           <div class="dial-wrap">
-            <div class="dial-housing"></div>
-            <div class="dial-bezel"></div>
-            <div class="dial">
-              <div class="dial-ring-light"></div>
-              <div class="dial-inner-glow"></div>
-              <div class="dial-core"></div>
-              <div class="ticks" id="${ticksId}"></div>
-              <div class="dial-numbers" id="${numbersId}"></div>
-              <div class="needle" id="${needleId}"></div>
-              <div class="glass"></div>
-            </div>
+            <svg class="dial-svg" viewBox="0 0 220 220" aria-hidden="true">
+              <defs>
+                <radialGradient id="${id}-bezel" cx="35%" cy="28%">
+                  <stop offset="0%" stop-color="#e7edf2" stop-opacity=".95"/>
+                  <stop offset="20%" stop-color="#b5bec6" stop-opacity=".95"/>
+                  <stop offset="55%" stop-color="#646f79" stop-opacity=".98"/>
+                  <stop offset="100%" stop-color="#2d3339" stop-opacity="1"/>
+                </radialGradient>
+
+                <radialGradient id="${id}-face" cx="50%" cy="38%">
+                  <stop offset="0%" stop-color="#101a24"/>
+                  <stop offset="55%" stop-color="#0a131b"/>
+                  <stop offset="100%" stop-color="#050a10"/>
+                </radialGradient>
+
+                <radialGradient id="${id}-core" cx="50%" cy="42%">
+                  <stop offset="0%" stop-color="#0b1218"/>
+                  <stop offset="60%" stop-color="#05090e"/>
+                  <stop offset="100%" stop-color="#02060a"/>
+                </radialGradient>
+
+                <radialGradient id="${id}-innerglow" cx="50%" cy="50%">
+                  <stop offset="0%" stop-color="${ringColor}" stop-opacity=".22"/>
+                  <stop offset="40%" stop-color="${ringColor}" stop-opacity=".10"/>
+                  <stop offset="100%" stop-color="${ringColor}" stop-opacity="0"/>
+                </radialGradient>
+
+                <linearGradient id="${id}-needle" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f8fbff"/>
+                  <stop offset="35%" stop-color="${color}"/>
+                  <stop offset="100%" stop-color="${color}"/>
+                </linearGradient>
+
+                <filter id="${id}-glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="5" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+
+                <filter id="${id}-glassblur" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="1.2"/>
+                </filter>
+              </defs>
+
+              <!-- housing -->
+              <circle cx="${cx}" cy="${cy}" r="${rOuter}" fill="url(#${id}-bezel)" />
+              <circle cx="${cx}" cy="${cy}" r="${rBezel}" fill="#0c1319" opacity=".65" />
+              <circle cx="${cx}" cy="${cy}" r="${rBezel-6}" fill="url(#${id}-face)" />
+
+              <!-- illuminated ring -->
+              <circle cx="${cx}" cy="${cy}" r="${rBezel-8}" fill="none" stroke="${ringColor}" stroke-width="3.5" opacity=".95" filter="url(#${id}-glow)" />
+              <circle cx="${cx}" cy="${cy}" r="${rBezel-8}" fill="url(#${id}-innerglow)" opacity=".88" />
+
+              <!-- ticks -->
+              ${ticks}
+
+              <!-- numbers -->
+              ${nums}
+
+              <!-- center face -->
+              <circle cx="${cx}" cy="${cy}" r="38" fill="url(#${id}-core)" />
+              <circle cx="${cx}" cy="${cy}" r="19" fill="#0f1821" opacity=".95" />
+
+              <!-- needle -->
+              <g transform="rotate(${angle} ${cx} ${cy})">
+                <line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy-64}" stroke="url(#${id}-needle)" stroke-width="8" stroke-linecap="round" filter="url(#${id}-glow)" />
+              </g>
+
+              <!-- hub -->
+              <circle cx="${cx}" cy="${cy}" r="18" fill="#ddefff" />
+              <circle cx="${cx}" cy="${cy}" r="18" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1"/>
+
+              <!-- glass -->
+              <ellipse cx="${cx-16}" cy="${cy-58}" rx="36" ry="11" fill="rgba(255,255,255,.20)" transform="rotate(-18 ${cx-16} ${cy-58})" filter="url(#${id}-glassblur)" />
+              <ellipse cx="${cx+34}" cy="${cy+28}" rx="22" ry="8" fill="rgba(255,255,255,.05)" transform="rotate(20 ${cx+34} ${cy+28})" filter="url(#${id}-glassblur)" />
+              <circle cx="${cx}" cy="${cy}" r="${rBezel-6}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.2"/>
+            </svg>
           </div>
-          <div class="g-value" id="${valueId}">-</div>
-          <div class="g-sub">${subtext}</div>
+          <div class="g-value">${display}</div>
+          <div class="g-sub">${subtitle}</div>
         </div>
       `;
     }
 
     function dashboardHTML(){
       const topBatch = getTopBatch();
+      const latest = topBatch ? getLatestMeasurement(topBatch) : null;
+
+      const ph = latest ? (parseNum(latest.ph) ?? 3.5) : 3.5;
+      const gravity = latest ? (parseNum(latest.gravity) ?? 1.000) : 1.000;
+      const temp = latest ? (parseNum(latest.temp) ?? 0) : 0;
+      const count = batches.length;
+
       return `
         <div class="dashboard">
           <div class="metal-panel">
@@ -1886,14 +1576,84 @@
             <div class="screw br"></div>
 
             <div class="gauges">
-              ${dialHTML("ph", t("ph"), "needlePh", "ticksPh", "numbersPh", "topPh", t("latestMeasurement"), getGaugeAlertClass("ph", topBatch))}
-              ${dialHTML("gravity", t("gravity"), "needleGravity", "ticksGravity", "numbersGravity", "topGravity", t("latestMeasurement"), getGaugeAlertClass("gravity", topBatch))}
-              ${dialHTML("temp", t("temp"), "needleTemp", "ticksTemp", "numbersTemp", "topTemp", t("tempScale"), getGaugeAlertClass("temp", topBatch))}
-              ${dialHTML("count", t("batches"), "needleCount", "ticksCount", "numbersCount", "topCount", t("stored"), getGaugeAlertClass("count", topBatch))}
+              ${gaugeSVG({
+                id:"ph",
+                label:t("ph"),
+                color:"var(--ph)",
+                ringColor:"var(--ph-ring)",
+                value:ph,
+                display:topBatch && latest ? formatValue(latest.ph) : "-",
+                subtitle:t("latestMeasurement"),
+                min:2.8,
+                max:5.0,
+                numbersMap:[
+                  {label:"2.8",angle:-56},
+                  {label:"3.5",angle:-22},
+                  {label:"4.2",angle:12},
+                  {label:"5.0",angle:46}
+                ]
+              })}
+
+              ${gaugeSVG({
+                id:"gravity",
+                label:t("gravity").toUpperCase(),
+                color:"var(--gravity)",
+                ringColor:"var(--gravity-ring)",
+                value:gravity,
+                display:topBatch && latest ? formatValue(latest.gravity) : "-",
+                subtitle:t("latestMeasurement"),
+                min:1.000,
+                max:1.060,
+                numbersMap:[
+                  {label:"1.000",angle:-56},
+                  {label:"1.020",angle:-22},
+                  {label:"1.040",angle:12},
+                  {label:"1.060",angle:46}
+                ]
+              })}
+
+              ${gaugeSVG({
+                id:"temp",
+                label:t("temp").toUpperCase(),
+                color:"var(--temp)",
+                ringColor:"var(--temp-ring)",
+                value:temp,
+                display:topBatch && latest ? formatTemp(latest.temp) : "-",
+                subtitle:t("tempScale"),
+                min:0,
+                max:50,
+                numbersMap:[
+                  {label:"0",angle:-56},
+                  {label:"10",angle:-34},
+                  {label:"20",angle:-12},
+                  {label:"30",angle:10},
+                  {label:"40",angle:32},
+                  {label:"50",angle:52}
+                ]
+              })}
+
+              ${gaugeSVG({
+                id:"count",
+                label:t("batches").toUpperCase(),
+                color:"var(--count)",
+                ringColor:"var(--count-ring)",
+                value:count,
+                display:String(count),
+                subtitle:t("stored"),
+                min:0,
+                max:20,
+                numbersMap:[
+                  {label:"0",angle:-56},
+                  {label:"5",angle:-24},
+                  {label:"10",angle:8},
+                  {label:"15",angle:34},
+                  {label:"20",angle:54}
+                ]
+              })}
             </div>
           </div>
 
-          ${selectedBatchIndex !== null ? alertBoxHTML(topBatch) : ""}
+          ${selectedBatchIndex !== null && topBatch ? alertBoxHTML(topBatch) : ""}
 
           ${selectedBatchIndex === null
             ? `<button class="main-btn" onclick="addBatch()">${t("newBatch")}</button>
@@ -2111,77 +1871,62 @@
       `;
     }
 
-    function updateTopPanel(){
-      const count = batches.length;
-      const topBatch = getTopBatch();
-
-      const topCountEl = document.getElementById("topCount");
-      if(topCountEl) topCountEl.textContent = count;
-      animateNeedle("needleCount", mapValue(count, 0, 20, -60, 60));
-
-      if(topBatch){
-        const latest = getLatestMeasurement(topBatch);
-        const ph = latest ? latest.ph : "-";
-        const gravity = latest ? latest.gravity : "-";
-        const temp = latest ? latest.temp : "-";
-
-        const phEl = document.getElementById("topPh");
-        const gravityEl = document.getElementById("topGravity");
-        const tempEl = document.getElementById("topTemp");
-
-        if(phEl) phEl.textContent = formatValue(ph);
-        if(gravityEl) gravityEl.textContent = formatValue(gravity);
-        if(tempEl) tempEl.textContent = formatTemp(temp);
-
-        animateNeedle("needlePh", mapValue(parseNum(ph) ?? 3.5, 2.8, 5.0, -60, 60));
-        animateNeedle("needleGravity", mapValue(parseNum(gravity) ?? 1.000, 1.000, 1.060, -60, 60));
-        animateNeedle("needleTemp", mapValue(parseNum(temp) ?? 0, 0, 50, -60, 60));
-      } else {
-        const phEl = document.getElementById("topPh");
-        const gravityEl = document.getElementById("topGravity");
-        const tempEl = document.getElementById("topTemp");
-
-        if(phEl) phEl.textContent = "-";
-        if(gravityEl) gravityEl.textContent = "-";
-        if(tempEl) tempEl.textContent = "-";
-
-        animateNeedle("needlePh", -60);
-        animateNeedle("needleGravity", -60);
-        animateNeedle("needleTemp", -60);
-      }
+    function templatesHTML(){
+      return `
+        <div class="templates-card">
+          <div class="templates-title">${t("templates")}</div>
+          <div class="templates-grid">
+            <button class="template-btn" onclick="createTemplateBatch('cider')">
+              <span class="template-name">${t("ciderBase")}</span>
+              <span class="template-desc">${t("ciderBaseDesc")}</span>
+            </button>
+            <button class="template-btn" onclick="createTemplateBatch('kombucha')">
+              <span class="template-name">${t("kombuchaBase")}</span>
+              <span class="template-desc">${t("kombuchaBaseDesc")}</span>
+            </button>
+            <button class="template-btn" onclick="createTemplateBatch('lactic')">
+              <span class="template-name">${t("lacticApple")}</span>
+              <span class="template-desc">${t("lacticAppleDesc")}</span>
+            </button>
+            <button class="template-btn" onclick="createTemplateBatch('mixed')">
+              <span class="template-name">${t("mixedFermentation")}</span>
+              <span class="template-desc">${t("mixedFermentationDesc")}</span>
+            </button>
+          </div>
+        </div>
+      `;
     }
 
-    function buildAllNumbers(){
-      buildDialNumbers("numbersPh", [
-        {label:"2.8", angle:-132},
-        {label:"3.5", angle:-96},
-        {label:"4.2", angle:-58},
-        {label:"5.0", angle:-20}
-      ]);
+    function filtersHTML(){
+      return `
+        <div class="filters-card">
+          <div class="filters-title">${t("filters")}</div>
+          <div class="filters-grid">
+            <input class="filter-input" type="text" placeholder="${t("searchPlaceholder")}"
+              value="${archiveSearch.replace(/"/g, "&quot;")}"
+              oninput="archiveSearch=this.value; render();">
 
-      buildDialNumbers("numbersGravity", [
-        {label:"1.000", angle:-132},
-        {label:"1.020", angle:-96},
-        {label:"1.040", angle:-58},
-        {label:"1.060", angle:-20}
-      ]);
+            <select class="filter-select" onchange="archiveTypeFilter=this.value; render();">
+              <option value="" ${archiveTypeFilter === "" ? "selected" : ""}>${t("allTypes")}</option>
+              <option value="cider" ${archiveTypeFilter === "cider" ? "selected" : ""}>${t("typeCider")}</option>
+              <option value="sidro" ${archiveTypeFilter === "sidro" ? "selected" : ""}>${t("typeCider")}</option>
+              <option value="kombucha" ${archiveTypeFilter === "kombucha" ? "selected" : ""}>${t("typeKombucha")}</option>
+              <option value="lactic" ${archiveTypeFilter === "lactic" ? "selected" : ""}>${t("typeLactic")}</option>
+              <option value="lattico" ${archiveTypeFilter === "lattico" ? "selected" : ""}>${t("typeLactic")}</option>
+              <option value="mixed" ${archiveTypeFilter === "mixed" ? "selected" : ""}>${t("typeMixed")}</option>
+              <option value="misto" ${archiveTypeFilter === "misto" ? "selected" : ""}>${t("typeMixed")}</option>
+            </select>
 
-      buildDialNumbers("numbersTemp", [
-        {label:"0", angle:-132},
-        {label:"10", angle:-108},
-        {label:"20", angle:-82},
-        {label:"30", angle:-56},
-        {label:"40", angle:-30},
-        {label:"50", angle:-6}
-      ]);
-
-      buildDialNumbers("numbersCount", [
-        {label:"0", angle:-132},
-        {label:"5", angle:-100},
-        {label:"10", angle:-66},
-        {label:"15", angle:-34},
-        {label:"20", angle:-4}
-      ]);
+            <select class="filter-select" onchange="archiveStatusFilter=this.value; render();">
+              <option value="" ${archiveStatusFilter === "" ? "selected" : ""}>${t("allStatuses")}</option>
+              <option value="active" ${archiveStatusFilter === "active" ? "selected" : ""}>${t("statusActive")}</option>
+              <option value="slow" ${archiveStatusFilter === "slow" ? "selected" : ""}>${t("statusSlow")}</option>
+              <option value="critical" ${archiveStatusFilter === "critical" ? "selected" : ""}>${t("statusCritical")}</option>
+              <option value="complete" ${archiveStatusFilter === "complete" ? "selected" : ""}>${t("statusComplete")}</option>
+            </select>
+          </div>
+        </div>
+      `;
     }
 
     function render(){
@@ -2198,13 +1943,6 @@
       } else {
         app.innerHTML = detailHTML(selectedBatchIndex);
       }
-
-      buildTicks("ticksPh");
-      buildTicks("ticksGravity");
-      buildTicks("ticksTemp");
-      buildTicks("ticksCount");
-      buildAllNumbers();
-      updateTopPanel();
     }
 
     function addBatch(){
