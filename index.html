@@ -13,10 +13,8 @@
       --stroke:rgba(255,255,255,.06);
       --text:#f4f7fb;
       --muted:#95a8bb;
-
       --scale:#e6dcc5;
       --needle:#ff3b3b;
-      --needleGlow:rgba(255,59,59,.35);
     }
 
     *{
@@ -119,26 +117,28 @@
       max: 5.0,
       value: 3.5,
 
-      // Questa è la scala che hai approvato:
-      // 2.8 in basso a sinistra, 3.5 alto-sinistra, 4.2 alto-destra, 5.0 basso-destra
+      // scala approvata
       startDeg: 135,
       endDeg: 405,
 
       faceRadius: 104,
+      bezelRadius: 116,
       arcRadius: 96,
       tickOuter: 96,
       tickInnerMinor: 82,
       tickInnerMajor: 74,
-      labelRadius: 120,
+
+      // numeri più vicini al quadrante
+      labelRadius: 108,
 
       majorValues: [2.8, 3.5, 4.2, 5.0],
 
-      // piccoli aggiustamenti solo per tenere i numeri ben leggibili
+      // offset corretti
       labelOffsets: {
-        "2.8": { dx: -2, dy: 4, a: 0 },
-        "3.5": { dx: 0,  dy: -6, a: 0 },
-        "4.2": { dx: 0,  dy: -6, a: 0 },
-        "5.0": { dx: 2,  dy: 4, a: 0 }
+        "2.8": { dx: -6, dy: 6, a: 0 },
+        "3.5": { dx: -2, dy: -2, a: 0 },
+        "4.2": { dx:  2, dy: -2, a: 0 },
+        "5.0": { dx:  6, dy: 6, a: 0 }
       }
     };
 
@@ -174,20 +174,20 @@
       ctx.shadowColor = "rgba(0,0,0,.45)";
       ctx.shadowBlur = 28;
       ctx.beginPath();
-      ctx.arc(cx, cy, cfg.faceRadius + 10, 0, Math.PI * 2);
+      ctx.arc(cx, cy, cfg.bezelRadius, 0, Math.PI * 2);
       ctx.fillStyle = "#0c1218";
       ctx.fill();
       ctx.restore();
 
       // ghiera
-      const bezel = ctx.createRadialGradient(cx - 28, cy - 28, 8, cx, cy, cfg.faceRadius + 12);
+      const bezel = ctx.createRadialGradient(cx - 28, cy - 28, 8, cx, cy, cfg.bezelRadius);
       bezel.addColorStop(0, "#eef2f5");
       bezel.addColorStop(0.30, "#9ea7b0");
       bezel.addColorStop(0.68, "#4d5660");
       bezel.addColorStop(1, "#232830");
 
       ctx.beginPath();
-      ctx.arc(cx, cy, cfg.faceRadius + 12, 0, Math.PI * 2);
+      ctx.arc(cx, cy, cfg.bezelRadius, 0, Math.PI * 2);
       ctx.fillStyle = bezel;
       ctx.fill();
 
@@ -230,7 +230,7 @@
       ctx.lineCap = "round";
       ctx.stroke();
 
-      // tacche: 21 suddivisioni
+      // tacche
       for(let i = 0; i <= 20; i++){
         const a = toRad(cfg.startDeg + i * (cfg.endDeg - cfg.startDeg) / 20);
         const major = i % 5 === 0;
@@ -266,9 +266,8 @@
 
       // centro metallico
       const hub = ctx.createRadialGradient(cx - 3, cy - 3, 2, cx, cy, 13);
-      hub.addColorStop(0, "#ffffff");
-      hub.addColorStop(0.35, "#d7dde4");
-      hub.addColorStop(1, "#666f79");
+      hub.addColorStop(0, "#fff");
+      hub.addColorStop(1, "#777");
 
       ctx.beginPath();
       ctx.arc(cx, cy, 10, 0, Math.PI * 2);
@@ -289,7 +288,7 @@
         const a = valueToAngle(v) + toRad(off.a);
         const p = polar(cfg.labelRadius, a);
 
-        // halo nero dietro al testo, così non viene mai coperto visivamente
+        // alone dietro al testo
         ctx.lineWidth = 5;
         ctx.strokeStyle = "rgba(0,0,0,.45)";
         ctx.strokeText(key, p.x + off.dx, p.y + off.dy);
