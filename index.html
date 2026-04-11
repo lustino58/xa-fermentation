@@ -23,6 +23,10 @@ body{
   text-align:center;
 }
 
+canvas{
+  transform: rotate(90deg); /* 🔥 FIX ORIENTAMENTO */
+}
+
 .value{
   font-size:60px;
   margin-top:10px;
@@ -56,15 +60,13 @@ new RadialGauge({
   maxValue: 5.0,
   value: 3.5,
 
-  startAngle: 180,   // SINISTRA
-  ticksAngle: 180,   // SEMICERCHIO PERFETTO
+  startAngle: 180,
+  ticksAngle: 180,
 
   majorTicks: ["2.8","3.5","4.2","5.0"],
   minorTicks: 4,
 
   strokeTicks: true,
-
-  highlights: [],
 
   colorPlate: "#000",
   colorMajorTicks: "#e6dcc5",
@@ -86,10 +88,7 @@ new RadialGauge({
   colorBorderMiddle: "#222",
   colorBorderInner: "#000",
 
-  valueBox: false,   // 🔥 TOGLIE IL DISPLAY INTERNO
-
-  animationDuration: 500,
-  animationRule: "linear"
+  valueBox: false
 }).draw();
 </script>
 
