@@ -232,7 +232,7 @@
     }
 
     .temp .needle{
-      background:linear-gradient(180deg, #ffe0b8, var(--orange));
+      background:linear-gradient(180deg, #ffe0b8, #ffb25c);
       box-shadow:0 0 14px rgba(255,178,92,.34);
     }
 
@@ -260,7 +260,8 @@
 
     .main-btn,
     .nav-btn,
-    .small-btn{
+    .small-btn,
+    .template-btn{
       border:none;
       color:#eef6fd;
       cursor:pointer;
@@ -275,6 +276,7 @@
       border-radius:24px;
       padding:18px;
       font-size:22px;
+      margin-bottom:12px;
     }
 
     .nav-btn{
@@ -285,7 +287,8 @@
       margin-bottom:14px;
     }
 
-    .small-btn{
+    .small-btn,
+    .template-btn{
       border-radius:18px;
       padding:14px 12px;
       font-size:15px;
@@ -311,7 +314,8 @@
     .detail-card,
     .chart-card,
     .measurements,
-    .process-card{
+    .process-card,
+    .templates-card{
       background:
         linear-gradient(180deg, rgba(130,147,163,.12), rgba(47,58,68,.08)),
         linear-gradient(180deg, #09111a 0%, #060d15 100%);
@@ -330,7 +334,8 @@
 
     .batch-card,
     .detail-card,
-    .process-card{
+    .process-card,
+    .templates-card{
       padding:18px;
       margin-bottom:14px;
     }
@@ -401,7 +406,8 @@
     }
 
     .metrics,
-    .process-grid{
+    .process-grid,
+    .templates-grid{
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:12px;
@@ -418,12 +424,16 @@
     }
 
     .metric-label,
-    .process-label{
+    .process-label,
+    .templates-title,
+    .chart-title,
+    .measurements-title,
+    .process-title{
       font-size:12px;
       color:var(--muted);
       text-transform:uppercase;
-      letter-spacing:1.3px;
-      margin-bottom:8px;
+      letter-spacing:1.6px;
+      margin-bottom:10px;
     }
 
     .metric-value,
@@ -455,16 +465,6 @@
       margin-bottom:12px;
     }
 
-    .chart-title,
-    .measurements-title,
-    .process-title{
-      font-size:12px;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:1.6px;
-      margin-bottom:10px;
-    }
-
     .chart-box{
       display:grid;
       grid-template-columns:1fr 1fr;
@@ -489,6 +489,26 @@
       font-size:12px;
       color:var(--muted);
       text-align:center;
+    }
+
+    .template-btn{
+      text-align:left;
+      min-height:92px;
+    }
+
+    .template-name{
+      display:block;
+      font-size:17px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .template-desc{
+      display:block;
+      font-size:12px;
+      color:#d8e6f3;
+      opacity:.9;
+      line-height:1.35;
     }
 
     .m-row{
@@ -517,7 +537,8 @@
     }
 
     @media (max-width:700px){
-      .chart-box{
+      .chart-box,
+      .templates-grid{
         grid-template-columns:1fr;
       }
 
@@ -637,7 +658,6 @@
         statusCritical: "Critical",
         statusComplete: "Complete",
         typeUnknown: "unknown",
-        writeAction: "Write:\n1 = edit batch\n2 = delete batch",
         deleteConfirm: "Delete this batch?",
         batchNamePrompt: "Batch name:",
         typePrompt: "Type (cider, kombucha, lactic, mixed):",
@@ -669,7 +689,17 @@
         editProcessNotesPrompt: "Process notes:",
         editSensoryNotesPrompt: "Sensory notes:",
         noMeasurements: "No measurements yet.",
-        useButtons: "Use the buttons inside each batch to add measurements, edit or delete"
+        templates: "Recipes / Templates",
+        useButtons: "Use the buttons inside each batch to add measurements, edit or delete",
+        ciderBase: "Cider Base",
+        ciderBaseDesc: "Apple juice, yeast fermentation, clean profile",
+        kombuchaBase: "Kombucha Base",
+        kombuchaBaseDesc: "Tea, sugar, SCOBY, balanced acidic profile",
+        lacticApple: "Lactic Apple",
+        lacticAppleDesc: "Apple juice with lactic culture and low alcohol focus",
+        mixedFermentation: "Mixed Fermentation",
+        mixedFermentationDesc: "Hybrid fermentation with yeast + bacteria",
+        templateCreated: "Template created"
       },
       it: {
         heroSubtitle: "Pannello di controllo per sidro, fermentati di tè, colture lattiche e lotti sperimentali",
@@ -716,7 +746,6 @@
         statusCritical: "Critico",
         statusComplete: "Completo",
         typeUnknown: "sconosciuto",
-        writeAction: "Scrivi:\n1 = modifica lotto\n2 = elimina lotto",
         deleteConfirm: "Eliminare questo lotto?",
         batchNamePrompt: "Nome lotto:",
         typePrompt: "Tipo (sidro, kombucha, lattico, misto):",
@@ -748,7 +777,17 @@
         editProcessNotesPrompt: "Note di processo:",
         editSensoryNotesPrompt: "Note sensoriali:",
         noMeasurements: "Nessuna misurazione ancora.",
-        useButtons: "Usa i pulsanti dentro ogni lotto per aggiungere misure, modificare o eliminare"
+        templates: "Ricette / Template",
+        useButtons: "Usa i pulsanti dentro ogni lotto per aggiungere misure, modificare o eliminare",
+        ciderBase: "Sidro Base",
+        ciderBaseDesc: "Succo di mela, fermentazione con lievito, profilo pulito",
+        kombuchaBase: "Kombucha Base",
+        kombuchaBaseDesc: "Tè, zucchero, SCOBY, profilo acidulo equilibrato",
+        lacticApple: "Mela Lattica",
+        lacticAppleDesc: "Succo di mela con coltura lattica e focus basso alcol",
+        mixedFermentation: "Fermentazione Mista",
+        mixedFermentationDesc: "Fermentazione ibrida con lievito + batteri",
+        templateCreated: "Template creato"
       }
     };
 
@@ -978,6 +1017,143 @@
       return null;
     }
 
+    function createTemplateBatch(templateKey){
+      const createdAt = new Date().toISOString();
+      let batch = null;
+
+      if(templateKey === "cider"){
+        batch = {
+          name: appLang === "it" ? "Sidro Base" : "Cider Base",
+          type: appLang === "it" ? "sidro" : "cider",
+          culture: appLang === "it" ? "Lievito" : "Yeast",
+          baseFermentable: appLang === "it" ? "Succo di mela" : "Apple juice",
+          liters: "20",
+          nutrients: appLang === "it" ? "Nutriente lievito" : "Yeast nutrient",
+          targetPressure: "2.5",
+          processNotes: appLang === "it" ? "Fermentazione pulita da sidro base." : "Clean base cider fermentation.",
+          sensoryNotes: appLang === "it" ? "Profilo fresco, mela pulita." : "Fresh profile, clean apple.",
+          og: "1.045",
+          createdAt,
+          measurements: [{
+            day: 1,
+            ph: "3.50",
+            gravity: "1.045",
+            temp: "18",
+            pressure: "0",
+            createdAt
+          }]
+        };
+      }
+
+      if(templateKey === "kombucha"){
+        batch = {
+          name: appLang === "it" ? "Kombucha Base" : "Kombucha Base",
+          type: "kombucha",
+          culture: "SCOBY",
+          baseFermentable: appLang === "it" ? "Tè + zucchero" : "Tea + sugar",
+          liters: "10",
+          nutrients: "-",
+          targetPressure: "2.0",
+          processNotes: appLang === "it" ? "Base classica kombucha." : "Classic kombucha base.",
+          sensoryNotes: appLang === "it" ? "Acidità equilibrata." : "Balanced acidity.",
+          og: "1.030",
+          createdAt,
+          measurements: [{
+            day: 1,
+            ph: "4.20",
+            gravity: "1.030",
+            temp: "24",
+            pressure: "0",
+            createdAt
+          }]
+        };
+      }
+
+      if(templateKey === "lactic"){
+        batch = {
+          name: appLang === "it" ? "Mela Lattica" : "Lactic Apple",
+          type: appLang === "it" ? "lattico" : "lactic",
+          culture: "L. plantarum",
+          baseFermentable: appLang === "it" ? "Succo di mela" : "Apple juice",
+          liters: "10",
+          nutrients: appLang === "it" ? "Nutriente batterico" : "Bacterial nutrient",
+          targetPressure: "1.5",
+          processNotes: appLang === "it" ? "Fermentazione lattica con focus acidità." : "Lactic fermentation focused on acidity.",
+          sensoryNotes: appLang === "it" ? "Acido, pulito, elegante." : "Acidic, clean, elegant.",
+          og: "1.040",
+          createdAt,
+          measurements: [{
+            day: 1,
+            ph: "3.80",
+            gravity: "1.040",
+            temp: "30",
+            pressure: "0",
+            createdAt
+          }]
+        };
+      }
+
+      if(templateKey === "mixed"){
+        batch = {
+          name: appLang === "it" ? "Fermentazione Mista" : "Mixed Fermentation",
+          type: appLang === "it" ? "misto" : "mixed",
+          culture: appLang === "it" ? "Lievito + batteri" : "Yeast + bacteria",
+          baseFermentable: appLang === "it" ? "Succo / tè / base mista" : "Juice / tea / mixed base",
+          liters: "15",
+          nutrients: appLang === "it" ? "Nutrienti misti" : "Mixed nutrients",
+          targetPressure: "2.2",
+          processNotes: appLang === "it" ? "Lotto ibrido sperimentale." : "Experimental hybrid batch.",
+          sensoryNotes: appLang === "it" ? "Complessità fermentativa." : "Fermentative complexity.",
+          og: "1.042",
+          createdAt,
+          measurements: [{
+            day: 1,
+            ph: "3.90",
+            gravity: "1.042",
+            temp: "22",
+            pressure: "0",
+            createdAt
+          }]
+        };
+      }
+
+      if(batch){
+        batches.push(batch);
+        save();
+        selectedBatchIndex = batches.length - 1;
+        render();
+      }
+    }
+
+    function templatesHTML(){
+      return `
+        <div class="templates-card">
+          <div class="templates-title">${t("templates")}</div>
+          <div class="templates-grid">
+            <button class="template-btn" onclick="createTemplateBatch('cider')">
+              <span class="template-name">${t("ciderBase")}</span>
+              <span class="template-desc">${t("ciderBaseDesc")}</span>
+            </button>
+
+            <button class="template-btn" onclick="createTemplateBatch('kombucha')">
+              <span class="template-name">${t("kombuchaBase")}</span>
+              <span class="template-desc">${t("kombuchaBaseDesc")}</span>
+            </button>
+
+            <button class="template-btn" onclick="createTemplateBatch('lactic')">
+              <span class="template-name">${t("lacticApple")}</span>
+              <span class="template-desc">${t("lacticAppleDesc")}</span>
+            </button>
+
+            <button class="template-btn" onclick="createTemplateBatch('mixed')">
+              <span class="template-name">${t("mixedFermentation")}</span>
+              <span class="template-desc">${t("mixedFermentationDesc")}</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
     function dashboardHTML(){
       return `
         <div class="dashboard">
@@ -1037,6 +1213,7 @@
 
     function archiveHTML(){
       let html = dashboardHTML();
+      html += templatesHTML();
       html += `<div class="section-title">${t("archive")}</div>`;
 
       if(batches.length === 0){
