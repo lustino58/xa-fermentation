@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,10 +20,10 @@
 
     *{
       box-sizing:border-box;
-      -webkit-tap-highlight-color: transparent;
+      -webkit-tap-highlight-color:transparent;
     }
 
-    body{
+    html,body{
       margin:0;
       min-height:100vh;
       font-family:Arial, Helvetica, sans-serif;
@@ -31,7 +31,10 @@
       background:
         radial-gradient(circle at top, rgba(45,102,160,.14), transparent 28%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
-      padding:20px 16px 34px;
+    }
+
+    body{
+      padding:20px 14px 34px;
     }
 
     .app{
@@ -82,6 +85,7 @@
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.14),
         0 0 22px rgba(70,140,220,.12);
+      flex:0 0 auto;
     }
 
     .hero-text h1{
@@ -98,16 +102,28 @@
       line-height:1.35;
     }
 
-    .dashboard{
+    .dashboard,
+    .empty,
+    .batch-card,
+    .detail-card,
+    .chart-card,
+    .measurements,
+    .process-card,
+    .templates-card,
+    .additions-card,
+    .filters-card{
       background:
-        linear-gradient(180deg, rgba(130,145,160,.14), rgba(48,59,70,.10)),
-        linear-gradient(180deg, var(--panel), var(--panel2));
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:32px;
-      padding:18px;
+        linear-gradient(180deg, rgba(130,147,163,.12), rgba(47,58,68,.08)),
+        linear-gradient(180deg, #09111a 0%, #060d15 100%);
+      border:1px solid rgba(167,187,204,.10);
+      border-radius:24px;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.08),
-        0 0 28px rgba(30,100,190,.12);
+        inset 0 1px 0 rgba(255,255,255,.06),
+        0 0 24px rgba(0,110,210,.10);
+    }
+
+    .dashboard{
+      padding:18px;
       margin-bottom:20px;
     }
 
@@ -129,6 +145,7 @@
         inset 0 1px 0 rgba(255,255,255,.05),
         0 0 18px rgba(20,90,180,.08);
       text-align:center;
+      min-width:0;
     }
 
     .g-label{
@@ -256,6 +273,7 @@
     .g-sub{
       font-size:12px;
       color:var(--muted);
+      line-height:1.25;
     }
 
     .main-btn,
@@ -292,6 +310,7 @@
       border-radius:18px;
       padding:14px 12px;
       font-size:15px;
+      width:100%;
     }
 
     .hint{
@@ -299,6 +318,7 @@
       color:var(--muted);
       font-size:12px;
       margin-top:10px;
+      line-height:1.3;
     }
 
     .section-title{
@@ -312,36 +332,18 @@
     .empty,
     .batch-card,
     .detail-card,
-    .chart-card,
-    .measurements,
-    .process-card,
-    .templates-card,
-    .additions-card,
-    .filters-card{
-      background:
-        linear-gradient(180deg, rgba(130,147,163,.12), rgba(47,58,68,.08)),
-        linear-gradient(180deg, #09111a 0%, #060d15 100%);
-      border:1px solid rgba(167,187,204,.10);
-      border-radius:24px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 0 24px rgba(0,110,210,.10);
-    }
-
-    .empty{
-      padding:20px;
-      color:var(--muted);
-      text-align:center;
-    }
-
-    .batch-card,
-    .detail-card,
     .process-card,
     .templates-card,
     .additions-card,
     .filters-card{
       padding:18px;
       margin-bottom:14px;
+    }
+
+    .empty{
+      color:var(--muted);
+      text-align:center;
+      line-height:1.4;
     }
 
     .batch-card{
@@ -361,7 +363,8 @@
     .detail-name{
       font-size:26px;
       font-weight:700;
-      line-height:1;
+      line-height:1.05;
+      word-break:break-word;
     }
 
     .right-stack{
@@ -369,6 +372,7 @@
       flex-direction:column;
       gap:8px;
       align-items:flex-end;
+      flex:0 0 auto;
     }
 
     .type-badge,
@@ -376,7 +380,7 @@
       padding:8px 12px;
       border-radius:999px;
       font-size:12px;
-      letter-spacing:1.5px;
+      letter-spacing:1.2px;
       text-transform:uppercase;
       white-space:nowrap;
       border:1px solid rgba(164,185,203,.12);
@@ -425,6 +429,7 @@
       border-radius:18px;
       padding:14px 12px;
       min-height:84px;
+      min-width:0;
     }
 
     .metric-label,
@@ -440,6 +445,8 @@
       text-transform:uppercase;
       letter-spacing:1.6px;
       margin-bottom:10px;
+      line-height:1.25;
+      word-break:break-word;
     }
 
     .metric-value,
@@ -449,13 +456,7 @@
       line-height:1.25;
       white-space:pre-wrap;
       word-break:break-word;
-    }
-
-    .actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-bottom:14px;
+      overflow-wrap:anywhere;
     }
 
     .detail-actions{
@@ -482,6 +483,7 @@
       border:1px solid rgba(143,164,182,.08);
       border-radius:16px;
       padding:10px;
+      min-width:0;
     }
 
     .mini-chart svg{
@@ -495,6 +497,7 @@
       font-size:12px;
       color:var(--muted);
       text-align:center;
+      line-height:1.25;
     }
 
     .template-btn{
@@ -507,6 +510,7 @@
       font-size:17px;
       font-weight:700;
       margin-bottom:6px;
+      word-break:break-word;
     }
 
     .template-desc{
@@ -515,41 +519,7 @@
       color:#d8e6f3;
       opacity:.9;
       line-height:1.35;
-    }
-
-    .m-row,
-    .a-row{
-      display:grid;
-      gap:8px;
-      padding:10px 0;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      font-size:14px;
-    }
-
-    .m-row{
-      grid-template-columns:70px 1fr 1fr 1fr 1fr;
-    }
-
-    .a-row{
-      grid-template-columns:60px 1fr 1fr 1fr 1fr 1.3fr;
-    }
-
-    .m-row:last-child,
-    .a-row:last-child{
-      border-bottom:none;
-    }
-
-    .m-head,
-    .a-head{
-      color:#dfeaf5;
-      font-weight:700;
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:1.3px;
-    }
-
-    .m-muted{
-      color:var(--muted);
+      word-break:break-word;
     }
 
     .filters-grid{
@@ -568,12 +538,88 @@
       color:#eef6fd;
       font-size:14px;
       outline:none;
+      min-width:0;
     }
 
+    /* TABELLE MOBILE-SAFE */
+    .table-wrap{
+      width:100%;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      border-radius:16px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      table-layout:fixed;
+    }
+
+    th, td{
+      padding:12px 10px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      vertical-align:top;
+      text-align:left;
+      word-break:break-word;
+      overflow-wrap:anywhere;
+    }
+
+    th{
+      color:#dfeaf5;
+      font-weight:700;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1.2px;
+      line-height:1.2;
+    }
+
+    td{
+      font-size:14px;
+      line-height:1.35;
+    }
+
+    tr:last-child td{
+      border-bottom:none;
+    }
+
+    .muted{
+      color:var(--muted);
+    }
+
+    .measure-table th:nth-child(1),
+    .measure-table td:nth-child(1){ width:14%; }
+
+    .measure-table th:nth-child(2),
+    .measure-table td:nth-child(2){ width:18%; }
+
+    .measure-table th:nth-child(3),
+    .measure-table td:nth-child(3){ width:22%; }
+
+    .measure-table th:nth-child(4),
+    .measure-table td:nth-child(4){ width:20%; }
+
+    .measure-table th:nth-child(5),
+    .measure-table td:nth-child(5){ width:26%; }
+
+    .additions-table th:nth-child(1),
+    .additions-table td:nth-child(1){ width:12%; }
+
+    .additions-table th:nth-child(2),
+    .additions-table td:nth-child(2){ width:18%; }
+
+    .additions-table th:nth-child(3),
+    .additions-table td:nth-child(3){ width:20%; }
+
+    .additions-table th:nth-child(4),
+    .additions-table td:nth-child(4){ width:14%; }
+
+    .additions-table th:nth-child(5),
+    .additions-table td:nth-child(5){ width:16%; }
+
+    .additions-table th:nth-child(6),
+    .additions-table td:nth-child(6){ width:20%; }
+
     @media (max-width:900px){
-      .a-row{
-        grid-template-columns:60px 1fr 1fr 1fr 1fr 1fr;
-      }
       .filters-grid{
         grid-template-columns:1fr;
       }
@@ -581,37 +627,57 @@
 
     @media (max-width:700px){
       .chart-box,
-      .templates-grid{
-        grid-template-columns:1fr;
-      }
-
+      .templates-grid,
       .detail-actions{
         grid-template-columns:1fr;
       }
     }
 
     @media (max-width:600px){
+      body{
+        padding:16px 10px 28px;
+      }
+
       .hero{
         align-items:flex-start;
       }
 
       .xa-logo{
-        width:78px;
-        height:78px;
-        font-size:36px;
+        width:74px;
+        height:74px;
+        font-size:34px;
+        border-radius:22px;
       }
 
       .hero-text h1{
         font-size:28px;
       }
 
+      .hero-text p{
+        font-size:13px;
+      }
+
+      .gauges{
+        grid-template-columns:1fr;
+      }
+
       .dial{
-        width:124px;
-        height:124px;
+        width:120px;
+        height:120px;
       }
 
       .g-value{
         font-size:28px;
+      }
+
+      .batch-top,
+      .detail-top{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .right-stack{
+        align-items:flex-start;
       }
 
       .batch-name,
@@ -619,19 +685,28 @@
         font-size:22px;
       }
 
-      .m-row{
-        grid-template-columns:58px 1fr 1fr 1fr 1fr;
-        font-size:13px;
-      }
-
-      .a-row{
-        grid-template-columns:58px 1fr 1fr 1fr 1fr 1fr;
-        font-size:13px;
-      }
-
       .metrics,
       .process-grid{
         grid-template-columns:1fr;
+      }
+
+      th{
+        font-size:11px;
+        letter-spacing:1px;
+        padding:10px 8px;
+      }
+
+      td{
+        font-size:13px;
+        padding:10px 8px;
+      }
+
+      .measure-table{
+        min-width:520px;
+      }
+
+      .additions-table{
+        min-width:700px;
       }
     }
   </style>
@@ -652,13 +727,12 @@
     </div>
 
     <div id="appContent"></div>
-
   </div>
 
   <script>
     let batches = JSON.parse(localStorage.getItem("batches")) || [];
     let selectedBatchIndex = null;
-    let appLang = localStorage.getItem("xa_lang") || "en";
+    let appLang = localStorage.getItem("xa_lang") || "it";
     let archiveSearch = "";
     let archiveTypeFilter = "";
     let archiveStatusFilter = "";
@@ -718,7 +792,6 @@
         pressure: "Pressure",
         type: "Type",
         status: "Status",
-        search: "Search",
         searchPlaceholder: "Search batch name, culture, ingredient...",
         allTypes: "All types",
         allStatuses: "All statuses",
@@ -781,7 +854,6 @@
         noAdditions: "No additions logged yet.",
         templates: "Recipes / Templates",
         filters: "Search / Filters",
-        useButtons: "Use the buttons inside each batch to add measurements, edit or delete",
         ciderBase: "Cider Base",
         ciderBaseDesc: "Apple juice, yeast fermentation, clean profile",
         kombuchaBase: "Kombucha Base",
@@ -845,7 +917,6 @@
         pressure: "Pressione",
         type: "Tipo",
         status: "Stato",
-        search: "Cerca",
         searchPlaceholder: "Cerca nome lotto, coltura, ingrediente...",
         allTypes: "Tutti i tipi",
         allStatuses: "Tutti gli stati",
@@ -908,7 +979,6 @@
         noAdditions: "Nessuna aggiunta registrata ancora.",
         templates: "Ricette / Template",
         filters: "Ricerca / Filtri",
-        useButtons: "Usa i pulsanti dentro ogni lotto per aggiungere misure, modificare o eliminare",
         ciderBase: "Sidro Base",
         ciderBaseDesc: "Succo di mela, fermentazione con lievito, profilo pulito",
         kombuchaBase: "Kombucha Base",
@@ -935,19 +1005,19 @@
       localStorage.setItem("batches", JSON.stringify(batches));
     }
 
-    function formatTemp(t){
-      if(t === undefined || t === null || t === "") return "-";
-      return t + "°C";
-    }
-
-    function formatValue(v){
+    function formatTemp(v){
       if(v === undefined || v === null || v === "") return "-";
-      return v;
+      return v + "°C";
     }
 
     function formatPressure(v){
       if(v === undefined || v === null || v === "") return "-";
       return v + " bar";
+    }
+
+    function formatValue(v){
+      if(v === undefined || v === null || v === "") return "-";
+      return v;
     }
 
     function parseNum(v){
@@ -964,8 +1034,7 @@
 
     function setNeedle(id, deg){
       const el = document.getElementById(id);
-      if(!el) return;
-      el.style.transform = `translateX(-50%) rotate(${deg}deg)`;
+      if(el) el.style.transform = `translateX(-50%) rotate(${deg}deg)`;
     }
 
     function buildTicks(containerId){
@@ -975,8 +1044,7 @@
       for(let i=0;i<=12;i++){
         const tick = document.createElement("div");
         tick.className = "tick" + ((i % 2 === 0) ? "" : " small");
-        const deg = -60 + (i * 10);
-        tick.style.transform = `rotate(${deg}deg)`;
+        tick.style.transform = `rotate(${-60 + i * 10}deg)`;
         box.appendChild(tick);
       }
     }
@@ -985,8 +1053,7 @@
       if(!b.createdAt) return "-";
       const start = new Date(b.createdAt);
       const now = new Date();
-      const diff = now - start;
-      return Math.max(1, Math.floor(diff / 86400000) + 1);
+      return Math.max(1, Math.floor((now - start) / 86400000) + 1);
     }
 
     function ensureBatchFields(b){
@@ -1001,32 +1068,12 @@
       if(!b.targetPressure) b.targetPressure = "-";
       if(!b.processNotes) b.processNotes = "-";
       if(!b.sensoryNotes) b.sensoryNotes = "-";
+      if(!Array.isArray(b.measurements)) b.measurements = [];
       if(!Array.isArray(b.additionsLog)) b.additionsLog = [];
     }
 
     function getMeasurements(b){
       ensureBatchFields(b);
-
-      if(!Array.isArray(b.measurements)) b.measurements = [];
-
-      if(b.measurements.length === 0){
-        const gravity = b.gravity ?? "-";
-        const ph = b.ph ?? "-";
-        const temp = b.temp ?? "-";
-        const pressure = b.pressure ?? "-";
-
-        if(gravity !== "-" || ph !== "-" || temp !== "-" || pressure !== "-"){
-          b.measurements.push({
-            day: getDay(b),
-            gravity: gravity,
-            ph: ph,
-            temp: temp,
-            pressure: pressure,
-            createdAt: b.createdAt || new Date().toISOString()
-          });
-        }
-      }
-
       return b.measurements;
     }
 
@@ -1039,20 +1086,17 @@
     function getABV(b){
       const og = parseNum(b.og);
       const latest = getLatestMeasurement(b);
-      const current = latest ? parseNum(latest.gravity) : parseNum(b.gravity);
-
-      if(og === null || current === null) return "-";
-      const abv = (og - current) * 131;
-      if(isNaN(abv)) return "-";
-      return abv.toFixed(2) + "%";
+      const fg = latest ? parseNum(latest.gravity) : null;
+      if(og === null || fg === null) return "-";
+      return ((og - fg) * 131).toFixed(2) + "%";
     }
 
     function getStatus(b){
       const latest = getLatestMeasurement(b);
       const og = parseNum(b.og);
-      const current = latest ? parseNum(latest.gravity) : parseNum(b.gravity);
-      const temp = latest ? parseNum(latest.temp) : parseNum(b.temp);
-      const ph = latest ? parseNum(latest.ph) : parseNum(b.ph);
+      const current = latest ? parseNum(latest.gravity) : null;
+      const temp = latest ? parseNum(latest.temp) : null;
+      const ph = latest ? parseNum(latest.ph) : null;
 
       if(temp !== null && (temp < 5 || temp > 40)) return { text:t("statusCritical"), cls:"status-critical", key:"critical" };
       if(ph !== null && (ph < 2.8 || ph > 4.6)) return { text:t("statusCritical"), cls:"status-critical", key:"critical" };
@@ -1082,18 +1126,8 @@
 
       if(search){
         const haystack = [
-          b.name,
-          b.type,
-          b.culture,
-          b.baseFermentable,
-          b.nutrients,
-          b.sugar,
-          b.fruit,
-          b.botanicals,
-          b.dryAdjunct,
-          b.otherAdditions,
-          b.processNotes,
-          b.sensoryNotes
+          b.name, b.type, b.culture, b.baseFermentable, b.nutrients, b.sugar, b.fruit,
+          b.botanicals, b.dryAdjunct, b.otherAdditions, b.processNotes, b.sensoryNotes
         ].join(" ").toLowerCase();
 
         if(!haystack.includes(search)) return false;
@@ -1151,73 +1185,75 @@
     function measurementTable(b){
       const list = [...getMeasurements(b)].reverse();
       if(list.length === 0){
-        return `<div class="m-muted">${t("noMeasurements")}</div>`;
+        return `<div class="muted">${t("noMeasurements")}</div>`;
       }
 
-      let html = `
-        <div class="m-row m-head">
-          <div>${t("day")}</div>
-          <div>${t("ph")}</div>
-          <div>${t("gravity")}</div>
-          <div>${t("temp")}</div>
-          <div>${t("pressure")}</div>
+      return `
+        <div class="table-wrap">
+          <table class="measure-table">
+            <thead>
+              <tr>
+                <th>${t("day")}</th>
+                <th>${t("ph")}</th>
+                <th>${t("gravity")}</th>
+                <th>${t("temp")}</th>
+                <th>${t("pressure")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${list.map(m => `
+                <tr>
+                  <td>${formatValue(m.day)}</td>
+                  <td>${formatValue(m.ph)}</td>
+                  <td>${formatValue(m.gravity)}</td>
+                  <td>${formatTemp(m.temp)}</td>
+                  <td>${formatPressure(m.pressure)}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
         </div>
       `;
-
-      list.forEach(m => {
-        html += `
-          <div class="m-row">
-            <div>${formatValue(m.day)}</div>
-            <div>${formatValue(m.ph)}</div>
-            <div>${formatValue(m.gravity)}</div>
-            <div>${formatTemp(m.temp)}</div>
-            <div>${formatPressure(m.pressure)}</div>
-          </div>
-        `;
-      });
-
-      return html;
     }
 
     function additionsTable(b){
-      ensureBatchFields(b);
       const list = [...b.additionsLog].reverse();
-
       if(list.length === 0){
-        return `<div class="m-muted">${t("noAdditions")}</div>`;
+        return `<div class="muted">${t("noAdditions")}</div>`;
       }
 
-      let html = `
-        <div class="a-row a-head">
-          <div>${t("day")}</div>
-          <div>${t("additionType")}</div>
-          <div>${t("ingredient")}</div>
-          <div>${t("quantity")}</div>
-          <div>${t("stage")}</div>
-          <div>${t("notes")}</div>
+      return `
+        <div class="table-wrap">
+          <table class="additions-table">
+            <thead>
+              <tr>
+                <th>${t("day")}</th>
+                <th>${t("additionType")}</th>
+                <th>${t("ingredient")}</th>
+                <th>${t("quantity")}</th>
+                <th>${t("stage")}</th>
+                <th>${t("notes")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${list.map(a => `
+                <tr>
+                  <td>${formatValue(a.day)}</td>
+                  <td>${formatValue(a.type)}</td>
+                  <td>${formatValue(a.ingredient)}</td>
+                  <td>${formatValue(a.quantity)}</td>
+                  <td>${formatValue(a.stage)}</td>
+                  <td>${formatValue(a.notes)}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
         </div>
       `;
-
-      list.forEach(a => {
-        html += `
-          <div class="a-row">
-            <div>${formatValue(a.day)}</div>
-            <div>${formatValue(a.type)}</div>
-            <div>${formatValue(a.ingredient)}</div>
-            <div>${formatValue(a.quantity)}</div>
-            <div>${formatValue(a.stage)}</div>
-            <div>${formatValue(a.notes)}</div>
-          </div>
-        `;
-      });
-
-      return html;
     }
 
     function getTopBatch(){
-      if(selectedBatchIndex !== null && batches[selectedBatchIndex]){
-        return batches[selectedBatchIndex];
-      }
+      if(selectedBatchIndex !== null && batches[selectedBatchIndex]) return batches[selectedBatchIndex];
       const filtered = batches.filter(matchesArchiveFilters);
       if(filtered.length > 0) return filtered[filtered.length - 1];
       if(batches.length > 0) return batches[batches.length - 1];
@@ -1260,7 +1296,7 @@
 
       if(templateKey === "kombucha"){
         batch = {
-          name: appLang === "it" ? "Kombucha Base" : "Kombucha Base",
+          name: "Kombucha Base",
           type: "kombucha",
           culture: "SCOBY",
           baseFermentable: appLang === "it" ? "Tè + zucchero" : "Tea + sugar",
@@ -1270,7 +1306,7 @@
           fruit: appLang === "it" ? "Nessuna" : "None",
           botanicals: appLang === "it" ? "Nessuna" : "None",
           dryAdjunct: appLang === "it" ? "Nessuno" : "None",
-          otherAdditions: appLang === "it" ? "SCOBY + starter" : "SCOBY + starter",
+          otherAdditions: "SCOBY + starter",
           targetPressure: "2.0",
           processNotes: appLang === "it" ? "Base classica kombucha." : "Classic kombucha base.",
           sensoryNotes: appLang === "it" ? "Acidità equilibrata." : "Balanced acidity.",
@@ -1365,17 +1401,14 @@
               <span class="template-name">${t("ciderBase")}</span>
               <span class="template-desc">${t("ciderBaseDesc")}</span>
             </button>
-
             <button class="template-btn" onclick="createTemplateBatch('kombucha')">
               <span class="template-name">${t("kombuchaBase")}</span>
               <span class="template-desc">${t("kombuchaBaseDesc")}</span>
             </button>
-
             <button class="template-btn" onclick="createTemplateBatch('lactic')">
               <span class="template-name">${t("lacticApple")}</span>
               <span class="template-desc">${t("lacticAppleDesc")}</span>
             </button>
-
             <button class="template-btn" onclick="createTemplateBatch('mixed')">
               <span class="template-name">${t("mixedFermentation")}</span>
               <span class="template-desc">${t("mixedFermentationDesc")}</span>
@@ -1390,26 +1423,22 @@
         <div class="filters-card">
           <div class="filters-title">${t("filters")}</div>
           <div class="filters-grid">
-            <input
-              class="filter-input"
-              type="text"
-              placeholder="${t("searchPlaceholder")}"
-              value="${archiveSearch.replace(/"/g, '&quot;')}"
-              oninput="archiveSearch = this.value; render();"
-            />
+            <input class="filter-input" type="text" placeholder="${t("searchPlaceholder")}"
+              value="${archiveSearch.replace(/"/g, "&quot;")}"
+              oninput="archiveSearch=this.value; render();">
 
-            <select class="filter-select" onchange="archiveTypeFilter = this.value; render();">
+            <select class="filter-select" onchange="archiveTypeFilter=this.value; render();">
               <option value="" ${archiveTypeFilter === "" ? "selected" : ""}>${t("allTypes")}</option>
               <option value="cider" ${archiveTypeFilter === "cider" ? "selected" : ""}>${t("typeCider")}</option>
+              <option value="sidro" ${archiveTypeFilter === "sidro" ? "selected" : ""}>${t("typeCider")}</option>
               <option value="kombucha" ${archiveTypeFilter === "kombucha" ? "selected" : ""}>${t("typeKombucha")}</option>
               <option value="lactic" ${archiveTypeFilter === "lactic" ? "selected" : ""}>${t("typeLactic")}</option>
-              <option value="mixed" ${archiveTypeFilter === "mixed" ? "selected" : ""}>${t("typeMixed")}</option>
-              <option value="sidro" ${archiveTypeFilter === "sidro" ? "selected" : ""}>${t("typeCider")}</option>
               <option value="lattico" ${archiveTypeFilter === "lattico" ? "selected" : ""}>${t("typeLactic")}</option>
+              <option value="mixed" ${archiveTypeFilter === "mixed" ? "selected" : ""}>${t("typeMixed")}</option>
               <option value="misto" ${archiveTypeFilter === "misto" ? "selected" : ""}>${t("typeMixed")}</option>
             </select>
 
-            <select class="filter-select" onchange="archiveStatusFilter = this.value; render();">
+            <select class="filter-select" onchange="archiveStatusFilter=this.value; render();">
               <option value="" ${archiveStatusFilter === "" ? "selected" : ""}>${t("allStatuses")}</option>
               <option value="active" ${archiveStatusFilter === "active" ? "selected" : ""}>${t("statusActive")}</option>
               <option value="slow" ${archiveStatusFilter === "slow" ? "selected" : ""}>${t("statusSlow")}</option>
@@ -1425,7 +1454,6 @@
       return `
         <div class="dashboard">
           <div class="gauges">
-
             <div class="gauge-card ph">
               <div class="g-label">${t("ph").toUpperCase()}</div>
               <div class="dial">
@@ -1465,7 +1493,6 @@
               <div class="g-value" id="topCount">0</div>
               <div class="g-sub">${t("stored")}</div>
             </div>
-
           </div>
 
           ${selectedBatchIndex === null
@@ -1512,17 +1539,14 @@
                   <div class="metric-label">${t("day")}</div>
                   <div class="metric-value">${getDay(b)}</div>
                 </div>
-
                 <div class="metric">
                   <div class="metric-label">${t("culture")}</div>
                   <div class="metric-value">${formatValue(b.culture)}</div>
                 </div>
-
                 <div class="metric">
                   <div class="metric-label">${t("latestPh")}</div>
                   <div class="metric-value">${latest ? formatValue(latest.ph) : "-"}</div>
                 </div>
-
                 <div class="metric">
                   <div class="metric-label">${t("latestGravity")}</div>
                   <div class="metric-value">${latest ? formatValue(latest.gravity) : "-"}</div>
@@ -1566,37 +1590,30 @@
               <div class="metric-label">${t("day")}</div>
               <div class="metric-value">${getDay(b)}</div>
             </div>
-
             <div class="metric">
               <div class="metric-label">${t("culture")}</div>
               <div class="metric-value">${formatValue(b.culture)}</div>
             </div>
-
             <div class="metric">
               <div class="metric-label">${t("og")}</div>
               <div class="metric-value">${formatValue(b.og)}</div>
             </div>
-
             <div class="metric">
               <div class="metric-label">${t("abv")}</div>
               <div class="metric-value">${getABV(b)}</div>
             </div>
-
             <div class="metric">
               <div class="metric-label">${t("latestPh")}</div>
               <div class="metric-value">${latest ? formatValue(latest.ph) : "-"}</div>
             </div>
-
             <div class="metric">
               <div class="metric-label">${t("latestGravity")}</div>
               <div class="metric-value">${latest ? formatValue(latest.gravity) : "-"}</div>
             </div>
-
             <div class="metric">
               <div class="metric-label">${t("latestTemp")}</div>
               <div class="metric-value">${latest ? formatTemp(latest.temp) : "-"}</div>
             </div>
-
             <div class="metric">
               <div class="metric-label">${t("latestPressure")}</div>
               <div class="metric-value">${latest ? formatPressure(latest.pressure) : "-"}</div>
@@ -1634,52 +1651,42 @@
                 <div class="process-label">${t("baseFermentable")}</div>
                 <div class="process-value">${formatValue(b.baseFermentable)}</div>
               </div>
-
               <div class="process-item">
                 <div class="process-label">${t("liters")}</div>
                 <div class="process-value">${formatValue(b.liters)}</div>
               </div>
-
               <div class="process-item">
                 <div class="process-label">${t("nutrients")}</div>
                 <div class="process-value">${formatValue(b.nutrients)}</div>
               </div>
-
               <div class="process-item">
                 <div class="process-label">${t("sugar")}</div>
                 <div class="process-value">${formatValue(b.sugar)}</div>
               </div>
-
               <div class="process-item">
                 <div class="process-label">${t("fruit")}</div>
                 <div class="process-value">${formatValue(b.fruit)}</div>
               </div>
-
               <div class="process-item">
                 <div class="process-label">${t("botanicals")}</div>
                 <div class="process-value">${formatValue(b.botanicals)}</div>
               </div>
-
               <div class="process-item">
                 <div class="process-label">${t("dryAdjunct")}</div>
                 <div class="process-value">${formatValue(b.dryAdjunct)}</div>
               </div>
-
               <div class="process-item">
                 <div class="process-label">${t("otherAdditions")}</div>
                 <div class="process-value">${formatValue(b.otherAdditions)}</div>
               </div>
-
               <div class="process-item">
                 <div class="process-label">${t("targetPressure")}</div>
                 <div class="process-value">${formatValue(b.targetPressure)}</div>
               </div>
-
               <div class="process-item">
                 <div class="process-label">${t("processNotes")}</div>
                 <div class="process-value">${formatValue(b.processNotes)}</div>
               </div>
-
               <div class="process-item">
                 <div class="process-label">${t("sensoryNotes")}</div>
                 <div class="process-value">${formatValue(b.sensoryNotes)}</div>
@@ -1822,14 +1829,13 @@
     function addMeasurement(i){
       const b = batches[i];
       const latest = getLatestMeasurement(b) || {};
+      if(!Array.isArray(b.measurements)) b.measurements = [];
 
       const day = prompt(t("dayNumberPrompt"), String(getDay(b))) || String(getDay(b));
       const ph = prompt(t("phPrompt"), latest.ph || "-") || latest.ph || "-";
       const gravity = prompt(t("gravityPrompt"), latest.gravity || "-") || latest.gravity || "-";
       const temp = prompt(t("tempPrompt"), latest.temp || "-") || latest.temp || "-";
       const pressure = prompt(t("pressurePrompt"), latest.pressure || "-") || latest.pressure || "-";
-
-      if(!Array.isArray(b.measurements)) b.measurements = [];
 
       b.measurements.push({
         day,
