@@ -132,25 +132,22 @@
 
     .metal-panel{
       position:relative;
-      border-radius:28px;
-      padding:18px 16px 14px;
+      border-radius:30px;
+      padding:18px 16px 16px;
       margin-bottom:18px;
       background:
-        linear-gradient(90deg,
-          rgba(255,255,255,.08) 0%,
-          rgba(255,255,255,.02) 8%,
-          rgba(255,255,255,.06) 16%,
-          rgba(0,0,0,.06) 30%,
-          rgba(255,255,255,.04) 44%,
-          rgba(0,0,0,.08) 58%,
-          rgba(255,255,255,.03) 72%,
-          rgba(255,255,255,.06) 86%,
-          rgba(0,0,0,.06) 100%),
-        linear-gradient(180deg, #4b5662 0%, #303842 20%, #58636f 48%, #2a323b 72%, #3b4652 100%);
-      border:1px solid rgba(255,255,255,.12);
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,.055) 0px,
+          rgba(255,255,255,.018) 2px,
+          rgba(0,0,0,.045) 4px,
+          rgba(255,255,255,.02) 6px
+        ),
+        linear-gradient(180deg, #76828d 0%, #3d4650 18%, #9aa7b2 46%, #353d46 74%, #697581 100%);
+      border:1px solid rgba(255,255,255,.22);
       box-shadow:
-        inset 0 1px 1px rgba(255,255,255,.15),
-        inset 0 -8px 14px rgba(0,0,0,.28),
+        inset 0 1px 1px rgba(255,255,255,.20),
+        inset 0 -14px 22px rgba(0,0,0,.36),
         0 0 28px rgba(30,100,190,.08);
     }
 
@@ -158,18 +155,11 @@
       content:"";
       position:absolute;
       inset:0;
-      border-radius:28px;
+      border-radius:30px;
       background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,.018) 0px,
-          rgba(255,255,255,.018) 1px,
-          rgba(0,0,0,.02) 2px,
-          rgba(0,0,0,.02) 4px
-        );
-      opacity:.55;
+        linear-gradient(180deg, rgba(255,255,255,.10), transparent 18%, transparent 82%, rgba(0,0,0,.12)),
+        linear-gradient(90deg, rgba(255,255,255,.03), transparent 12%, rgba(255,255,255,.04) 30%, transparent 48%, rgba(0,0,0,.05) 70%, transparent);
       pointer-events:none;
-      mix-blend-mode:screen;
     }
 
     .screw{
@@ -206,34 +196,32 @@
     .gauges{
       display:grid;
       grid-template-columns:repeat(2,1fr);
-      gap:14px;
+      gap:16px;
       position:relative;
       z-index:2;
     }
 
     .gauge-card{
-      border-radius:28px;
-      padding:14px 12px 16px;
+      border-radius:32px;
+      padding:16px 12px 18px;
       background:
-        radial-gradient(circle at 50% 35%, rgba(255,255,255,.03), transparent 40%),
+        radial-gradient(circle at 50% 18%, rgba(255,255,255,.03), transparent 38%),
         linear-gradient(180deg, #071018, #050b12);
       border:1px solid rgba(255,255,255,.08);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.04),
+        inset 0 -14px 24px rgba(0,0,0,.50),
         0 0 18px rgba(20,90,180,.06);
       text-align:center;
       min-width:0;
       transition:transform .2s ease, box-shadow .25s ease, border-color .25s ease;
     }
 
-    .gauge-card.alert-ok{
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 0 18px rgba(20,90,180,.06);
-    }
-
     .gauge-card.alert-warning{
       border-color:rgba(255,211,106,.24);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.05),
+        inset 0 -14px 24px rgba(0,0,0,.50),
         0 0 18px rgba(255,211,106,.10);
     }
 
@@ -241,6 +229,7 @@
       border-color:rgba(255,111,122,.28);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.05),
+        inset 0 -14px 24px rgba(0,0,0,.50),
         0 0 18px rgba(255,111,122,.12);
     }
 
@@ -248,25 +237,47 @@
       font-size:11px;
       letter-spacing:4px;
       color:#d7e1ea;
-      margin-bottom:10px;
+      margin-bottom:8px;
+    }
+
+    .dial-wrap{
+      position:relative;
+      width:166px;
+      height:166px;
+      margin:0 auto 8px;
     }
 
     .dial{
       width:136px;
       height:136px;
-      margin:0 auto 10px;
+      position:absolute;
+      left:15px;
+      top:15px;
       border-radius:50%;
-      position:relative;
       overflow:visible;
       background:
-        radial-gradient(circle at 50% 50%, rgba(0,0,0,.98) 0 28%, rgba(3,9,15,.98) 28% 48%, rgba(7,14,23,1) 48% 100%);
+        radial-gradient(circle at 50% 52%, rgba(0,0,0,.98) 0 26%, rgba(4,10,16,.98) 26% 48%, rgba(7,14,23,1) 48% 100%);
       border:2px solid rgba(215,230,245,.10);
       box-shadow:
-        inset 0 2px 12px rgba(255,255,255,.04),
-        inset 0 -8px 18px rgba(0,0,0,.48);
+        inset 0 3px 14px rgba(255,255,255,.03),
+        inset 0 12px 24px rgba(0,0,0,.70),
+        inset 0 -8px 18px rgba(0,0,0,.58),
+        0 8px 18px rgba(0,0,0,.45);
     }
 
-    /* BORDO ILLUMINATO ESTERNO BEN VISIBILE */
+    .dial-frame{
+      position:absolute;
+      inset:7px;
+      border-radius:50%;
+      background:
+        linear-gradient(145deg, rgba(230,237,243,.30), rgba(72,82,92,.26));
+      box-shadow:
+        inset 0 2px 3px rgba(255,255,255,.15),
+        inset 0 -8px 10px rgba(0,0,0,.36),
+        0 2px 10px rgba(0,0,0,.35);
+      z-index:0;
+    }
+
     .dial-ring-light{
       position:absolute;
       inset:-5px;
@@ -288,7 +299,6 @@
         inset 0 0 6px rgba(255,255,255,.08);
     }
 
-    /* ALONE ESTERNO MORBIDO */
     .dial-glow{
       position:absolute;
       inset:-12px;
@@ -299,12 +309,11 @@
       opacity:.60;
     }
 
-    /* LUCE INTERNA SOFFUSA STILE QUADRO AUTO */
     .dial-inner-glow{
       position:absolute;
       inset:16px;
       border-radius:50%;
-      z-index:0;
+      z-index:1;
       pointer-events:none;
       filter:blur(13px);
       opacity:.30;
@@ -320,6 +329,34 @@
       box-shadow:
         inset 0 8px 20px rgba(0,0,0,.55),
         inset 0 -3px 8px rgba(255,255,255,.02);
+    }
+
+    .glass{
+      position:absolute;
+      inset:3px;
+      border-radius:50%;
+      z-index:5;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 32% 22%, rgba(255,255,255,.16), transparent 26%),
+        linear-gradient(140deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,.06) 18%, rgba(255,255,255,.00) 38%, rgba(255,255,255,.06) 70%, rgba(255,255,255,.10) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.10),
+        inset 0 -1px 0 rgba(255,255,255,.04);
+      opacity:.78;
+    }
+
+    .glass::after{
+      content:"";
+      position:absolute;
+      left:17%;
+      top:10%;
+      width:42%;
+      height:16%;
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.02));
+      transform:rotate(-16deg);
+      filter:blur(1px);
     }
 
     .ticks{
@@ -376,7 +413,24 @@
         inset 0 1px 1px rgba(255,255,255,.4);
     }
 
-    /* PH: lancetta verde, bordo ghiaccio/celeste, interno celestino */
+    .dial-numbers{
+      position:absolute;
+      inset:0;
+      z-index:3;
+      pointer-events:none;
+    }
+
+    .dial-number{
+      position:absolute;
+      transform:translate(-50%,-50%);
+      font-size:11px;
+      font-weight:700;
+      color:#d9e7f3;
+      text-shadow:0 0 6px rgba(255,255,255,.08);
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+
     .ph .dial-ring-light::before{
       border-color:rgba(164,231,255,.72);
       box-shadow:
@@ -400,7 +454,6 @@
       color:rgba(162,231,255,.88);
     }
 
-    /* DENSITA: lancetta azzurra, bordo blu freddo, interno ghiaccio chiarissimo */
     .gravity .dial-ring-light::before{
       border-color:rgba(114,183,255,.76);
       box-shadow:
@@ -424,7 +477,6 @@
       color:rgba(105,184,255,.92);
     }
 
-    /* TEMP: lancetta arancio, bordo ambra, interno avorio caldo */
     .temp .dial-ring-light::before{
       border-color:rgba(255,196,112,.76);
       box-shadow:
@@ -448,7 +500,6 @@
       color:rgba(255,184,96,.92);
     }
 
-    /* LOTTI: lancetta viola, bordo lilla freddo, interno azzurrino chiaro */
     .count .dial-ring-light::before{
       border-color:rgba(213,162,255,.76);
       box-shadow:
@@ -914,9 +965,28 @@
         grid-template-columns:1fr;
       }
 
+      .dial-wrap{
+        width:152px;
+        height:152px;
+      }
+
       .dial{
-        width:120px;
-        height:120px;
+        width:124px;
+        height:124px;
+        left:14px;
+        top:14px;
+      }
+
+      .dial-frame{
+        inset:8px;
+      }
+
+      .tick{
+        transform-origin:50% 54px;
+      }
+
+      .dial-number{
+        font-size:10px;
       }
 
       .g-value{
@@ -1324,6 +1394,31 @@
         tick.style.transform = `rotate(${-60 + i * 10}deg)`;
         box.appendChild(tick);
       }
+    }
+
+    function polarPosition(centerX, centerY, radius, angleDeg){
+      const rad = angleDeg * Math.PI / 180;
+      return {
+        x: centerX + Math.cos(rad) * radius,
+        y: centerY + Math.sin(rad) * radius
+      };
+    }
+
+    function buildDialNumbers(containerId, labels){
+      const box = document.getElementById(containerId);
+      if(!box) return;
+      box.innerHTML = "";
+      const center = 83;
+      const radius = 68;
+      labels.forEach(item => {
+        const pos = polarPosition(center, center, radius, item.angle);
+        const el = document.createElement("div");
+        el.className = "dial-number";
+        el.style.left = pos.x + "px";
+        el.style.top = pos.y + "px";
+        el.textContent = item.label;
+        box.appendChild(el);
+      });
     }
 
     function getDay(b){
@@ -1808,17 +1903,22 @@
       `;
     }
 
-    function dialHTML(typeClass, label, needleId, ticksId, valueId, subtext, alertClass){
+    function dialHTML(typeClass, label, needleId, ticksId, numbersId, valueId, subtext, alertClass){
       return `
         <div class="gauge-card ${typeClass} ${alertClass}">
           <div class="g-label">${label.toUpperCase()}</div>
-          <div class="dial">
-            <div class="dial-ring-light"></div>
-            <div class="dial-glow"></div>
-            <div class="dial-inner-glow"></div>
-            <div class="dial-core"></div>
-            <div class="ticks" id="${ticksId}"></div>
-            <div class="needle" id="${needleId}"></div>
+          <div class="dial-wrap">
+            <div class="dial-frame"></div>
+            <div class="dial">
+              <div class="dial-ring-light"></div>
+              <div class="dial-glow"></div>
+              <div class="dial-inner-glow"></div>
+              <div class="dial-core"></div>
+              <div class="ticks" id="${ticksId}"></div>
+              <div class="dial-numbers" id="${numbersId}"></div>
+              <div class="needle" id="${needleId}"></div>
+              <div class="glass"></div>
+            </div>
           </div>
           <div class="g-value" id="${valueId}">-</div>
           <div class="g-sub">${subtext}</div>
@@ -1837,10 +1937,10 @@
             <div class="screw br"></div>
 
             <div class="gauges">
-              ${dialHTML("ph", t("ph"), "needlePh", "ticksPh", "topPh", t("latestMeasurement"), getGaugeAlertClass("ph", topBatch))}
-              ${dialHTML("gravity", t("gravity"), "needleGravity", "ticksGravity", "topGravity", t("latestMeasurement"), getGaugeAlertClass("gravity", topBatch))}
-              ${dialHTML("temp", t("temp"), "needleTemp", "ticksTemp", "topTemp", t("tempScale"), getGaugeAlertClass("temp", topBatch))}
-              ${dialHTML("count", t("batches"), "needleCount", "ticksCount", "topCount", t("stored"), getGaugeAlertClass("count", topBatch))}
+              ${dialHTML("ph", t("ph"), "needlePh", "ticksPh", "numbersPh", "topPh", t("latestMeasurement"), getGaugeAlertClass("ph", topBatch))}
+              ${dialHTML("gravity", t("gravity"), "needleGravity", "ticksGravity", "numbersGravity", "topGravity", t("latestMeasurement"), getGaugeAlertClass("gravity", topBatch))}
+              ${dialHTML("temp", t("temp"), "needleTemp", "ticksTemp", "numbersTemp", "topTemp", t("tempScale"), getGaugeAlertClass("temp", topBatch))}
+              ${dialHTML("count", t("batches"), "needleCount", "ticksCount", "numbersCount", "topCount", t("stored"), getGaugeAlertClass("count", topBatch))}
             </div>
           </div>
 
@@ -2084,8 +2184,8 @@
         if(gravityEl) gravityEl.textContent = formatValue(gravity);
         if(tempEl) tempEl.textContent = formatTemp(temp);
 
-        animateNeedle("needlePh", mapValue(parseNum(ph) ?? 0, 0, 7, -60, 60));
-        animateNeedle("needleGravity", mapValue(parseNum(gravity) ?? 1.000, 1.080, -60, 60));
+        animateNeedle("needlePh", mapValue(parseNum(ph) ?? 0, 2.8, 5.0, -60, 60));
+        animateNeedle("needleGravity", mapValue(parseNum(gravity) ?? 1.000, 1.000, 1.060, -60, 60));
         animateNeedle("needleTemp", mapValue(parseNum(temp) ?? 0, 0, 50, -60, 60));
       } else {
         const phEl = document.getElementById("topPh");
@@ -2100,6 +2200,39 @@
         animateNeedle("needleGravity", -60);
         animateNeedle("needleTemp", -60);
       }
+    }
+
+    function buildAllNumbers(){
+      buildDialNumbers("numbersPh", [
+        {label:"2.8", angle:-145},
+        {label:"3.5", angle:-95},
+        {label:"4.2", angle:-35},
+        {label:"5.0", angle:20}
+      ]);
+
+      buildDialNumbers("numbersGravity", [
+        {label:"1.000", angle:-145},
+        {label:"1.020", angle:-95},
+        {label:"1.040", angle:-35},
+        {label:"1.060", angle:20}
+      ]);
+
+      buildDialNumbers("numbersTemp", [
+        {label:"0", angle:-145},
+        {label:"10", angle:-115},
+        {label:"20", angle:-75},
+        {label:"30", angle:-35},
+        {label:"40", angle:-5},
+        {label:"50", angle:25}
+      ]);
+
+      buildDialNumbers("numbersCount", [
+        {label:"0", angle:-145},
+        {label:"5", angle:-110},
+        {label:"10", angle:-70},
+        {label:"15", angle:-30},
+        {label:"20", angle:15}
+      ]);
     }
 
     function render(){
@@ -2121,6 +2254,7 @@
       buildTicks("ticksGravity");
       buildTicks("ticksTemp");
       buildTicks("ticksCount");
+      buildAllNumbers();
       updateTopPanel();
     }
 
@@ -2276,4 +2410,4 @@
     render();
   </script>
 </body>
-</html
+</html>
