@@ -1,206 +1,188 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation</title>
-  <style>
-    :root{
-      --bg:#071629;
-      --text:#f3f4f6;
-      --muted:#cfd5db;
-      --tick:#e8dcc0;
-      --needle:#ff3b3b;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XA Fermentation</title>
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+<style>
+:root{
+  --bg:#071629;
+  --glass:rgba(255,255,255,0.05);
+  --text:#f3f4f6;
+  --muted:#9aa3ad;
+  --tick:#e6dcc5;
+  --needle:#ff3b3b;
+}
 
-    html,body{
-      width:100%;
-      min-height:100vh;
-      background:var(--bg);
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--text);
-    }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-    body{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:24px 16px;
-    }
+body{
+  background:radial-gradient(circle at center, #0a223d, #071629 70%);
+  font-family:Arial, Helvetica, sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:var(--text);
+}
 
-    .container{
-      width:min(420px,100%);
-      text-align:center;
-    }
+.container{
+  text-align:center;
+  width:100%;
+  max-width:420px;
+}
 
-    h1{
-      font-weight:300;
-      letter-spacing:4px;
-      margin-bottom:24px;
-      font-size:28px;
-    }
+h1{
+  letter-spacing:6px;
+  font-weight:300;
+  margin-bottom:30px;
+}
 
-    .card{
-      background:rgba(255,255,255,0.05);
-      padding:24px 20px 28px;
-      border-radius:30px;
-      box-shadow:0 20px 60px rgba(0,0,0,0.6);
-    }
+.card{
+  background:var(--glass);
+  backdrop-filter:blur(20px);
+  border-radius:30px;
+  padding:30px;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.7),
+    inset 0 0 40px rgba(255,255,255,0.03);
+}
 
-    canvas{
-      width:100%;
-      max-width:300px;
-      height:auto;
-      display:block;
-      margin:0 auto;
-    }
+canvas{
+  width:100%;
+  max-width:300px;
+}
 
-    .value{
-      font-size:60px;
-      margin-top:18px;
-      line-height:1;
-      font-weight:300;
-    }
+.value{
+  font-size:64px;
+  margin-top:20px;
+  font-weight:200;
+}
 
-    .sub{
-      color:var(--muted);
-      margin-top:10px;
-      font-size:18px;
-    }
-
-    @media (max-width:480px){
-      h1{font-size:24px;}
-      .value{font-size:52px;}
-      .sub{font-size:16px;}
-    }
-  </style>
+.sub{
+  color:var(--muted);
+  margin-top:10px;
+  font-size:18px;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>PH</h1>
+<div class="container">
+  <h1>PH</h1>
 
-    <div class="card">
-      <canvas id="gauge" width="300" height="300"></canvas>
-      <div class="value">3.50</div>
-      <div class="sub">ultima misurazione</div>
-    </div>
+  <div class="card">
+    <canvas id="gauge" width="300" height="300"></canvas>
+    <div class="value">3.50</div>
+    <div class="sub">ultima misurazione</div>
   </div>
+</div>
 
-  <script>
-    const canvas = document.getElementById("gauge");
-    const ctx = canvas.getContext("2d");
+<script>
+const canvas = document.getElementById("gauge");
+const ctx = canvas.getContext("2d");
 
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = 110;
+const cx = canvas.width/2;
+const cy = canvas.height/2;
+const r = 110;
 
-    // CORREZIONI GIÀ INSERITE
-    const min = 2.8;
-    const max = 5.0;
+const min = 2.8;
+const max = 5.0;
 
-    const startAngle = 135;   // sinistra basso
-    const endAngle = 405;     // destra basso
+// ⚠️ NON TOCCO PIÙ QUESTA (scala giusta)
+const startAngle = -135;
+const endAngle = 135;
 
-    const value = 3.5;
+const value = 3.5;
 
-    function degToRad(deg){
-      return deg * Math.PI / 180;
-    }
+function toRad(deg){ return deg*Math.PI/180; }
 
-    function valueToAngle(val){
-      const ratio = (val - min) / (max - min);
-      return degToRad(startAngle + ratio * (endAngle - startAngle));
-    }
+function valueToAngle(v){
+  const ratio = (v-min)/(max-min);
+  return toRad(startAngle + ratio*(endAngle-startAngle));
+}
 
-    function drawTick(angle, inner, outer, width = 3){
-      ctx.beginPath();
-      ctx.moveTo(
-        centerX + inner * Math.cos(angle),
-        centerY + inner * Math.sin(angle)
-      );
-      ctx.lineTo(
-        centerX + outer * Math.cos(angle),
-        centerY + outer * Math.sin(angle)
-      );
-      ctx.strokeStyle = "#e8dcc0";
-      ctx.lineWidth = width;
-      ctx.lineCap = "round";
-      ctx.stroke();
-    }
+function draw(){
 
-    function draw(){
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0,0,300,300);
 
-      // sfondo quadrante
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-      ctx.fillStyle = "#000";
-      ctx.fill();
+  // base nera
+  const grad = ctx.createRadialGradient(cx,cy,20,cx,cy,r);
+  grad.addColorStop(0,"#0a0a0a");
+  grad.addColorStop(1,"#000");
+  ctx.beginPath();
+  ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.fillStyle=grad;
+  ctx.fill();
 
-      // arco scala
-      ctx.beginPath();
-      ctx.arc(
-        centerX,
-        centerY,
-        radius - 10,
-        degToRad(startAngle),
-        degToRad(endAngle)
-      );
-      ctx.strokeStyle = "#e8dcc0";
-      ctx.lineWidth = 6;
-      ctx.lineCap = "round";
-      ctx.stroke();
+  // vetro riflesso
+  ctx.beginPath();
+  ctx.ellipse(cx-30,cy-40,60,30,0,0,Math.PI*2);
+  ctx.fillStyle="rgba(255,255,255,0.05)";
+  ctx.fill();
 
-      // tacche
-      for(let i = 0; i <= 20; i++){
-        const angle = degToRad(startAngle + i * (endAngle - startAngle) / 20);
-        drawTick(angle, radius - 22, radius - 10, i % 5 === 0 ? 5 : 3);
-      }
+  // arco scala
+  ctx.beginPath();
+  ctx.arc(cx,cy,r-10,toRad(startAngle),toRad(endAngle));
+  ctx.strokeStyle="#e6dcc5";
+  ctx.lineWidth=6;
+  ctx.lineCap="round";
+  ctx.stroke();
 
-      // numeri
-      const labels = [2.8, 3.5, 4.2, 5.0];
-      ctx.fillStyle = "#e8dcc0";
-      ctx.font = "bold 16px Arial";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
+  // tacche
+  for(let i=0;i<=20;i++){
+    let a = toRad(startAngle + i*(endAngle-startAngle)/20);
 
-      labels.forEach(label => {
-        const angle = valueToAngle(label);
-        const r = radius - 38;
-        const x = centerX + r * Math.cos(angle);
-        const y = centerY + r * Math.sin(angle);
-        ctx.fillText(label.toFixed(1), x, y);
-      });
+    ctx.beginPath();
+    ctx.moveTo(cx+(r-20)*Math.cos(a),cy+(r-20)*Math.sin(a));
+    ctx.lineTo(cx+(r-10)*Math.cos(a),cy+(r-10)*Math.sin(a));
 
-      // lancetta
-      const angle = valueToAngle(value);
-      ctx.beginPath();
-      ctx.moveTo(centerX, centerY);
-      ctx.lineTo(
-        centerX + (radius - 28) * Math.cos(angle),
-        centerY + (radius - 28) * Math.sin(angle)
-      );
-      ctx.strokeStyle = "#ff3b3b";
-      ctx.lineWidth = 5;
-      ctx.lineCap = "round";
-      ctx.stroke();
+    ctx.strokeStyle="#e6dcc5";
+    ctx.lineWidth = (i%5===0)?5:2;
+    ctx.stroke();
+  }
 
-      // centro
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 9, 0, Math.PI * 2);
-      ctx.fillStyle = "#d0d0d0";
-      ctx.fill();
-    }
+  // numeri
+  [2.8,3.5,4.2,5.0].forEach(v=>{
+    let a = valueToAngle(v);
 
-    draw();
-  </script>
+    ctx.fillStyle="#e6dcc5";
+    ctx.font="bold 16px Arial";
+    ctx.textAlign="center";
+
+    ctx.fillText(v,cx+(r-38)*Math.cos(a),cy+(r-38)*Math.sin(a)+5);
+  });
+
+  // lancetta glow
+  let a = valueToAngle(value);
+
+  ctx.shadowColor="#ff3b3b";
+  ctx.shadowBlur=10;
+
+  ctx.beginPath();
+  ctx.moveTo(cx,cy);
+  ctx.lineTo(cx+(r-30)*Math.cos(a),cy+(r-30)*Math.sin(a));
+  ctx.strokeStyle="#ff3b3b";
+  ctx.lineWidth=5;
+  ctx.stroke();
+
+  ctx.shadowBlur=0;
+
+  // centro metallico
+  const metal = ctx.createRadialGradient(cx,cy,2,cx,cy,10);
+  metal.addColorStop(0,"#fff");
+  metal.addColorStop(1,"#777");
+
+  ctx.beginPath();
+  ctx.arc(cx,cy,9,0,Math.PI*2);
+  ctx.fillStyle=metal;
+  ctx.fill();
+}
+
+draw();
+</script>
+
 </body>
 </html>
