@@ -650,6 +650,11 @@
         targetPressure: "Target Pressure",
         processNotes: "Process Notes",
         sensoryNotes: "Sensory Notes",
+        sugar: "Sugar",
+        fruit: "Fruit",
+        botanicals: "Botanicals",
+        dryAdjunct: "Dry Adjunct",
+        otherAdditions: "Other Additions",
         dailyMeasurements: "Daily Measurements",
         pressure: "Pressure",
         type: "Type",
@@ -665,6 +670,11 @@
         basePrompt: "Base fermentable (apple juice, tea, wort...):",
         litersPrompt: "Liters:",
         nutrientsPrompt: "Nutrients (optional):",
+        sugarPrompt: "Sugar (optional):",
+        fruitPrompt: "Fruit (optional):",
+        botanicalsPrompt: "Botanicals (optional):",
+        dryAdjunctPrompt: "Dry adjunct (optional):",
+        otherAdditionsPrompt: "Other additions (optional):",
         initialPhPrompt: "Initial pH:",
         initialGravityPrompt: "Initial Gravity:",
         ogPrompt: "OG (optional):",
@@ -684,6 +694,11 @@
         editBasePrompt: "Base fermentable:",
         editLitersPrompt: "Liters:",
         editNutrientsPrompt: "Nutrients:",
+        editSugarPrompt: "Sugar:",
+        editFruitPrompt: "Fruit:",
+        editBotanicalsPrompt: "Botanicals:",
+        editDryAdjunctPrompt: "Dry adjunct:",
+        editOtherAdditionsPrompt: "Other additions:",
         editOGPrompt: "OG:",
         editTargetPressurePrompt: "Target pressure:",
         editProcessNotesPrompt: "Process notes:",
@@ -698,8 +713,7 @@
         lacticApple: "Lactic Apple",
         lacticAppleDesc: "Apple juice with lactic culture and low alcohol focus",
         mixedFermentation: "Mixed Fermentation",
-        mixedFermentationDesc: "Hybrid fermentation with yeast + bacteria",
-        templateCreated: "Template created"
+        mixedFermentationDesc: "Hybrid fermentation with yeast + bacteria"
       },
       it: {
         heroSubtitle: "Pannello di controllo per sidro, fermentati di tè, colture lattiche e lotti sperimentali",
@@ -738,6 +752,11 @@
         targetPressure: "Pressione Target",
         processNotes: "Note di Processo",
         sensoryNotes: "Note Sensoriali",
+        sugar: "Zucchero",
+        fruit: "Frutta",
+        botanicals: "Botaniche",
+        dryAdjunct: "Dry Adjunct",
+        otherAdditions: "Altre Aggiunte",
         dailyMeasurements: "Misurazioni Giornaliere",
         pressure: "Pressione",
         type: "Tipo",
@@ -753,6 +772,11 @@
         basePrompt: "Base fermentabile (succo di mela, tè, mosto...):",
         litersPrompt: "Litri:",
         nutrientsPrompt: "Nutrienti (opzionale):",
+        sugarPrompt: "Zucchero (opzionale):",
+        fruitPrompt: "Frutta (opzionale):",
+        botanicalsPrompt: "Botaniche (opzionale):",
+        dryAdjunctPrompt: "Dry adjunct (opzionale):",
+        otherAdditionsPrompt: "Altre aggiunte (opzionale):",
         initialPhPrompt: "pH iniziale:",
         initialGravityPrompt: "Densità iniziale:",
         ogPrompt: "OG (opzionale):",
@@ -772,6 +796,11 @@
         editBasePrompt: "Base fermentabile:",
         editLitersPrompt: "Litri:",
         editNutrientsPrompt: "Nutrienti:",
+        editSugarPrompt: "Zucchero:",
+        editFruitPrompt: "Frutta:",
+        editBotanicalsPrompt: "Botaniche:",
+        editDryAdjunctPrompt: "Dry adjunct:",
+        editOtherAdditionsPrompt: "Altre aggiunte:",
         editOGPrompt: "OG:",
         editTargetPressurePrompt: "Pressione target:",
         editProcessNotesPrompt: "Note di processo:",
@@ -786,8 +815,7 @@
         lacticApple: "Mela Lattica",
         lacticAppleDesc: "Succo di mela con coltura lattica e focus basso alcol",
         mixedFermentation: "Fermentazione Mista",
-        mixedFermentationDesc: "Fermentazione ibrida con lievito + batteri",
-        templateCreated: "Template creato"
+        mixedFermentationDesc: "Fermentazione ibrida con lievito + batteri"
       }
     };
 
@@ -864,6 +892,11 @@
       if(!b.baseFermentable) b.baseFermentable = "-";
       if(!b.liters) b.liters = "-";
       if(!b.nutrients) b.nutrients = "-";
+      if(!b.sugar) b.sugar = "-";
+      if(!b.fruit) b.fruit = "-";
+      if(!b.botanicals) b.botanicals = "-";
+      if(!b.dryAdjunct) b.dryAdjunct = "-";
+      if(!b.otherAdditions) b.otherAdditions = "-";
       if(!b.targetPressure) b.targetPressure = "-";
       if(!b.processNotes) b.processNotes = "-";
       if(!b.sensoryNotes) b.sensoryNotes = "-";
@@ -1029,6 +1062,11 @@
           baseFermentable: appLang === "it" ? "Succo di mela" : "Apple juice",
           liters: "20",
           nutrients: appLang === "it" ? "Nutriente lievito" : "Yeast nutrient",
+          sugar: appLang === "it" ? "Nessuno" : "None",
+          fruit: appLang === "it" ? "Nessuna" : "None",
+          botanicals: appLang === "it" ? "Nessuna" : "None",
+          dryAdjunct: appLang === "it" ? "Nessuno" : "None",
+          otherAdditions: appLang === "it" ? "Nessuna" : "None",
           targetPressure: "2.5",
           processNotes: appLang === "it" ? "Fermentazione pulita da sidro base." : "Clean base cider fermentation.",
           sensoryNotes: appLang === "it" ? "Profilo fresco, mela pulita." : "Fresh profile, clean apple.",
@@ -1053,6 +1091,11 @@
           baseFermentable: appLang === "it" ? "Tè + zucchero" : "Tea + sugar",
           liters: "10",
           nutrients: "-",
+          sugar: appLang === "it" ? "Zucchero bianco" : "White sugar",
+          fruit: appLang === "it" ? "Nessuna" : "None",
+          botanicals: appLang === "it" ? "Nessuna" : "None",
+          dryAdjunct: appLang === "it" ? "Nessuno" : "None",
+          otherAdditions: appLang === "it" ? "SCOBY + starter" : "SCOBY + starter",
           targetPressure: "2.0",
           processNotes: appLang === "it" ? "Base classica kombucha." : "Classic kombucha base.",
           sensoryNotes: appLang === "it" ? "Acidità equilibrata." : "Balanced acidity.",
@@ -1077,6 +1120,11 @@
           baseFermentable: appLang === "it" ? "Succo di mela" : "Apple juice",
           liters: "10",
           nutrients: appLang === "it" ? "Nutriente batterico" : "Bacterial nutrient",
+          sugar: appLang === "it" ? "Nessuno" : "None",
+          fruit: appLang === "it" ? "Nessuna" : "None",
+          botanicals: appLang === "it" ? "Nessuna" : "None",
+          dryAdjunct: appLang === "it" ? "Nessuno" : "None",
+          otherAdditions: appLang === "it" ? "Coltura lattica" : "Lactic culture",
           targetPressure: "1.5",
           processNotes: appLang === "it" ? "Fermentazione lattica con focus acidità." : "Lactic fermentation focused on acidity.",
           sensoryNotes: appLang === "it" ? "Acido, pulito, elegante." : "Acidic, clean, elegant.",
@@ -1101,6 +1149,11 @@
           baseFermentable: appLang === "it" ? "Succo / tè / base mista" : "Juice / tea / mixed base",
           liters: "15",
           nutrients: appLang === "it" ? "Nutrienti misti" : "Mixed nutrients",
+          sugar: appLang === "it" ? "Zucchero da rifermentazione" : "Priming sugar",
+          fruit: appLang === "it" ? "Frutta opzionale" : "Optional fruit",
+          botanicals: appLang === "it" ? "Botaniche opzionali" : "Optional botanicals",
+          dryAdjunct: appLang === "it" ? "Dry adjunct botanico/frutta" : "Botanical/fruit dry adjunct",
+          otherAdditions: appLang === "it" ? "Aggiunte sperimentali" : "Experimental additions",
           targetPressure: "2.2",
           processNotes: appLang === "it" ? "Lotto ibrido sperimentale." : "Experimental hybrid batch.",
           sensoryNotes: appLang === "it" ? "Complessità fermentativa." : "Fermentative complexity.",
@@ -1369,6 +1422,31 @@
               </div>
 
               <div class="process-item">
+                <div class="process-label">${t("sugar")}</div>
+                <div class="process-value">${formatValue(b.sugar)}</div>
+              </div>
+
+              <div class="process-item">
+                <div class="process-label">${t("fruit")}</div>
+                <div class="process-value">${formatValue(b.fruit)}</div>
+              </div>
+
+              <div class="process-item">
+                <div class="process-label">${t("botanicals")}</div>
+                <div class="process-value">${formatValue(b.botanicals)}</div>
+              </div>
+
+              <div class="process-item">
+                <div class="process-label">${t("dryAdjunct")}</div>
+                <div class="process-value">${formatValue(b.dryAdjunct)}</div>
+              </div>
+
+              <div class="process-item">
+                <div class="process-label">${t("otherAdditions")}</div>
+                <div class="process-value">${formatValue(b.otherAdditions)}</div>
+              </div>
+
+              <div class="process-item">
                 <div class="process-label">${t("targetPressure")}</div>
                 <div class="process-value">${formatValue(b.targetPressure)}</div>
               </div>
@@ -1464,6 +1542,11 @@
       const baseFermentable = prompt(t("basePrompt")) || "-";
       const liters = prompt(t("litersPrompt")) || "-";
       const nutrients = prompt(t("nutrientsPrompt")) || "-";
+      const sugar = prompt(t("sugarPrompt")) || "-";
+      const fruit = prompt(t("fruitPrompt")) || "-";
+      const botanicals = prompt(t("botanicalsPrompt")) || "-";
+      const dryAdjunct = prompt(t("dryAdjunctPrompt")) || "-";
+      const otherAdditions = prompt(t("otherAdditionsPrompt")) || "-";
       const ph = prompt(t("initialPhPrompt")) || "-";
       const gravity = prompt(t("initialGravityPrompt")) || "-";
       const og = prompt(t("ogPrompt")) || gravity || "-";
@@ -1482,6 +1565,11 @@
         baseFermentable,
         liters,
         nutrients,
+        sugar,
+        fruit,
+        botanicals,
+        dryAdjunct,
+        otherAdditions,
         targetPressure,
         processNotes,
         sensoryNotes,
@@ -1536,6 +1624,11 @@
       b.baseFermentable = prompt(t("editBasePrompt"), b.baseFermentable) || b.baseFermentable;
       b.liters = prompt(t("editLitersPrompt"), b.liters) || b.liters;
       b.nutrients = prompt(t("editNutrientsPrompt"), b.nutrients) || b.nutrients;
+      b.sugar = prompt(t("editSugarPrompt"), b.sugar) || b.sugar;
+      b.fruit = prompt(t("editFruitPrompt"), b.fruit) || b.fruit;
+      b.botanicals = prompt(t("editBotanicalsPrompt"), b.botanicals) || b.botanicals;
+      b.dryAdjunct = prompt(t("editDryAdjunctPrompt"), b.dryAdjunct) || b.dryAdjunct;
+      b.otherAdditions = prompt(t("editOtherAdditionsPrompt"), b.otherAdditions) || b.otherAdditions;
       b.og = prompt(t("editOGPrompt"), b.og) || b.og;
       b.targetPressure = prompt(t("editTargetPressurePrompt"), b.targetPressure) || b.targetPressure;
       b.processNotes = prompt(t("editProcessNotesPrompt"), b.processNotes) || b.processNotes;
