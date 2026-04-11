@@ -1,168 +1,393 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PH</title>
-
-<style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:linear-gradient(#071629,#081b2f);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  color:white;
-}
-
-.card{
-  background:rgba(255,255,255,0.05);
-  padding:30px;
-  border-radius:30px;
-  text-align:center;
-  box-shadow:0 20px 60px rgba(0,0,0,0.5);
-}
-
-.value{
-  font-size:60px;
-  margin-top:20px;
-}
-
-.sub{
-  color:#aaa;
-}
-
-/* display stile macchina */
-.display{
-  fill:#dcdcdc;
-  stroke:#999;
-  stroke-width:2;
-  rx:6;
-}
-
-.display-text{
-  font-size:16px;
-  fill:#222;
-  font-family:monospace;
-  text-anchor:middle;
-}
-</style>
-</head>
-
-<body>
-
-<div class="card">
-<h2>PH</h2>
-
-<svg viewBox="0 0 300 300" width="300">
-
-<!-- cerchio -->
-<circle cx="150" cy="150" r="110" fill="#000"/>
-
-<!-- arco -->
-<path d="M 40 170 A 110 110 0 0 1 260 170"
-      stroke="#e6dcc5"
-      stroke-width="6"
-      fill="none"
-      stroke-linecap="round"/>
-
-<!-- numeri -->
-<text x="50" y="190" fill="#e6dcc5">2.8</text>
-<text x="105" y="95" fill="#e6dcc5">3.5</text>
-<text x="190" y="95" fill="#e6dcc5">4.2</text>
-<text x="240" y="190" fill="#e6dcc5">5.0</text>
-
-<!-- DISPLAY INTERNO -->
-<rect x="110" y="175" width="80" height="30" class="display"/>
-<text id="miniValue" x="150" y="195" class="display-text">3.50</text>
-
-<!-- lancetta -->
-<line id="needle"
-      x1="150" y1="150"
-      x2="150" y2="70"
-      stroke="red"
-      stroke-width="4"
-      stroke-linecap="round"/>
-
-<!-- centro -->
-<circle cx="150" cy="150" r="8" fill="white"/>
-
-</svg>
-
-<div class="value" id="bigValue">3.50</div>
-<div class="sub">ultima misurazione</div>
-
-</div>
-
-<script>
-const min = 2.8;
-const max = 5.0;
-
-// mezzo cerchio corretto
-const startAngle = 150;
-const endAngle = 30;
-
-const cx = 150;
-const cy = 150;
-const radius = 80;
-
-let currentValue = 3.5;
-
-function valueToAngle(value){
-  const ratio = (value - min) / (max - min);
-  return startAngle + ratio * (endAngle - startAngle);
-}
-
-function updateGauge(value){
-
-  const angle = valueToAngle(value) * Math.PI / 180;
-
-  const x = cx + radius * Math.cos(angle);
-  const y = cy - radius * Math.sin(angle);
-
-  const needle = document.getElementById("needle");
-
-  needle.setAttribute("x2", x);
-  needle.setAttribute("y2", y);
-
-  document.getElementById("bigValue").innerText = value.toFixed(2);
-  document.getElementById("miniValue").innerText = value.toFixed(2);
-}
-
-// 🔥 ANIMAZIONE LANCETTA
-function animateTo(target){
-
-  const start = currentValue;
-  const duration = 800;
-  const startTime = performance.now();
-
-  function frame(time){
-    const progress = Math.min((time - startTime)/duration,1);
-    const value = start + (target - start) * progress;
-
-    updateGauge(value);
-
-    if(progress < 1){
-      requestAnimationFrame(frame);
-    } else {
-      currentValue = target;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XA Fermentation</title>
+  <style>
+    :root{
+      --bg1:#071629;
+      --bg2:#081b2f;
+      --card1:#10243a;
+      --card2:#0b1b2c;
+      --stroke:rgba(255,255,255,.06);
+      --text:#f4f7fb;
+      --muted:#95a8bb;
+      --scale:#e6dcc5;
+      --needle:#ff3b3b;
     }
-  }
 
-  requestAnimationFrame(frame);
-}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      -webkit-tap-highlight-color:transparent;
+    }
 
-// click per testare movimento
-document.body.addEventListener("click", () => {
-  const randomPH = (Math.random() * (max - min) + min);
-  animateTo(randomPH);
-});
+    html,body{
+      min-height:100vh;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(70,130,210,.16), transparent 28%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
 
-// iniziale
-updateGauge(currentValue);
-</script>
+    body{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:24px 16px;
+    }
 
+    .app{
+      width:min(430px,100%);
+      text-align:center;
+    }
+
+    .title{
+      font-size:28px;
+      letter-spacing:6px;
+      font-weight:300;
+      margin-bottom:22px;
+    }
+
+    .card{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        linear-gradient(180deg, var(--card1), var(--card2));
+      border:1px solid var(--stroke);
+      border-radius:30px;
+      padding:28px 20px 26px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.04),
+        0 20px 60px rgba(0,0,0,.55);
+      backdrop-filter: blur(16px);
+    }
+
+    svg{
+      width:100%;
+      max-width:330px;
+      height:auto;
+      display:block;
+      margin:0 auto;
+      filter:drop-shadow(0 18px 24px rgba(0,0,0,.35));
+      cursor:pointer;
+    }
+
+    .value{
+      margin-top:18px;
+      font-size:64px;
+      line-height:1;
+      font-weight:200;
+      letter-spacing:1px;
+    }
+
+    .sub{
+      margin-top:10px;
+      font-size:18px;
+      color:var(--muted);
+    }
+
+    .hint{
+      margin-top:12px;
+      font-size:13px;
+      color:rgba(255,255,255,.48);
+    }
+
+    @media (max-width:480px){
+      .title{font-size:24px;}
+      .value{font-size:56px;}
+      .sub{font-size:16px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="title">PH</div>
+
+    <div class="card">
+      <svg id="gauge" viewBox="0 0 360 280" aria-hidden="true">
+        <defs>
+          <radialGradient id="bezelGrad" cx="30%" cy="26%">
+            <stop offset="0%" stop-color="#eef2f5"/>
+            <stop offset="30%" stop-color="#a0a8b0"/>
+            <stop offset="68%" stop-color="#4c5560"/>
+            <stop offset="100%" stop-color="#232830"/>
+          </radialGradient>
+
+          <radialGradient id="faceGrad" cx="42%" cy="38%">
+            <stop offset="0%" stop-color="#20262d"/>
+            <stop offset="58%" stop-color="#101419"/>
+            <stop offset="100%" stop-color="#000000"/>
+          </radialGradient>
+
+          <radialGradient id="hubGrad" cx="35%" cy="35%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="38%" stop-color="#d6dce3"/>
+            <stop offset="100%" stop-color="#686f78"/>
+          </radialGradient>
+
+          <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="10"/>
+          </filter>
+
+          <filter id="needleGlow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="4"/>
+          </filter>
+        </defs>
+
+        <!-- ombra -->
+        <ellipse cx="180" cy="146" rx="126" ry="126" fill="rgba(0,0,0,.34)" filter="url(#shadow)"/>
+
+        <!-- ghiera -->
+        <circle cx="180" cy="140" r="118" fill="url(#bezelGrad)"/>
+
+        <!-- quadrante -->
+        <circle cx="180" cy="140" r="104" fill="#0b1016"/>
+        <circle cx="180" cy="140" r="100" fill="url(#faceGrad)"/>
+        <circle cx="180" cy="140" r="99" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.2"/>
+
+        <!-- riflessi -->
+        <ellipse cx="145" cy="104" rx="54" ry="22" fill="rgba(255,255,255,.07)" transform="rotate(-16 145 104)"/>
+        <ellipse cx="226" cy="188" rx="24" ry="8" fill="rgba(255,255,255,.04)" transform="rotate(18 226 188)"/>
+
+        <g id="arcGroup"></g>
+        <g id="ticksGroup"></g>
+        <g id="labelsGroup"></g>
+
+        <!-- lancetta -->
+        <g id="needleShadowGroup"></g>
+        <g id="needleGroup"></g>
+
+        <!-- perno -->
+        <circle cx="180" cy="140" r="11" fill="url(#hubGrad)"/>
+      </svg>
+
+      <div class="value" id="valueText">3.50</div>
+      <div class="sub">ultima misurazione</div>
+      <div class="hint">Tocca il quadrante per muovere la lancetta</div>
+    </div>
+  </div>
+
+  <script>
+    const cfg = {
+      min: 2.8,
+      max: 5.0,
+      value: 3.5,
+      labels: [2.8, 3.5, 4.2, 5.0],
+
+      cx: 180,
+      cy: 140,
+
+      bezelRadius: 118,
+      faceRadius: 100,
+      arcRadius: 108,
+      majorInner: 84,
+      minorInner: 92,
+      outerTick: 108,
+      labelRadius: 132,
+      needleLength: 86,
+
+      // mezzo cerchio alto
+      startDeg: 150,
+      endDeg: 30
+    };
+
+    const svg = document.getElementById("gauge");
+    const arcGroup = document.getElementById("arcGroup");
+    const ticksGroup = document.getElementById("ticksGroup");
+    const labelsGroup = document.getElementById("labelsGroup");
+    const needleShadowGroup = document.getElementById("needleShadowGroup");
+    const needleGroup = document.getElementById("needleGroup");
+    const valueText = document.getElementById("valueText");
+
+    const svgNS = "http://www.w3.org/2000/svg";
+    let currentValue = cfg.value;
+    let animationFrame = null;
+
+    function el(tag, attrs = {}) {
+      const node = document.createElementNS(svgNS, tag);
+      Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
+      return node;
+    }
+
+    function toRad(deg) {
+      return deg * Math.PI / 180;
+    }
+
+    function polar(cx, cy, r, deg) {
+      const a = toRad(deg);
+      return {
+        x: cx + r * Math.cos(a),
+        y: cy - r * Math.sin(a)
+      };
+    }
+
+    function valueToDeg(value) {
+      const ratio = (value - cfg.min) / (cfg.max - cfg.min);
+      return cfg.startDeg + ratio * (cfg.endDeg - cfg.startDeg);
+    }
+
+    function arcPath(cx, cy, r, startDeg, endDeg) {
+      const start = polar(cx, cy, r, startDeg);
+      const end = polar(cx, cy, r, endDeg);
+      return `M ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y}`;
+    }
+
+    function drawArc() {
+      arcGroup.innerHTML = "";
+      arcGroup.appendChild(el("path", {
+        d: arcPath(cfg.cx, cfg.cy, cfg.arcRadius, cfg.startDeg, cfg.endDeg),
+        fill: "none",
+        stroke: "#e6dcc5",
+        "stroke-width": "6",
+        "stroke-linecap": "round"
+      }));
+    }
+
+    function drawTicks() {
+      ticksGroup.innerHTML = "";
+
+      for (let i = 0; i <= 12; i++) {
+        const deg = cfg.startDeg + i * (cfg.endDeg - cfg.startDeg) / 12;
+        const major = i === 0 || i === 4 || i === 8 || i === 12;
+        const p1 = polar(cfg.cx, cfg.cy, major ? cfg.majorInner : cfg.minorInner, deg);
+        const p2 = polar(cfg.cx, cfg.cy, cfg.outerTick, deg);
+
+        ticksGroup.appendChild(el("line", {
+          x1: p1.x, y1: p1.y,
+          x2: p2.x, y2: p2.y,
+          stroke: "#e6dcc5",
+          "stroke-width": major ? "5" : "2.5",
+          "stroke-linecap": "round"
+        }));
+      }
+    }
+
+    function drawLabels() {
+      labelsGroup.innerHTML = "";
+
+      const offsets = {
+        "2.8": { dx: -2, dy: 8 },
+        "3.5": { dx: 0, dy: -2 },
+        "4.2": { dx: 0, dy: -2 },
+        "5.0": { dx: 2, dy: 8 }
+      };
+
+      cfg.labels.forEach(v => {
+        const key = v.toFixed(1);
+        const deg = valueToDeg(v);
+        const pos = polar(cfg.cx, cfg.cy, cfg.labelRadius, deg);
+        const off = offsets[key] || { dx: 0, dy: 0 };
+
+        labelsGroup.appendChild(el("text", {
+          x: pos.x + off.dx,
+          y: pos.y + off.dy,
+          fill: "#e6dcc5",
+          "font-family": "Arial, Helvetica, sans-serif",
+          "font-size": "16",
+          "font-weight": "700",
+          "text-anchor": "middle",
+          "dominant-baseline": "middle",
+          "paint-order": "stroke",
+          stroke: "rgba(0,0,0,.55)",
+          "stroke-width": "5",
+          "stroke-linejoin": "round"
+        })).textContent = key;
+      });
+    }
+
+    function drawNeedle(value) {
+      needleShadowGroup.innerHTML = "";
+      needleGroup.innerHTML = "";
+
+      const deg = valueToDeg(value);
+      const tip = polar(cfg.cx, cfg.cy, cfg.needleLength, deg);
+
+      needleShadowGroup.appendChild(el("line", {
+        x1: cfg.cx, y1: cfg.cy,
+        x2: tip.x, y2: tip.y,
+        stroke: "rgba(255,59,59,.35)",
+        "stroke-width": "10",
+        "stroke-linecap": "round",
+        filter: "url(#needleGlow)"
+      }));
+
+      needleGroup.appendChild(el("line", {
+        x1: cfg.cx, y1: cfg.cy,
+        x2: tip.x, y2: tip.y,
+        stroke: "#ff3b3b",
+        "stroke-width": "5",
+        "stroke-linecap": "round"
+      }));
+
+      needleGroup.appendChild(el("line", {
+        x1: cfg.cx + 1.5, y1: cfg.cy - 1.5,
+        x2: tip.x + 1.5, y2: tip.y - 1.5,
+        stroke: "#ffd0d0",
+        "stroke-width": "1.6",
+        "stroke-linecap": "round",
+        opacity: ".85"
+      }));
+    }
+
+    function setValue(value) {
+      const clamped = Math.max(cfg.min, Math.min(cfg.max, value));
+      valueText.textContent = clamped.toFixed(2);
+      drawNeedle(clamped);
+    }
+
+    function animateNeedle(targetValue, duration = 900) {
+      const startValue = currentValue;
+      const target = Math.max(cfg.min, Math.min(cfg.max, targetValue));
+      const startTime = performance.now();
+
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+
+      function easeInOutCubic(t) {
+        return t < 0.5
+          ? 4 * t * t * t
+          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeInOutCubic(progress);
+        const value = startValue + (target - startValue) * eased;
+
+        setValue(value);
+
+        if (progress < 1) {
+          animationFrame = requestAnimationFrame(step);
+        } else {
+          currentValue = target;
+          animationFrame = null;
+        }
+      }
+
+      animationFrame = requestAnimationFrame(step);
+    }
+
+    function randomPH() {
+      return +(cfg.min + Math.random() * (cfg.max - cfg.min)).toFixed(2);
+    }
+
+    function drawStaticParts() {
+      drawArc();
+      drawTicks();
+      drawLabels();
+    }
+
+    svg.addEventListener("click", () => {
+      animateNeedle(randomPH());
+    });
+
+    drawStaticParts();
+    setValue(currentValue);
+  </script>
 </body>
 </html>
