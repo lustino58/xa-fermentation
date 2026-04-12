@@ -1,328 +1,174 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation</title>
-  <style>
-    :root{
-      --bg1:#071629;
-      --bg2:#081b2f;
-      --card1:#10243a;
-      --card2:#0b1b2c;
-      --stroke:rgba(255,255,255,.06);
-      --text:#f4f7fb;
-      --muted:#95a8bb;
-      --scale:#e6dcc5;
-      --needle:#ff3b3b;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XA Fermentation - Densità</title>
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      -webkit-tap-highlight-color:transparent;
-    }
+<style>
+:root{
+  --bg1:#071629;
+  --bg2:#081b2f;
+  --card1:#10243a;
+  --card2:#0b1b2c;
+  --text:#f4f7fb;
+  --muted:#95a8bb;
 
-    html,body{
-      min-height:100vh;
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, rgba(70,130,210,.16), transparent 28%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-    }
+  /* COLORI DENSITÀ */
+  --scale:#f1c27d;
+  --needle:#ff7a00;
+}
 
-    body{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:24px 16px;
-    }
+*{margin:0;padding:0;box-sizing:border-box}
 
-    .app{
-      width:min(430px,100%);
-      text-align:center;
-    }
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Arial;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top, rgba(255,180,80,.15), transparent 30%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+}
 
-    .title{
-      font-size:28px;
-      letter-spacing:6px;
-      font-weight:300;
-      margin-bottom:22px;
-    }
+.app{
+  width:100%;
+  max-width:420px;
+  text-align:center;
+}
 
-    .card{
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
-        linear-gradient(180deg, var(--card1), var(--card2));
-      border:1px solid var(--stroke);
-      border-radius:30px;
-      padding:28px 20px 26px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.04),
-        0 20px 60px rgba(0,0,0,.55);
-      backdrop-filter: blur(16px);
-    }
+.title{
+  font-size:28px;
+  letter-spacing:6px;
+  margin-bottom:20px;
+}
 
-    svg{
-      width:100%;
-      max-width:330px;
-      height:auto;
-      display:block;
-      margin:0 auto;
-      filter:drop-shadow(0 18px 24px rgba(0,0,0,.35));
-    }
+.card{
+  background:linear-gradient(180deg,var(--card1),var(--card2));
+  border-radius:30px;
+  padding:25px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
 
-    .value{
-      margin-top:18px;
-      font-size:64px;
-      line-height:1;
-      font-weight:200;
-      letter-spacing:1px;
-    }
+svg{
+  width:100%;
+  max-width:320px;
+}
 
-    .sub{
-      margin-top:10px;
-      font-size:18px;
-      color:var(--muted);
-    }
+.value{
+  font-size:60px;
+  margin-top:20px;
+}
 
-    @media (max-width:480px){
-      .title{font-size:24px;}
-      .value{font-size:56px;}
-      .sub{font-size:16px;}
-    }
-  </style>
+.sub{
+  color:var(--muted);
+}
+</style>
 </head>
+
 <body>
-  <div class="app">
-    <div class="title">PH</div>
 
-    <div class="card">
-      <svg id="gauge" viewBox="0 0 360 280" aria-hidden="true">
-        <defs>
-          <radialGradient id="bezelGrad" cx="30%" cy="26%">
-            <stop offset="0%" stop-color="#eef2f5"/>
-            <stop offset="30%" stop-color="#a0a8b0"/>
-            <stop offset="68%" stop-color="#4c5560"/>
-            <stop offset="100%" stop-color="#232830"/>
-          </radialGradient>
+<div class="app">
+  <div class="title">DENSITÀ</div>
 
-          <radialGradient id="faceGrad" cx="42%" cy="38%">
-            <stop offset="0%" stop-color="#20262d"/>
-            <stop offset="58%" stop-color="#101419"/>
-            <stop offset="100%" stop-color="#000000"/>
-          </radialGradient>
+  <div class="card">
 
-          <radialGradient id="hubGrad" cx="35%" cy="35%">
-            <stop offset="0%" stop-color="#ffffff"/>
-            <stop offset="38%" stop-color="#d6dce3"/>
-            <stop offset="100%" stop-color="#686f78"/>
-          </radialGradient>
+<svg viewBox="0 0 360 280">
 
-          <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="10"/>
-          </filter>
+<circle cx="180" cy="140" r="110" fill="#000"/>
+<circle cx="180" cy="140" r="105" fill="#111"/>
 
-          <filter id="needleGlow" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="4"/>
-          </filter>
-        </defs>
+<g id="ticks"></g>
+<g id="labels"></g>
+<g id="needle"></g>
 
-        <ellipse cx="180" cy="146" rx="126" ry="126" fill="rgba(0,0,0,.34)" filter="url(#shadow)"/>
+<circle cx="180" cy="140" r="10" fill="#ccc"/>
 
-        <circle cx="180" cy="140" r="118" fill="url(#bezelGrad)"/>
+</svg>
 
-        <circle cx="180" cy="140" r="104" fill="#0b1016"/>
-        <circle cx="180" cy="140" r="100" fill="url(#faceGrad)"/>
-        <circle cx="180" cy="140" r="99" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.2"/>
+<div class="value" id="val">1.050</div>
+<div class="sub">densità attuale</div>
 
-        <ellipse cx="145" cy="104" rx="54" ry="22" fill="rgba(255,255,255,.07)" transform="rotate(-16 145 104)"/>
-        <ellipse cx="226" cy="188" rx="24" ry="8" fill="rgba(255,255,255,.04)" transform="rotate(18 226 188)"/>
+</div>
+</div>
 
-        <g id="arcGroup"></g>
-        <g id="ticksGroup"></g>
-        <g id="labelsGroup"></g>
+<script>
 
-        <g id="needleShadowGroup"></g>
-        <g id="needleGroup"></g>
+const cfg = {
+  min:1000,
+  max:1080,
+  value:1050,
+  cx:180,
+  cy:140,
+  r:100,
+  start:150,
+  end:30
+};
 
-        <circle cx="180" cy="140" r="11" fill="url(#hubGrad)"/>
-      </svg>
+function deg(v){
+  return cfg.start + (v-cfg.min)/(cfg.max-cfg.min)*(cfg.end-cfg.start);
+}
 
-      <div class="value" id="valueText">3.50</div>
-      <div class="sub">ultima misurazione</div>
-    </div>
-  </div>
+function polar(r,a){
+  let rad=a*Math.PI/180;
+  return {
+    x:cfg.cx + r*Math.cos(rad),
+    y:cfg.cy - r*Math.sin(rad)
+  }
+}
 
-  <script>
-    const cfg = {
-      min: 2.8,
-      max: 5.0,
-      value: 3.5,
-      labels: [2.8, 3.5, 4.2, 5.0],
+const ticks=document.getElementById("ticks");
+const labels=document.getElementById("labels");
+const needle=document.getElementById("needle");
 
-      cx: 180,
-      cy: 140,
+for(let i=0;i<=8;i++){
+  let val=1000+i*10;
+  let a=deg(val);
+  let p1=polar(80,a);
+  let p2=polar(100,a);
 
-      bezelRadius: 118,
-      faceRadius: 100,
-      arcRadius: 108,
-      majorInner: 84,
-      minorInner: 92,
-      outerTick: 108,
-      labelRadius: 132,
-      needleLength: 86,
+  let l=document.createElementNS("http://www.w3.org/2000/svg","line");
+  l.setAttribute("x1",p1.x);
+  l.setAttribute("y1",p1.y);
+  l.setAttribute("x2",p2.x);
+  l.setAttribute("y2",p2.y);
+  l.setAttribute("stroke","#f1c27d");
+  l.setAttribute("stroke-width","4");
+  ticks.appendChild(l);
 
-      startDeg: 150,
-      endDeg: 30
-    };
+  let txt=document.createElementNS("http://www.w3.org/2000/svg","text");
+  let p=polar(120,a);
+  txt.setAttribute("x",p.x);
+  txt.setAttribute("y",p.y);
+  txt.setAttribute("fill","#f1c27d");
+  txt.setAttribute("font-size","14");
+  txt.setAttribute("text-anchor","middle");
+  txt.textContent=(val/1000).toFixed(3);
+  labels.appendChild(txt);
+}
 
-    const arcGroup = document.getElementById("arcGroup");
-    const ticksGroup = document.getElementById("ticksGroup");
-    const labelsGroup = document.getElementById("labelsGroup");
-    const needleShadowGroup = document.getElementById("needleShadowGroup");
-    const needleGroup = document.getElementById("needleGroup");
-    const valueText = document.getElementById("valueText");
+function drawNeedle(){
+  let a=deg(cfg.value);
+  let p=polar(80,a);
 
-    const svgNS = "http://www.w3.org/2000/svg";
+  let line=document.createElementNS("http://www.w3.org/2000/svg","line");
+  line.setAttribute("x1",cfg.cx);
+  line.setAttribute("y1",cfg.cy);
+  line.setAttribute("x2",p.x);
+  line.setAttribute("y2",p.y);
+  line.setAttribute("stroke","#ff7a00");
+  line.setAttribute("stroke-width","5");
 
-    function el(tag, attrs = {}) {
-      const node = document.createElementNS(svgNS, tag);
-      Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
-      return node;
-    }
+  needle.appendChild(line);
+}
 
-    function toRad(deg) {
-      return deg * Math.PI / 180;
-    }
+drawNeedle();
 
-    function polar(cx, cy, r, deg) {
-      const a = toRad(deg);
-      return {
-        x: cx + r * Math.cos(a),
-        y: cy - r * Math.sin(a)
-      };
-    }
+document.getElementById("val").innerText=(cfg.value/1000).toFixed(3);
 
-    function valueToDeg(value) {
-      const ratio = (value - cfg.min) / (cfg.max - cfg.min);
-      return cfg.startDeg + ratio * (cfg.endDeg - cfg.startDeg);
-    }
+</script>
 
-    function arcPath(cx, cy, r, startDeg, endDeg) {
-      const start = polar(cx, cy, r, startDeg);
-      const end = polar(cx, cy, r, endDeg);
-      return `M ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y}`;
-    }
-
-    function drawArc() {
-      arcGroup.innerHTML = "";
-      arcGroup.appendChild(el("path", {
-        d: arcPath(cfg.cx, cfg.cy, cfg.arcRadius, cfg.startDeg, cfg.endDeg),
-        fill: "none",
-        stroke: "#e6dcc5",
-        "stroke-width": "6",
-        "stroke-linecap": "round"
-      }));
-    }
-
-    function drawTicks() {
-      ticksGroup.innerHTML = "";
-
-      for (let i = 0; i <= 12; i++) {
-        const deg = cfg.startDeg + i * (cfg.endDeg - cfg.startDeg) / 12;
-        const major = i === 0 || i === 4 || i === 8 || i === 12;
-        const p1 = polar(cfg.cx, cfg.cy, major ? cfg.majorInner : cfg.minorInner, deg);
-        const p2 = polar(cfg.cx, cfg.cy, cfg.outerTick, deg);
-
-        ticksGroup.appendChild(el("line", {
-          x1: p1.x, y1: p1.y,
-          x2: p2.x, y2: p2.y,
-          stroke: "#e6dcc5",
-          "stroke-width": major ? "5" : "2.5",
-          "stroke-linecap": "round"
-        }));
-      }
-    }
-
-    function drawLabels() {
-      labelsGroup.innerHTML = "";
-
-      const offsets = {
-        "2.8": { dx: -2, dy: 8 },
-        "3.5": { dx: 0, dy: -2 },
-        "4.2": { dx: 0, dy: -2 },
-        "5.0": { dx: 2, dy: 8 }
-      };
-
-      cfg.labels.forEach(v => {
-        const key = v.toFixed(1);
-        const deg = valueToDeg(v);
-        const pos = polar(cfg.cx, cfg.cy, cfg.labelRadius, deg);
-        const off = offsets[key] || { dx: 0, dy: 0 };
-
-        labelsGroup.appendChild(el("text", {
-          x: pos.x + off.dx,
-          y: pos.y + off.dy,
-          fill: "#e6dcc5",
-          "font-family": "Arial, Helvetica, sans-serif",
-          "font-size": "16",
-          "font-weight": "700",
-          "text-anchor": "middle",
-          "dominant-baseline": "middle",
-          "paint-order": "stroke",
-          stroke: "rgba(0,0,0,.55)",
-          "stroke-width": "5",
-          "stroke-linejoin": "round"
-        })).textContent = key;
-      });
-    }
-
-    function drawNeedle() {
-      needleShadowGroup.innerHTML = "";
-      needleGroup.innerHTML = "";
-
-      const deg = valueToDeg(cfg.value);
-      const tip = polar(cfg.cx, cfg.cy, cfg.needleLength, deg);
-
-      needleShadowGroup.appendChild(el("line", {
-        x1: cfg.cx, y1: cfg.cy,
-        x2: tip.x, y2: tip.y,
-        stroke: "rgba(255,59,59,.35)",
-        "stroke-width": "10",
-        "stroke-linecap": "round",
-        filter: "url(#needleGlow)"
-      }));
-
-      needleGroup.appendChild(el("line", {
-        x1: cfg.cx, y1: cfg.cy,
-        x2: tip.x, y2: tip.y,
-        stroke: "#ff3b3b",
-        "stroke-width": "5",
-        "stroke-linecap": "round"
-      }));
-
-      needleGroup.appendChild(el("line", {
-        x1: cfg.cx + 1.5, y1: cfg.cy - 1.5,
-        x2: tip.x + 1.5, y2: tip.y - 1.5,
-        stroke: "#ffd0d0",
-        "stroke-width": "1.6",
-        "stroke-linecap": "round",
-        opacity: ".85"
-      }));
-    }
-
-    function draw() {
-      valueText.textContent = cfg.value.toFixed(2);
-      drawArc();
-      drawTicks();
-      drawLabels();
-      drawNeedle();
-    }
-
-    draw();
-  </script>
 </body>
 </html>
