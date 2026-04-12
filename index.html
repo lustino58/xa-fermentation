@@ -1,99 +1,3 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XA Fermentation - Densità</title>
-
-<style>
-:root{
-  --bg1:#071629;
-  --bg2:#081b2f;
-  --card1:#10243a;
-  --card2:#0b1b2c;
-  --text:#f4f7fb;
-  --muted:#95a8bb;
-
-  /* COLORI DENSITÀ */
-  --scale:#f1c27d;
-  --needle:#ff7a00;
-}
-
-*{margin:0;padding:0;box-sizing:border-box}
-
-body{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:Arial;
-  color:var(--text);
-  background:
-    radial-gradient(circle at top, rgba(255,180,80,.15), transparent 30%),
-    linear-gradient(180deg,var(--bg1),var(--bg2));
-}
-
-.app{
-  width:100%;
-  max-width:420px;
-  text-align:center;
-}
-
-.title{
-  font-size:28px;
-  letter-spacing:6px;
-  margin-bottom:20px;
-}
-
-.card{
-  background:linear-gradient(180deg,var(--card1),var(--card2));
-  border-radius:30px;
-  padding:25px;
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
-}
-
-svg{
-  width:100%;
-  max-width:320px;
-}
-
-.value{
-  font-size:60px;
-  margin-top:20px;
-}
-
-.sub{
-  color:var(--muted);
-}
-</style>
-</head>
-
-<body>
-
-<div class="app">
-  <div class="title">DENSITÀ</div>
-
-  <div class="card">
-
-<svg viewBox="0 0 360 280">
-
-<circle cx="180" cy="140" r="110" fill="#000"/>
-<circle cx="180" cy="140" r="105" fill="#111"/>
-
-<g id="ticks"></g>
-<g id="labels"></g>
-<g id="needle"></g>
-
-<circle cx="180" cy="140" r="10" fill="#ccc"/>
-
-</svg>
-
-<div class="value" id="val">1.050</div>
-<div class="sub">densità attuale</div>
-
-</div>
-</div>
-
 <script>
 
 const cfg = {
@@ -123,6 +27,7 @@ const ticks=document.getElementById("ticks");
 const labels=document.getElementById("labels");
 const needle=document.getElementById("needle");
 
+/* TICK OGNI 10 */
 for(let i=0;i<=8;i++){
   let val=1000+i*10;
   let a=deg(val);
@@ -135,20 +40,29 @@ for(let i=0;i<=8;i++){
   l.setAttribute("x2",p2.x);
   l.setAttribute("y2",p2.y);
   l.setAttribute("stroke","#f1c27d");
-  l.setAttribute("stroke-width","4");
+  l.setAttribute("stroke-width", i%2===0 ? "4" : "2");
   ticks.appendChild(l);
+}
+
+/* LABEL SOLO PRINCIPALI */
+[1000,1020,1040,1060,1080].forEach(val=>{
+  let a=deg(val);
+  let p=polar(120,a);
 
   let txt=document.createElementNS("http://www.w3.org/2000/svg","text");
-  let p=polar(120,a);
   txt.setAttribute("x",p.x);
   txt.setAttribute("y",p.y);
   txt.setAttribute("fill","#f1c27d");
-  txt.setAttribute("font-size","14");
+  txt.setAttribute("font-size","16");
+  txt.setAttribute("font-weight","700");
   txt.setAttribute("text-anchor","middle");
-  txt.textContent=(val/1000).toFixed(3);
-  labels.appendChild(txt);
-}
 
+  txt.textContent=(val/1000).toFixed(3);
+
+  labels.appendChild(txt);
+});
+
+/* LANCETTA */
 function drawNeedle(){
   let a=deg(cfg.value);
   let p=polar(80,a);
@@ -169,6 +83,3 @@ drawNeedle();
 document.getElementById("val").innerText=(cfg.value/1000).toFixed(3);
 
 </script>
-
-</body>
-</html>
