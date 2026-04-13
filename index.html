@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation Ultra VST Pro</title>
+  <title>XA Fermentation Ultra VST Max</title>
   <meta name="theme-color" content="#12090c" />
   <style>
     :root{
@@ -12,8 +12,6 @@
       --bg3:#24131b;
       --panel:#1a1017;
       --panel2:#120b11;
-      --metal:#24161e;
-      --metal2:#0f0a0d;
       --stroke:rgba(255,255,255,.08);
       --text:#f5f7fb;
       --muted:#aa99a3;
@@ -54,7 +52,7 @@
     }
 
     .app{
-      width:min(1580px,100%);
+      width:min(1600px,100%);
       margin:0 auto;
     }
 
@@ -84,7 +82,7 @@
     }
 
     .hero h1{
-      font-size:clamp(28px,7vw,56px);
+      font-size:clamp(28px,7vw,58px);
       line-height:.92;
       font-weight:800;
       letter-spacing:-.05em;
@@ -167,13 +165,20 @@
       color:#fff;
       background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.07);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.04),
+        0 0 0 rgba(0,0,0,0);
+      transition:transform .12s ease, box-shadow .12s ease;
     }
 
-    .top-btn.red{background:linear-gradient(180deg,#ff4f5f,#d53142);}
-    .top-btn.blue{background:linear-gradient(180deg,#3e87ff,#205fcb);}
-    .top-btn.green{background:linear-gradient(180deg,#11b67b,#078f5f);}
-    .top-btn.orange{background:linear-gradient(180deg,#ff9e3d,#d87409);}
+    .top-btn:active{
+      transform:translateY(1px) scale(.99);
+    }
+
+    .top-btn.red{background:linear-gradient(180deg,#ff4f5f,#d53142); box-shadow:0 0 18px rgba(255,79,95,.16);}
+    .top-btn.blue{background:linear-gradient(180deg,#3e87ff,#205fcb); box-shadow:0 0 18px rgba(62,135,255,.16);}
+    .top-btn.green{background:linear-gradient(180deg,#11b67b,#078f5f); box-shadow:0 0 18px rgba(17,182,123,.16);}
+    .top-btn.orange{background:linear-gradient(180deg,#ff9e3d,#d87409); box-shadow:0 0 18px rgba(255,158,61,.16);}
 
     .browser-shell{
       padding:14px;
@@ -209,10 +214,33 @@
       font-weight:800;
       background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 0 14px rgba(255,255,255,.03);
+      transition:transform .12s ease, box-shadow .12s ease;
     }
 
     .lib-btn.active{
       background:linear-gradient(180deg,#ff4c5c,#c92f3f);
+      box-shadow:0 0 18px rgba(255,76,92,.22);
+    }
+
+    .lib-btn:active{
+      transform:scale(.98);
+    }
+
+    .search-bar{
+      margin-bottom:12px;
+    }
+
+    .search-bar input{
+      width:100%;
+      border:none;
+      outline:none;
+      border-radius:16px;
+      padding:13px 14px;
+      font-size:15px;
+      background:rgba(255,255,255,.96);
+      color:#111827;
+      box-shadow:inset 0 2px 8px rgba(0,0,0,.08);
     }
 
     .library-panel{
@@ -234,11 +262,16 @@
       border:1px solid rgba(255,255,255,.06);
       border-radius:20px;
       padding:14px;
-      transition:transform .12s ease;
+      transition:transform .12s ease, box-shadow .12s ease;
+      box-shadow:0 0 0 rgba(0,0,0,0);
     }
 
     .lib-item:active{
       transform:scale(.98);
+    }
+
+    .lib-item:hover{
+      box-shadow:0 0 18px rgba(255,255,255,.05);
     }
 
     .lib-item h4{
@@ -252,6 +285,7 @@
       color:var(--muted);
       line-height:1.45;
       margin-bottom:10px;
+      min-height:52px;
     }
 
     .mini-row{
@@ -289,6 +323,7 @@
       font-weight:800;
       color:#fff;
       background:linear-gradient(180deg,#ff4d5d,#d53343);
+      box-shadow:0 0 16px rgba(255,77,93,.18);
     }
 
     .shell{
@@ -329,7 +364,7 @@
 
     .strip{
       width:128px;
-      min-height:700px;
+      min-height:710px;
       border-radius:26px;
       padding:14px 12px;
       position:relative;
@@ -816,7 +851,7 @@
       <div class="logo">XA</div>
       <div>
         <h1>XA Fermentation Ultra VST</h1>
-        <p>Master section centrale • browser tecnico espandibile • ricetta professionale numerata</p>
+        <p>Libreria ampia • browser tecnico • ricetta professionale numerata</p>
       </div>
     </div>
 
@@ -839,7 +874,7 @@
 
     <div class="browser-shell">
       <div class="section-title">Browser tecnico espandibile</div>
-      <div class="section-sub">Tocca una categoria, si apre il pannello. Poi scegli quantità, unità e aggiungi alla ricetta numerata.</div>
+      <div class="section-sub">Categorie ampie, ricerca interna e aggiunta ingredienti con quantità e unità.</div>
 
       <div class="browser-toolbar">
         <button class="lib-btn active" data-lib="hops">Luppoli</button>
@@ -852,6 +887,10 @@
         <button class="lib-btn" data-lib="acids">Acidi</button>
         <button class="lib-btn" data-lib="teas">Tè</button>
         <button class="lib-btn" data-lib="salts">Sali</button>
+      </div>
+
+      <div class="search-bar">
+        <input id="librarySearch" type="text" placeholder="Cerca nella categoria aperta..." />
       </div>
 
       <div class="library-panel active" id="lib-hops"><div class="library-grid" id="hopsGrid"></div></div>
@@ -878,7 +917,7 @@
       </div>
 
       <div class="section-title">Mixer digitale parametri</div>
-      <div class="section-sub">LED più realistici, master fader centrale vero, pulsanti mute/solo/rec.</div>
+      <div class="section-sub">Layout VST, master fader centrale, meter realistici, pulsanti illuminati.</div>
 
       <div class="mixer-wrap">
         <div class="mixer">
@@ -1111,7 +1150,7 @@
 
       <div class="info-card span-6">
         <div class="section-title">Ingredienti rapidi</div>
-        <div class="section-sub">Anche questi inseriscono righe pulite e professionali nella ricetta.</div>
+        <div class="section-sub">Anche questi scrivono righe pulite e professionali nella ricetta.</div>
 
         <div class="ingredient-grid">
           <button class="ingredient-btn" data-quick-name="Mela" data-quick-qty="1" data-quick-unit="kg">
@@ -1121,6 +1160,14 @@
           <button class="ingredient-btn" data-quick-name="Pera" data-quick-qty="1" data-quick-unit="kg">
             <span class="emoji">🍐</span>
             <span class="txt">Pera</span>
+          </button>
+          <button class="ingredient-btn" data-quick-name="Mango" data-quick-qty="1" data-quick-unit="kg">
+            <span class="emoji">🥭</span>
+            <span class="txt">Mango</span>
+          </button>
+          <button class="ingredient-btn" data-quick-name="Litchi" data-quick-qty="500" data-quick-unit="g">
+            <span class="emoji">🧺</span>
+            <span class="txt">Litchi</span>
           </button>
           <button class="ingredient-btn" data-quick-name="Tè oolong" data-quick-qty="8" data-quick-unit="g">
             <span class="emoji">🍵</span>
@@ -1134,17 +1181,9 @@
             <span class="emoji">🍋</span>
             <span class="txt">Limone</span>
           </button>
-          <button class="ingredient-btn" data-quick-name="Arancia" data-quick-qty="1" data-quick-unit="pz">
-            <span class="emoji">🍊</span>
-            <span class="txt">Arancia</span>
-          </button>
           <button class="ingredient-btn" data-quick-name="Botaniche miste" data-quick-qty="5" data-quick-unit="g">
             <span class="emoji">🌿</span>
             <span class="txt">Botaniche</span>
-          </button>
-          <button class="ingredient-btn" data-quick-name="Malto" data-quick-qty="1" data-quick-unit="kg">
-            <span class="emoji">🌾</span>
-            <span class="txt">Malto</span>
           </button>
         </div>
 
@@ -1162,7 +1201,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xaFermentationUltraVST_v2";
+    const STORAGE_KEY = "xaFermentationUltraVST_v3";
 
     const defaults = {
       recipeName: "Sidro Secco XA",
@@ -1191,8 +1230,8 @@
         fg: 1.004,
         ibu: 0,
         co2: 2.4,
-        ingredientsText: "1. Mela — 20 L succo\\n2. Lievito autoctono — 1 dose",
-        additionsText: "1. Inoculo lievito — giorno 1\\n2. Travaso — giorno 5",
+        ingredientsText: "1. Mela — 20 L succo\n2. Lievito autoctono — 1 dose",
+        additionsText: "1. Inoculo lievito — giorno 1\n2. Travaso — giorno 5",
         notesText: "Profilo secco e pulito"
       },
       perry: {
@@ -1204,7 +1243,7 @@
         fg: 1.006,
         ibu: 0,
         co2: 2.5,
-        ingredientsText: "1. Pera — 20 L succo\\n2. Lievito da sidro — 1 dose",
+        ingredientsText: "1. Pera — 20 L succo\n2. Lievito da sidro — 1 dose",
         additionsText: "1. Inoculo — giorno 1",
         notesText: "Profilo fruttato da pera"
       },
@@ -1217,7 +1256,7 @@
         fg: 1.008,
         ibu: 0,
         co2: 2.8,
-        ingredientsText: "1. Tè nero — 8 g\\n2. Zucchero — 80 g/L\\n3. SCOBY — 1 coltura",
+        ingredientsText: "1. Tè nero — 8 g\n2. Zucchero — 80 g/L\n3. SCOBY — 1 coltura",
         additionsText: "1. Seconda fermentazione opzionale",
         notesText: "Acidità viva e bollicina"
       },
@@ -1230,7 +1269,7 @@
         fg: 1.010,
         ibu: 20,
         co2: 2.3,
-        ingredientsText: "1. Malto pils — 4.5 kg\\n2. Luppolo Saaz — 35 g\\n3. Lievito US-05 — 11 g",
+        ingredientsText: "1. Malto pils — 4.5 kg\n2. Luppolo Saaz — 35 g\n3. Lievito US-05 — 11 g",
         additionsText: "1. Bollitura — 60 min",
         notesText: "Pulita e semplice"
       },
@@ -1243,7 +1282,7 @@
         fg: 1.012,
         ibu: 55,
         co2: 2.4,
-        ingredientsText: "1. Malto pale — 5.5 kg\\n2. Citra — 60 g\\n3. Simcoe — 60 g\\n4. Lievito US-05 — 11 g",
+        ingredientsText: "1. Malto pale — 5.5 kg\n2. Citra — 60 g\n3. Simcoe — 60 g\n4. Lievito US-05 — 11 g",
         additionsText: "1. Dry hop — giorno 5",
         notesText: "Luppolata, secca, moderna"
       },
@@ -1256,7 +1295,7 @@
         fg: 1.010,
         ibu: 10,
         co2: 2.6,
-        ingredientsText: "1. Malto — 4.5 kg\\n2. Sale — 8 g\\n3. Coriandolo — 12 g",
+        ingredientsText: "1. Malto — 4.5 kg\n2. Sale — 8 g\n3. Coriandolo — 12 g",
         additionsText: "1. Acidificazione controllata",
         notesText: "Acida e sapida"
       }
@@ -1264,20 +1303,56 @@
 
     const libraryData = {
       hops: [
-        {name:"Citra", desc:"Agrumi, mango, tropicale. Ottimo per aroma e dry hop.", qty:"20", unit:"g"},
+        {name:"Citra", desc:"Agrumi, lime, mango, tropicale. Ottimo per aroma e dry hop.", qty:"20", unit:"g"},
         {name:"Simcoe", desc:"Pino, resina, frutta scura. Profilo intenso e moderno.", qty:"20", unit:"g"},
-        {name:"Saaz", desc:"Speziato, erbaceo, nobile. Classico pils e lager.", qty:"20", unit:"g"},
-        {name:"Hallertau", desc:"Floreale, delicato, nobile.", qty:"20", unit:"g"},
+        {name:"Mosaic", desc:"Tropicale, berry, complesso. Molto usato in IPA moderne.", qty:"20", unit:"g"},
         {name:"Cascade", desc:"Agrumi e floreale. Classico americano.", qty:"20", unit:"g"},
-        {name:"Mosaic", desc:"Tropicale, berry, molto complesso.", qty:"20", unit:"g"}
+        {name:"Centennial", desc:"Agrumi, floreale, pulito. Molto versatile.", qty:"20", unit:"g"},
+        {name:"Chinook", desc:"Resina, pino, spezia. Più aggressivo.", qty:"20", unit:"g"},
+        {name:"Columbus", desc:"Dank, resinoso, pungente. Ottimo per bittering.", qty:"20", unit:"g"},
+        {name:"Amarillo", desc:"Arancia dolce, floreale, elegante.", qty:"20", unit:"g"},
+        {name:"Galaxy", desc:"Frutto della passione, pesca, tropicale.", qty:"20", unit:"g"},
+        {name:"Nelson Sauvin", desc:"Uva bianca, gooseberry, vinoso.", qty:"20", unit:"g"},
+        {name:"Motueka", desc:"Lime, agrumi, fresco.", qty:"20", unit:"g"},
+        {name:"Riwaka", desc:"Passion fruit, pompelmo, molto intenso.", qty:"20", unit:"g"},
+        {name:"Ekuanot", desc:"Papaya, lime, erbe leggere.", qty:"20", unit:"g"},
+        {name:"Idaho 7", desc:"Tropicale, albicocca, resina.", qty:"20", unit:"g"},
+        {name:"Strata", desc:"Frutto tropicale, cannabis, fragola.", qty:"20", unit:"g"},
+        {name:"Sabro", desc:"Cocco, lime, tropicale.", qty:"20", unit:"g"},
+        {name:"Azacca", desc:"Mango, ananas, agrumi.", qty:"20", unit:"g"},
+        {name:"El Dorado", desc:"Pera, caramella, tropicale.", qty:"20", unit:"g"},
+        {name:"Hallertau", desc:"Floreale, delicato, nobile.", qty:"20", unit:"g"},
+        {name:"Saaz", desc:"Speziato, erbaceo, nobile. Classico pils.", qty:"20", unit:"g"},
+        {name:"Tettnang", desc:"Floreale, speziato, nobile.", qty:"20", unit:"g"},
+        {name:"Spalt", desc:"Elegante, nobile, erbaceo.", qty:"20", unit:"g"},
+        {name:"Styrian Goldings", desc:"Terroso, speziato, europeo.", qty:"20", unit:"g"},
+        {name:"Fuggle", desc:"Terroso, erbaceo, inglese classico.", qty:"20", unit:"g"},
+        {name:"East Kent Goldings", desc:"Miele, floreale, inglese raffinato.", qty:"20", unit:"g"},
+        {name:"Magnum", desc:"Pulito per amaro, poco invasivo.", qty:"20", unit:"g"},
+        {name:"Warrior", desc:"Amaro pulito e potente.", qty:"20", unit:"g"},
+        {name:"Nugget", desc:"Resina, spezia, uso dual purpose.", qty:"20", unit:"g"}
       ],
       yeasts: [
         {name:"US-05", desc:"Pulito, neutro, versatile. Ale americana.", qty:"11", unit:"g"},
+        {name:"S-04", desc:"Inglese, più fruttato, floccula bene.", qty:"11", unit:"g"},
+        {name:"Nottingham", desc:"Versatile, attenuante, neutro.", qty:"11", unit:"g"},
         {name:"Belle Saison", desc:"Molto attenuante, speziato, secco.", qty:"11", unit:"g"},
-        {name:"Kveik", desc:"Veloce, tollera alte temperature, fruttato.", qty:"11", unit:"g"},
+        {name:"BE-134", desc:"Saison secca e speziata.", qty:"11", unit:"g"},
+        {name:"Kveik Voss", desc:"Arancia, veloce, alta temperatura.", qty:"11", unit:"g"},
+        {name:"Kveik Hornindal", desc:"Tropicale intenso, molto veloce.", qty:"11", unit:"g"},
+        {name:"W-34/70", desc:"Lager classica, pulita e affidabile.", qty:"11", unit:"g"},
+        {name:"S-23", desc:"Lager fruttata e morbida.", qty:"11", unit:"g"},
+        {name:"LalBrew Verdant", desc:"Fruttata, ideale per hazy IPA.", qty:"11", unit:"g"},
+        {name:"LalBrew New England", desc:"Esters morbidi, haze friendly.", qty:"11", unit:"g"},
+        {name:"WB-06", desc:"Weizen secca e fenolica.", qty:"11", unit:"g"},
+        {name:"T-58", desc:"Pepato, speziato, belga.", qty:"11", unit:"g"},
+        {name:"BE-256", desc:"Belga abbazia, attenuazione alta.", qty:"11", unit:"g"},
+        {name:"Mangrove M02", desc:"Yeast da sidro, pulito e secco.", qty:"11", unit:"g"},
+        {name:"Mangrove M05", desc:"Mead yeast, adatto anche a fermentazioni spinte.", qty:"11", unit:"g"},
         {name:"Lievito da sidro", desc:"Pulito, secco, adatto a mela e pera.", qty:"1", unit:"dose"},
         {name:"SCOBY", desc:"Coltura simbiotica per kombucha.", qty:"1", unit:"pz"},
-        {name:"Lievito autoctono", desc:"Profilo unico, più complesso.", qty:"1", unit:"dose"}
+        {name:"Lievito autoctono", desc:"Profilo unico, più complesso.", qty:"1", unit:"dose"},
+        {name:"Brettanomyces", desc:"Funky, complesso, secco, evolutivo.", qty:"1", unit:"dose"}
       ],
       fruits: [
         {name:"Mela", desc:"Base fruttata fresca, acidità naturale.", qty:"1", unit:"kg"},
@@ -1285,7 +1360,19 @@
         {name:"Uva", desc:"Profilo vinoso, fruttato, più strutturato.", qty:"1", unit:"kg"},
         {name:"Limone", desc:"Acidità e freschezza agrumata.", qty:"1", unit:"pz"},
         {name:"Arancia", desc:"Dolcezza agrumata e oli essenziali.", qty:"1", unit:"pz"},
-        {name:"Pompelmo", desc:"Agrume amaro, fresco, secco.", qty:"1", unit:"pz"}
+        {name:"Pompelmo", desc:"Agrume amaro, fresco, secco.", qty:"1", unit:"pz"},
+        {name:"Mango", desc:"Tropicale, dolce, succoso.", qty:"1", unit:"kg"},
+        {name:"Litchi", desc:"Floreale, tropicale, delicato.", qty:"500", unit:"g"},
+        {name:"Ananas", desc:"Tropicale, acido-dolce, brillante.", qty:"1", unit:"kg"},
+        {name:"Pesca", desc:"Morbida, fruttata, rotonda.", qty:"1", unit:"kg"},
+        {name:"Albicocca", desc:"Frutto maturo, elegante, vellutato.", qty:"1", unit:"kg"},
+        {name:"Lampone", desc:"Acidulo, rosso, fragrante.", qty:"500", unit:"g"},
+        {name:"Fragola", desc:"Morbida, dolce, delicata.", qty:"500", unit:"g"},
+        {name:"Mirtillo", desc:"Scuro, fine, leggermente vinoso.", qty:"500", unit:"g"},
+        {name:"Ribes nero", desc:"Teso, vinoso, aromatico.", qty:"500", unit:"g"},
+        {name:"Passion fruit", desc:"Tropicale, acido, molto aromatico.", qty:"500", unit:"g"},
+        {name:"Ciliegia", desc:"Frutto rosso, rotondo, intenso.", qty:"1", unit:"kg"},
+        {name:"Prugna", desc:"Scura, matura, densa.", qty:"1", unit:"kg"}
       ],
       peppers: [
         {name:"Pepe Timut", desc:"Agrumato, pompelmo, molto aromatico.", qty:"2", unit:"g"},
@@ -1293,7 +1380,9 @@
         {name:"Pepe Cubebe", desc:"Speziato, balsamico, fresco.", qty:"2", unit:"g"},
         {name:"Pepe nero", desc:"Caldo, classico, pungente.", qty:"2", unit:"g"},
         {name:"Pepe lungo", desc:"Caldo, profondo, più complesso.", qty:"2", unit:"g"},
-        {name:"Pepe rosa", desc:"Floreale, morbido, decorativo.", qty:"2", unit:"g"}
+        {name:"Pepe rosa", desc:"Floreale, morbido, decorativo.", qty:"2", unit:"g"},
+        {name:"Pepe bianco", desc:"Più asciutto e diretto.", qty:"2", unit:"g"},
+        {name:"Pepe verde", desc:"Più fresco e delicato.", qty:"2", unit:"g"}
       ],
       spices: [
         {name:"Cardamomo", desc:"Agrumato, fresco, elegante.", qty:"2", unit:"g"},
@@ -1301,7 +1390,9 @@
         {name:"Cannella", desc:"Calda, dolce, avvolgente.", qty:"2", unit:"g"},
         {name:"Zenzero", desc:"Fresco, pungente, vibrante.", qty:"4", unit:"g"},
         {name:"Vaniglia", desc:"Dolce, morbida, cremosa.", qty:"1", unit:"bacca"},
-        {name:"Anice stellato", desc:"Dolce, balsamico, intenso.", qty:"1", unit:"pz"}
+        {name:"Anice stellato", desc:"Dolce, balsamico, intenso.", qty:"1", unit:"pz"},
+        {name:"Noce moscata", desc:"Calda, profonda, speziata.", qty:"1", unit:"g"},
+        {name:"Chiodi di garofano", desc:"Potenti, balsamici, intensi.", qty:"1", unit:"g"}
       ],
       botanicals: [
         {name:"Ginepro", desc:"Resinoso, balsamico, secco.", qty:"3", unit:"g"},
@@ -1309,7 +1400,11 @@
         {name:"Osmanto", desc:"Floreale, albicocca, elegante.", qty:"2", unit:"g"},
         {name:"China", desc:"Amara, tonica, cortecciosa.", qty:"2", unit:"g"},
         {name:"Rosmarino", desc:"Resinoso, mediterraneo.", qty:"2", unit:"g"},
-        {name:"Timo", desc:"Erbaceo, secco, aromatico.", qty:"2", unit:"g"}
+        {name:"Timo", desc:"Erbaceo, secco, aromatico.", qty:"2", unit:"g"},
+        {name:"Genziana", desc:"Amara, radicale, profonda.", qty:"2", unit:"g"},
+        {name:"Camomilla", desc:"Floreale, morbida, distensiva.", qty:"2", unit:"g"},
+        {name:"Verbena", desc:"Agrumata, fresca, elegante.", qty:"2", unit:"g"},
+        {name:"Basilico", desc:"Verde, aromatico, mediterraneo.", qty:"2", unit:"g"}
       ],
       lacto: [
         {name:"L. plantarum", desc:"Acidificazione rapida e pulita.", qty:"1", unit:"dose"},
@@ -1333,7 +1428,13 @@
         {name:"Tè nero", desc:"Corposo, tannico, profondo.", qty:"8", unit:"g"},
         {name:"Tè bianco", desc:"Fine, delicato, leggero.", qty:"8", unit:"g"},
         {name:"Tè al gelsomino", desc:"Floreale e profumato.", qty:"8", unit:"g"},
-        {name:"Lapsang Souchong", desc:"Affumicato, deciso, molto caratterizzante.", qty:"8", unit:"g"}
+        {name:"Lapsang Souchong", desc:"Affumicato, deciso, molto caratterizzante.", qty:"8", unit:"g"},
+        {name:"Genmaicha", desc:"Verde con riso tostato, caldo e cereale.", qty:"8", unit:"g"},
+        {name:"Sencha", desc:"Verde giapponese, netto e vegetale.", qty:"8", unit:"g"},
+        {name:"Gyokuro", desc:"Umami, fine, prezioso.", qty:"8", unit:"g"},
+        {name:"Pu-erh", desc:"Terroso, profondo, maturo.", qty:"8", unit:"g"},
+        {name:"Darjeeling", desc:"Moscatel, fine, floreale.", qty:"8", unit:"g"},
+        {name:"Earl Grey", desc:"Bergamotto, agrumato, classico.", qty:"8", unit:"g"}
       ],
       salts: [
         {name:"Sale marino", desc:"Sapido pulito, classico.", qty:"1", unit:"g/L"},
@@ -1344,6 +1445,8 @@
         {name:"Sale di Maldon", desc:"Cristallo delicato, elegante.", qty:"1", unit:"g/L"}
       ]
     };
+
+    let currentLibrary = "hops";
 
     function $(id){ return document.getElementById(id); }
 
@@ -1597,11 +1700,22 @@
       reader.readAsText(file);
     }
 
-    function renderLibrary(gridId, items){
+    function renderLibrary(gridId, items, filterText = ""){
       const grid = $(gridId);
       grid.innerHTML = "";
+      const q = filterText.trim().toLowerCase();
 
-      items.forEach(item => {
+      const filtered = !q ? items : items.filter(item =>
+        item.name.toLowerCase().includes(q) ||
+        item.desc.toLowerCase().includes(q)
+      );
+
+      if(filtered.length === 0){
+        grid.innerHTML = `<div class="lib-item"><h4>Nessun risultato</h4><p>Prova con un altro termine.</p></div>`;
+        return;
+      }
+
+      filtered.forEach(item => {
         const div = document.createElement("div");
         div.className = "lib-item";
         div.innerHTML = `
@@ -1636,11 +1750,28 @@
       });
     }
 
+    function renderCurrentLibrary(){
+      const filterText = $("librarySearch").value || "";
+      renderLibrary("hopsGrid", libraryData.hops, currentLibrary === "hops" ? filterText : "");
+      renderLibrary("yeastsGrid", libraryData.yeasts, currentLibrary === "yeasts" ? filterText : "");
+      renderLibrary("fruitsGrid", libraryData.fruits, currentLibrary === "fruits" ? filterText : "");
+      renderLibrary("peppersGrid", libraryData.peppers, currentLibrary === "peppers" ? filterText : "");
+      renderLibrary("spicesGrid", libraryData.spices, currentLibrary === "spices" ? filterText : "");
+      renderLibrary("botanicalsGrid", libraryData.botanicals, currentLibrary === "botanicals" ? filterText : "");
+      renderLibrary("lactoGrid", libraryData.lacto, currentLibrary === "lacto" ? filterText : "");
+      renderLibrary("acidsGrid", libraryData.acids, currentLibrary === "acids" ? filterText : "");
+      renderLibrary("teasGrid", libraryData.teas, currentLibrary === "teas" ? filterText : "");
+      renderLibrary("saltsGrid", libraryData.salts, currentLibrary === "salts" ? filterText : "");
+    }
+
     function switchLibrary(name){
+      currentLibrary = name;
       document.querySelectorAll(".lib-btn").forEach(b => b.classList.remove("active"));
       document.querySelectorAll(".library-panel").forEach(p => p.classList.remove("active"));
       document.querySelector(`.lib-btn[data-lib="${name}"]`).classList.add("active");
       $(`lib-${name}`).classList.add("active");
+      $("librarySearch").value = "";
+      renderCurrentLibrary();
     }
 
     [
@@ -1670,6 +1801,8 @@
       btn.addEventListener("click", () => btn.classList.toggle("active"));
     });
 
+    $("librarySearch").addEventListener("input", renderCurrentLibrary);
+
     $("newRecipeBtn").addEventListener("click", newRecipe);
     $("saveBtn").addEventListener("click", saveData);
     $("exportBtn").addEventListener("click", exportJSON);
@@ -1680,18 +1813,8 @@
       e.target.value = "";
     });
 
-    renderLibrary("hopsGrid", libraryData.hops);
-    renderLibrary("yeastsGrid", libraryData.yeasts);
-    renderLibrary("fruitsGrid", libraryData.fruits);
-    renderLibrary("peppersGrid", libraryData.peppers);
-    renderLibrary("spicesGrid", libraryData.spices);
-    renderLibrary("botanicalsGrid", libraryData.botanicals);
-    renderLibrary("lactoGrid", libraryData.lacto);
-    renderLibrary("acidsGrid", libraryData.acids);
-    renderLibrary("teasGrid", libraryData.teas);
-    renderLibrary("saltsGrid", libraryData.salts);
-
     fillData(loadData());
+    renderCurrentLibrary();
     saveData();
 
     setInterval(() => {
