@@ -3,30 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation Pro</title>
-  <meta name="theme-color" content="#071629" />
+  <title>XA Fermentation</title>
+  <meta name="theme-color" content="#081b2f" />
   <style>
     :root{
-      --bg1:#061425;
-      --bg2:#0a223a;
+      --bg1:#071629;
+      --bg2:#0b2036;
       --panel:#102742;
-      --panel2:#0b1d31;
+      --panel2:#0c1e31;
       --stroke:rgba(255,255,255,.08);
       --text:#f4f7fb;
-      --muted:#94a9bd;
+      --muted:#9bb0c3;
 
-      --ph:#58a6ff;
-      --temp:#ff934d;
-      --abv:#b56cff;
-      --og:#ffd166;
-      --fg:#43d6a3;
-      --att:#7ad7ff;
-      --cal:#ff7aa2;
-      --sugar:#f6c56b;
-      --danger:#ff5d6c;
+      --blue:#58a6ff;
+      --orange:#ff9a4a;
+      --violet:#b56cff;
+      --yellow:#ffd166;
+      --green:#40d7a2;
+      --pink:#ff6b8a;
 
       --radius:24px;
-      --shadow:0 20px 60px rgba(0,0,0,.38);
+      --shadow:0 18px 50px rgba(0,0,0,.35);
     }
 
     *{
@@ -41,16 +38,16 @@
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top, rgba(90,160,255,.16), transparent 24%),
+        radial-gradient(circle at top, rgba(88,166,255,.16), transparent 24%),
         linear-gradient(180deg,var(--bg1),var(--bg2));
     }
 
     body{
-      padding:16px 14px 110px;
+      padding:16px 14px 96px;
     }
 
     .app{
-      width:min(1080px,100%);
+      width:min(720px,100%);
       margin:0 auto;
     }
 
@@ -62,25 +59,24 @@
     }
 
     .logo{
-      width:78px;
-      height:78px;
+      width:76px;
+      height:76px;
       border-radius:22px;
       display:grid;
       place-items:center;
       font-size:30px;
       font-weight:800;
-      letter-spacing:.5px;
       color:#fff;
       background:
         linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
-        linear-gradient(180deg,#132c47,#081527);
+        linear-gradient(180deg,#132b46,#091728);
       border:1px solid rgba(255,255,255,.08);
-      box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.05);
+      box-shadow:var(--shadow);
       flex:0 0 auto;
     }
 
     .hero h1{
-      font-size:clamp(28px,7vw,48px);
+      font-size:clamp(28px,7vw,46px);
       line-height:.95;
       font-weight:800;
       letter-spacing:-.03em;
@@ -89,128 +85,27 @@
     .hero p{
       margin-top:6px;
       color:var(--muted);
-      font-size:clamp(14px,3.5vw,18px);
+      font-size:14px;
     }
 
-    .shell{
+    .screen{
+      display:none;
+    }
+
+    .screen.active{
+      display:block;
+    }
+
+    .card{
       background:
         linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)),
         linear-gradient(180deg,var(--panel),var(--panel2));
       border:1px solid var(--stroke);
       border-radius:30px;
       box-shadow:var(--shadow);
-      padding:14px;
-    }
-
-    .topbar{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
+      padding:16px;
       margin-bottom:14px;
     }
-
-    .tab{
-      border:none;
-      cursor:pointer;
-      color:#fff;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.07);
-      padding:11px 14px;
-      border-radius:14px;
-      font-size:14px;
-      font-weight:700;
-    }
-
-    .tab.active{
-      background:rgba(255,255,255,.16);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
-    }
-
-    .panel{
-      display:none;
-    }
-
-    .panel.active{
-      display:block;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:12px;
-    }
-
-    .card{
-      grid-column:span 12;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)),
-        rgba(6,14,24,.28);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:var(--radius);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
-      padding:16px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .card::after{
-      content:"";
-      position:absolute;
-      width:180px;
-      height:180px;
-      right:-60px;
-      bottom:-80px;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(255,255,255,.10), transparent 70%);
-      pointer-events:none;
-    }
-
-    .metric{
-      min-height:148px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-
-    .metric .k{
-      position:relative;
-      z-index:1;
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      color:#dbe5ef;
-    }
-
-    .metric .v{
-      position:relative;
-      z-index:1;
-      font-size:clamp(34px,9vw,66px);
-      line-height:.95;
-      font-weight:800;
-      letter-spacing:-.05em;
-      margin:10px 0;
-    }
-
-    .metric .s{
-      position:relative;
-      z-index:1;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .metric.ph .v{color:var(--ph);}
-    .metric.temp .v{color:var(--temp);}
-    .metric.abv .v{color:var(--abv);}
-    .metric.og .v{color:var(--og);}
-    .metric.fg .v{color:var(--fg);}
-    .metric.att .v{color:var(--att);}
-    .metric.cal .v{color:var(--cal);}
-    .metric.sugar .v{color:var(--sugar);}
-
-    .span-6{grid-column:span 6;}
-    .span-4{grid-column:span 4;}
-    .span-3{grid-column:span 3;}
-    .span-8{grid-column:span 8;}
 
     .section-title{
       font-size:18px;
@@ -219,160 +114,185 @@
     }
 
     .section-sub{
-      color:var(--muted);
       font-size:13px;
+      color:var(--muted);
       margin-bottom:12px;
     }
 
-    .form-grid{
+    .grid{
       display:grid;
-      grid-template-columns:repeat(12,1fr);
+      grid-template-columns:repeat(2,1fr);
       gap:12px;
     }
 
-    .field{
-      grid-column:span 12;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
+    .metric{
+      border-radius:22px;
+      padding:16px;
+      min-height:130px;
+      position:relative;
+      overflow:hidden;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.05);
     }
 
-    .field.half{grid-column:span 6;}
-    .field.third{grid-column:span 4;}
-
-    label{
-      font-size:13px;
-      color:#dce6f1;
-      font-weight:700;
-    }
-
-    input, textarea, select{
-      width:100%;
-      border:none;
-      outline:none;
-      border-radius:18px;
-      padding:14px 14px;
-      font-size:16px;
-      color:#111827;
-      background:rgba(255,255,255,.95);
-      box-shadow: inset 0 2px 8px rgba(0,0,0,.08);
-    }
-
-    textarea{
-      min-height:120px;
-      resize:vertical;
-    }
-
-    .mini-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:10px;
-    }
-
-    .mini-box{
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:18px;
-      padding:14px;
-    }
-
-    .mini-box .k{
-      color:var(--muted);
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-
-    .mini-box .v{
-      margin-top:8px;
-      font-size:22px;
-      font-weight:800;
-    }
-
-    .status{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:800;
-      background:rgba(255,255,255,.07);
-      border:1px solid rgba(255,255,255,.06);
-    }
-
-    .status .dot{
-      width:10px;
-      height:10px;
+    .metric::after{
+      content:"";
+      position:absolute;
+      width:140px;
+      height:140px;
+      right:-50px;
+      bottom:-70px;
       border-radius:50%;
-      background:#999;
-      box-shadow:0 0 12px rgba(255,255,255,.15);
+      background:radial-gradient(circle, rgba(255,255,255,.12), transparent 70%);
     }
 
-    .status.ok .dot{background:var(--fg);}
-    .status.warn .dot{background:var(--og);}
-    .status.danger .dot{background:var(--danger);}
-
-    .recipe-lines{
-      display:grid;
-      gap:10px;
+    .metric .k{
+      position:relative;
+      z-index:1;
+      font-size:12px;
+      color:#dce6f1;
+      text-transform:uppercase;
+      letter-spacing:.12em;
     }
 
-    .recipe-line{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding-bottom:9px;
-      border-bottom:1px dashed rgba(255,255,255,.08);
-      font-size:15px;
-    }
-
-    .recipe-line span:first-child{
-      color:var(--muted);
-    }
-
-    .recipe-line span:last-child{
+    .metric .v{
+      position:relative;
+      z-index:1;
+      margin-top:12px;
+      font-size:clamp(34px,10vw,56px);
       font-weight:800;
-      text-align:right;
+      line-height:.95;
+      letter-spacing:-.05em;
     }
 
-    .quick-actions{
+    .metric .s{
+      position:relative;
+      z-index:1;
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .ph .v{color:var(--blue);}
+    .temp .v{color:var(--orange);}
+    .abv .v{color:var(--violet);}
+    .og .v{color:var(--yellow);}
+    .fg .v{color:var(--green);}
+    .att .v{color:var(--pink);}
+
+    .quick-grid{
       display:grid;
       grid-template-columns:repeat(2,1fr);
-      gap:10px;
+      gap:12px;
     }
 
     .quick-btn{
       border:none;
       cursor:pointer;
-      border-radius:18px;
-      padding:14px 14px;
+      border-radius:22px;
+      padding:18px 16px;
+      text-align:left;
       color:#fff;
-      font-size:15px;
+      min-height:90px;
+      box-shadow:var(--shadow);
+      font-size:16px;
       font-weight:800;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.07);
     }
 
-    .quick-btn.red{background:#ff4d4d;}
-    .quick-btn.blue{background:#2563eb;}
-    .quick-btn.green{background:#059669;}
-    .quick-btn.orange{background:#d97706;}
+    .quick-btn small{
+      display:block;
+      margin-top:6px;
+      font-size:12px;
+      opacity:.85;
+      font-weight:600;
+    }
 
-    .search-results{
+    .quick-btn.red{background:linear-gradient(180deg,#ff5b5b,#d93e3e);}
+    .quick-btn.blue{background:linear-gradient(180deg,#3388ff,#1b5fca);}
+    .quick-btn.green{background:linear-gradient(180deg,#17b87d,#0d8f61);}
+    .quick-btn.orange{background:linear-gradient(180deg,#f39b30,#cb6f08);}
+
+    .form{
+      display:grid;
+      gap:12px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .two{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    label{
+      font-size:13px;
+      font-weight:700;
+      color:#dce6f1;
+    }
+
+    input, textarea{
+      width:100%;
+      border:none;
+      outline:none;
+      border-radius:18px;
+      padding:14px;
+      font-size:16px;
+      background:rgba(255,255,255,.96);
+      color:#111827;
+      box-shadow:inset 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    .result-box{
+      border-radius:22px;
+      padding:16px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .result-line{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 0;
+      border-bottom:1px dashed rgba(255,255,255,.08);
+    }
+
+    .result-line:last-child{
+      border-bottom:none;
+    }
+
+    .result-line span:first-child{
+      color:var(--muted);
+    }
+
+    .result-line span:last-child{
+      font-weight:800;
+    }
+
+    .recipe-list{
       display:grid;
       gap:10px;
     }
 
     .recipe-item{
-      padding:14px;
-      border-radius:18px;
       background:rgba(255,255,255,.05);
       border:1px solid rgba(255,255,255,.06);
+      border-radius:20px;
+      padding:14px;
       cursor:pointer;
     }
 
-    .recipe-item h4{
+    .recipe-item h3{
       font-size:16px;
       margin-bottom:6px;
     }
@@ -380,64 +300,56 @@
     .recipe-item p{
       font-size:13px;
       color:var(--muted);
-      line-height:1.4;
+      line-height:1.35;
     }
 
-    .actionbar{
+    .bottom-nav{
       position:fixed;
       left:0;
       right:0;
       bottom:0;
-      padding:12px 14px calc(12px + env(safe-area-inset-bottom));
-      background:linear-gradient(180deg, rgba(6,20,37,.1), rgba(6,20,37,.92));
+      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+      background:linear-gradient(180deg, rgba(6,20,37,.15), rgba(6,20,37,.95));
       backdrop-filter:blur(10px);
       border-top:1px solid rgba(255,255,255,.06);
     }
 
-    .actionbar-inner{
-      width:min(1080px,100%);
+    .bottom-nav-inner{
+      width:min(720px,100%);
       margin:0 auto;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
     }
 
-    .btn{
+    .nav-btn{
       border:none;
       cursor:pointer;
-      border-radius:18px;
-      padding:14px 16px;
-      font-size:15px;
+      border-radius:16px;
+      padding:12px 8px;
+      font-size:13px;
       font-weight:800;
       color:#fff;
-      flex:1 1 140px;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.06);
     }
 
-    .btn.save{background:#ff4d4d;}
-    .btn.export{background:#0f766e;}
-    .btn.import{background:#2563eb;}
-    .btn.reset{background:#7c2d12;}
+    .nav-btn.active{
+      background:rgba(255,255,255,.16);
+    }
 
     .save-note{
-      margin-top:12px;
-      font-size:12px;
-      color:rgba(255,255,255,.45);
+      margin-top:10px;
       text-align:center;
+      color:rgba(255,255,255,.42);
+      font-size:12px;
     }
 
-    @media (max-width:780px){
-      .span-6,.span-4,.span-3,.span-8,.field.half,.field.third{
-        grid-column:span 12;
-      }
-
-      .logo{
-        width:70px;
-        height:70px;
-        font-size:28px;
-      }
-
-      .shell{
-        padding:12px;
+    @media (max-width:640px){
+      .grid,
+      .quick-grid,
+      .two{
+        grid-template-columns:1fr;
       }
     }
   </style>
@@ -448,249 +360,207 @@
       <div class="logo">XA</div>
       <div>
         <h1>XA Fermentation</h1>
-        <p>App completa digitale per lotti, ricette e fermentazione</p>
+        <p>Digitale, semplice, veloce</p>
       </div>
     </div>
 
-    <div class="shell">
-      <div class="topbar">
-        <button class="tab active" data-tab="dashboard">Dashboard</button>
-        <button class="tab" data-tab="lotto">Lotto</button>
-        <button class="tab" data-tab="ricetta">Ricetta</button>
-        <button class="tab" data-tab="processo">Processo</button>
-        <button class="tab" data-tab="strumenti">Strumenti</button>
-      </div>
-
-      <section class="panel active" id="dashboard">
+    <!-- HOME -->
+    <section class="screen active" id="screen-home">
+      <div class="card">
+        <div class="section-title">Dashboard</div>
         <div class="grid">
-          <div class="card metric ph span-6">
+          <div class="metric ph">
             <div class="k">pH</div>
             <div class="v" id="dashPh">3.50</div>
-            <div class="s">Acidità fermentazione</div>
+            <div class="s">Acidità</div>
           </div>
 
-          <div class="card metric temp span-6">
+          <div class="metric temp">
             <div class="k">Temperatura</div>
             <div class="v" id="dashTemp">20.0°</div>
-            <div class="s">Temperatura attuale</div>
+            <div class="s">Fermentazione</div>
           </div>
 
-          <div class="card metric abv span-4">
+          <div class="metric abv">
             <div class="k">ABV</div>
-            <div class="v" id="dashAbv">5.00%</div>
-            <div class="s">Calcolo automatico</div>
+            <div class="v" id="dashAbv">5.25%</div>
+            <div class="s">Automatico</div>
           </div>
 
-          <div class="card metric og span-4">
+          <div class="metric og">
             <div class="k">OG</div>
             <div class="v" id="dashOg">1.050</div>
             <div class="s">Densità iniziale</div>
           </div>
 
-          <div class="card metric fg span-4">
+          <div class="metric fg">
             <div class="k">FG</div>
             <div class="v" id="dashFg">1.010</div>
             <div class="s">Densità finale</div>
           </div>
 
-          <div class="card metric att span-6">
+          <div class="metric att">
             <div class="k">Attenuazione</div>
             <div class="v" id="dashAtt">80.0%</div>
-            <div class="s">Attenuazione apparente</div>
-          </div>
-
-          <div class="card metric cal span-3">
-            <div class="k">Calorie</div>
-            <div class="v" id="dashCal">160</div>
-            <div class="s">stima / 330 ml</div>
-          </div>
-
-          <div class="card metric sugar span-3">
-            <div class="k">Zucchero residuo</div>
-            <div class="v" id="dashSugar">24.0</div>
-            <div class="s">g/L stimati</div>
-          </div>
-
-          <div class="card span-6">
-            <div class="section-title">Riepilogo lotto</div>
-            <div class="recipe-lines">
-              <div class="recipe-line"><span>Ricetta</span><span id="sumRicetta">—</span></div>
-              <div class="recipe-line"><span>Lotto</span><span id="sumLotto">—</span></div>
-              <div class="recipe-line"><span>Data</span><span id="sumData">—</span></div>
-              <div class="recipe-line"><span>Litri</span><span id="sumLitri">—</span></div>
-              <div class="recipe-line"><span>Lievito</span><span id="sumLievito">—</span></div>
-            </div>
-          </div>
-
-          <div class="card span-6">
-            <div class="section-title">Stato rapido</div>
-            <div class="section-sub">Controllo immediato fermentazione</div>
-            <div class="mini-grid">
-              <div class="mini-box">
-                <div class="k">Stato pH</div>
-                <div class="v"><span class="status" id="phStatus"><span class="dot"></span><span id="phStatusText">Buono</span></span></div>
-              </div>
-              <div class="mini-box">
-                <div class="k">Stato temperatura</div>
-                <div class="v"><span class="status" id="tempStatus"><span class="dot"></span><span id="tempStatusText">Ottima</span></span></div>
-              </div>
-              <div class="mini-box">
-                <div class="k">Ingredienti</div>
-                <div class="v" id="countIngredienti">0</div>
-              </div>
-              <div class="mini-box">
-                <div class="k">Aggiunte</div>
-                <div class="v" id="countAggiunte">0</div>
-              </div>
-            </div>
+            <div class="s">Apparente</div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section class="panel" id="lotto">
-        <div class="card">
-          <div class="section-title">Scheda lotto</div>
-          <div class="form-grid">
-            <div class="field half">
+      <div class="card">
+        <div class="section-title">Azioni rapide</div>
+        <div class="quick-grid">
+          <button class="quick-btn red" id="btnNewRecipe">
+            Nuova Ricetta
+            <small>Apre la schermata ricetta pulita</small>
+          </button>
+
+          <button class="quick-btn blue" id="btnSearchRecipe">
+            Cerca Ricetta
+            <small>Apre il ricettario base</small>
+          </button>
+
+          <button class="quick-btn green" id="btnCalories">
+            Calcolo Calorie
+            <small>Stima per 330 ml</small>
+          </button>
+
+          <button class="quick-btn orange" id="btnSugar">
+            Zucchero Residuo
+            <small>Stima g/L</small>
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Riepilogo lotto</div>
+        <div class="result-box">
+          <div class="result-line"><span>Ricetta</span><span id="sumRicetta">Sidro Secco XA</span></div>
+          <div class="result-line"><span>Lotto</span><span id="sumLotto">XA-001</span></div>
+          <div class="result-line"><span>Data</span><span id="sumData">—</span></div>
+          <div class="result-line"><span>Litri</span><span id="sumLitri">23</span></div>
+          <div class="result-line"><span>Lievito</span><span id="sumLievito">Autoctono</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NUOVA RICETTA -->
+    <section class="screen" id="screen-new">
+      <div class="card">
+        <div class="section-title">Nuova Ricetta</div>
+        <div class="section-sub">Qui inserisci tutti i dati principali del lotto.</div>
+
+        <div class="form">
+          <div class="two">
+            <div class="field">
               <label for="nomeRicetta">Nome ricetta</label>
               <input id="nomeRicetta" type="text" placeholder="Es. Sidro Secco XA" />
             </div>
-
-            <div class="field half">
+            <div class="field">
               <label for="numeroLotto">Numero lotto</label>
               <input id="numeroLotto" type="text" placeholder="Es. XA-001" />
             </div>
+          </div>
 
-            <div class="field third">
+          <div class="two">
+            <div class="field">
               <label for="dataLotto">Data lotto</label>
               <input id="dataLotto" type="date" />
             </div>
-
-            <div class="field third">
-              <label for="litri">Litri prodotti</label>
+            <div class="field">
+              <label for="litri">Litri</label>
               <input id="litri" type="number" step="0.1" placeholder="23" />
             </div>
-
-            <div class="field third">
-              <label for="lievito">Lievito</label>
-              <input id="lievito" type="text" placeholder="US-05, Kveik, autoctono..." />
-            </div>
           </div>
-        </div>
-      </section>
 
-      <section class="panel" id="ricetta">
-        <div class="card">
-          <div class="section-title">Ricetta completa</div>
-          <div class="form-grid">
-            <div class="field">
-              <label for="ingredienti">Ingredienti</label>
-              <textarea id="ingredienti" placeholder="Es.
-Succo mela 20 L
-Lievito autoctono
-Zucchero 300 g
-Nutriente 5 g"></textarea>
-            </div>
-
-            <div class="field">
-              <label for="aggiunte">Aggiunte / step</label>
-              <textarea id="aggiunte" placeholder="Es.
-Giorno 1: inoculo
-Giorno 3: nutrienti
-Giorno 5: travaso
-Giorno 7: cold crash"></textarea>
-            </div>
+          <div class="field">
+            <label for="lievito">Lievito</label>
+            <input id="lievito" type="text" placeholder="Es. Lievito autoctono" />
           </div>
-        </div>
-      </section>
 
-      <section class="panel" id="processo">
-        <div class="card">
-          <div class="section-title">Dati fermentazione</div>
-          <div class="form-grid">
-            <div class="field third">
+          <div class="two">
+            <div class="field">
               <label for="ph">pH</label>
               <input id="ph" type="text" placeholder="3.50" />
             </div>
-
-            <div class="field third">
+            <div class="field">
               <label for="temperatura">Temperatura °C</label>
               <input id="temperatura" type="text" placeholder="20.0" />
             </div>
+          </div>
 
-            <div class="field third">
-              <label for="abvManuale">ABV manuale</label>
-              <input id="abvManuale" type="text" placeholder="vuoto = automatico" />
-            </div>
-
-            <div class="field half">
+          <div class="two">
+            <div class="field">
               <label for="og">OG</label>
               <input id="og" type="text" placeholder="1.050" />
             </div>
-
-            <div class="field half">
+            <div class="field">
               <label for="fg">FG</label>
               <input id="fg" type="text" placeholder="1.010" />
             </div>
+          </div>
 
-            <div class="field">
-              <label for="note">Note</label>
-              <textarea id="note" placeholder="Osservazioni, aromi, problemi, andamento fermentazione..."></textarea>
-            </div>
+          <div class="field">
+            <label for="ingredienti">Ingredienti</label>
+            <textarea id="ingredienti" placeholder="Es. Succo mela&#10;Lievito autoctono&#10;Nutriente"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="aggiunte">Aggiunte</label>
+            <textarea id="aggiunte" placeholder="Es. Giorno 1 inoculo&#10;Giorno 3 nutrienti"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="note">Note</label>
+            <textarea id="note" placeholder="Osservazioni fermentazione..."></textarea>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="panel" id="strumenti">
-        <div class="grid">
-          <div class="card span-6">
-            <div class="section-title">Azioni rapide</div>
-            <div class="quick-actions">
-              <button class="quick-btn red" id="newRecipeBtn">Nuova Ricetta</button>
-              <button class="quick-btn blue" id="searchRecipeBtn">Cerca Ricetta</button>
-              <button class="quick-btn green" id="calcCaloriesBtn">Calcolo Calorie</button>
-              <button class="quick-btn orange" id="calcSugarBtn">Calcolo Zucchero Residuo</button>
-            </div>
-          </div>
-
-          <div class="card span-6">
-            <div class="section-title">Risultati rapidi</div>
-            <div class="recipe-lines">
-              <div class="recipe-line"><span>Calorie stimate / 330 ml</span><span id="toolCalorie">160 kcal</span></div>
-              <div class="recipe-line"><span>Zucchero residuo stimato</span><span id="toolSugar">24.0 g/L</span></div>
-              <div class="recipe-line"><span>ABV calcolato</span><span id="toolAbv">5.00 %</span></div>
-              <div class="recipe-line"><span>Attenuazione</span><span id="toolAtt">80.0 %</span></div>
-            </div>
-          </div>
-
-          <div class="card span-12">
-            <div class="section-title">Cerca ricetta</div>
-            <div class="section-sub">Scrivi nome o stile e scegli una base da caricare.</div>
-            <div class="field">
-              <label for="recipeSearch">Ricerca</label>
-              <input id="recipeSearch" type="text" placeholder="Es. blonde, saison, sidro, ipa..." />
-            </div>
-            <div class="search-results" id="recipeResults"></div>
-          </div>
+    <!-- CERCA RICETTA -->
+    <section class="screen" id="screen-search">
+      <div class="card">
+        <div class="section-title">Cerca Ricetta</div>
+        <div class="section-sub">Tocca una ricetta per caricarla nella schermata nuova ricetta.</div>
+        <div class="field">
+          <label for="recipeSearch">Ricerca</label>
+          <input id="recipeSearch" type="text" placeholder="Es. sidro, blonde, saison, ipa..." />
         </div>
-      </section>
+      </div>
 
-      <div class="save-note" id="saveNote">Salvataggio automatico attivo</div>
-    </div>
+      <div class="card">
+        <div class="recipe-list" id="recipeResults"></div>
+      </div>
+    </section>
+
+    <!-- STRUMENTI -->
+    <section class="screen" id="screen-tools">
+      <div class="card">
+        <div class="section-title">Strumenti</div>
+        <div class="result-box">
+          <div class="result-line"><span>ABV</span><span id="toolAbv">5.25 %</span></div>
+          <div class="result-line"><span>Attenuazione</span><span id="toolAtt">80.0 %</span></div>
+          <div class="result-line"><span>Calorie / 330 ml</span><span id="toolCal">160 kcal</span></div>
+          <div class="result-line"><span>Zucchero residuo</span><span id="toolSugar">24.0 g/L</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="save-note" id="saveNote">Salvataggio automatico attivo</div>
   </div>
 
-  <div class="actionbar">
-    <div class="actionbar-inner">
-      <button class="btn save" id="saveBtn">Salva</button>
-      <button class="btn export" id="exportBtn">Export JSON</button>
-      <label class="btn import" for="importFile" style="display:flex;align-items:center;justify-content:center;">Import JSON</label>
-      <input id="importFile" type="file" accept=".json" hidden />
-      <button class="btn reset" id="resetBtn">Reset</button>
+  <div class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <button class="nav-btn active" data-screen="home">Home</button>
+      <button class="nav-btn" data-screen="new">Nuova</button>
+      <button class="nav-btn" data-screen="search">Cerca</button>
+      <button class="nav-btn" data-screen="tools">Strumenti</button>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = "xaFermentationPremium_v2";
+    const STORAGE_KEY = "xaFermentationSimple_v1";
 
     const defaults = {
       nomeRicetta: "Sidro Secco XA",
@@ -698,71 +568,59 @@ Giorno 7: cold crash"></textarea>
       dataLotto: "",
       litri: "23",
       lievito: "Lievito autoctono",
-      ingredienti: "Succo mela\\nLievito autoctono",
-      aggiunte: "",
       ph: "3.50",
       temperatura: "20.0",
-      abvManuale: "",
       og: "1.050",
       fg: "1.010",
+      ingredienti: "Succo mela\\nLievito autoctono",
+      aggiunte: "",
       note: ""
     };
 
     const recipeLibrary = [
       {
-        nomeRicetta: "Blonde Ale Base",
-        lievito: "US-05",
-        og: "1.048",
-        fg: "1.010",
-        ph: "4.20",
-        temperatura: "20.0",
-        ingredienti: "Pilsner malt 4.5 kg\\nCaraPils 0.25 kg\\nSaaz 35 g",
-        aggiunte: "60 min: amaro\\n10 min: aroma",
-        note: "Base pulita e semplice"
+        nomeRicetta: "Sidro Secco",
+        lievito: "Lievito autoctono",
+        ph: "3.40",
+        temperatura: "18.0",
+        og: "1.050",
+        fg: "1.004",
+        ingredienti: "Succo mela 20 L\\nNutriente 4 g",
+        aggiunte: "Giorno 1 inoculo\\nGiorno 5 travaso",
+        note: "Profilo secco e pulito"
       },
       {
-        nomeRicetta: "West Coast IPA",
+        nomeRicetta: "Blonde Ale Base",
         lievito: "US-05",
-        og: "1.060",
-        fg: "1.012",
-        ph: "4.10",
-        temperatura: "19.0",
-        ingredienti: "Pale malt 5.5 kg\\nCrystal light 0.25 kg\\nCitra 60 g\\nSimcoe 60 g",
-        aggiunte: "Dry hop giorno 5\\nCold crash giorno 9",
-        note: "Finale secco, luppolo deciso"
+        ph: "4.20",
+        temperatura: "20.0",
+        og: "1.048",
+        fg: "1.010",
+        ingredienti: "Pilsner malt 4.5 kg\\nSaaz 35 g",
+        aggiunte: "60 min amaro\\n10 min aroma",
+        note: "Base semplice"
       },
       {
         nomeRicetta: "Saison",
         lievito: "Belle Saison",
-        og: "1.054",
-        fg: "1.004",
         ph: "4.00",
         temperatura: "24.0",
-        ingredienti: "Pilsner malt 4.8 kg\\nFrumento 0.5 kg\\nSaaz 40 g",
-        aggiunte: "Ramp temperatura graduale",
+        og: "1.054",
+        fg: "1.004",
+        ingredienti: "Pilsner 4.8 kg\\nFrumento 0.5 kg",
+        aggiunte: "Ramp temperatura",
         note: "Molto attenuata"
       },
       {
-        nomeRicetta: "Sidro Secco",
-        lievito: "Lievito autoctono",
-        og: "1.050",
-        fg: "1.004",
-        ph: "3.40",
-        temperatura: "18.0",
-        ingredienti: "Succo mela 20 L\\nNutriente 4 g",
-        aggiunte: "Giorno 1: inoculo\\nGiorno 5: travaso",
-        note: "Profilo secco e pulito"
-      },
-      {
-        nomeRicetta: "Gose",
-        lievito: "Ale neutro",
-        og: "1.044",
-        fg: "1.010",
-        ph: "3.30",
-        temperatura: "20.0",
-        ingredienti: "Pilsner 2.6 kg\\nFrumento 2.0 kg\\nCoriandolo\\nSale",
-        aggiunte: "Sour kettle o acidificazione controllata",
-        note: "Acida e sapida"
+        nomeRicetta: "West Coast IPA",
+        lievito: "US-05",
+        ph: "4.10",
+        temperatura: "19.0",
+        og: "1.060",
+        fg: "1.012",
+        ingredienti: "Pale malt 5.5 kg\\nCitra 60 g\\nSimcoe 60 g",
+        aggiunte: "Dry hop giorno 5",
+        note: "Secca e luppolata"
       }
     ];
 
@@ -780,16 +638,28 @@ Giorno 7: cold crash"></textarea>
       }
     }
 
+    function saveData(){
+      const data = collectData();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      $("saveNote").textContent = "Salvato automaticamente";
+      updateUI(data);
+    }
+
     function collectData(){
       const data = {};
       ids.forEach(id => data[id] = $(id).value);
       return data;
     }
 
+    function fillData(data){
+      ids.forEach(id => {
+        $(id).value = data[id] ?? defaults[id] ?? "";
+      });
+      updateUI(data);
+    }
+
     function parseNum(value, fallback = 0){
-      if(typeof value !== "string") value = String(value ?? "");
-      const normalized = value.replace(",", ".").trim();
-      const n = parseFloat(normalized);
+      const n = parseFloat(String(value || "").replace(",", "."));
       return Number.isFinite(n) ? n : fallback;
     }
 
@@ -805,14 +675,13 @@ Giorno 7: cold crash"></textarea>
     }
 
     function sgToPlato(sg){
-      return -616.868 + (1111.14 * sg) - (630.272 * sg * sg) + (135.997 * sg * sg * sg);
+      return -616.868 + 1111.14*sg - 630.272*sg*sg + 135.997*sg*sg*sg;
     }
 
     function calcCaloriesPer330(og, fg, abv){
-      const fgValue = fg;
       const abw = abv * 0.79;
       const re = (0.1808 * sgToPlato(og)) + (0.8192 * sgToPlato(fg));
-      const calories12oz = ((6.9 * abw) + (4.0 * (re - 0.10))) * fgValue * 3.55;
+      const calories12oz = ((6.9 * abw) + (4.0 * (re - 0.10))) * fg * 3.55;
       return Math.max(0, calories12oz * (330 / 355));
     }
 
@@ -820,47 +689,22 @@ Giorno 7: cold crash"></textarea>
       return Math.max(0, (fg - 1) * 1000 * 2.4);
     }
 
-    function countLines(text){
-      return text
-        .split("\\n")
-        .map(v => v.trim())
-        .filter(Boolean).length;
-    }
-
-    function statusClass(type){
-      return type === "ok" ? "status ok" : type === "warn" ? "status warn" : "status danger";
-    }
-
-    function getPhState(ph){
-      if(ph < 3.2) return { text:"Molto basso", cls:"warn" };
-      if(ph <= 4.2) return { text:"Buono", cls:"ok" };
-      return { text:"Alto", cls:"danger" };
-    }
-
-    function getTempState(temp){
-      if(temp < 16) return { text:"Bassa", cls:"warn" };
-      if(temp <= 22) return { text:"Ottima", cls:"ok" };
-      return { text:"Alta", cls:"danger" };
-    }
-
-    function updateDashboard(data = collectData()){
+    function updateUI(data = collectData()){
       const ph = parseNum(data.ph, 3.5);
-      const temperatura = parseNum(data.temperatura, 20);
+      const temp = parseNum(data.temperatura, 20);
       const og = parseNum(data.og, 1.050);
       const fg = parseNum(data.fg, 1.010);
-      const abv = data.abvManuale.trim() ? parseNum(data.abvManuale, 0) : calcABV(og, fg);
+      const abv = calcABV(og, fg);
       const att = calcAtt(og, fg);
       const cal = calcCaloriesPer330(og, fg, abv);
       const sugar = calcResidualSugarGL(fg);
 
       $("dashPh").textContent = ph.toFixed(2);
-      $("dashTemp").textContent = temperatura.toFixed(1) + "°";
+      $("dashTemp").textContent = temp.toFixed(1) + "°";
       $("dashAbv").textContent = abv.toFixed(2) + "%";
       $("dashOg").textContent = og.toFixed(3);
       $("dashFg").textContent = fg.toFixed(3);
       $("dashAtt").textContent = att.toFixed(1) + "%";
-      $("dashCal").textContent = Math.round(cal);
-      $("dashSugar").textContent = sugar.toFixed(1);
 
       $("sumRicetta").textContent = data.nomeRicetta || "—";
       $("sumLotto").textContent = data.numeroLotto || "—";
@@ -868,178 +712,91 @@ Giorno 7: cold crash"></textarea>
       $("sumLitri").textContent = data.litri || "—";
       $("sumLievito").textContent = data.lievito || "—";
 
-      const phState = getPhState(ph);
-      $("phStatus").className = statusClass(phState.cls);
-      $("phStatusText").textContent = phState.text;
-
-      const tempState = getTempState(temperatura);
-      $("tempStatus").className = statusClass(tempState.cls);
-      $("tempStatusText").textContent = tempState.text;
-
-      $("countIngredienti").textContent = countLines(data.ingredienti);
-      $("countAggiunte").textContent = countLines(data.aggiunte);
-
-      $("toolCalorie").textContent = Math.round(cal) + " kcal";
-      $("toolSugar").textContent = sugar.toFixed(1) + " g/L";
       $("toolAbv").textContent = abv.toFixed(2) + " %";
       $("toolAtt").textContent = att.toFixed(1) + " %";
+      $("toolCal").textContent = Math.round(cal) + " kcal";
+      $("toolSugar").textContent = sugar.toFixed(1) + " g/L";
     }
 
-    function fillData(data){
-      ids.forEach(id => {
-        $(id).value = data[id] ?? defaults[id] ?? "";
-      });
-      updateDashboard(data);
-    }
-
-    function saveData(){
-      const data = collectData();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      $("saveNote").textContent = "Salvato";
-      updateDashboard(data);
-    }
-
-    function exportJSON(){
-      const data = collectData();
-      const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = (data.numeroLotto || "xa-fermentation") + ".json";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function importJSON(file){
-      const reader = new FileReader();
-      reader.onload = () => {
-        try{
-          const data = JSON.parse(reader.result);
-          fillData({...defaults, ...data});
-          saveData();
-        }catch{
-          alert("File JSON non valido");
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    function resetData(){
-      if(!confirm("Vuoi davvero resettare tutti i dati?")) return;
-      fillData({...defaults});
-      saveData();
+    function switchScreen(name){
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      $("screen-" + name).classList.add("active");
+      document.querySelector('.nav-btn[data-screen="' + name + '"]').classList.add("active");
     }
 
     function newRecipe(){
-      if(!confirm("Creare una nuova ricetta? I dati attuali verranno sostituiti.")) return;
-      const next = {...defaults};
-      next.numeroLotto = "";
-      next.nomeRicetta = "";
-      next.dataLotto = "";
-      next.note = "";
-      next.ingredienti = "";
-      next.aggiunte = "";
-      fillData(next);
+      if(!confirm("Creare una nuova ricetta vuota?")) return;
+      fillData({
+        ...defaults,
+        nomeRicetta: "",
+        numeroLotto: "",
+        dataLotto: "",
+        lievito: "",
+        ingredienti: "",
+        aggiunte: "",
+        note: ""
+      });
       saveData();
+      switchScreen("new");
     }
 
-    function activateTab(tabName){
-      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-      document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add("active");
-      $(tabName).classList.add("active");
-    }
-
-    function searchRecipes(query){
+    function renderRecipes(query = ""){
       const q = query.trim().toLowerCase();
-      const results = !q
+      const list = !q
         ? recipeLibrary
         : recipeLibrary.filter(r =>
             r.nomeRicetta.toLowerCase().includes(q) ||
-            r.note.toLowerCase().includes(q) ||
-            r.ingredienti.toLowerCase().includes(q)
+            r.ingredienti.toLowerCase().includes(q) ||
+            r.note.toLowerCase().includes(q)
           );
 
-      const container = $("recipeResults");
-      container.innerHTML = "";
+      const box = $("recipeResults");
+      box.innerHTML = "";
 
-      results.forEach((recipe, index) => {
-        const div = document.createElement("div");
-        div.className = "recipe-item";
-        div.innerHTML = `
-          <h4>${recipe.nomeRicetta}</h4>
+      if(list.length === 0){
+        box.innerHTML = `<div class="recipe-item"><h3>Nessun risultato</h3><p>Prova con un altro termine.</p></div>`;
+        return;
+      }
+
+      list.forEach(recipe => {
+        const item = document.createElement("div");
+        item.className = "recipe-item";
+        item.innerHTML = `
+          <h3>${recipe.nomeRicetta}</h3>
           <p>${recipe.lievito} • OG ${recipe.og} • FG ${recipe.fg}</p>
           <p>${recipe.note}</p>
         `;
-        div.addEventListener("click", () => {
+        item.addEventListener("click", () => {
           const current = collectData();
           fillData({
             ...current,
-            ...recipe,
-            numeroLotto: current.numeroLotto || "",
-            dataLotto: current.dataLotto || ""
+            ...recipe
           });
           saveData();
-          activateTab("ricetta");
+          switchScreen("new");
         });
-        container.appendChild(div);
-      });
-
-      if(results.length === 0){
-        container.innerHTML = `<div class="recipe-item"><h4>Nessun risultato</h4><p>Prova con un altro nome o stile.</p></div>`;
-      }
-    }
-
-    function setupTabs(){
-      const tabs = document.querySelectorAll(".tab");
-      tabs.forEach(tab => {
-        tab.addEventListener("click", () => activateTab(tab.dataset.tab));
+        box.appendChild(item);
       });
     }
 
-    function setupEvents(){
-      ids.forEach(id => {
-        $(id).addEventListener("input", () => {
-          $("saveNote").textContent = "Modifiche salvate automaticamente";
-          const data = collectData();
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-          updateDashboard(data);
-        });
-      });
+    ids.forEach(id => {
+      $(id).addEventListener("input", saveData);
+    });
 
-      $("saveBtn").addEventListener("click", saveData);
-      $("exportBtn").addEventListener("click", exportJSON);
-      $("resetBtn").addEventListener("click", resetData);
-      $("newRecipeBtn").addEventListener("click", newRecipe);
-      $("searchRecipeBtn").addEventListener("click", () => {
-        activateTab("strumenti");
-        $("recipeSearch").focus();
-      });
-      $("calcCaloriesBtn").addEventListener("click", () => {
-        updateDashboard();
-        activateTab("strumenti");
-      });
-      $("calcSugarBtn").addEventListener("click", () => {
-        updateDashboard();
-        activateTab("strumenti");
-      });
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => switchScreen(btn.dataset.screen));
+    });
 
-      $("recipeSearch").addEventListener("input", (e) => {
-        searchRecipes(e.target.value);
-      });
+    $("btnNewRecipe").addEventListener("click", newRecipe);
+    $("btnSearchRecipe").addEventListener("click", () => switchScreen("search"));
+    $("btnCalories").addEventListener("click", () => switchScreen("tools"));
+    $("btnSugar").addEventListener("click", () => switchScreen("tools"));
 
-      $("importFile").addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if(file) importJSON(file);
-        e.target.value = "";
-      });
-    }
+    $("recipeSearch").addEventListener("input", e => renderRecipes(e.target.value));
 
     fillData(loadData());
-    setupTabs();
-    setupEvents();
-    searchRecipes("");
-    saveData();
+    renderRecipes("");
   </script>
 </body>
 </html>
