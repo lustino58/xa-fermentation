@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation Ultra VST</title>
+  <title>XA Fermentation Ultra VST Final</title>
   <meta name="theme-color" content="#14090d" />
   <style>
     :root{
-      --bg1:#14090d;
+      --bg1:#12080c;
       --bg2:#1b1016;
-      --bg3:#24151d;
+      --bg3:#24131b;
       --panel:#1b1017;
       --panel2:#120b10;
       --glass:rgba(255,255,255,.04);
       --stroke:rgba(255,255,255,.08);
       --text:#f5f7fb;
-      --muted:#a99aa4;
+      --muted:#aa99a4;
 
       --red:#ff4253;
       --red2:#ff6c78;
@@ -25,6 +25,7 @@
       --cyan:#62e8ff;
       --violet:#b674ff;
       --pink:#ff74ae;
+      --blue:#65a8ff;
 
       --shadow:0 24px 60px rgba(0,0,0,.45);
       --radius:26px;
@@ -74,10 +75,12 @@
       font-weight:800;
       color:#fff;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02)),
-        linear-gradient(180deg,#2b1820,#120a0f);
+        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.02)),
+        linear-gradient(180deg,#2d1820,#12090f);
       border:1px solid rgba(255,255,255,.09);
-      box-shadow:var(--shadow);
+      box-shadow:
+        0 20px 40px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.08);
       flex:0 0 auto;
     }
 
@@ -99,7 +102,7 @@
     .browser-shell,
     .screen-shell{
       background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)),
+        linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012)),
         linear-gradient(180deg,var(--panel),var(--panel2));
       border:1px solid var(--stroke);
       border-radius:30px;
@@ -150,7 +153,8 @@
     }
 
     .top-actions,
-    .nav-row{
+    .nav-row,
+    .preset-row{
       display:flex;
       gap:8px;
       flex-wrap:wrap;
@@ -181,9 +185,13 @@
       transform:scale(.985);
     }
 
-    .top-btn.red,.nav-btn.active,.lib-toggle.active{background:linear-gradient(180deg,#ff4f5f,#d53142); box-shadow:0 0 18px rgba(255,79,95,.18);}
-    .top-btn.blue{background:linear-gradient(180deg,#3f88ff,#205fcb);}
-    .top-btn.green{background:linear-gradient(180deg,#10b77b,#078f60);}
+    .top-btn.red,.nav-btn.active,.lib-toggle.active{
+      background:linear-gradient(180deg,#ff4f5f,#d53142);
+      box-shadow:0 0 18px rgba(255,79,95,.18);
+    }
+
+    .top-btn.blue{background:linear-gradient(180deg,#428cff,#205fcb);}
+    .top-btn.green{background:linear-gradient(180deg,#12b97d,#078f60);}
     .top-btn.orange{background:linear-gradient(180deg,#ff9d3d,#d8740a);}
 
     .nav-shell{
@@ -222,17 +230,6 @@
       margin-bottom:14px;
     }
 
-    .preset-row{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-    }
-
-    .preset-btn{
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-    }
-
     .mixer-wrap{
       overflow-x:auto;
       padding-bottom:6px;
@@ -247,37 +244,63 @@
 
     .strip{
       width:126px;
-      min-height:470px;
-      border-radius:26px;
+      min-height:500px;
+      border-radius:28px;
       padding:14px 12px;
       position:relative;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.09);
       display:flex;
       flex-direction:column;
       align-items:center;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.01)),
-        linear-gradient(180deg,#1b1017,#100a0f);
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.01)),
+        linear-gradient(180deg,#201219,#110a0f);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.05),
+        inset 0 -30px 60px rgba(0,0,0,.18),
         0 10px 30px rgba(0,0,0,.35);
     }
 
+    .strip::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:3px;
+      background:linear-gradient(180deg, transparent, rgba(255,255,255,.18), transparent);
+      opacity:.25;
+      pointer-events:none;
+    }
+
+    .strip::after{
+      content:"";
+      position:absolute;
+      right:0;
+      top:0;
+      bottom:0;
+      width:3px;
+      background:linear-gradient(180deg, transparent, rgba(255,255,255,.08), transparent);
+      opacity:.18;
+      pointer-events:none;
+    }
+
     .master-strip{
-      width:180px;
+      width:184px;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.05),
-        0 0 0 1px rgba(255,66,83,.18),
+        inset 0 1px 0 rgba(255,255,255,.06),
+        0 0 0 1px rgba(255,66,83,.16),
         0 14px 36px rgba(255,66,83,.10);
     }
 
-    .strip.orange{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,155,57,.20), 0 14px 36px rgba(255,155,57,.10);}
-    .strip.red{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,66,83,.20), 0 14px 36px rgba(255,66,83,.10);}
-    .strip.yellow{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,213,77,.20), 0 14px 36px rgba(255,213,77,.10);}
-    .strip.green{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(51,212,156,.20), 0 14px 36px rgba(51,212,156,.10);}
-    .strip.pink{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,116,174,.20), 0 14px 36px rgba(255,116,174,.10);}
-    .strip.cyan{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(98,232,255,.20), 0 14px 36px rgba(98,232,255,.10);}
+    .strip.orange{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,155,57,.18), 0 14px 36px rgba(255,155,57,.08);}
+    .strip.red{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,66,83,.18), 0 14px 36px rgba(255,66,83,.08);}
+    .strip.yellow{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,213,77,.18), 0 14px 36px rgba(255,213,77,.08);}
+    .strip.green{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(51,212,156,.18), 0 14px 36px rgba(51,212,156,.08);}
+    .strip.pink{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,116,174,.18), 0 14px 36px rgba(255,116,174,.08);}
+    .strip.cyan{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(98,232,255,.18), 0 14px 36px rgba(98,232,255,.08);}
+    .strip.srm{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(201,141,66,.20), 0 14px 36px rgba(201,141,66,.10);}
 
     .strip-label{
       min-height:32px;
@@ -296,9 +319,13 @@
       border-radius:18px;
       padding:12px 8px;
       text-align:center;
-      background:linear-gradient(180deg,#090e14,#04070c);
+      background:
+        linear-gradient(180deg,#10161d,#06090d);
       border:1px solid rgba(255,255,255,.06);
-      box-shadow:inset 0 0 24px rgba(0,0,0,.55);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.02),
+        inset 0 0 24px rgba(0,0,0,.55),
+        0 8px 20px rgba(0,0,0,.25);
       margin-bottom:12px;
     }
 
@@ -330,6 +357,7 @@
     .green-bar{color:var(--green); background:var(--green);}
     .pink-bar{color:var(--pink); background:var(--pink);}
     .cyan-bar{color:var(--cyan); background:var(--cyan);}
+    .srm-bar{color:#c58b2f; background:#c58b2f;}
 
     .meter-and-slider{
       flex:1;
@@ -341,7 +369,7 @@
     }
 
     .vu{
-      height:160px;
+      height:165px;
       width:14px;
       border-radius:999px;
       background:#06090e;
@@ -384,7 +412,7 @@
 
     .slider-vertical::-webkit-slider-runnable-track{
       height:14px;
-      background:linear-gradient(180deg,#1d2a39,#0c141e);
+      background:linear-gradient(180deg,#1f2a37,#0d141c);
       border-radius:999px;
       border:1px solid rgba(255,255,255,.05);
       box-shadow:inset 0 2px 6px rgba(0,0,0,.45);
@@ -398,14 +426,17 @@
       border-radius:10px;
       margin-top:-10px;
       border:none;
-      box-shadow:0 6px 14px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.50), 0 0 18px currentColor;
+      box-shadow:
+        0 6px 14px rgba(0,0,0,.38),
+        inset 0 1px 0 rgba(255,255,255,.50),
+        0 0 18px currentColor;
       cursor:pointer;
       background:currentColor;
     }
 
     .slider-vertical::-moz-range-track{
       height:14px;
-      background:linear-gradient(180deg,#1d2a39,#0c141e);
+      background:linear-gradient(180deg,#1f2a37,#0d141c);
       border-radius:999px;
       border:1px solid rgba(255,255,255,.05);
     }
@@ -415,7 +446,10 @@
       height:32px;
       border-radius:10px;
       border:none;
-      box-shadow:0 6px 14px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.50), 0 0 18px currentColor;
+      box-shadow:
+        0 6px 14px rgba(0,0,0,.38),
+        inset 0 1px 0 rgba(255,255,255,.50),
+        0 0 18px currentColor;
       cursor:pointer;
       background:currentColor;
     }
@@ -426,13 +460,14 @@
     .fg-thumb{color:var(--green);}
     .ibu-thumb{color:var(--pink);}
     .co2-thumb{color:var(--cyan);}
+    .srm-thumb{color:#c58b2f;}
 
     .master-fader{
       width:120px;
       -webkit-appearance:none;
       appearance:none;
       height:18px;
-      background:linear-gradient(180deg,#1d2a39,#0c141e);
+      background:linear-gradient(180deg,#1f2a37,#0d141c);
       border-radius:999px;
       border:1px solid rgba(255,255,255,.05);
     }
@@ -471,6 +506,7 @@
       text-align:center;
       background:#080d13;
       border:1px solid rgba(255,255,255,.06);
+      box-shadow:inset 0 0 18px rgba(0,0,0,.35);
     }
 
     .led-box .n{
@@ -517,6 +553,24 @@
       text-align:center;
       font-size:12px;
       color:var(--muted);
+    }
+
+    .hardware-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+
+    .hardware-port{
+      padding:10px 12px;
+      border-radius:14px;
+      background:linear-gradient(180deg,#2a3138,#101419);
+      border:1px solid rgba(255,255,255,.08);
+      font-size:12px;
+      color:#d5dce5;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+      letter-spacing:.08em;
     }
 
     .accordion{
@@ -741,7 +795,14 @@
       border:1px solid rgba(255,255,255,.06);
       border-radius:20px;
       padding:16px;
-      min-height:240px;
+      min-height:260px;
+    }
+
+    .print-bar{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
     }
 
     .archive-list{
@@ -771,6 +832,24 @@
       color:var(--muted);
       font-size:13px;
       line-height:1.45;
+      margin-bottom:6px;
+    }
+
+    .tag-row{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+
+    .tag{
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.07);
     }
 
     .archive-actions{
@@ -807,7 +886,7 @@
         width:118px;
       }
       .master-strip{
-        width:170px;
+        width:172px;
       }
     }
   </style>
@@ -818,7 +897,7 @@
       <div class="logo">XA</div>
       <div>
         <h1>XA Fermentation Ultra VST</h1>
-        <p>Ricette catalogate • browser tecnico richiudibile • ricerca web • vista ricetta separata</p>
+        <p>Final level • hardware dark • archivio intelligente • stampa professionale</p>
       </div>
     </div>
 
@@ -834,6 +913,7 @@
           <button class="top-btn blue" id="saveBtn">Salva</button>
           <button class="top-btn green" id="saveArchiveBtn">Salva in Archivio</button>
           <button class="top-btn orange" id="exportBtn">Export JSON</button>
+          <button class="top-btn green" id="printBtnTop">Stampa</button>
           <label class="top-btn orange" for="importFile">Import JSON</label>
           <input id="importFile" type="file" accept=".json" hidden />
         </div>
@@ -851,7 +931,14 @@
     <section class="screen active" id="screen-mixer">
       <div class="browser-shell">
         <div class="section-title">Browser tecnico</div>
-        <div class="section-sub">Ogni categoria si apre e si richiude. Dentro hai ricerca locale e ricerca web separata.</div>
+        <div class="section-sub">Ogni categoria ha il suo pulsante ON/OFF, ricerca interna e ricerca web mirata.</div>
+
+        <div class="hardware-row">
+          <div class="hardware-port">USB</div>
+          <div class="hardware-port">ANALOG OUT</div>
+          <div class="hardware-port">DIGITAL BUS</div>
+          <div class="hardware-port">XA ENGINE</div>
+        </div>
 
         <div class="accordion" id="libraryAccordion"></div>
       </div>
@@ -868,7 +955,7 @@
         </div>
 
         <div class="section-title">Mixer digitale parametri</div>
-        <div class="section-sub">Fader più corti per vedere tutto anche sul telefono.</div>
+        <div class="section-sub">Fader corti per vedere bene tutto sul telefono. Incluso SRM colore.</div>
 
         <div class="mixer-wrap">
           <div class="mixer">
@@ -1050,6 +1137,28 @@
               </div>
               <div class="strip-footer">1.0 → 4.0</div>
             </div>
+
+            <div class="strip srm">
+              <div class="strip-label">SRM</div>
+              <div class="strip-display">
+                <div class="strip-value" id="srmVal" style="color:#c58b2f">10</div>
+                <div class="strip-unit">colore</div>
+              </div>
+              <div class="channel-color srm-bar" id="srmBar"></div>
+              <div class="meter-and-slider">
+                <div class="vu" id="vu-srm-l"></div>
+                <div class="slider-zone">
+                  <input id="srmSlider" class="slider-vertical srm-thumb" type="range" min="1" max="40" step="1" value="10" />
+                </div>
+                <div class="vu" id="vu-srm-r"></div>
+              </div>
+              <div class="channel-buttons">
+                <button class="chan-btn mute" data-btn="srm-mute">MUTE</button>
+                <button class="chan-btn solo" data-btn="srm-solo">SOLO</button>
+                <button class="chan-btn rec" data-btn="srm-rec">REC</button>
+              </div>
+              <div class="strip-footer">1 → 40 SRM</div>
+            </div>
           </div>
         </div>
 
@@ -1101,7 +1210,7 @@
 
         <div class="screen-shell span-6">
           <div class="section-title">Ingredienti rapidi</div>
-          <div class="section-sub">Anche questi scrivono righe pulite e professionali nella ricetta.</div>
+          <div class="section-sub">Questi aggiungono righe professionali numerate.</div>
 
           <div class="ingredient-grid">
             <button class="ingredient-btn" data-quick-name="Mela" data-quick-qty="1" data-quick-unit="kg">
@@ -1146,6 +1255,7 @@
             <div class="result-line"><span>Zucchero residuo</span><span id="resSugar">24.0 g/L</span></div>
             <div class="result-line"><span>IBU</span><span id="resIbu">28</span></div>
             <div class="result-line"><span>CO₂</span><span id="resCo2">2.4 vol</span></div>
+            <div class="result-line"><span>SRM</span><span id="resSrm">10</span></div>
           </div>
         </div>
       </div>
@@ -1153,8 +1263,13 @@
 
     <section class="screen" id="screen-recipe">
       <div class="screen-shell">
-        <div class="section-title">Pagina ricetta separata</div>
-        <div class="section-sub">Qui leggi la ricetta completa in una vista pulita.</div>
+        <div class="section-title">Scheda singola ricetta</div>
+        <div class="section-sub">Vista pulita e professionale, pronta anche per la stampa.</div>
+
+        <div class="print-bar">
+          <button class="top-btn green" id="printBtnRecipe">Stampa questa scheda</button>
+        </div>
+
         <div class="recipe-preview" id="recipePreview"></div>
       </div>
     </section>
@@ -1162,7 +1277,7 @@
     <section class="screen" id="screen-archive">
       <div class="screen-shell">
         <div class="section-title">Archivio ricette</div>
-        <div class="section-sub">Le ricette salvate restano catalogate e ricercabili sul telefono.</div>
+        <div class="section-sub">Le ricette vengono catalogate e cercano anche per tag automatici.</div>
         <input class="archive-search" id="archiveSearch" type="text" placeholder="Cerca una ricetta salvata..." />
         <div class="archive-list" id="archiveList"></div>
       </div>
@@ -1170,8 +1285,8 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xaFermentationUltraVST_v4";
-    const ARCHIVE_KEY = "xaFermentationUltraVST_archive_v1";
+    const STORAGE_KEY = "xaFermentationUltraVST_final_v1";
+    const ARCHIVE_KEY = "xaFermentationUltraVST_archive_final_v1";
 
     const defaults = {
       recipeName: "Sidro Secco XA",
@@ -1187,6 +1302,7 @@
       fg: 1.010,
       ibu: 28,
       co2: 2.4,
+      srm: 10,
       master: 72
     };
 
@@ -1200,6 +1316,7 @@
         fg: 1.004,
         ibu: 0,
         co2: 2.4,
+        srm: 3,
         ingredientsText: "1. Mela — 20 L succo\n2. Lievito autoctono — 1 dose",
         additionsText: "1. Inoculo lievito — giorno 1\n2. Travaso — giorno 5",
         notesText: "Profilo secco e pulito"
@@ -1213,6 +1330,7 @@
         fg: 1.006,
         ibu: 0,
         co2: 2.5,
+        srm: 2,
         ingredientsText: "1. Pera — 20 L succo\n2. Lievito da sidro — 1 dose",
         additionsText: "1. Inoculo — giorno 1",
         notesText: "Profilo fruttato da pera"
@@ -1226,6 +1344,7 @@
         fg: 1.008,
         ibu: 0,
         co2: 2.8,
+        srm: 6,
         ingredientsText: "1. Tè nero — 8 g\n2. Zucchero — 80 g/L\n3. SCOBY — 1 coltura",
         additionsText: "1. Seconda fermentazione opzionale",
         notesText: "Acidità viva e bollicina"
@@ -1239,6 +1358,7 @@
         fg: 1.010,
         ibu: 20,
         co2: 2.3,
+        srm: 4,
         ingredientsText: "1. Malto pils — 4.5 kg\n2. Luppolo Saaz — 35 g\n3. Lievito US-05 — 11 g",
         additionsText: "1. Bollitura — 60 min",
         notesText: "Pulita e semplice"
@@ -1252,6 +1372,7 @@
         fg: 1.012,
         ibu: 55,
         co2: 2.4,
+        srm: 8,
         ingredientsText: "1. Malto pale — 5.5 kg\n2. Citra — 60 g\n3. Simcoe — 60 g\n4. Lievito US-05 — 11 g",
         additionsText: "1. Dry hop — giorno 5",
         notesText: "Luppolata, secca, moderna"
@@ -1265,6 +1386,7 @@
         fg: 1.010,
         ibu: 10,
         co2: 2.6,
+        srm: 4,
         ingredientsText: "1. Malto — 4.5 kg\n2. Sale — 8 g\n3. Coriandolo — 12 g",
         additionsText: "1. Acidificazione controllata",
         notesText: "Acida e sapida"
@@ -1286,7 +1408,7 @@
         {name:"Motueka", desc:"Lime, agrumi, fresco.", qty:"20", unit:"g"},
         {name:"Riwaka", desc:"Pompelmo, passion fruit.", qty:"20", unit:"g"},
         {name:"Ekuanot", desc:"Papaya, lime.", qty:"20", unit:"g"},
-        {name:"Idaho 7", desc:"Albiccoca, tropicale, resina.", qty:"20", unit:"g"},
+        {name:"Idaho 7", desc:"Albicocca, tropicale, resina.", qty:"20", unit:"g"},
         {name:"Strata", desc:"Frutta tropicale, dank.", qty:"20", unit:"g"},
         {name:"Sabro", desc:"Cocco, lime, tropicale.", qty:"20", unit:"g"},
         {name:"Azacca", desc:"Mango, ananas, agrumi.", qty:"20", unit:"g"},
@@ -1443,7 +1565,7 @@
     [
       "vu-ph-l","vu-ph-r","vu-temp-l","vu-temp-r","vu-og-l","vu-og-r",
       "vu-fg-l","vu-fg-r","vu-ibu-l","vu-ibu-r","vu-co2-l","vu-co2-r",
-      "vu-master-l","vu-master-r"
+      "vu-master-l","vu-master-r","vu-srm-l","vu-srm-r"
     ].forEach(buildVu);
 
     function setVu(id, ratio){
@@ -1487,6 +1609,19 @@
       return Math.max(0, (fg - 1) * 1000 * 2.4);
     }
 
+    function srmToColor(srm){
+      const colors = [
+        "#FFE699","#FFD878","#FFCA5A","#FFBF42","#FBB123","#F8A600",
+        "#F39C00","#EA8F00","#E58500","#DE7C00","#D77200","#CF6900",
+        "#CB6200","#C35900","#BB5100","#B54C00","#B04500","#A63E00",
+        "#A13700","#9B3200","#952D00","#8E2900","#882300","#821E00",
+        "#7B1A00","#771900","#701400","#6A0E00","#660D00","#5E0B00",
+        "#5A0A02","#560A05","#520907","#4C0505","#470606","#440607",
+        "#3F0708","#3B0607","#3A070B","#36080A","#320A0A"
+      ];
+      return colors[Math.max(0, Math.min(colors.length - 1, srm - 1))];
+    }
+
     function collectData(){
       return {
         recipeName: $("recipeName").value,
@@ -1502,6 +1637,7 @@
         fg: parseFloat($("fgSlider").value) / 1000,
         ibu: parseFloat($("ibuSlider").value),
         co2: parseFloat($("co2Slider").value) / 10,
+        srm: parseFloat($("srmSlider").value),
         master: parseFloat($("masterSlider").value)
       };
     }
@@ -1551,6 +1687,7 @@
       $("fgSlider").value = Math.round((data.fg ?? defaults.fg) * 1000);
       $("ibuSlider").value = Math.round(data.ibu ?? defaults.ibu);
       $("co2Slider").value = Math.round((data.co2 ?? defaults.co2) * 10);
+      $("srmSlider").value = Math.round(data.srm ?? defaults.srm);
       $("masterSlider").value = Math.round(data.master ?? defaults.master);
 
       updateUI(data);
@@ -1562,6 +1699,7 @@
       const att = calcAtt(data.og, data.fg);
       const cal = calcCaloriesPer330(data.og, data.fg, abv);
       const sugar = calcResidualSugarGL(data.fg);
+      const srmColor = srmToColor(data.srm);
 
       $("phVal").textContent = data.ph.toFixed(2);
       $("tempVal").textContent = data.temp.toFixed(1) + "°";
@@ -1569,6 +1707,11 @@
       $("fgVal").textContent = data.fg.toFixed(3);
       $("ibuVal").textContent = data.ibu.toFixed(0);
       $("co2Val").textContent = data.co2.toFixed(1);
+      $("srmVal").textContent = data.srm.toFixed(0);
+      $("srmVal").style.color = srmColor;
+      $("srmBar").style.background = srmColor;
+      $("srmBar").style.color = srmColor;
+      $("srmBar").style.boxShadow = `0 0 18px ${srmColor}`;
 
       $("masterAbv").textContent = abv.toFixed(2) + "%";
       $("masterAtt").textContent = att.toFixed(1) + "%";
@@ -1580,6 +1723,7 @@
       $("resSugar").textContent = sugar.toFixed(1) + " g/L";
       $("resIbu").textContent = data.ibu.toFixed(0);
       $("resCo2").textContent = data.co2.toFixed(1) + " vol";
+      $("resSrm").textContent = data.srm.toFixed(0);
 
       $("recipeTitleBig").textContent = (data.recipeName || "Nuova Ricetta").toUpperCase();
       $("lotTitle").textContent = data.lotNumber || "—";
@@ -1598,19 +1742,20 @@
       setVu("vu-ibu-r", data.ibu / 120);
       setVu("vu-co2-l", (data.co2 - 1.0) / (4.0 - 1.0));
       setVu("vu-co2-r", (data.co2 - 1.0) / (4.0 - 1.0));
+      setVu("vu-srm-l", data.srm / 40);
+      setVu("vu-srm-r", data.srm / 40);
 
       const masterRatio = Math.min((((abv / 12) + (att / 100) + (data.co2 / 4)) / 3) * (data.master / 100), 1);
       setVu("vu-master-l", masterRatio);
       setVu("vu-master-r", masterRatio);
     }
 
-    function renumberRecipeLines(text){
+    function renumberLines(text){
       const lines = text
         .split("\n")
         .map(v => v.trim())
         .filter(Boolean)
         .map(v => v.replace(/^\d+\.\s*/, ""));
-
       return lines.map((line, idx) => `${idx + 1}. ${line}`).join("\n");
     }
 
@@ -1635,22 +1780,56 @@
 
     function updateRecipePreview(){
       const data = collectData();
+      const abv = calcABV(data.og, data.fg);
+
       const text = [
         `RICETTA: ${data.recipeName || "—"}`,
         `LOTTO: ${data.lotNumber || "—"}`,
         `DATA: ${data.batchDate || "—"}`,
         `LIEVITO: ${data.yeast || "—"}`,
         ``,
+        `PARAMETRI`,
+        `PH: ${data.ph.toFixed(2)}`,
+        `TEMP: ${data.temp.toFixed(1)} °C`,
+        `OG: ${data.og.toFixed(3)}`,
+        `FG: ${data.fg.toFixed(3)}`,
+        `ABV: ${abv.toFixed(2)} %`,
+        `IBU: ${data.ibu.toFixed(0)}`,
+        `CO₂: ${data.co2.toFixed(1)} vol`,
+        `SRM: ${data.srm.toFixed(0)}`,
+        ``,
         `INGREDIENTI`,
-        `${renumberRecipeLines(data.ingredientsText || "") || "—"}`,
+        `${renumberLines(data.ingredientsText || "") || "—"}`,
         ``,
         `AGGIUNTE / STEP`,
-        `${renumberRecipeLines(data.additionsText || "") || "—"}`,
+        `${renumberLines(data.additionsText || "") || "—"}`,
         ``,
         `NOTE`,
         `${data.notesText || "—"}`
       ].join("\n");
+
       $("recipePreview").textContent = text;
+    }
+
+    function generateTags(data){
+      const tags = [];
+      const ingredients = (data.ingredientsText || "").toLowerCase();
+      const yeast = (data.yeast || "").toLowerCase();
+
+      if(data.ibu >= 40) tags.push("amaro");
+      if(data.ibu <= 15) tags.push("low-ibu");
+      if(data.ph < 3.4) tags.push("acido");
+      if(calcABV(data.og, data.fg) >= 7) tags.push("strong");
+      if(calcABV(data.og, data.fg) < 4.2) tags.push("session");
+      if(yeast.includes("kveik") || yeast.includes("lutra")) tags.push("kveik");
+      if(ingredients.includes("mela")) tags.push("sidro");
+      if(ingredients.includes("pera")) tags.push("perry");
+      if(ingredients.includes("tè") || ingredients.includes("tea")) tags.push("tea-based");
+      if(ingredients.includes("latt") || ingredients.includes("plantarum")) tags.push("lattico");
+      if(data.srm >= 18) tags.push("scura");
+      if(data.srm <= 6) tags.push("chiara");
+
+      return [...new Set(tags)];
     }
 
     function newRecipe(){
@@ -1680,8 +1859,8 @@
 
     function exportJSON(){
       const data = collectData();
-      data.ingredientsText = renumberRecipeLines(data.ingredientsText);
-      data.additionsText = renumberRecipeLines(data.additionsText);
+      data.ingredientsText = renumberLines(data.ingredientsText);
+      data.additionsText = renumberLines(data.additionsText);
       const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -1696,8 +1875,8 @@
       reader.onload = () => {
         try{
           const data = JSON.parse(reader.result);
-          if(data.ingredientsText) data.ingredientsText = renumberRecipeLines(data.ingredientsText);
-          if(data.additionsText) data.additionsText = renumberRecipeLines(data.additionsText);
+          if(data.ingredientsText) data.ingredientsText = renumberLines(data.ingredientsText);
+          if(data.additionsText) data.additionsText = renumberLines(data.additionsText);
           fillData({...defaults, ...data});
           saveData();
         }catch{
@@ -1716,8 +1895,8 @@
         lotNumber: data.lotNumber || "",
         batchDate: data.batchDate || "",
         yeast: data.yeast || "",
-        ingredientsText: renumberRecipeLines(data.ingredientsText || ""),
-        additionsText: renumberRecipeLines(data.additionsText || ""),
+        ingredientsText: renumberLines(data.ingredientsText || ""),
+        additionsText: renumberLines(data.additionsText || ""),
         notesText: data.notesText || "",
         ph: data.ph,
         temp: data.temp,
@@ -1725,7 +1904,9 @@
         fg: data.fg,
         ibu: data.ibu,
         co2: data.co2,
-        master: data.master
+        srm: data.srm,
+        master: data.master,
+        tags: generateTags(data)
       };
       archive.unshift(entry);
       saveArchive(archive);
@@ -1741,7 +1922,8 @@
         (item.recipeName || "").toLowerCase().includes(q) ||
         (item.lotNumber || "").toLowerCase().includes(q) ||
         (item.yeast || "").toLowerCase().includes(q) ||
-        (item.ingredientsText || "").toLowerCase().includes(q)
+        (item.ingredientsText || "").toLowerCase().includes(q) ||
+        (item.tags || []).join(" ").toLowerCase().includes(q)
       );
 
       list.innerHTML = "";
@@ -1758,6 +1940,9 @@
           <div>
             <h4>${item.recipeName}</h4>
             <p>Lotto: ${item.lotNumber || "—"} • Data: ${item.batchDate || "—"} • Lievito: ${item.yeast || "—"}</p>
+            <div class="tag-row">
+              ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join("")}
+            </div>
           </div>
           <div class="archive-actions">
             <button class="mini-btn top-btn blue">Apri</button>
@@ -1778,6 +1963,27 @@
         });
         list.appendChild(box);
       });
+    }
+
+    function smartSearchUrl(key, term){
+      const t = (term || "").trim().toLowerCase();
+
+      if(key === "yeasts"){
+        if(t.includes("omega") || t.includes("lutra")) return "https://omegayeast.com/";
+        if(t.includes("lallemand") || t.includes("lalbrew") || t.includes("verdant")) return "https://www.lallemandbrewing.com/";
+        if(t.includes("fermentis") || t.includes("safale") || t.includes("saflager") || t.includes("s-04") || t.includes("us-05") || t.includes("w-34/70")) return "https://fermentis.com/";
+        if(t.includes("mangrove")) return "https://mangrovejacks.com/";
+        return `https://www.google.com/search?q=${encodeURIComponent(term + " yeast producer official site")}`;
+      }
+
+      if(key === "hops"){
+        if(t.includes("yakima")) return "https://yakimavalleyhops.com/";
+        if(t.includes("barth")) return "https://www.barthhaas.com/";
+        if(t.includes("hopsteiner") || t.includes("citra") || t.includes("mosaic") || t.includes("simcoe")) return "https://hopsteiner.com/";
+        return `https://www.google.com/search?q=${encodeURIComponent(term + " hop producer official technical sheet")}`;
+      }
+
+      return `https://www.google.com/search?q=${encodeURIComponent(term || libraryLabels[key])}`;
     }
 
     function buildLibraryAccordion(){
@@ -1804,7 +2010,6 @@
         `;
 
         const toggle = card.querySelector(".lib-toggle");
-        const body = card.querySelector(".lib-body");
         const search = card.querySelector(".search-input");
         const grid = card.querySelector(".library-grid");
         const webBtn = card.querySelector(".web-search-btn");
@@ -1867,10 +2072,7 @@
 
         webBtn.addEventListener("click", () => {
           const term = search.value.trim();
-          const query = term
-            ? `${term} ${libraryLabels[key]} brewing fermentation`
-            : `${libraryLabels[key]} brewing fermentation list`;
-          window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, "_blank");
+          window.open(smartSearchUrl(key, term), "_blank");
         });
 
         render();
@@ -1887,10 +2089,62 @@
       if(name === "archive") renderArchive();
     }
 
+    function printRecipe(){
+      const data = collectData();
+      const abv = calcABV(data.og, data.fg).toFixed(2);
+      const html = `
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>${data.recipeName || "Ricetta XA"}</title>
+        <style>
+          body{font-family:Arial,Helvetica,sans-serif;padding:28px;color:#111;}
+          h1{font-size:30px;margin:0 0 12px 0;}
+          h2{font-size:18px;margin:22px 0 8px 0;}
+          .meta{margin-bottom:16px;line-height:1.6;}
+          .box{background:#f4f4f4;border:1px solid #ddd;border-radius:12px;padding:14px;white-space:pre-wrap;line-height:1.5;}
+          .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px;}
+          .item{padding:8px 10px;background:#fafafa;border:1px solid #e6e6e6;border-radius:10px;}
+        </style>
+      </head>
+      <body>
+        <h1>${data.recipeName || "Ricetta XA"}</h1>
+        <div class="meta">
+          <div><b>Lotto:</b> ${data.lotNumber || "—"}</div>
+          <div><b>Data:</b> ${data.batchDate || "—"}</div>
+          <div><b>Lievito:</b> ${data.yeast || "—"}</div>
+        </div>
+        <h2>Parametri</h2>
+        <div class="grid">
+          <div class="item"><b>pH:</b> ${data.ph.toFixed(2)}</div>
+          <div class="item"><b>Temperatura:</b> ${data.temp.toFixed(1)} °C</div>
+          <div class="item"><b>OG:</b> ${data.og.toFixed(3)}</div>
+          <div class="item"><b>FG:</b> ${data.fg.toFixed(3)}</div>
+          <div class="item"><b>ABV:</b> ${abv} %</div>
+          <div class="item"><b>IBU:</b> ${data.ibu.toFixed(0)}</div>
+          <div class="item"><b>CO₂:</b> ${data.co2.toFixed(1)} vol</div>
+          <div class="item"><b>SRM:</b> ${data.srm.toFixed(0)}</div>
+        </div>
+        <h2>Ingredienti</h2>
+        <div class="box">${renumberLines(data.ingredientsText || "") || "—"}</div>
+        <h2>Aggiunte / Step</h2>
+        <div class="box">${renumberLines(data.additionsText || "") || "—"}</div>
+        <h2>Note</h2>
+        <div class="box">${data.notesText || "—"}</div>
+      </body>
+      </html>
+      `;
+      const w = window.open("", "_blank");
+      w.document.write(html);
+      w.document.close();
+      w.focus();
+      setTimeout(() => w.print(), 300);
+    }
+
     [
       "recipeName","lotNumber","batchDate","yeast",
       "ingredientsText","additionsText","notesText",
-      "phSlider","tempSlider","ogSlider","fgSlider","ibuSlider","co2Slider","masterSlider"
+      "phSlider","tempSlider","ogSlider","fgSlider","ibuSlider","co2Slider","srmSlider","masterSlider"
     ].forEach(id => {
       $(id).addEventListener("input", saveData);
       $(id).addEventListener("change", saveData);
@@ -1918,6 +2172,8 @@
     $("saveBtn").addEventListener("click", saveData);
     $("saveArchiveBtn").addEventListener("click", saveCurrentRecipeToArchive);
     $("exportBtn").addEventListener("click", exportJSON);
+    $("printBtnTop").addEventListener("click", printRecipe);
+    $("printBtnRecipe").addEventListener("click", printRecipe);
     $("archiveSearch").addEventListener("input", renderArchive);
 
     $("importFile").addEventListener("change", e => {
