@@ -21,6 +21,8 @@
       --og:#ffd166;
       --fg:#43d6a3;
       --att:#7ad7ff;
+      --cal:#ff7aa2;
+      --sugar:#f6c56b;
       --danger:#ff5d6c;
 
       --radius:24px;
@@ -48,7 +50,7 @@
     }
 
     .app{
-      width:min(980px,100%);
+      width:min(1080px,100%);
       margin:0 auto;
     }
 
@@ -182,7 +184,7 @@
     .metric .v{
       position:relative;
       z-index:1;
-      font-size:clamp(36px,9vw,66px);
+      font-size:clamp(34px,9vw,66px);
       line-height:.95;
       font-weight:800;
       letter-spacing:-.05em;
@@ -202,9 +204,12 @@
     .metric.og .v{color:var(--og);}
     .metric.fg .v{color:var(--fg);}
     .metric.att .v{color:var(--att);}
+    .metric.cal .v{color:var(--cal);}
+    .metric.sugar .v{color:var(--sugar);}
 
     .span-6{grid-column:span 6;}
     .span-4{grid-column:span 4;}
+    .span-3{grid-column:span 3;}
     .span-8{grid-column:span 8;}
 
     .section-title{
@@ -250,7 +255,7 @@
       font-size:16px;
       color:#111827;
       background:rgba(255,255,255,.95);
-      box-shadow:inset 0 2px 8px rgba(0,0,0,.08);
+      box-shadow: inset 0 2px 8px rgba(0,0,0,.08);
     }
 
     textarea{
@@ -331,6 +336,53 @@
       text-align:right;
     }
 
+    .quick-actions{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .quick-btn{
+      border:none;
+      cursor:pointer;
+      border-radius:18px;
+      padding:14px 14px;
+      color:#fff;
+      font-size:15px;
+      font-weight:800;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.07);
+    }
+
+    .quick-btn.red{background:#ff4d4d;}
+    .quick-btn.blue{background:#2563eb;}
+    .quick-btn.green{background:#059669;}
+    .quick-btn.orange{background:#d97706;}
+
+    .search-results{
+      display:grid;
+      gap:10px;
+    }
+
+    .recipe-item{
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.06);
+      cursor:pointer;
+    }
+
+    .recipe-item h4{
+      font-size:16px;
+      margin-bottom:6px;
+    }
+
+    .recipe-item p{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.4;
+    }
+
     .actionbar{
       position:fixed;
       left:0;
@@ -343,7 +395,7 @@
     }
 
     .actionbar-inner{
-      width:min(980px,100%);
+      width:min(1080px,100%);
       margin:0 auto;
       display:flex;
       gap:10px;
@@ -374,7 +426,7 @@
     }
 
     @media (max-width:780px){
-      .span-6,.span-4,.span-8,.field.half,.field.third{
+      .span-6,.span-4,.span-3,.span-8,.field.half,.field.third{
         grid-column:span 12;
       }
 
@@ -406,6 +458,7 @@
         <button class="tab" data-tab="lotto">Lotto</button>
         <button class="tab" data-tab="ricetta">Ricetta</button>
         <button class="tab" data-tab="processo">Processo</button>
+        <button class="tab" data-tab="strumenti">Strumenti</button>
       </div>
 
       <section class="panel active" id="dashboard">
@@ -444,6 +497,18 @@
             <div class="k">Attenuazione</div>
             <div class="v" id="dashAtt">80.0%</div>
             <div class="s">Attenuazione apparente</div>
+          </div>
+
+          <div class="card metric cal span-3">
+            <div class="k">Calorie</div>
+            <div class="v" id="dashCal">160</div>
+            <div class="s">stima / 330 ml</div>
+          </div>
+
+          <div class="card metric sugar span-3">
+            <div class="k">Zucchero residuo</div>
+            <div class="v" id="dashSugar">24.0</div>
+            <div class="s">g/L stimati</div>
           </div>
 
           <div class="card span-6">
@@ -576,6 +641,40 @@ Giorno 7: cold crash"></textarea>
         </div>
       </section>
 
+      <section class="panel" id="strumenti">
+        <div class="grid">
+          <div class="card span-6">
+            <div class="section-title">Azioni rapide</div>
+            <div class="quick-actions">
+              <button class="quick-btn red" id="newRecipeBtn">Nuova Ricetta</button>
+              <button class="quick-btn blue" id="searchRecipeBtn">Cerca Ricetta</button>
+              <button class="quick-btn green" id="calcCaloriesBtn">Calcolo Calorie</button>
+              <button class="quick-btn orange" id="calcSugarBtn">Calcolo Zucchero Residuo</button>
+            </div>
+          </div>
+
+          <div class="card span-6">
+            <div class="section-title">Risultati rapidi</div>
+            <div class="recipe-lines">
+              <div class="recipe-line"><span>Calorie stimate / 330 ml</span><span id="toolCalorie">160 kcal</span></div>
+              <div class="recipe-line"><span>Zucchero residuo stimato</span><span id="toolSugar">24.0 g/L</span></div>
+              <div class="recipe-line"><span>ABV calcolato</span><span id="toolAbv">5.00 %</span></div>
+              <div class="recipe-line"><span>Attenuazione</span><span id="toolAtt">80.0 %</span></div>
+            </div>
+          </div>
+
+          <div class="card span-12">
+            <div class="section-title">Cerca ricetta</div>
+            <div class="section-sub">Scrivi nome o stile e scegli una base da caricare.</div>
+            <div class="field">
+              <label for="recipeSearch">Ricerca</label>
+              <input id="recipeSearch" type="text" placeholder="Es. blonde, saison, sidro, ipa..." />
+            </div>
+            <div class="search-results" id="recipeResults"></div>
+          </div>
+        </div>
+      </section>
+
       <div class="save-note" id="saveNote">Salvataggio automatico attivo</div>
     </div>
   </div>
@@ -591,7 +690,7 @@ Giorno 7: cold crash"></textarea>
   </div>
 
   <script>
-    const STORAGE_KEY = "xaFermentationPremium_v1";
+    const STORAGE_KEY = "xaFermentationPremium_v2";
 
     const defaults = {
       nomeRicetta: "Sidro Secco XA",
@@ -609,6 +708,64 @@ Giorno 7: cold crash"></textarea>
       note: ""
     };
 
+    const recipeLibrary = [
+      {
+        nomeRicetta: "Blonde Ale Base",
+        lievito: "US-05",
+        og: "1.048",
+        fg: "1.010",
+        ph: "4.20",
+        temperatura: "20.0",
+        ingredienti: "Pilsner malt 4.5 kg\\nCaraPils 0.25 kg\\nSaaz 35 g",
+        aggiunte: "60 min: amaro\\n10 min: aroma",
+        note: "Base pulita e semplice"
+      },
+      {
+        nomeRicetta: "West Coast IPA",
+        lievito: "US-05",
+        og: "1.060",
+        fg: "1.012",
+        ph: "4.10",
+        temperatura: "19.0",
+        ingredienti: "Pale malt 5.5 kg\\nCrystal light 0.25 kg\\nCitra 60 g\\nSimcoe 60 g",
+        aggiunte: "Dry hop giorno 5\\nCold crash giorno 9",
+        note: "Finale secco, luppolo deciso"
+      },
+      {
+        nomeRicetta: "Saison",
+        lievito: "Belle Saison",
+        og: "1.054",
+        fg: "1.004",
+        ph: "4.00",
+        temperatura: "24.0",
+        ingredienti: "Pilsner malt 4.8 kg\\nFrumento 0.5 kg\\nSaaz 40 g",
+        aggiunte: "Ramp temperatura graduale",
+        note: "Molto attenuata"
+      },
+      {
+        nomeRicetta: "Sidro Secco",
+        lievito: "Lievito autoctono",
+        og: "1.050",
+        fg: "1.004",
+        ph: "3.40",
+        temperatura: "18.0",
+        ingredienti: "Succo mela 20 L\\nNutriente 4 g",
+        aggiunte: "Giorno 1: inoculo\\nGiorno 5: travaso",
+        note: "Profilo secco e pulito"
+      },
+      {
+        nomeRicetta: "Gose",
+        lievito: "Ale neutro",
+        og: "1.044",
+        fg: "1.010",
+        ph: "3.30",
+        temperatura: "20.0",
+        ingredienti: "Pilsner 2.6 kg\\nFrumento 2.0 kg\\nCoriandolo\\nSale",
+        aggiunte: "Sour kettle o acidificazione controllata",
+        note: "Acida e sapida"
+      }
+    ];
+
     const ids = Object.keys(defaults);
 
     function $(id){ return document.getElementById(id); }
@@ -623,24 +780,10 @@ Giorno 7: cold crash"></textarea>
       }
     }
 
-    function saveData(){
-      const data = collectData();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      $("saveNote").textContent = "Salvato";
-      updateDashboard(data);
-    }
-
     function collectData(){
       const data = {};
       ids.forEach(id => data[id] = $(id).value);
       return data;
-    }
-
-    function fillData(data){
-      ids.forEach(id => {
-        $(id).value = data[id] ?? defaults[id] ?? "";
-      });
-      updateDashboard(data);
     }
 
     function parseNum(value, fallback = 0){
@@ -648,14 +791,6 @@ Giorno 7: cold crash"></textarea>
       const normalized = value.replace(",", ".").trim();
       const n = parseFloat(normalized);
       return Number.isFinite(n) ? n : fallback;
-    }
-
-    function fmt(value, dec){
-      return parseNum(value).toFixed(dec);
-    }
-
-    function fmtGravity(value){
-      return parseNum(value, 1).toFixed(3);
     }
 
     function calcABV(og, fg){
@@ -667,6 +802,29 @@ Giorno 7: cold crash"></textarea>
       const fgPts = (fg - 1) * 1000;
       if(ogPts <= 0) return 0;
       return Math.max(0, ((ogPts - fgPts) / ogPts) * 100);
+    }
+
+    function sgToPlato(sg){
+      return -616.868 + (1111.14 * sg) - (630.272 * sg * sg) + (135.997 * sg * sg * sg);
+    }
+
+    function calcCaloriesPer330(og, fg, abv){
+      const fgValue = fg;
+      const abw = abv * 0.79;
+      const re = (0.1808 * sgToPlato(og)) + (0.8192 * sgToPlato(fg));
+      const calories12oz = ((6.9 * abw) + (4.0 * (re - 0.10))) * fgValue * 3.55;
+      return Math.max(0, calories12oz * (330 / 355));
+    }
+
+    function calcResidualSugarGL(fg){
+      return Math.max(0, (fg - 1) * 1000 * 2.4);
+    }
+
+    function countLines(text){
+      return text
+        .split("\\n")
+        .map(v => v.trim())
+        .filter(Boolean).length;
     }
 
     function statusClass(type){
@@ -685,13 +843,6 @@ Giorno 7: cold crash"></textarea>
       return { text:"Alta", cls:"danger" };
     }
 
-    function countLines(text){
-      return text
-        .split("\\n")
-        .map(v => v.trim())
-        .filter(Boolean).length;
-    }
-
     function updateDashboard(data = collectData()){
       const ph = parseNum(data.ph, 3.5);
       const temperatura = parseNum(data.temperatura, 20);
@@ -699,6 +850,8 @@ Giorno 7: cold crash"></textarea>
       const fg = parseNum(data.fg, 1.010);
       const abv = data.abvManuale.trim() ? parseNum(data.abvManuale, 0) : calcABV(og, fg);
       const att = calcAtt(og, fg);
+      const cal = calcCaloriesPer330(og, fg, abv);
+      const sugar = calcResidualSugarGL(fg);
 
       $("dashPh").textContent = ph.toFixed(2);
       $("dashTemp").textContent = temperatura.toFixed(1) + "°";
@@ -706,6 +859,8 @@ Giorno 7: cold crash"></textarea>
       $("dashOg").textContent = og.toFixed(3);
       $("dashFg").textContent = fg.toFixed(3);
       $("dashAtt").textContent = att.toFixed(1) + "%";
+      $("dashCal").textContent = Math.round(cal);
+      $("dashSugar").textContent = sugar.toFixed(1);
 
       $("sumRicetta").textContent = data.nomeRicetta || "—";
       $("sumLotto").textContent = data.numeroLotto || "—";
@@ -723,6 +878,25 @@ Giorno 7: cold crash"></textarea>
 
       $("countIngredienti").textContent = countLines(data.ingredienti);
       $("countAggiunte").textContent = countLines(data.aggiunte);
+
+      $("toolCalorie").textContent = Math.round(cal) + " kcal";
+      $("toolSugar").textContent = sugar.toFixed(1) + " g/L";
+      $("toolAbv").textContent = abv.toFixed(2) + " %";
+      $("toolAtt").textContent = att.toFixed(1) + " %";
+    }
+
+    function fillData(data){
+      ids.forEach(id => {
+        $(id).value = data[id] ?? defaults[id] ?? "";
+      });
+      updateDashboard(data);
+    }
+
+    function saveData(){
+      const data = collectData();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      $("saveNote").textContent = "Salvato";
+      updateDashboard(data);
     }
 
     function exportJSON(){
@@ -756,17 +930,70 @@ Giorno 7: cold crash"></textarea>
       saveData();
     }
 
+    function newRecipe(){
+      if(!confirm("Creare una nuova ricetta? I dati attuali verranno sostituiti.")) return;
+      const next = {...defaults};
+      next.numeroLotto = "";
+      next.nomeRicetta = "";
+      next.dataLotto = "";
+      next.note = "";
+      next.ingredienti = "";
+      next.aggiunte = "";
+      fillData(next);
+      saveData();
+    }
+
+    function activateTab(tabName){
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add("active");
+      $(tabName).classList.add("active");
+    }
+
+    function searchRecipes(query){
+      const q = query.trim().toLowerCase();
+      const results = !q
+        ? recipeLibrary
+        : recipeLibrary.filter(r =>
+            r.nomeRicetta.toLowerCase().includes(q) ||
+            r.note.toLowerCase().includes(q) ||
+            r.ingredienti.toLowerCase().includes(q)
+          );
+
+      const container = $("recipeResults");
+      container.innerHTML = "";
+
+      results.forEach((recipe, index) => {
+        const div = document.createElement("div");
+        div.className = "recipe-item";
+        div.innerHTML = `
+          <h4>${recipe.nomeRicetta}</h4>
+          <p>${recipe.lievito} • OG ${recipe.og} • FG ${recipe.fg}</p>
+          <p>${recipe.note}</p>
+        `;
+        div.addEventListener("click", () => {
+          const current = collectData();
+          fillData({
+            ...current,
+            ...recipe,
+            numeroLotto: current.numeroLotto || "",
+            dataLotto: current.dataLotto || ""
+          });
+          saveData();
+          activateTab("ricetta");
+        });
+        container.appendChild(div);
+      });
+
+      if(results.length === 0){
+        container.innerHTML = `<div class="recipe-item"><h4>Nessun risultato</h4><p>Prova con un altro nome o stile.</p></div>`;
+      }
+    }
+
     function setupTabs(){
       const tabs = document.querySelectorAll(".tab");
-      const panels = document.querySelectorAll(".panel");
-
       tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-          tabs.forEach(t => t.classList.remove("active"));
-          panels.forEach(p => p.classList.remove("active"));
-          tab.classList.add("active");
-          $(tab.dataset.tab).classList.add("active");
-        });
+        tab.addEventListener("click", () => activateTab(tab.dataset.tab));
       });
     }
 
@@ -783,6 +1010,23 @@ Giorno 7: cold crash"></textarea>
       $("saveBtn").addEventListener("click", saveData);
       $("exportBtn").addEventListener("click", exportJSON);
       $("resetBtn").addEventListener("click", resetData);
+      $("newRecipeBtn").addEventListener("click", newRecipe);
+      $("searchRecipeBtn").addEventListener("click", () => {
+        activateTab("strumenti");
+        $("recipeSearch").focus();
+      });
+      $("calcCaloriesBtn").addEventListener("click", () => {
+        updateDashboard();
+        activateTab("strumenti");
+      });
+      $("calcSugarBtn").addEventListener("click", () => {
+        updateDashboard();
+        activateTab("strumenti");
+      });
+
+      $("recipeSearch").addEventListener("input", (e) => {
+        searchRecipes(e.target.value);
+      });
 
       $("importFile").addEventListener("change", (e) => {
         const file = e.target.files[0];
@@ -794,6 +1038,7 @@ Giorno 7: cold crash"></textarea>
     fillData(loadData());
     setupTabs();
     setupEvents();
+    searchRecipes("");
     saveData();
   </script>
 </body>
