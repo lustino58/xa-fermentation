@@ -3,27 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation</title>
-  <meta name="theme-color" content="#081b2f" />
+  <title>XA Fermentation Mixer</title>
+  <meta name="theme-color" content="#071629" />
   <style>
     :root{
-      --bg1:#071629;
-      --bg2:#0b2036;
+      --bg1:#061425;
+      --bg2:#0b2138;
       --panel:#102742;
-      --panel2:#0c1e31;
+      --panel2:#0a1a2d;
+      --strip:#0a1422;
+      --strip2:#0d1b2c;
       --stroke:rgba(255,255,255,.08);
       --text:#f4f7fb;
-      --muted:#9bb0c3;
+      --muted:#94a9bd;
 
-      --blue:#58a6ff;
-      --orange:#ff9a4a;
-      --violet:#b56cff;
-      --yellow:#ffd166;
-      --green:#40d7a2;
-      --pink:#ff6b8a;
-
+      --ph:#58a6ff;
+      --temp:#ff934d;
+      --og:#ffd166;
+      --fg:#43d6a3;
+      --abv:#b56cff;
+      --ibu:#ff6b8a;
+      --co2:#7ad7ff;
+      --sugar:#f6c56b;
       --radius:24px;
-      --shadow:0 18px 50px rgba(0,0,0,.35);
+      --shadow:0 18px 55px rgba(0,0,0,.38);
     }
 
     *{
@@ -38,16 +41,16 @@
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top, rgba(88,166,255,.16), transparent 24%),
+        radial-gradient(circle at top, rgba(88,166,255,.14), transparent 22%),
         linear-gradient(180deg,var(--bg1),var(--bg2));
     }
 
     body{
-      padding:16px 14px 96px;
+      padding:16px 14px 110px;
     }
 
     .app{
-      width:min(720px,100%);
+      width:min(1300px,100%);
       margin:0 auto;
     }
 
@@ -55,12 +58,12 @@
       display:flex;
       align-items:center;
       gap:14px;
-      margin-bottom:16px;
+      margin-bottom:14px;
     }
 
     .logo{
-      width:76px;
-      height:76px;
+      width:80px;
+      height:80px;
       border-radius:22px;
       display:grid;
       place-items:center;
@@ -69,17 +72,17 @@
       color:#fff;
       background:
         linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
-        linear-gradient(180deg,#132b46,#091728);
+        linear-gradient(180deg,#132b46,#081728);
       border:1px solid rgba(255,255,255,.08);
       box-shadow:var(--shadow);
       flex:0 0 auto;
     }
 
     .hero h1{
-      font-size:clamp(28px,7vw,46px);
+      font-size:clamp(28px,7vw,50px);
       line-height:.95;
       font-weight:800;
-      letter-spacing:-.03em;
+      letter-spacing:-.04em;
     }
 
     .hero p{
@@ -88,132 +91,265 @@
       font-size:14px;
     }
 
-    .screen{
-      display:none;
+    .title-panel{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)),
+        linear-gradient(180deg,var(--panel),var(--panel2));
+      border:1px solid var(--stroke);
+      border-radius:30px;
+      padding:16px;
+      box-shadow:var(--shadow);
+      margin-bottom:14px;
     }
 
-    .screen.active{
-      display:block;
+    .title-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+      flex-wrap:wrap;
     }
 
-    .card{
+    .recipe-big{
+      font-size:clamp(26px,7vw,46px);
+      font-weight:800;
+      line-height:.95;
+      letter-spacing:-.04em;
+    }
+
+    .recipe-sub{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .top-btn{
+      border:none;
+      cursor:pointer;
+      border-radius:16px;
+      padding:12px 14px;
+      font-size:14px;
+      font-weight:800;
+      color:#fff;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .top-btn.red{background:#ff4d4d;}
+    .top-btn.blue{background:#2563eb;}
+    .top-btn.green{background:#059669;}
+    .top-btn.orange{background:#d97706;}
+
+    .shell{
       background:
         linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)),
         linear-gradient(180deg,var(--panel),var(--panel2));
       border:1px solid var(--stroke);
       border-radius:30px;
       box-shadow:var(--shadow);
-      padding:16px;
+      padding:14px;
       margin-bottom:14px;
     }
 
     .section-title{
       font-size:18px;
       font-weight:800;
-      margin-bottom:12px;
+      margin-bottom:8px;
     }
 
     .section-sub{
-      font-size:13px;
       color:var(--muted);
+      font-size:13px;
       margin-bottom:12px;
+    }
+
+    .mixer-wrap{
+      overflow-x:auto;
+      padding-bottom:6px;
+    }
+
+    .mixer{
+      display:flex;
+      gap:12px;
+      min-width:max-content;
+      align-items:stretch;
+    }
+
+    .strip{
+      width:118px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        linear-gradient(180deg,var(--strip),var(--strip2));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:24px;
+      padding:14px 12px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      min-height:510px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .strip::after{
+      content:"";
+      position:absolute;
+      right:-30px;
+      top:-30px;
+      width:90px;
+      height:90px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.10), transparent 70%);
+      pointer-events:none;
+    }
+
+    .strip-label{
+      position:relative;
+      z-index:1;
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:#dbe6f1;
+      margin-bottom:8px;
+      text-align:center;
+      min-height:30px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .strip-display{
+      position:relative;
+      z-index:1;
+      width:100%;
+      border-radius:16px;
+      padding:12px 8px;
+      text-align:center;
+      background:#06111d;
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), inset 0 0 24px rgba(0,0,0,.45);
+      margin-bottom:14px;
+    }
+
+    .strip-value{
+      font-size:30px;
+      font-weight:800;
+      line-height:.95;
+      letter-spacing:-.04em;
+    }
+
+    .strip-unit{
+      margin-top:4px;
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .slider-zone{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      position:relative;
+      z-index:1;
+    }
+
+    .slider-vertical{
+      -webkit-appearance:none;
+      appearance:none;
+      width:280px;
+      height:34px;
+      transform:rotate(-90deg);
+      background:transparent;
+    }
+
+    .slider-vertical::-webkit-slider-runnable-track{
+      height:14px;
+      background:linear-gradient(180deg,#1b2b42,#0d1624);
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .slider-vertical::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      appearance:none;
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      margin-top:-9px;
+      border:none;
+      box-shadow:0 4px 12px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.5);
+      cursor:pointer;
+    }
+
+    .slider-vertical::-moz-range-track{
+      height:14px;
+      background:linear-gradient(180deg,#1b2b42,#0d1624);
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .slider-vertical::-moz-range-thumb{
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      border:none;
+      box-shadow:0 4px 12px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.5);
+      cursor:pointer;
+    }
+
+    .ph-thumb::-webkit-slider-thumb,.ph-thumb::-moz-range-thumb{background:var(--ph);}
+    .temp-thumb::-webkit-slider-thumb,.temp-thumb::-moz-range-thumb{background:var(--temp);}
+    .og-thumb::-webkit-slider-thumb,.og-thumb::-moz-range-thumb{background:var(--og);}
+    .fg-thumb::-webkit-slider-thumb,.fg-thumb::-moz-range-thumb{background:var(--fg);}
+    .ibu-thumb::-webkit-slider-thumb,.ibu-thumb::-moz-range-thumb{background:var(--ibu);}
+    .co2-thumb::-webkit-slider-thumb,.co2-thumb::-moz-range-thumb{background:var(--co2);}
+
+    .strip-footer{
+      width:100%;
+      margin-top:12px;
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
+      position:relative;
+      z-index:1;
     }
 
     .grid{
       display:grid;
-      grid-template-columns:repeat(2,1fr);
+      grid-template-columns:repeat(12,1fr);
       gap:12px;
     }
 
-    .metric{
-      border-radius:22px;
+    .card{
+      grid-column:span 12;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)),
+        rgba(6,14,24,.28);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:24px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
       padding:16px;
-      min-height:130px;
-      position:relative;
-      overflow:hidden;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.05);
     }
 
-    .metric::after{
-      content:"";
-      position:absolute;
-      width:140px;
-      height:140px;
-      right:-50px;
-      bottom:-70px;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(255,255,255,.12), transparent 70%);
-    }
-
-    .metric .k{
-      position:relative;
-      z-index:1;
-      font-size:12px;
-      color:#dce6f1;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-    }
-
-    .metric .v{
-      position:relative;
-      z-index:1;
-      margin-top:12px;
-      font-size:clamp(34px,10vw,56px);
-      font-weight:800;
-      line-height:.95;
-      letter-spacing:-.05em;
-    }
-
-    .metric .s{
-      position:relative;
-      z-index:1;
-      margin-top:8px;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .ph .v{color:var(--blue);}
-    .temp .v{color:var(--orange);}
-    .abv .v{color:var(--violet);}
-    .og .v{color:var(--yellow);}
-    .fg .v{color:var(--green);}
-    .att .v{color:var(--pink);}
-
-    .quick-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:12px;
-    }
-
-    .quick-btn{
-      border:none;
-      cursor:pointer;
-      border-radius:22px;
-      padding:18px 16px;
-      text-align:left;
-      color:#fff;
-      min-height:90px;
-      box-shadow:var(--shadow);
-      font-size:16px;
-      font-weight:800;
-    }
-
-    .quick-btn small{
-      display:block;
-      margin-top:6px;
-      font-size:12px;
-      opacity:.85;
-      font-weight:600;
-    }
-
-    .quick-btn.red{background:linear-gradient(180deg,#ff5b5b,#d93e3e);}
-    .quick-btn.blue{background:linear-gradient(180deg,#3388ff,#1b5fca);}
-    .quick-btn.green{background:linear-gradient(180deg,#17b87d,#0d8f61);}
-    .quick-btn.orange{background:linear-gradient(180deg,#f39b30,#cb6f08);}
+    .span-6{grid-column:span 6;}
+    .span-4{grid-column:span 4;}
 
     .form{
       display:grid;
+      gap:12px;
+    }
+
+    .two{
+      display:grid;
+      grid-template-columns:1fr 1fr;
       gap:12px;
     }
 
@@ -221,12 +357,6 @@
       display:flex;
       flex-direction:column;
       gap:8px;
-    }
-
-    .two{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
     }
 
     label{
@@ -252,6 +382,36 @@
       resize:vertical;
     }
 
+    .ingredient-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .ingredient-btn{
+      border:none;
+      cursor:pointer;
+      border-radius:20px;
+      padding:12px 8px;
+      text-align:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.06);
+      color:#fff;
+      min-height:90px;
+      font-weight:700;
+    }
+
+    .ingredient-btn .emoji{
+      font-size:30px;
+      display:block;
+      margin-bottom:6px;
+    }
+
+    .ingredient-btn .txt{
+      font-size:12px;
+      color:#dbe6f1;
+    }
+
     .result-box{
       border-radius:22px;
       padding:16px;
@@ -267,76 +427,10 @@
       border-bottom:1px dashed rgba(255,255,255,.08);
     }
 
-    .result-line:last-child{
-      border-bottom:none;
-    }
+    .result-line:last-child{border-bottom:none;}
 
-    .result-line span:first-child{
-      color:var(--muted);
-    }
-
-    .result-line span:last-child{
-      font-weight:800;
-    }
-
-    .recipe-list{
-      display:grid;
-      gap:10px;
-    }
-
-    .recipe-item{
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:20px;
-      padding:14px;
-      cursor:pointer;
-    }
-
-    .recipe-item h3{
-      font-size:16px;
-      margin-bottom:6px;
-    }
-
-    .recipe-item p{
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.35;
-    }
-
-    .bottom-nav{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:0;
-      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
-      background:linear-gradient(180deg, rgba(6,20,37,.15), rgba(6,20,37,.95));
-      backdrop-filter:blur(10px);
-      border-top:1px solid rgba(255,255,255,.06);
-    }
-
-    .bottom-nav-inner{
-      width:min(720px,100%);
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:8px;
-    }
-
-    .nav-btn{
-      border:none;
-      cursor:pointer;
-      border-radius:16px;
-      padding:12px 8px;
-      font-size:13px;
-      font-weight:800;
-      color:#fff;
-      background:rgba(255,255,255,.07);
-      border:1px solid rgba(255,255,255,.06);
-    }
-
-    .nav-btn.active{
-      background:rgba(255,255,255,.16);
-    }
+    .result-line span:first-child{color:var(--muted);}
+    .result-line span:last-child{font-weight:800;}
 
     .save-note{
       margin-top:10px;
@@ -345,11 +439,13 @@
       font-size:12px;
     }
 
-    @media (max-width:640px){
-      .grid,
-      .quick-grid,
-      .two{
-        grid-template-columns:1fr;
+    @media (max-width:720px){
+      .two,
+      .ingredient-grid{
+        grid-template-columns:1fr 1fr;
+      }
+      .span-6,.span-4{
+        grid-column:span 12;
       }
     }
   </style>
@@ -359,308 +455,294 @@
     <div class="hero">
       <div class="logo">XA</div>
       <div>
-        <h1>XA Fermentation</h1>
-        <p>Digitale, semplice, veloce</p>
+        <h1>XA Fermentation Mixer</h1>
+        <p>Digitale, scenografica, veloce</p>
       </div>
     </div>
 
-    <!-- HOME -->
-    <section class="screen active" id="screen-home">
-      <div class="card">
-        <div class="section-title">Dashboard</div>
-        <div class="grid">
-          <div class="metric ph">
-            <div class="k">pH</div>
-            <div class="v" id="dashPh">3.50</div>
-            <div class="s">Acidità</div>
+    <div class="title-panel">
+      <div class="title-top">
+        <div>
+          <div class="recipe-big" id="recipeTitleBig">SIDRO SECCO XA</div>
+          <div class="recipe-sub">Lotto <span id="lotTitle">XA-001</span> • <span id="dateTitle">—</span></div>
+        </div>
+
+        <div class="top-actions">
+          <button class="top-btn red" id="newRecipeBtn">Nuova Ricetta</button>
+          <button class="top-btn blue" id="saveBtn">Salva</button>
+          <button class="top-btn green" id="exportBtn">Export JSON</button>
+          <label class="top-btn orange" for="importFile">Import JSON</label>
+          <input id="importFile" type="file" accept=".json" hidden />
+        </div>
+      </div>
+    </div>
+
+    <div class="shell">
+      <div class="section-title">Mixer digitale parametri</div>
+      <div class="section-sub">Muovi i cursori come un mixer digitale. OG e FG calcolano ABV, attenuazione, calorie e zucchero residuo.</div>
+
+      <div class="mixer-wrap">
+        <div class="mixer">
+          <div class="strip">
+            <div class="strip-label">pH</div>
+            <div class="strip-display">
+              <div class="strip-value" id="phVal" style="color:var(--ph)">3.50</div>
+              <div class="strip-unit">acidità</div>
+            </div>
+            <div class="slider-zone">
+              <input id="phSlider" class="slider-vertical ph-thumb" type="range" min="280" max="500" step="1" value="350" />
+            </div>
+            <div class="strip-footer">2.80 → 5.00</div>
           </div>
 
-          <div class="metric temp">
-            <div class="k">Temperatura</div>
-            <div class="v" id="dashTemp">20.0°</div>
-            <div class="s">Fermentazione</div>
+          <div class="strip">
+            <div class="strip-label">Temperatura</div>
+            <div class="strip-display">
+              <div class="strip-value" id="tempVal" style="color:var(--temp)">20.0°</div>
+              <div class="strip-unit">°C</div>
+            </div>
+            <div class="slider-zone">
+              <input id="tempSlider" class="slider-vertical temp-thumb" type="range" min="0" max="350" step="1" value="200" />
+            </div>
+            <div class="strip-footer">0 → 35 °C</div>
           </div>
 
-          <div class="metric abv">
-            <div class="k">ABV</div>
-            <div class="v" id="dashAbv">5.25%</div>
-            <div class="s">Automatico</div>
+          <div class="strip">
+            <div class="strip-label">OG</div>
+            <div class="strip-display">
+              <div class="strip-value" id="ogVal" style="color:var(--og)">1.050</div>
+              <div class="strip-unit">original gravity</div>
+            </div>
+            <div class="slider-zone">
+              <input id="ogSlider" class="slider-vertical og-thumb" type="range" min="1000" max="1120" step="1" value="1050" />
+            </div>
+            <div class="strip-footer">1.000 → 1.120</div>
           </div>
 
-          <div class="metric og">
-            <div class="k">OG</div>
-            <div class="v" id="dashOg">1.050</div>
-            <div class="s">Densità iniziale</div>
+          <div class="strip">
+            <div class="strip-label">FG</div>
+            <div class="strip-display">
+              <div class="strip-value" id="fgVal" style="color:var(--fg)">1.010</div>
+              <div class="strip-unit">final gravity</div>
+            </div>
+            <div class="slider-zone">
+              <input id="fgSlider" class="slider-vertical fg-thumb" type="range" min="998" max="1040" step="1" value="1010" />
+            </div>
+            <div class="strip-footer">0.998 → 1.040</div>
           </div>
 
-          <div class="metric fg">
-            <div class="k">FG</div>
-            <div class="v" id="dashFg">1.010</div>
-            <div class="s">Densità finale</div>
+          <div class="strip">
+            <div class="strip-label">ABV</div>
+            <div class="strip-display">
+              <div class="strip-value" id="abvVal" style="color:var(--abv)">5.25%</div>
+              <div class="strip-unit">automatico</div>
+            </div>
+            <div class="slider-zone">
+              <div style="width:100%; text-align:center; color:var(--muted); font-size:13px;">calcolato da OG / FG</div>
+            </div>
+            <div class="strip-footer">live</div>
           </div>
 
-          <div class="metric att">
-            <div class="k">Attenuazione</div>
-            <div class="v" id="dashAtt">80.0%</div>
-            <div class="s">Apparente</div>
+          <div class="strip">
+            <div class="strip-label">IBU</div>
+            <div class="strip-display">
+              <div class="strip-value" id="ibuVal" style="color:var(--ibu)">28</div>
+              <div class="strip-unit">amaro</div>
+            </div>
+            <div class="slider-zone">
+              <input id="ibuSlider" class="slider-vertical ibu-thumb" type="range" min="0" max="120" step="1" value="28" />
+            </div>
+            <div class="strip-footer">0 → 120</div>
+          </div>
+
+          <div class="strip">
+            <div class="strip-label">CO₂</div>
+            <div class="strip-display">
+              <div class="strip-value" id="co2Val" style="color:var(--co2)">2.4</div>
+              <div class="strip-unit">volumi</div>
+            </div>
+            <div class="slider-zone">
+              <input id="co2Slider" class="slider-vertical co2-thumb" type="range" min="10" max="40" step="1" value="24" />
+            </div>
+            <div class="strip-footer">1.0 → 4.0</div>
+          </div>
+
+          <div class="strip">
+            <div class="strip-label">Calorie</div>
+            <div class="strip-display">
+              <div class="strip-value" id="calVal" style="color:var(--sugar)">160</div>
+              <div class="strip-unit">kcal / 330 ml</div>
+            </div>
+            <div class="slider-zone">
+              <div style="width:100%; text-align:center; color:var(--muted); font-size:13px;">stima automatica</div>
+            </div>
+            <div class="strip-footer">live</div>
+          </div>
+
+          <div class="strip">
+            <div class="strip-label">Zucchero</div>
+            <div class="strip-display">
+              <div class="strip-value" id="sugarVal" style="color:var(--sugar)">24.0</div>
+              <div class="strip-unit">g/L residui</div>
+            </div>
+            <div class="slider-zone">
+              <div style="width:100%; text-align:center; color:var(--muted); font-size:13px;">stima automatica</div>
+            </div>
+            <div class="strip-footer">live</div>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="section-title">Azioni rapide</div>
-        <div class="quick-grid">
-          <button class="quick-btn red" id="btnNewRecipe">
-            Nuova Ricetta
-            <small>Apre la schermata ricetta pulita</small>
-          </button>
+      <div class="save-note" id="saveNote">Salvataggio automatico attivo</div>
+    </div>
 
-          <button class="quick-btn blue" id="btnSearchRecipe">
-            Cerca Ricetta
-            <small>Apre il ricettario base</small>
-          </button>
-
-          <button class="quick-btn green" id="btnCalories">
-            Calcolo Calorie
-            <small>Stima per 330 ml</small>
-          </button>
-
-          <button class="quick-btn orange" id="btnSugar">
-            Zucchero Residuo
-            <small>Stima g/L</small>
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title">Riepilogo lotto</div>
-        <div class="result-box">
-          <div class="result-line"><span>Ricetta</span><span id="sumRicetta">Sidro Secco XA</span></div>
-          <div class="result-line"><span>Lotto</span><span id="sumLotto">XA-001</span></div>
-          <div class="result-line"><span>Data</span><span id="sumData">—</span></div>
-          <div class="result-line"><span>Litri</span><span id="sumLitri">23</span></div>
-          <div class="result-line"><span>Lievito</span><span id="sumLievito">Autoctono</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- NUOVA RICETTA -->
-    <section class="screen" id="screen-new">
-      <div class="card">
-        <div class="section-title">Nuova Ricetta</div>
-        <div class="section-sub">Qui inserisci tutti i dati principali del lotto.</div>
-
+    <div class="grid">
+      <div class="card span-6">
+        <div class="section-title">Scheda ricetta</div>
         <div class="form">
           <div class="two">
             <div class="field">
-              <label for="nomeRicetta">Nome ricetta</label>
-              <input id="nomeRicetta" type="text" placeholder="Es. Sidro Secco XA" />
+              <label for="recipeName">Nome ricetta</label>
+              <input id="recipeName" type="text" placeholder="Es. Sidro Secco XA" />
             </div>
             <div class="field">
-              <label for="numeroLotto">Numero lotto</label>
-              <input id="numeroLotto" type="text" placeholder="Es. XA-001" />
+              <label for="lotNumber">Numero lotto</label>
+              <input id="lotNumber" type="text" placeholder="Es. XA-001" />
             </div>
           </div>
 
           <div class="two">
             <div class="field">
-              <label for="dataLotto">Data lotto</label>
-              <input id="dataLotto" type="date" />
+              <label for="batchDate">Data</label>
+              <input id="batchDate" type="date" />
             </div>
             <div class="field">
-              <label for="litri">Litri</label>
-              <input id="litri" type="number" step="0.1" placeholder="23" />
+              <label for="yeast">Lievito</label>
+              <input id="yeast" type="text" placeholder="Es. Autoctono / US-05 / Kveik" />
             </div>
           </div>
 
           <div class="field">
-            <label for="lievito">Lievito</label>
-            <input id="lievito" type="text" placeholder="Es. Lievito autoctono" />
-          </div>
-
-          <div class="two">
-            <div class="field">
-              <label for="ph">pH</label>
-              <input id="ph" type="text" placeholder="3.50" />
-            </div>
-            <div class="field">
-              <label for="temperatura">Temperatura °C</label>
-              <input id="temperatura" type="text" placeholder="20.0" />
-            </div>
-          </div>
-
-          <div class="two">
-            <div class="field">
-              <label for="og">OG</label>
-              <input id="og" type="text" placeholder="1.050" />
-            </div>
-            <div class="field">
-              <label for="fg">FG</label>
-              <input id="fg" type="text" placeholder="1.010" />
-            </div>
+            <label for="ingredientsText">Ingredienti</label>
+            <textarea id="ingredientsText" placeholder="Gli ingredienti selezionati appaiono qui..."></textarea>
           </div>
 
           <div class="field">
-            <label for="ingredienti">Ingredienti</label>
-            <textarea id="ingredienti" placeholder="Es. Succo mela&#10;Lievito autoctono&#10;Nutriente"></textarea>
+            <label for="additionsText">Aggiunte / Step</label>
+            <textarea id="additionsText" placeholder="Es. giorno 1 inoculo, giorno 3 nutrienti..."></textarea>
           </div>
 
           <div class="field">
-            <label for="aggiunte">Aggiunte</label>
-            <textarea id="aggiunte" placeholder="Es. Giorno 1 inoculo&#10;Giorno 3 nutrienti"></textarea>
-          </div>
-
-          <div class="field">
-            <label for="note">Note</label>
-            <textarea id="note" placeholder="Osservazioni fermentazione..."></textarea>
+            <label for="notesText">Note</label>
+            <textarea id="notesText" placeholder="Osservazioni, profilo aromatico, problemi, andamento..."></textarea>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- CERCA RICETTA -->
-    <section class="screen" id="screen-search">
-      <div class="card">
-        <div class="section-title">Cerca Ricetta</div>
-        <div class="section-sub">Tocca una ricetta per caricarla nella schermata nuova ricetta.</div>
-        <div class="field">
-          <label for="recipeSearch">Ricerca</label>
-          <input id="recipeSearch" type="text" placeholder="Es. sidro, blonde, saison, ipa..." />
+      <div class="card span-6">
+        <div class="section-title">Ingredienti rapidi</div>
+        <div class="section-sub">Tocca una micro-icona per inserirla nella ricetta.</div>
+
+        <div class="ingredient-grid">
+          <button class="ingredient-btn" data-ingredient="Mela">
+            <span class="emoji">🍎</span>
+            <span class="txt">Mela</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Pera">
+            <span class="emoji">🍐</span>
+            <span class="txt">Pera</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Tè">
+            <span class="emoji">🍵</span>
+            <span class="txt">Tè</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Miele">
+            <span class="emoji">🍯</span>
+            <span class="txt">Miele</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Limone">
+            <span class="emoji">🍋</span>
+            <span class="txt">Limone</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Arancia">
+            <span class="emoji">🍊</span>
+            <span class="txt">Arancia</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Botaniche">
+            <span class="emoji">🌿</span>
+            <span class="txt">Botaniche</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Malto">
+            <span class="emoji">🌾</span>
+            <span class="txt">Malto</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Zucchero">
+            <span class="emoji">🧁</span>
+            <span class="txt">Zucchero</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Sale">
+            <span class="emoji">🧂</span>
+            <span class="txt">Sale</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Uva">
+            <span class="emoji">🍇</span>
+            <span class="txt">Uva</span>
+          </button>
+
+          <button class="ingredient-btn" data-ingredient="Spezie">
+            <span class="emoji">🫚</span>
+            <span class="txt">Spezie</span>
+          </button>
         </div>
-      </div>
 
-      <div class="card">
-        <div class="recipe-list" id="recipeResults"></div>
-      </div>
-    </section>
+        <div style="height:12px"></div>
 
-    <!-- STRUMENTI -->
-    <section class="screen" id="screen-tools">
-      <div class="card">
-        <div class="section-title">Strumenti</div>
+        <div class="section-title">Riepilogo tecnico</div>
         <div class="result-box">
-          <div class="result-line"><span>ABV</span><span id="toolAbv">5.25 %</span></div>
-          <div class="result-line"><span>Attenuazione</span><span id="toolAtt">80.0 %</span></div>
-          <div class="result-line"><span>Calorie / 330 ml</span><span id="toolCal">160 kcal</span></div>
-          <div class="result-line"><span>Zucchero residuo</span><span id="toolSugar">24.0 g/L</span></div>
+          <div class="result-line"><span>ABV</span><span id="resAbv">5.25 %</span></div>
+          <div class="result-line"><span>Attenuazione</span><span id="resAtt">80.0 %</span></div>
+          <div class="result-line"><span>Calorie / 330 ml</span><span id="resCal">160 kcal</span></div>
+          <div class="result-line"><span>Zucchero residuo</span><span id="resSugar">24.0 g/L</span></div>
+          <div class="result-line"><span>IBU</span><span id="resIbu">28</span></div>
+          <div class="result-line"><span>CO₂</span><span id="resCo2">2.4 vol</span></div>
         </div>
       </div>
-    </section>
-
-    <div class="save-note" id="saveNote">Salvataggio automatico attivo</div>
-  </div>
-
-  <div class="bottom-nav">
-    <div class="bottom-nav-inner">
-      <button class="nav-btn active" data-screen="home">Home</button>
-      <button class="nav-btn" data-screen="new">Nuova</button>
-      <button class="nav-btn" data-screen="search">Cerca</button>
-      <button class="nav-btn" data-screen="tools">Strumenti</button>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = "xaFermentationSimple_v1";
+    const STORAGE_KEY = "xaFermentationMixer_v1";
 
     const defaults = {
-      nomeRicetta: "Sidro Secco XA",
-      numeroLotto: "XA-001",
-      dataLotto: "",
-      litri: "23",
-      lievito: "Lievito autoctono",
-      ph: "3.50",
-      temperatura: "20.0",
-      og: "1.050",
-      fg: "1.010",
-      ingredienti: "Succo mela\\nLievito autoctono",
-      aggiunte: "",
-      note: ""
+      recipeName: "Sidro Secco XA",
+      lotNumber: "XA-001",
+      batchDate: "",
+      yeast: "Lievito autoctono",
+      ingredientsText: "Mela\\nLievito autoctono",
+      additionsText: "",
+      notesText: "",
+      ph: 3.50,
+      temp: 20.0,
+      og: 1.050,
+      fg: 1.010,
+      ibu: 28,
+      co2: 2.4
     };
-
-    const recipeLibrary = [
-      {
-        nomeRicetta: "Sidro Secco",
-        lievito: "Lievito autoctono",
-        ph: "3.40",
-        temperatura: "18.0",
-        og: "1.050",
-        fg: "1.004",
-        ingredienti: "Succo mela 20 L\\nNutriente 4 g",
-        aggiunte: "Giorno 1 inoculo\\nGiorno 5 travaso",
-        note: "Profilo secco e pulito"
-      },
-      {
-        nomeRicetta: "Blonde Ale Base",
-        lievito: "US-05",
-        ph: "4.20",
-        temperatura: "20.0",
-        og: "1.048",
-        fg: "1.010",
-        ingredienti: "Pilsner malt 4.5 kg\\nSaaz 35 g",
-        aggiunte: "60 min amaro\\n10 min aroma",
-        note: "Base semplice"
-      },
-      {
-        nomeRicetta: "Saison",
-        lievito: "Belle Saison",
-        ph: "4.00",
-        temperatura: "24.0",
-        og: "1.054",
-        fg: "1.004",
-        ingredienti: "Pilsner 4.8 kg\\nFrumento 0.5 kg",
-        aggiunte: "Ramp temperatura",
-        note: "Molto attenuata"
-      },
-      {
-        nomeRicetta: "West Coast IPA",
-        lievito: "US-05",
-        ph: "4.10",
-        temperatura: "19.0",
-        og: "1.060",
-        fg: "1.012",
-        ingredienti: "Pale malt 5.5 kg\\nCitra 60 g\\nSimcoe 60 g",
-        aggiunte: "Dry hop giorno 5",
-        note: "Secca e luppolata"
-      }
-    ];
-
-    const ids = Object.keys(defaults);
 
     function $(id){ return document.getElementById(id); }
 
-    function loadData(){
-      try{
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if(!raw) return {...defaults};
-        return {...defaults, ...JSON.parse(raw)};
-      }catch{
-        return {...defaults};
-      }
-    }
-
-    function saveData(){
-      const data = collectData();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      $("saveNote").textContent = "Salvato automaticamente";
-      updateUI(data);
-    }
-
-    function collectData(){
-      const data = {};
-      ids.forEach(id => data[id] = $(id).value);
-      return data;
-    }
-
-    function fillData(data){
-      ids.forEach(id => {
-        $(id).value = data[id] ?? defaults[id] ?? "";
-      });
-      updateUI(data);
-    }
-
-    function parseNum(value, fallback = 0){
-      const n = parseFloat(String(value || "").replace(",", "."));
-      return Number.isFinite(n) ? n : fallback;
+    function sgToPlato(sg){
+      return -616.868 + (1111.14 * sg) - (630.272 * sg * sg) + (135.997 * sg * sg * sg);
     }
 
     function calcABV(og, fg){
@@ -674,10 +756,6 @@
       return Math.max(0, ((ogPts - fgPts) / ogPts) * 100);
     }
 
-    function sgToPlato(sg){
-      return -616.868 + 1111.14*sg - 630.272*sg*sg + 135.997*sg*sg*sg;
-    }
-
     function calcCaloriesPer330(og, fg, abv){
       const abw = abv * 0.79;
       const re = (0.1808 * sgToPlato(og)) + (0.8192 * sgToPlato(fg));
@@ -689,114 +767,160 @@
       return Math.max(0, (fg - 1) * 1000 * 2.4);
     }
 
-    function updateUI(data = collectData()){
-      const ph = parseNum(data.ph, 3.5);
-      const temp = parseNum(data.temperatura, 20);
-      const og = parseNum(data.og, 1.050);
-      const fg = parseNum(data.fg, 1.010);
-      const abv = calcABV(og, fg);
-      const att = calcAtt(og, fg);
-      const cal = calcCaloriesPer330(og, fg, abv);
-      const sugar = calcResidualSugarGL(fg);
-
-      $("dashPh").textContent = ph.toFixed(2);
-      $("dashTemp").textContent = temp.toFixed(1) + "°";
-      $("dashAbv").textContent = abv.toFixed(2) + "%";
-      $("dashOg").textContent = og.toFixed(3);
-      $("dashFg").textContent = fg.toFixed(3);
-      $("dashAtt").textContent = att.toFixed(1) + "%";
-
-      $("sumRicetta").textContent = data.nomeRicetta || "—";
-      $("sumLotto").textContent = data.numeroLotto || "—";
-      $("sumData").textContent = data.dataLotto || "—";
-      $("sumLitri").textContent = data.litri || "—";
-      $("sumLievito").textContent = data.lievito || "—";
-
-      $("toolAbv").textContent = abv.toFixed(2) + " %";
-      $("toolAtt").textContent = att.toFixed(1) + " %";
-      $("toolCal").textContent = Math.round(cal) + " kcal";
-      $("toolSugar").textContent = sugar.toFixed(1) + " g/L";
+    function collectData(){
+      return {
+        recipeName: $("recipeName").value,
+        lotNumber: $("lotNumber").value,
+        batchDate: $("batchDate").value,
+        yeast: $("yeast").value,
+        ingredientsText: $("ingredientsText").value,
+        additionsText: $("additionsText").value,
+        notesText: $("notesText").value,
+        ph: parseFloat($("phSlider").value) / 100,
+        temp: parseFloat($("tempSlider").value) / 10,
+        og: parseFloat($("ogSlider").value) / 1000,
+        fg: parseFloat($("fgSlider").value) / 1000,
+        ibu: parseFloat($("ibuSlider").value),
+        co2: parseFloat($("co2Slider").value) / 10
+      };
     }
 
-    function switchScreen(name){
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-      $("screen-" + name).classList.add("active");
-      document.querySelector('.nav-btn[data-screen="' + name + '"]').classList.add("active");
+    function saveData(){
+      const data = collectData();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      $("saveNote").textContent = "Salvato automaticamente";
+      updateUI(data);
+    }
+
+    function loadData(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return {...defaults};
+        return {...defaults, ...JSON.parse(raw)};
+      }catch{
+        return {...defaults};
+      }
+    }
+
+    function fillData(data){
+      $("recipeName").value = data.recipeName ?? defaults.recipeName;
+      $("lotNumber").value = data.lotNumber ?? defaults.lotNumber;
+      $("batchDate").value = data.batchDate ?? defaults.batchDate;
+      $("yeast").value = data.yeast ?? defaults.yeast;
+      $("ingredientsText").value = data.ingredientsText ?? defaults.ingredientsText;
+      $("additionsText").value = data.additionsText ?? defaults.additionsText;
+      $("notesText").value = data.notesText ?? defaults.notesText;
+
+      $("phSlider").value = Math.round((data.ph ?? defaults.ph) * 100);
+      $("tempSlider").value = Math.round((data.temp ?? defaults.temp) * 10);
+      $("ogSlider").value = Math.round((data.og ?? defaults.og) * 1000);
+      $("fgSlider").value = Math.round((data.fg ?? defaults.fg) * 1000);
+      $("ibuSlider").value = Math.round(data.ibu ?? defaults.ibu);
+      $("co2Slider").value = Math.round((data.co2 ?? defaults.co2) * 10);
+
+      updateUI(data);
+    }
+
+    function updateUI(data = collectData()){
+      const abv = calcABV(data.og, data.fg);
+      const att = calcAtt(data.og, data.fg);
+      const cal = calcCaloriesPer330(data.og, data.fg, abv);
+      const sugar = calcResidualSugarGL(data.fg);
+
+      $("phVal").textContent = data.ph.toFixed(2);
+      $("tempVal").textContent = data.temp.toFixed(1) + "°";
+      $("ogVal").textContent = data.og.toFixed(3);
+      $("fgVal").textContent = data.fg.toFixed(3);
+      $("abvVal").textContent = abv.toFixed(2) + "%";
+      $("ibuVal").textContent = data.ibu.toFixed(0);
+      $("co2Val").textContent = data.co2.toFixed(1);
+      $("calVal").textContent = Math.round(cal);
+      $("sugarVal").textContent = sugar.toFixed(1);
+
+      $("resAbv").textContent = abv.toFixed(2) + " %";
+      $("resAtt").textContent = att.toFixed(1) + " %";
+      $("resCal").textContent = Math.round(cal) + " kcal";
+      $("resSugar").textContent = sugar.toFixed(1) + " g/L";
+      $("resIbu").textContent = data.ibu.toFixed(0);
+      $("resCo2").textContent = data.co2.toFixed(1) + " vol";
+
+      $("recipeTitleBig").textContent = (data.recipeName || "Nuova Ricetta").toUpperCase();
+      $("lotTitle").textContent = data.lotNumber || "—";
+      $("dateTitle").textContent = data.batchDate || "—";
+    }
+
+    function addIngredient(name){
+      const box = $("ingredientsText");
+      const current = box.value.trim();
+      box.value = current ? current + "\\n" + name : name;
+      saveData();
     }
 
     function newRecipe(){
       if(!confirm("Creare una nuova ricetta vuota?")) return;
       fillData({
         ...defaults,
-        nomeRicetta: "",
-        numeroLotto: "",
-        dataLotto: "",
-        lievito: "",
-        ingredienti: "",
-        aggiunte: "",
-        note: ""
+        recipeName: "",
+        lotNumber: "",
+        batchDate: "",
+        yeast: "",
+        ingredientsText: "",
+        additionsText: "",
+        notesText: ""
       });
       saveData();
-      switchScreen("new");
     }
 
-    function renderRecipes(query = ""){
-      const q = query.trim().toLowerCase();
-      const list = !q
-        ? recipeLibrary
-        : recipeLibrary.filter(r =>
-            r.nomeRicetta.toLowerCase().includes(q) ||
-            r.ingredienti.toLowerCase().includes(q) ||
-            r.note.toLowerCase().includes(q)
-          );
+    function exportJSON(){
+      const data = collectData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = (data.lotNumber || "xa-fermentation") + ".json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
 
-      const box = $("recipeResults");
-      box.innerHTML = "";
-
-      if(list.length === 0){
-        box.innerHTML = `<div class="recipe-item"><h3>Nessun risultato</h3><p>Prova con un altro termine.</p></div>`;
-        return;
-      }
-
-      list.forEach(recipe => {
-        const item = document.createElement("div");
-        item.className = "recipe-item";
-        item.innerHTML = `
-          <h3>${recipe.nomeRicetta}</h3>
-          <p>${recipe.lievito} • OG ${recipe.og} • FG ${recipe.fg}</p>
-          <p>${recipe.note}</p>
-        `;
-        item.addEventListener("click", () => {
-          const current = collectData();
-          fillData({
-            ...current,
-            ...recipe
-          });
+    function importJSON(file){
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const data = JSON.parse(reader.result);
+          fillData({...defaults, ...data});
           saveData();
-          switchScreen("new");
-        });
-        box.appendChild(item);
-      });
+        }catch{
+          alert("File JSON non valido");
+        }
+      };
+      reader.readAsText(file);
     }
 
-    ids.forEach(id => {
+    [
+      "recipeName","lotNumber","batchDate","yeast",
+      "ingredientsText","additionsText","notesText",
+      "phSlider","tempSlider","ogSlider","fgSlider","ibuSlider","co2Slider"
+    ].forEach(id => {
       $(id).addEventListener("input", saveData);
+      $(id).addEventListener("change", saveData);
     });
 
-    document.querySelectorAll(".nav-btn").forEach(btn => {
-      btn.addEventListener("click", () => switchScreen(btn.dataset.screen));
+    document.querySelectorAll(".ingredient-btn").forEach(btn => {
+      btn.addEventListener("click", () => addIngredient(btn.dataset.ingredient));
     });
 
-    $("btnNewRecipe").addEventListener("click", newRecipe);
-    $("btnSearchRecipe").addEventListener("click", () => switchScreen("search"));
-    $("btnCalories").addEventListener("click", () => switchScreen("tools"));
-    $("btnSugar").addEventListener("click", () => switchScreen("tools"));
+    $("newRecipeBtn").addEventListener("click", newRecipe);
+    $("saveBtn").addEventListener("click", saveData);
+    $("exportBtn").addEventListener("click", exportJSON);
 
-    $("recipeSearch").addEventListener("input", e => renderRecipes(e.target.value));
+    $("importFile").addEventListener("change", e => {
+      const file = e.target.files[0];
+      if(file) importJSON(file);
+      e.target.value = "";
+    });
 
     fillData(loadData());
-    renderRecipes("");
+    saveData();
   </script>
 </body>
 </html>
