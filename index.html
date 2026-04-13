@@ -3,30 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation Ultra VST</title>
-  <meta name="theme-color" content="#12090d" />
+  <title>XA Fermentation Ultra VST Complete</title>
+  <meta name="theme-color" content="#0b1220" />
   <style>
     :root{
-      --bg1:#0a0810;
-      --bg2:#0b1a2a;
-      --bg3:#10253a;
-      --panel:#102338;
-      --panel2:#0b1b2c;
-      --stroke:rgba(255,255,255,.08);
-      --text:#f5f7fb;
-      --muted:#9fb0c2;
+      --bg1:#080d16;
+      --bg2:#0c1d30;
+      --bg3:#112943;
+      --panel:#10243a;
+      --panel2:#0c1c2e;
+      --line:rgba(255,255,255,.08);
+      --text:#f4f7fb;
+      --muted:#99aec4;
 
-      --red:#ff4354;
-      --red2:#ff6d7a;
-      --orange:#ff9d39;
-      --yellow:#ffd34d;
-      --green:#39d8a0;
-      --cyan:#65e8ff;
-      --violet:#b97aff;
-      --pink:#ff77ae;
-      --blue:#4aa3ff;
+      --red:#ff495d;
+      --orange:#ff9f3b;
+      --yellow:#ffd44d;
+      --green:#39d79f;
+      --cyan:#63e9ff;
+      --violet:#b87cff;
+      --pink:#ff79b2;
+      --blue:#58a8ff;
 
-      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --shadow:0 20px 50px rgba(0,0,0,.42);
+      --radius:24px;
     }
 
     *{
@@ -41,9 +41,9 @@
       min-height:100%;
       color:var(--text);
       background:
-        radial-gradient(circle at top, rgba(255,67,84,.10), transparent 18%),
-        radial-gradient(circle at bottom, rgba(74,163,255,.10), transparent 20%),
-        linear-gradient(180deg,var(--bg1),var(--bg2) 44%,var(--bg3));
+        radial-gradient(circle at top, rgba(255,73,93,.12), transparent 18%),
+        radial-gradient(circle at bottom, rgba(88,168,255,.10), transparent 22%),
+        linear-gradient(180deg,var(--bg1),var(--bg2) 45%,var(--bg3));
     }
 
     body{
@@ -51,7 +51,7 @@
     }
 
     .app{
-      width:min(1500px,100%);
+      width:min(1600px,100%);
       margin:0 auto;
     }
 
@@ -72,10 +72,11 @@
       font-size:32px;
       font-weight:800;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.02)),
-        linear-gradient(180deg,#2c1820,#12090f);
+        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.02)),
+        linear-gradient(180deg,#2b1820,#12090f);
       border:1px solid rgba(255,255,255,.09);
       box-shadow:var(--shadow);
+      flex:0 0 auto;
     }
 
     .hero h1{
@@ -91,14 +92,14 @@
       font-size:14px;
     }
 
-    .shell,
     .top-shell,
-    .screen-shell,
-    .browser-shell{
+    .shell,
+    .browser-shell,
+    .screen-shell{
       background:
         linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015)),
         linear-gradient(180deg,var(--panel),var(--panel2));
-      border:1px solid var(--stroke);
+      border:1px solid var(--line);
       border-radius:30px;
       box-shadow:var(--shadow);
     }
@@ -106,19 +107,19 @@
     .top-shell{
       padding:16px;
       margin-bottom:14px;
-      overflow:hidden;
       position:relative;
+      overflow:hidden;
     }
 
     .top-shell::after{
       content:"";
       position:absolute;
-      width:340px;
-      height:340px;
-      right:-140px;
-      top:-140px;
+      right:-120px;
+      top:-120px;
+      width:320px;
+      height:320px;
       border-radius:50%;
-      background:radial-gradient(circle, rgba(255,67,84,.14), transparent 68%);
+      background:radial-gradient(circle, rgba(255,73,93,.16), transparent 68%);
       pointer-events:none;
     }
 
@@ -149,7 +150,10 @@
     .top-actions,
     .nav-row,
     .preset-row,
-    .print-bar{
+    .action-row,
+    .detail-actions,
+    .chart-actions,
+    .hardware-row{
       display:flex;
       gap:8px;
       flex-wrap:wrap;
@@ -158,8 +162,9 @@
     .top-btn,
     .nav-btn,
     .preset-btn,
-    .lib-toggle,
-    .mini-btn{
+    .mini-btn,
+    .lib-head-btn,
+    .detail-add-btn{
       border:none;
       cursor:pointer;
       border-radius:16px;
@@ -175,31 +180,24 @@
     .top-btn:active,
     .nav-btn:active,
     .preset-btn:active,
-    .lib-toggle:active,
-    .mini-btn:active{
+    .mini-btn:active,
+    .lib-head-btn:active,
+    .detail-add-btn:active{
       transform:scale(.985);
     }
 
-    .top-btn.red,.nav-btn.active,.lib-toggle.active{
-      background:linear-gradient(180deg,#ff4f5f,#d53142);
-      box-shadow:0 0 18px rgba(255,79,95,.18);
+    .top-btn.red,.nav-btn.active,.lib-head-btn.active,.detail-add-btn{
+      background:linear-gradient(180deg,#ff5060,#d32f42);
+      box-shadow:0 0 18px rgba(255,80,96,.18);
     }
 
-    .top-btn.blue{
-      background:linear-gradient(180deg,#3f8bff,#1d5ecf);
-    }
-
-    .top-btn.green{
-      background:linear-gradient(180deg,#0fb77a,#078f60);
-    }
-
-    .top-btn.orange{
-      background:linear-gradient(180deg,#ff9e3d,#d8740a);
-    }
+    .top-btn.blue{background:linear-gradient(180deg,#458fff,#1f62cd);}
+    .top-btn.green{background:linear-gradient(180deg,#11b87c,#078e5f);}
+    .top-btn.orange{background:linear-gradient(180deg,#ffa13d,#d87609);}
 
     .shell,
-    .screen-shell,
-    .browser-shell{
+    .browser-shell,
+    .screen-shell{
       padding:14px;
       margin-bottom:14px;
     }
@@ -228,26 +226,19 @@
     }
 
     .section-sub{
-      font-size:13px;
       color:var(--muted);
+      font-size:13px;
       margin-bottom:12px;
     }
 
-    .hardware-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-    }
-
-    .hardware-port{
+    .hardware-pill{
       padding:10px 12px;
       border-radius:14px;
-      background:linear-gradient(180deg,#2a3138,#101419);
+      background:linear-gradient(180deg,#2b333c,#10151c);
       border:1px solid rgba(255,255,255,.08);
       font-size:12px;
-      color:#d5dce5;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+      color:#d8dfe8;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
       letter-spacing:.08em;
     }
 
@@ -264,8 +255,8 @@
     }
 
     .strip{
-      width:124px;
-      min-height:520px;
+      width:122px;
+      min-height:510px;
       border-radius:28px;
       padding:14px 12px;
       position:relative;
@@ -276,36 +267,37 @@
       align-items:center;
       background:
         linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.01)),
-        linear-gradient(180deg,#1a1320,#0f1218);
+        linear-gradient(180deg,#1b1320,#10131a);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.05),
-        inset 0 -30px 60px rgba(0,0,0,.18),
+        inset 0 -28px 56px rgba(0,0,0,.16),
         0 10px 30px rgba(0,0,0,.35);
-    }
-
-    .master-strip{
-      width:186px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 0 0 1px rgba(255,66,83,.16),
-        0 14px 36px rgba(255,66,83,.10);
     }
 
     .strip::before{
       content:"";
       position:absolute;
       inset:0;
-      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 18%, transparent 82%, rgba(0,0,0,.12));
+      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 22%, transparent 78%, rgba(0,0,0,.10));
       pointer-events:none;
     }
 
-    .strip.orange{box-shadow: inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(255,157,57,.18),0 14px 36px rgba(255,157,57,.08);}
-    .strip.red{box-shadow: inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(255,67,84,.18),0 14px 36px rgba(255,67,84,.08);}
-    .strip.yellow{box-shadow: inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(255,211,77,.18),0 14px 36px rgba(255,211,77,.08);}
-    .strip.green{box-shadow: inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(57,216,160,.18),0 14px 36px rgba(57,216,160,.08);}
-    .strip.pink{box-shadow: inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(255,119,174,.18),0 14px 36px rgba(255,119,174,.08);}
-    .strip.cyan{box-shadow: inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(101,232,255,.18),0 14px 36px rgba(101,232,255,.08);}
-    .strip.srm{box-shadow: inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(194,138,53,.18),0 14px 36px rgba(194,138,53,.08);}
+    .master-strip{
+      width:182px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05),
+        0 0 0 1px rgba(255,73,93,.16),
+        0 14px 36px rgba(255,73,93,.10);
+    }
+
+    .strip.orange{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,159,59,.18), 0 14px 36px rgba(255,159,59,.08);}
+    .strip.red{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,73,93,.18), 0 14px 36px rgba(255,73,93,.08);}
+    .strip.yellow{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,212,77,.18), 0 14px 36px rgba(255,212,77,.08);}
+    .strip.green{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(57,215,159,.18), 0 14px 36px rgba(57,215,159,.08);}
+    .strip.pink{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,121,178,.18), 0 14px 36px rgba(255,121,178,.08);}
+    .strip.cyan{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(99,233,255,.18), 0 14px 36px rgba(99,233,255,.08);}
+    .strip.violet{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(184,124,255,.18), 0 14px 36px rgba(184,124,255,.08);}
+    .strip.srm{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(194,138,53,.18), 0 14px 36px rgba(194,138,53,.08);}
 
     .strip-label{
       min-height:32px;
@@ -324,17 +316,17 @@
       border-radius:18px;
       padding:12px 8px;
       text-align:center;
-      background:linear-gradient(180deg,#0d1118,#020406);
+      background:linear-gradient(180deg,#0d1118,#030508);
       border:1px solid rgba(255,255,255,.06);
       box-shadow:
         inset 0 0 0 1px rgba(255,255,255,.02),
         inset 0 0 24px rgba(0,0,0,.55),
-        0 8px 20px rgba(0,0,0,.25);
+        0 8px 20px rgba(0,0,0,.22);
       margin-bottom:12px;
     }
 
     .strip-value{
-      font-size:30px;
+      font-size:28px;
       font-weight:800;
       line-height:.95;
       letter-spacing:-.04em;
@@ -361,6 +353,7 @@
     .green-bar{color:var(--green);background:var(--green);}
     .pink-bar{color:var(--pink);background:var(--pink);}
     .cyan-bar{color:var(--cyan);background:var(--cyan);}
+    .violet-bar{color:var(--violet);background:var(--violet);}
     .srm-bar{color:#c28a35;background:#c28a35;}
 
     .meter-and-slider{
@@ -373,10 +366,10 @@
     }
 
     .vu{
-      height:170px;
+      height:165px;
       width:14px;
       border-radius:999px;
-      background:#05080d;
+      background:#05080e;
       border:1px solid rgba(255,255,255,.06);
       padding:3px 2px;
       display:flex;
@@ -459,7 +452,7 @@
     }
 
     .ph-thumb{color:var(--orange);}
-    .temp-thumb{color:var(--red2);}
+    .temp-thumb{color:var(--red);}
     .og-thumb{color:var(--yellow);}
     .fg-thumb{color:var(--green);}
     .abv-thumb{color:var(--violet);}
@@ -485,7 +478,7 @@
       border-radius:10px;
       background:var(--red);
       border:none;
-      box-shadow:0 0 20px rgba(255,66,83,.55), 0 6px 14px rgba(0,0,0,.4);
+      box-shadow:0 0 20px rgba(255,73,93,.55), 0 6px 14px rgba(0,0,0,.40);
     }
 
     .master-fader::-moz-range-thumb{
@@ -494,7 +487,7 @@
       border-radius:10px;
       background:var(--red);
       border:none;
-      box-shadow:0 0 20px rgba(255,66,83,.55), 0 6px 14px rgba(0,0,0,.4);
+      box-shadow:0 0 20px rgba(255,73,93,.55), 0 6px 14px rgba(0,0,0,.40);
     }
 
     .master-leds{
@@ -560,24 +553,13 @@
       color:var(--muted);
     }
 
-    .accordion{
-      display:grid;
-      gap:10px;
-    }
-
-    .lib-card{
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:22px;
-      overflow:hidden;
-      background:rgba(255,255,255,.03);
-    }
-
     .lib-head{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:12px;
-      padding:14px;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.06);
     }
 
     .lib-title{
@@ -585,53 +567,35 @@
       font-size:16px;
     }
 
+    .lib-card{
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:22px;
+      overflow:hidden;
+      background:rgba(255,255,255,.03);
+      padding:0 14px 14px;
+      margin-bottom:10px;
+    }
+
     .lib-body{
       display:none;
-      padding:0 14px 14px;
+      padding-top:12px;
     }
 
     .lib-card.open .lib-body{
       display:block;
     }
 
-    .library-grid{
+    .lib-toolbar{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .lib-item{
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:20px;
-      padding:14px;
-    }
-
-    .lib-item h4{
-      font-size:15px;
-      margin-bottom:6px;
-    }
-
-    .lib-item p{
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.45;
-      margin-bottom:10px;
-      min-height:52px;
-    }
-
-    .mini-row{
-      display:flex;
+      grid-template-columns:1fr auto;
       gap:8px;
-      align-items:center;
-      flex-wrap:wrap;
+      margin-bottom:10px;
     }
 
-    .mini-row input,
-    .mini-row select,
     .search-input,
     .archive-search,
+    .detail-input,
+    .detail-select,
     .field input,
     .field textarea{
       border:none;
@@ -644,36 +608,93 @@
       box-shadow:inset 0 2px 8px rgba(0,0,0,.08);
     }
 
-    .mini-row input{
-      width:84px;
+    .lib-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:8px;
     }
 
-    .mini-row select{
-      width:94px;
+    .lib-chip{
+      background:linear-gradient(180deg,#18324f,#10253b);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:12px;
+      padding:8px 10px;
+      min-height:52px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      font-size:12px;
+      cursor:pointer;
     }
 
-    .search-row{
+    .lib-chip-name{
+      font-weight:800;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+    }
+
+    .zoom-btn{
+      width:26px;
+      height:26px;
+      border-radius:999px;
+      border:none;
+      cursor:pointer;
+      font-weight:800;
+      color:#fff;
+      background:rgba(255,255,255,.12);
+      flex:0 0 auto;
+    }
+
+    .detail-panel{
+      display:none;
+      margin-top:12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.07);
+      background:rgba(0,0,0,.16);
+      padding:14px;
+    }
+
+    .detail-panel.show{
+      display:block;
+    }
+
+    .detail-title{
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:6px;
+    }
+
+    .detail-desc{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+      margin-bottom:10px;
+    }
+
+    .detail-meta{
       display:flex;
       gap:8px;
       flex-wrap:wrap;
-      margin-top:10px;
+      margin-bottom:10px;
     }
 
-    .search-input{
-      flex:1;
-      min-width:180px;
-    }
-
-    .add-lib-btn{
-      border:none;
-      cursor:pointer;
-      border-radius:12px;
-      padding:10px 12px;
-      font-size:12px;
+    .meta-pill{
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.07);
+      font-size:11px;
       font-weight:800;
-      color:#fff;
-      background:linear-gradient(180deg,#ff4d5d,#d53343);
-      box-shadow:0 0 16px rgba(255,77,93,.18);
+    }
+
+    .detail-form{
+      display:grid;
+      grid-template-columns:110px 110px 1fr;
+      gap:8px;
+      margin-top:8px;
     }
 
     .grid{
@@ -779,11 +800,11 @@
     }
 
     .chart-wrap{
+      margin-top:12px;
       border-radius:20px;
       background:rgba(0,0,0,.18);
       border:1px solid rgba(255,255,255,.06);
       padding:12px;
-      margin-top:12px;
     }
 
     .chart-canvas{
@@ -866,31 +887,49 @@
       font-size:12px;
     }
 
+    @media (max-width:1100px){
+      .lib-grid{
+        grid-template-columns:repeat(4,1fr);
+      }
+    }
+
     @media (max-width:900px){
-      .library-grid,
+      .lib-grid,
       .ingredient-grid,
       .two{
         grid-template-columns:1fr 1fr;
       }
-
       .span-6{
         grid-column:span 12;
+      }
+      .detail-form{
+        grid-template-columns:1fr 1fr;
+      }
+      .detail-form .detail-add-btn{
+        grid-column:span 2;
       }
     }
 
     @media (max-width:640px){
-      .library-grid,
+      .lib-grid,
       .ingredient-grid,
       .two{
         grid-template-columns:1fr;
       }
-
       .strip{
-        width:118px;
+        width:116px;
       }
-
       .master-strip{
-        width:174px;
+        width:172px;
+      }
+      .detail-form{
+        grid-template-columns:1fr;
+      }
+      .detail-form .detail-add-btn{
+        grid-column:span 1;
+      }
+      .lib-toolbar{
+        grid-template-columns:1fr;
       }
     }
   </style>
@@ -901,7 +940,7 @@
       <div class="logo">XA</div>
       <div>
         <h1>XA Fermentation Ultra VST</h1>
-        <p>App completa • mixer • ricette • archivio • grafico fermentazione</p>
+        <p>Versione completa • mixer pro • database integrato • ricette • archivio • grafico</p>
       </div>
     </div>
 
@@ -934,17 +973,17 @@
 
     <section class="screen active" id="screen-mixer">
       <div class="browser-shell">
-        <div class="section-title">Browser tecnico</div>
-        <div class="section-sub">Categorie apri/chiudi, ricerca locale e ricerca web mirata.</div>
+        <div class="section-title">Browser ingredienti integrato</div>
+        <div class="section-sub">Bottoni piccoli, tanti ingredienti visibili, click sulla lente e si apre il dettaglio sotto.</div>
 
         <div class="hardware-row">
-          <div class="hardware-port">USB</div>
-          <div class="hardware-port">ANALOG OUT</div>
-          <div class="hardware-port">DIGITAL BUS</div>
-          <div class="hardware-port">XA ENGINE</div>
+          <div class="hardware-pill">USB</div>
+          <div class="hardware-pill">DIGITAL BUS</div>
+          <div class="hardware-pill">BATCH ENGINE</div>
+          <div class="hardware-pill">XA CORE</div>
         </div>
 
-        <div class="accordion" id="libraryAccordion"></div>
+        <div id="librariesContainer"></div>
       </div>
 
       <div class="shell">
@@ -959,7 +998,7 @@
         </div>
 
         <div class="section-title">Mixer parametri</div>
-        <div class="section-sub">Completo: pH, temperatura, OG, FG, ABV, IBU, CO₂, SRM, master.</div>
+        <div class="section-sub">pH, temperatura, OG, FG, ABV, IBU, CO₂, SRM e master.</div>
 
         <div class="mixer-wrap">
           <div class="mixer">
@@ -972,15 +1011,13 @@
               <div class="channel-color orange-bar"></div>
               <div class="meter-and-slider">
                 <div class="vu" id="vu-ph-l"></div>
-                <div class="slider-zone">
-                  <input id="phSlider" class="slider-vertical ph-thumb" type="range" min="280" max="500" step="1" value="350" />
-                </div>
+                <div class="slider-zone"><input id="phSlider" class="slider-vertical ph-thumb" type="range" min="280" max="500" step="1" value="350" /></div>
                 <div class="vu" id="vu-ph-r"></div>
               </div>
               <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="ph-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="ph-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="ph-rec">REC</button>
+                <button class="chan-btn mute">MUTE</button>
+                <button class="chan-btn solo">SOLO</button>
+                <button class="chan-btn rec">REC</button>
               </div>
               <div class="strip-footer">2.80 → 5.00</div>
             </div>
@@ -988,21 +1025,19 @@
             <div class="strip red">
               <div class="strip-label">TEMP</div>
               <div class="strip-display">
-                <div class="strip-value" id="tempVal" style="color:var(--red2)">20.0°</div>
+                <div class="strip-value" id="tempVal" style="color:var(--red)">20.0°</div>
                 <div class="strip-unit">°C</div>
               </div>
               <div class="channel-color red-bar"></div>
               <div class="meter-and-slider">
                 <div class="vu" id="vu-temp-l"></div>
-                <div class="slider-zone">
-                  <input id="tempSlider" class="slider-vertical temp-thumb" type="range" min="0" max="350" step="1" value="200" />
-                </div>
+                <div class="slider-zone"><input id="tempSlider" class="slider-vertical temp-thumb" type="range" min="0" max="350" step="1" value="200" /></div>
                 <div class="vu" id="vu-temp-r"></div>
               </div>
               <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="temp-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="temp-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="temp-rec">REC</button>
+                <button class="chan-btn mute">MUTE</button>
+                <button class="chan-btn solo">SOLO</button>
+                <button class="chan-btn rec">REC</button>
               </div>
               <div class="strip-footer">0 → 35 °C</div>
             </div>
@@ -1016,22 +1051,19 @@
               <div class="channel-color yellow-bar"></div>
               <div class="meter-and-slider">
                 <div class="vu" id="vu-og-l"></div>
-                <div class="slider-zone">
-                  <input id="ogSlider" class="slider-vertical og-thumb" type="range" min="1000" max="1120" step="1" value="1050" />
-                </div>
+                <div class="slider-zone"><input id="ogSlider" class="slider-vertical og-thumb" type="range" min="1000" max="1120" step="1" value="1050" /></div>
                 <div class="vu" id="vu-og-r"></div>
               </div>
               <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="og-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="og-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="og-rec">REC</button>
+                <button class="chan-btn mute">MUTE</button>
+                <button class="chan-btn solo">SOLO</button>
+                <button class="chan-btn rec">REC</button>
               </div>
               <div class="strip-footer">1.000 → 1.120</div>
             </div>
 
             <div class="strip master-strip">
               <div class="strip-label">MASTER</div>
-
               <div class="master-leds">
                 <div class="led-box">
                   <div class="n">ABV</div>
@@ -1043,21 +1075,17 @@
                 </div>
                 <div class="led-box">
                   <div class="n">CAL</div>
-                  <div class="v" id="masterCal" style="color:var(--red2)">160</div>
+                  <div class="v" id="masterCal" style="color:var(--red)">160</div>
                 </div>
               </div>
-
               <div class="strip-display">
-                <div class="strip-value" id="masterTitle" style="color:var(--red2)">XA</div>
+                <div class="strip-value" id="masterTitle" style="color:var(--red)">XA</div>
                 <div class="strip-unit">master section</div>
               </div>
-
               <div class="channel-color red-bar"></div>
-
               <div style="margin:6px 0 12px;">
                 <input id="masterSlider" class="master-fader" type="range" min="0" max="100" step="1" value="72" />
               </div>
-
               <div class="meter-and-slider">
                 <div class="vu" id="vu-master-l"></div>
                 <div class="slider-zone" style="text-align:center;color:var(--muted);font-size:13px;line-height:1.5;">
@@ -1067,11 +1095,10 @@
                 </div>
                 <div class="vu" id="vu-master-r"></div>
               </div>
-
               <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="master-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="master-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="master-rec">REC</button>
+                <button class="chan-btn mute">MUTE</button>
+                <button class="chan-btn solo">SOLO</button>
+                <button class="chan-btn rec">REC</button>
               </div>
               <div class="strip-footer">master output</div>
             </div>
@@ -1085,37 +1112,33 @@
               <div class="channel-color green-bar"></div>
               <div class="meter-and-slider">
                 <div class="vu" id="vu-fg-l"></div>
-                <div class="slider-zone">
-                  <input id="fgSlider" class="slider-vertical fg-thumb" type="range" min="998" max="1040" step="1" value="1010" />
-                </div>
+                <div class="slider-zone"><input id="fgSlider" class="slider-vertical fg-thumb" type="range" min="998" max="1040" step="1" value="1010" /></div>
                 <div class="vu" id="vu-fg-r"></div>
               </div>
               <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="fg-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="fg-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="fg-rec">REC</button>
+                <button class="chan-btn mute">MUTE</button>
+                <button class="chan-btn solo">SOLO</button>
+                <button class="chan-btn rec">REC</button>
               </div>
               <div class="strip-footer">0.998 → 1.040</div>
             </div>
 
-            <div class="strip">
+            <div class="strip violet">
               <div class="strip-label">ABV</div>
               <div class="strip-display">
                 <div class="strip-value" id="abvVal" style="color:var(--violet)">5.25</div>
                 <div class="strip-unit">alcol %</div>
               </div>
-              <div class="channel-color" style="color:var(--violet);background:var(--violet);box-shadow:0 0 18px var(--violet);"></div>
+              <div class="channel-color violet-bar"></div>
               <div class="meter-and-slider">
                 <div class="vu" id="vu-abv-l"></div>
-                <div class="slider-zone">
-                  <input id="abvSlider" class="slider-vertical abv-thumb" type="range" min="0" max="1500" step="1" value="525" />
-                </div>
+                <div class="slider-zone"><input id="abvSlider" class="slider-vertical abv-thumb" type="range" min="0" max="1500" step="1" value="525" /></div>
                 <div class="vu" id="vu-abv-r"></div>
               </div>
               <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="abv-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="abv-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="abv-rec">REC</button>
+                <button class="chan-btn mute">MUTE</button>
+                <button class="chan-btn solo">SOLO</button>
+                <button class="chan-btn rec">REC</button>
               </div>
               <div class="strip-footer">0 → 15 %</div>
             </div>
@@ -1129,15 +1152,13 @@
               <div class="channel-color pink-bar"></div>
               <div class="meter-and-slider">
                 <div class="vu" id="vu-ibu-l"></div>
-                <div class="slider-zone">
-                  <input id="ibuSlider" class="slider-vertical ibu-thumb" type="range" min="0" max="120" step="1" value="28" />
-                </div>
+                <div class="slider-zone"><input id="ibuSlider" class="slider-vertical ibu-thumb" type="range" min="0" max="120" step="1" value="28" /></div>
                 <div class="vu" id="vu-ibu-r"></div>
               </div>
               <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="ibu-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="ibu-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="ibu-rec">REC</button>
+                <button class="chan-btn mute">MUTE</button>
+                <button class="chan-btn solo">SOLO</button>
+                <button class="chan-btn rec">REC</button>
               </div>
               <div class="strip-footer">0 → 120</div>
             </div>
@@ -1151,15 +1172,13 @@
               <div class="channel-color cyan-bar"></div>
               <div class="meter-and-slider">
                 <div class="vu" id="vu-co2-l"></div>
-                <div class="slider-zone">
-                  <input id="co2Slider" class="slider-vertical co2-thumb" type="range" min="10" max="40" step="1" value="24" />
-                </div>
+                <div class="slider-zone"><input id="co2Slider" class="slider-vertical co2-thumb" type="range" min="10" max="40" step="1" value="24" /></div>
                 <div class="vu" id="vu-co2-r"></div>
               </div>
               <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="co2-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="co2-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="co2-rec">REC</button>
+                <button class="chan-btn mute">MUTE</button>
+                <button class="chan-btn solo">SOLO</button>
+                <button class="chan-btn rec">REC</button>
               </div>
               <div class="strip-footer">1.0 → 4.0</div>
             </div>
@@ -1173,15 +1192,13 @@
               <div class="channel-color srm-bar" id="srmBar"></div>
               <div class="meter-and-slider">
                 <div class="vu" id="vu-srm-l"></div>
-                <div class="slider-zone">
-                  <input id="srmSlider" class="slider-vertical srm-thumb" type="range" min="1" max="40" step="1" value="10" />
-                </div>
+                <div class="slider-zone"><input id="srmSlider" class="slider-vertical srm-thumb" type="range" min="1" max="40" step="1" value="10" /></div>
                 <div class="vu" id="vu-srm-r"></div>
               </div>
               <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="srm-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="srm-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="srm-rec">REC</button>
+                <button class="chan-btn mute">MUTE</button>
+                <button class="chan-btn solo">SOLO</button>
+                <button class="chan-btn rec">REC</button>
               </div>
               <div class="strip-footer">1 → 40 SRM</div>
             </div>
@@ -1236,46 +1253,22 @@
 
         <div class="screen-shell span-6">
           <div class="section-title">Ingredienti rapidi</div>
-          <div class="section-sub">Inserimento veloce professionale nella ricetta.</div>
+          <div class="section-sub">Aggiunta veloce nella ricetta numerata.</div>
 
           <div class="ingredient-grid">
-            <button class="ingredient-btn" data-quick-name="Mela" data-quick-qty="1" data-quick-unit="kg">
-              <span class="emoji">🍎</span>
-              <span class="txt">Mela</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Pera" data-quick-qty="1" data-quick-unit="kg">
-              <span class="emoji">🍐</span>
-              <span class="txt">Pera</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Mango" data-quick-qty="1" data-quick-unit="kg">
-              <span class="emoji">🥭</span>
-              <span class="txt">Mango</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Litchi" data-quick-qty="500" data-quick-unit="g">
-              <span class="emoji">🧺</span>
-              <span class="txt">Litchi</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Tè oolong" data-quick-qty="8" data-quick-unit="g">
-              <span class="emoji">🍵</span>
-              <span class="txt">Tè</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Miele" data-quick-qty="250" data-quick-unit="g">
-              <span class="emoji">🍯</span>
-              <span class="txt">Miele</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Limone" data-quick-qty="1" data-quick-unit="pz">
-              <span class="emoji">🍋</span>
-              <span class="txt">Limone</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Botaniche miste" data-quick-qty="5" data-quick-unit="g">
-              <span class="emoji">🌿</span>
-              <span class="txt">Botaniche</span>
-            </button>
+            <button class="ingredient-btn" data-quick-name="Mela" data-quick-qty="1" data-quick-unit="kg"><span class="emoji">🍎</span><span class="txt">Mela</span></button>
+            <button class="ingredient-btn" data-quick-name="Pera" data-quick-qty="1" data-quick-unit="kg"><span class="emoji">🍐</span><span class="txt">Pera</span></button>
+            <button class="ingredient-btn" data-quick-name="Mango" data-quick-qty="1" data-quick-unit="kg"><span class="emoji">🥭</span><span class="txt">Mango</span></button>
+            <button class="ingredient-btn" data-quick-name="Litchi" data-quick-qty="500" data-quick-unit="g"><span class="emoji">🧺</span><span class="txt">Litchi</span></button>
+            <button class="ingredient-btn" data-quick-name="Tè oolong" data-quick-qty="8" data-quick-unit="g"><span class="emoji">🍵</span><span class="txt">Tè</span></button>
+            <button class="ingredient-btn" data-quick-name="Miele" data-quick-qty="250" data-quick-unit="g"><span class="emoji">🍯</span><span class="txt">Miele</span></button>
+            <button class="ingredient-btn" data-quick-name="Limone" data-quick-qty="1" data-quick-unit="pz"><span class="emoji">🍋</span><span class="txt">Limone</span></button>
+            <button class="ingredient-btn" data-quick-name="Botaniche miste" data-quick-qty="5" data-quick-unit="g"><span class="emoji">🌿</span><span class="txt">Botaniche</span></button>
           </div>
 
           <div class="section-title">Riepilogo tecnico</div>
           <div class="result-box">
-            <div class="result-line"><span>ABV</span><span id="resAbv">5.25 %</span></div>
+            <div class="result-line"><span>ABV calcolato</span><span id="resAbv">5.25 %</span></div>
             <div class="result-line"><span>Attenuazione</span><span id="resAtt">80.0 %</span></div>
             <div class="result-line"><span>Calorie / 330 ml</span><span id="resCal">160 kcal</span></div>
             <div class="result-line"><span>Zucchero residuo</span><span id="resSugar">24.0 g/L</span></div>
@@ -1285,11 +1278,11 @@
           </div>
 
           <div class="section-title" style="margin-top:14px;">Grafico fermentazione</div>
-          <div class="section-sub">Salva l’andamento densità nel tempo.</div>
+          <div class="section-sub">Inserisci i punti densità giorno per giorno.</div>
           <div class="chart-wrap">
-            <canvas id="fermentationChart" class="chart-canvas" width="800" height="250"></canvas>
+            <canvas id="fermentationChart" class="chart-canvas" width="900" height="250"></canvas>
           </div>
-          <div class="print-bar" style="margin-top:10px;">
+          <div class="chart-actions" style="margin-top:10px;">
             <button class="top-btn blue" id="addPointBtn">Aggiungi Punto</button>
             <button class="top-btn orange" id="clearChartBtn">Reset Grafico</button>
           </div>
@@ -1300,12 +1293,10 @@
     <section class="screen" id="screen-recipe">
       <div class="screen-shell">
         <div class="section-title">Scheda singola ricetta</div>
-        <div class="section-sub">Vista pulita e professionale, pronta anche per la stampa.</div>
-
-        <div class="print-bar">
+        <div class="section-sub">Vista pulita pronta per lettura e stampa.</div>
+        <div class="action-row">
           <button class="top-btn green" id="printBtnRecipe">Stampa questa scheda</button>
         </div>
-
         <div class="recipe-preview" id="recipePreview"></div>
       </div>
     </section>
@@ -1313,7 +1304,7 @@
     <section class="screen" id="screen-archive">
       <div class="screen-shell">
         <div class="section-title">Archivio ricette</div>
-        <div class="section-sub">Ricette catalogate e ricercabili anche per tag automatici.</div>
+        <div class="section-sub">Ricerca per nome, lotto, lievito, ingredienti e tag.</div>
         <input class="archive-search" id="archiveSearch" type="text" placeholder="Cerca una ricetta salvata..." />
         <div class="archive-list" id="archiveList"></div>
       </div>
@@ -1321,9 +1312,9 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xaFermentationUltraVST_complete_v2";
-    const ARCHIVE_KEY = "xaFermentationUltraVST_archive_complete_v2";
-    const CHART_KEY = "xaFermentationUltraVST_chart_v2";
+    const STORAGE_KEY = "xa_fermentation_complete_all_v1";
+    const ARCHIVE_KEY = "xa_fermentation_archive_all_v1";
+    const CHART_KEY = "xa_fermentation_chart_all_v1";
 
     const defaults = {
       recipeName: "Sidro Secco XA",
@@ -1345,254 +1336,155 @@
     };
 
     const presets = {
-      sidro: {
-        recipeName: "Sidro Secco XA",
-        yeast: "Lievito autoctono",
-        ph: 3.40,
-        temp: 18.0,
-        og: 1.050,
-        fg: 1.004,
-        abv: 6.04,
-        ibu: 0,
-        co2: 2.4,
-        srm: 3,
-        ingredientsText: "1. Mela — 20 L succo\n2. Lievito autoctono — 1 dose",
-        additionsText: "1. Inoculo lievito — giorno 1\n2. Travaso — giorno 5",
-        notesText: "Profilo secco e pulito"
-      },
-      perry: {
-        recipeName: "Perry XA",
-        yeast: "Lievito da sidro",
-        ph: 3.55,
-        temp: 17.0,
-        og: 1.048,
-        fg: 1.006,
-        abv: 5.51,
-        ibu: 0,
-        co2: 2.5,
-        srm: 2,
-        ingredientsText: "1. Pera — 20 L succo\n2. Lievito da sidro — 1 dose",
-        additionsText: "1. Inoculo — giorno 1",
-        notesText: "Profilo fruttato da pera"
-      },
-      kombucha: {
-        recipeName: "Kombucha XA",
-        yeast: "SCOBY",
-        ph: 3.20,
-        temp: 24.0,
-        og: 1.030,
-        fg: 1.008,
-        abv: 2.89,
-        ibu: 0,
-        co2: 2.8,
-        srm: 6,
-        ingredientsText: "1. Tè nero — 8 g\n2. Zucchero — 80 g/L\n3. SCOBY — 1 coltura",
-        additionsText: "1. Seconda fermentazione opzionale",
-        notesText: "Acidità viva e bollicina"
-      },
-      blonde: {
-        recipeName: "Blonde Ale XA",
-        yeast: "US-05",
-        ph: 4.20,
-        temp: 20.0,
-        og: 1.048,
-        fg: 1.010,
-        abv: 4.99,
-        ibu: 20,
-        co2: 2.3,
-        srm: 4,
-        ingredientsText: "1. Malto pils — 4.5 kg\n2. Luppolo Saaz — 35 g\n3. Lievito US-05 — 11 g",
-        additionsText: "1. Bollitura — 60 min",
-        notesText: "Pulita e semplice"
-      },
-      ipa: {
-        recipeName: "IPA XA",
-        yeast: "US-05",
-        ph: 4.10,
-        temp: 19.0,
-        og: 1.060,
-        fg: 1.012,
-        abv: 6.30,
-        ibu: 55,
-        co2: 2.4,
-        srm: 8,
-        ingredientsText: "1. Malto pale — 5.5 kg\n2. Citra — 60 g\n3. Simcoe — 60 g\n4. Lievito US-05 — 11 g",
-        additionsText: "1. Dry hop — giorno 5",
-        notesText: "Luppolata, secca, moderna"
-      },
-      gose: {
-        recipeName: "Gose XA",
-        yeast: "Ale neutro",
-        ph: 3.30,
-        temp: 20.0,
-        og: 1.044,
-        fg: 1.010,
-        abv: 4.46,
-        ibu: 10,
-        co2: 2.6,
-        srm: 4,
-        ingredientsText: "1. Malto — 4.5 kg\n2. Sale — 8 g\n3. Coriandolo — 12 g",
-        additionsText: "1. Acidificazione controllata",
-        notesText: "Acida e sapida"
-      }
+      sidro:{recipeName:"Sidro Secco XA",yeast:"Lievito autoctono",ph:3.40,temp:18.0,og:1.050,fg:1.004,abv:6.04,ibu:0,co2:2.4,srm:3,ingredientsText:"1. Mela — 20 L succo\n2. Lievito autoctono — 1 dose",additionsText:"1. Inoculo lievito — giorno 1\n2. Travaso — giorno 5",notesText:"Profilo secco e pulito"},
+      perry:{recipeName:"Perry XA",yeast:"Lievito da sidro",ph:3.55,temp:17.0,og:1.048,fg:1.006,abv:5.51,ibu:0,co2:2.5,srm:2,ingredientsText:"1. Pera — 20 L succo\n2. Lievito da sidro — 1 dose",additionsText:"1. Inoculo — giorno 1",notesText:"Profilo fruttato da pera"},
+      kombucha:{recipeName:"Kombucha XA",yeast:"SCOBY",ph:3.20,temp:24.0,og:1.030,fg:1.008,abv:2.89,ibu:0,co2:2.8,srm:6,ingredientsText:"1. Tè nero — 8 g\n2. Zucchero — 80 g/L\n3. SCOBY — 1 coltura",additionsText:"1. Seconda fermentazione opzionale",notesText:"Acidità viva e bollicina"},
+      blonde:{recipeName:"Blonde Ale XA",yeast:"US-05",ph:4.20,temp:20.0,og:1.048,fg:1.010,abv:4.99,ibu:20,co2:2.3,srm:4,ingredientsText:"1. Malto pils — 4.5 kg\n2. Luppolo Saaz — 35 g\n3. Lievito US-05 — 11 g",additionsText:"1. Bollitura — 60 min",notesText:"Pulita e semplice"},
+      ipa:{recipeName:"IPA XA",yeast:"US-05",ph:4.10,temp:19.0,og:1.060,fg:1.012,abv:6.30,ibu:55,co2:2.4,srm:8,ingredientsText:"1. Malto pale — 5.5 kg\n2. Citra — 60 g\n3. Simcoe — 60 g\n4. Lievito US-05 — 11 g",additionsText:"1. Dry hop — giorno 5",notesText:"Luppolata, secca, moderna"},
+      gose:{recipeName:"Gose XA",yeast:"Ale neutro",ph:3.30,temp:20.0,og:1.044,fg:1.010,abv:4.46,ibu:10,co2:2.6,srm:4,ingredientsText:"1. Malto — 4.5 kg\n2. Sale — 8 g\n3. Coriandolo — 12 g",additionsText:"1. Acidificazione controllata",notesText:"Acida e sapida"}
     };
 
     const libraryData = {
       hops: [
-        {name:"Citra", desc:"Agrumi, mango, tropicale.", qty:"20", unit:"g"},
-        {name:"Simcoe", desc:"Pino, resina, frutta scura.", qty:"20", unit:"g"},
-        {name:"Mosaic", desc:"Tropicale, berry, complesso.", qty:"20", unit:"g"},
-        {name:"Cascade", desc:"Agrumi e floreale.", qty:"20", unit:"g"},
-        {name:"Centennial", desc:"Agrumi, floreale, pulito.", qty:"20", unit:"g"},
-        {name:"Chinook", desc:"Resina, pino, spezia.", qty:"20", unit:"g"},
-        {name:"Columbus", desc:"Dank, resinoso, pungente.", qty:"20", unit:"g"},
-        {name:"Amarillo", desc:"Arancia dolce, floreale.", qty:"20", unit:"g"},
-        {name:"Galaxy", desc:"Passion fruit, pesca.", qty:"20", unit:"g"},
-        {name:"Nelson Sauvin", desc:"Uva bianca, gooseberry.", qty:"20", unit:"g"},
-        {name:"Motueka", desc:"Lime, agrumi, fresco.", qty:"20", unit:"g"},
-        {name:"Riwaka", desc:"Pompelmo, passion fruit.", qty:"20", unit:"g"},
-        {name:"Ekuanot", desc:"Papaya, lime.", qty:"20", unit:"g"},
-        {name:"Idaho 7", desc:"Albicocca, tropicale, resina.", qty:"20", unit:"g"},
-        {name:"Strata", desc:"Frutta tropicale, dank.", qty:"20", unit:"g"},
-        {name:"Sabro", desc:"Cocco, lime, tropicale.", qty:"20", unit:"g"},
-        {name:"Azacca", desc:"Mango, ananas, agrumi.", qty:"20", unit:"g"},
-        {name:"El Dorado", desc:"Pera, caramella, tropicale.", qty:"20", unit:"g"},
-        {name:"Hallertau", desc:"Floreale, delicato, nobile.", qty:"20", unit:"g"},
-        {name:"Saaz", desc:"Speziato, erbaceo, nobile.", qty:"20", unit:"g"},
-        {name:"Tettnang", desc:"Nobile, floreale, speziato.", qty:"20", unit:"g"},
-        {name:"Spalt", desc:"Elegante, nobile, erbaceo.", qty:"20", unit:"g"},
-        {name:"Styrian Goldings", desc:"Terroso, speziato.", qty:"20", unit:"g"},
-        {name:"Fuggle", desc:"Terroso, erbaceo, inglese.", qty:"20", unit:"g"},
-        {name:"East Kent Goldings", desc:"Miele, floreale.", qty:"20", unit:"g"},
-        {name:"Magnum", desc:"Amaro pulito.", qty:"20", unit:"g"},
-        {name:"Warrior", desc:"Amaro forte e pulito.", qty:"20", unit:"g"},
-        {name:"Nugget", desc:"Resina, spezia.", qty:"20", unit:"g"}
+        {name:"Citra", desc:"Agrumi, mango, tropicale.", meta:["USA","Aroma","IPA"], qty:"20", unit:"g"},
+        {name:"Mosaic", desc:"Tropicale, berry, complesso.", meta:["USA","Aroma","NEIPA"], qty:"20", unit:"g"},
+        {name:"Simcoe", desc:"Pino, resina, frutta scura.", meta:["USA","Dual"], qty:"20", unit:"g"},
+        {name:"Cascade", desc:"Agrumi e floreale.", meta:["USA","Classico"], qty:"20", unit:"g"},
+        {name:"Centennial", desc:"Agrumi, floreale, pulito.", meta:["USA","Dual"], qty:"20", unit:"g"},
+        {name:"Chinook", desc:"Resina, pino, spezia.", meta:["USA","Bittering"], qty:"20", unit:"g"},
+        {name:"Columbus", desc:"Dank, resinoso, pungente.", meta:["USA","Bittering"], qty:"20", unit:"g"},
+        {name:"Amarillo", desc:"Arancia dolce, floreale.", meta:["USA","Aroma"], qty:"20", unit:"g"},
+        {name:"Galaxy", desc:"Passion fruit, pesca.", meta:["Australia","Aroma"], qty:"20", unit:"g"},
+        {name:"Nelson Sauvin", desc:"Uva bianca, gooseberry.", meta:["NZ","Aroma"], qty:"20", unit:"g"},
+        {name:"Motueka", desc:"Lime, agrumi, fresco.", meta:["NZ","Aroma"], qty:"20", unit:"g"},
+        {name:"Riwaka", desc:"Pompelmo, passion fruit.", meta:["NZ","Aroma"], qty:"20", unit:"g"},
+        {name:"Ekuanot", desc:"Papaya, lime.", meta:["USA","Aroma"], qty:"20", unit:"g"},
+        {name:"Idaho 7", desc:"Albicocca, tropicale, resina.", meta:["USA","Dual"], qty:"20", unit:"g"},
+        {name:"Strata", desc:"Frutta tropicale, dank.", meta:["USA","Aroma"], qty:"20", unit:"g"},
+        {name:"Sabro", desc:"Cocco, lime, tropicale.", meta:["USA","Aroma"], qty:"20", unit:"g"},
+        {name:"Azacca", desc:"Mango, ananas, agrumi.", meta:["USA","Aroma"], qty:"20", unit:"g"},
+        {name:"El Dorado", desc:"Pera, caramella, tropicale.", meta:["USA","Aroma"], qty:"20", unit:"g"},
+        {name:"Hallertau", desc:"Floreale, delicato, nobile.", meta:["Germania","Nobile"], qty:"20", unit:"g"},
+        {name:"Saaz", desc:"Speziato, erbaceo, nobile.", meta:["CZ","Nobile"], qty:"20", unit:"g"},
+        {name:"Tettnang", desc:"Nobile, floreale, speziato.", meta:["Germania","Nobile"], qty:"20", unit:"g"},
+        {name:"Spalt", desc:"Elegante, nobile, erbaceo.", meta:["Germania","Nobile"], qty:"20", unit:"g"},
+        {name:"Fuggle", desc:"Terroso, erbaceo, inglese.", meta:["UK","Classico"], qty:"20", unit:"g"},
+        {name:"EK Goldings", desc:"Miele, floreale.", meta:["UK","Classico"], qty:"20", unit:"g"}
       ],
       yeasts: [
-        {name:"US-05", desc:"Ale americana pulita.", qty:"11", unit:"g"},
-        {name:"S-04", desc:"Inglese, più fruttato.", qty:"11", unit:"g"},
-        {name:"Nottingham", desc:"Versatile e attenuante.", qty:"11", unit:"g"},
-        {name:"Belle Saison", desc:"Saison secca e speziata.", qty:"11", unit:"g"},
-        {name:"BE-134", desc:"Saison molto attenuante.", qty:"11", unit:"g"},
-        {name:"Kveik Voss", desc:"Arancia, veloce, caldo.", qty:"11", unit:"g"},
-        {name:"Kveik Hornindal", desc:"Molto tropicale.", qty:"11", unit:"g"},
-        {name:"Omega Lutra", desc:"Kveik molto pulito, ottimo lager-like.", qty:"1", unit:"dose"},
-        {name:"W-34/70", desc:"Lager classica pulita.", qty:"11", unit:"g"},
-        {name:"S-23", desc:"Lager più fruttata.", qty:"11", unit:"g"},
-        {name:"LalBrew Verdant", desc:"Hazy, fruttata.", qty:"11", unit:"g"},
-        {name:"LalBrew New England", desc:"Esters morbidi.", qty:"11", unit:"g"},
-        {name:"WB-06", desc:"Weizen fenolica.", qty:"11", unit:"g"},
-        {name:"T-58", desc:"Belga pepata.", qty:"11", unit:"g"},
-        {name:"BE-256", desc:"Belga abbazia.", qty:"11", unit:"g"},
-        {name:"Mangrove M02", desc:"Yeast da sidro.", qty:"11", unit:"g"},
-        {name:"Mangrove M05", desc:"Yeast per mead e fermentazioni spinte.", qty:"11", unit:"g"},
-        {name:"Lievito autoctono", desc:"Profilo unico, complesso.", qty:"1", unit:"dose"},
-        {name:"SCOBY", desc:"Coltura kombucha.", qty:"1", unit:"pz"},
-        {name:"Brettanomyces", desc:"Funky, secco, evolutivo.", qty:"1", unit:"dose"}
+        {name:"US-05", desc:"Ale americana pulita.", meta:["Fermentis","Ale","Secco"], qty:"11", unit:"g"},
+        {name:"S-04", desc:"Inglese, più fruttato.", meta:["Fermentis","Ale","Secco"], qty:"11", unit:"g"},
+        {name:"Nottingham", desc:"Versatile e attenuante.", meta:["Lallemand","Ale"], qty:"11", unit:"g"},
+        {name:"Belle Saison", desc:"Saison secca e speziata.", meta:["Lallemand","Saison"], qty:"11", unit:"g"},
+        {name:"BE-134", desc:"Saison molto attenuante.", meta:["Fermentis","Saison"], qty:"11", unit:"g"},
+        {name:"Kveik Voss", desc:"Arancia, veloce, caldo.", meta:["Kveik","Ale"], qty:"11", unit:"g"},
+        {name:"Kveik Hornindal", desc:"Molto tropicale.", meta:["Kveik","Ale"], qty:"11", unit:"g"},
+        {name:"Omega Lutra", desc:"Kveik molto pulito, ottimo lager-like.", meta:["Omega","Kveik"], qty:"1", unit:"dose"},
+        {name:"W-34/70", desc:"Lager classica pulita.", meta:["Fermentis","Lager"], qty:"11", unit:"g"},
+        {name:"S-23", desc:"Lager più fruttata.", meta:["Fermentis","Lager"], qty:"11", unit:"g"},
+        {name:"LalBrew Verdant", desc:"Hazy, fruttata.", meta:["Lallemand","IPA"], qty:"11", unit:"g"},
+        {name:"LalBrew New England", desc:"Esters morbidi.", meta:["Lallemand","NEIPA"], qty:"11", unit:"g"},
+        {name:"WB-06", desc:"Weizen fenolica.", meta:["Fermentis","Weizen"], qty:"11", unit:"g"},
+        {name:"T-58", desc:"Belga pepata.", meta:["Fermentis","Belgian"], qty:"11", unit:"g"},
+        {name:"BE-256", desc:"Belga abbazia.", meta:["Fermentis","Abbey"], qty:"11", unit:"g"},
+        {name:"Mangrove M02", desc:"Yeast da sidro.", meta:["Mangrove","Cider"], qty:"11", unit:"g"},
+        {name:"Mangrove M05", desc:"Yeast per mead e fermentazioni spinte.", meta:["Mangrove","Mead"], qty:"11", unit:"g"},
+        {name:"Lievito autoctono", desc:"Profilo unico, complesso.", meta:["Wild","Ale"], qty:"1", unit:"dose"},
+        {name:"SCOBY", desc:"Coltura kombucha.", meta:["Culture","Kombucha"], qty:"1", unit:"pz"},
+        {name:"Brettanomyces", desc:"Funky, secco, evolutivo.", meta:["Brett","Wild"], qty:"1", unit:"dose"}
       ],
       fruits: [
-        {name:"Mela", desc:"Base fresca, acidità naturale.", qty:"1", unit:"kg"},
-        {name:"Pera", desc:"Delicata, rotonda.", qty:"1", unit:"kg"},
-        {name:"Mango", desc:"Tropicale, dolce.", qty:"1", unit:"kg"},
-        {name:"Litchi", desc:"Floreale, delicato.", qty:"500", unit:"g"},
-        {name:"Ananas", desc:"Tropicale, brillante.", qty:"1", unit:"kg"},
-        {name:"Pesca", desc:"Morbida e rotonda.", qty:"1", unit:"kg"},
-        {name:"Albicocca", desc:"Matura, vellutata.", qty:"1", unit:"kg"},
-        {name:"Lampone", desc:"Acidulo, fragrante.", qty:"500", unit:"g"},
-        {name:"Fragola", desc:"Dolce, delicata.", qty:"500", unit:"g"},
-        {name:"Mirtillo", desc:"Scuro, fine.", qty:"500", unit:"g"},
-        {name:"Ribes nero", desc:"Vinoso e teso.", qty:"500", unit:"g"},
-        {name:"Passion fruit", desc:"Molto tropicale.", qty:"500", unit:"g"},
-        {name:"Uva", desc:"Profilo vinoso.", qty:"1", unit:"kg"},
-        {name:"Ciliegia", desc:"Frutto rosso intenso.", qty:"1", unit:"kg"},
-        {name:"Prugna", desc:"Scura e matura.", qty:"1", unit:"kg"},
-        {name:"Limone", desc:"Agrume acido e fresco.", qty:"1", unit:"pz"},
-        {name:"Arancia", desc:"Agrume dolce.", qty:"1", unit:"pz"},
-        {name:"Pompelmo", desc:"Agrume amaro.", qty:"1", unit:"pz"}
-      ],
-      peppers: [
-        {name:"Pepe Timut", desc:"Agrumato, pompelmo.", qty:"2", unit:"g"},
-        {name:"Pepe Sichuan", desc:"Agrumato, vibrante.", qty:"2", unit:"g"},
-        {name:"Pepe Cubebe", desc:"Balsamico, fresco.", qty:"2", unit:"g"},
-        {name:"Pepe nero", desc:"Caldo e pungente.", qty:"2", unit:"g"},
-        {name:"Pepe lungo", desc:"Profondo e caldo.", qty:"2", unit:"g"},
-        {name:"Pepe rosa", desc:"Floreale e morbido.", qty:"2", unit:"g"},
-        {name:"Pepe bianco", desc:"Più asciutto.", qty:"2", unit:"g"},
-        {name:"Pepe verde", desc:"Più fresco.", qty:"2", unit:"g"}
-      ],
-      spices: [
-        {name:"Cardamomo", desc:"Agrumato, fresco.", qty:"2", unit:"g"},
-        {name:"Coriandolo", desc:"Agrumato, speziato.", qty:"3", unit:"g"},
-        {name:"Cannella", desc:"Calda, dolce.", qty:"2", unit:"g"},
-        {name:"Zenzero", desc:"Pungente, vibrante.", qty:"4", unit:"g"},
-        {name:"Vaniglia", desc:"Cremosa, morbida.", qty:"1", unit:"bacca"},
-        {name:"Anice stellato", desc:"Dolce, balsamico.", qty:"1", unit:"pz"},
-        {name:"Noce moscata", desc:"Calda, profonda.", qty:"1", unit:"g"},
-        {name:"Chiodi di garofano", desc:"Intensi, balsamici.", qty:"1", unit:"g"}
+        {name:"Mela", desc:"Base fresca, acidità naturale.", meta:["Frutta","Sidro"], qty:"1", unit:"kg"},
+        {name:"Pera", desc:"Delicata, rotonda.", meta:["Frutta","Perry"], qty:"1", unit:"kg"},
+        {name:"Mango", desc:"Tropicale, dolce.", meta:["Frutta","Tropicale"], qty:"1", unit:"kg"},
+        {name:"Litchi", desc:"Floreale, delicato.", meta:["Frutta","Tropicale"], qty:"500", unit:"g"},
+        {name:"Ananas", desc:"Tropicale, brillante.", meta:["Frutta","Tropicale"], qty:"1", unit:"kg"},
+        {name:"Pesca", desc:"Morbida e rotonda.", meta:["Frutta","Stone fruit"], qty:"1", unit:"kg"},
+        {name:"Albicocca", desc:"Matura, vellutata.", meta:["Frutta","Stone fruit"], qty:"1", unit:"kg"},
+        {name:"Lampone", desc:"Acidulo, fragrante.", meta:["Frutta rossa"], qty:"500", unit:"g"},
+        {name:"Fragola", desc:"Dolce, delicata.", meta:["Frutta rossa"], qty:"500", unit:"g"},
+        {name:"Mirtillo", desc:"Scuro, fine.", meta:["Berry"], qty:"500", unit:"g"},
+        {name:"Ribes nero", desc:"Vinoso e teso.", meta:["Berry"], qty:"500", unit:"g"},
+        {name:"Passion fruit", desc:"Molto tropicale.", meta:["Tropicale"], qty:"500", unit:"g"},
+        {name:"Uva", desc:"Profilo vinoso.", meta:["Uva"], qty:"1", unit:"kg"},
+        {name:"Ciliegia", desc:"Frutto rosso intenso.", meta:["Stone fruit"], qty:"1", unit:"kg"},
+        {name:"Prugna", desc:"Scura e matura.", meta:["Stone fruit"], qty:"1", unit:"kg"},
+        {name:"Limone", desc:"Agrume acido e fresco.", meta:["Agrume"], qty:"1", unit:"pz"},
+        {name:"Arancia", desc:"Agrume dolce.", meta:["Agrume"], qty:"1", unit:"pz"},
+        {name:"Pompelmo", desc:"Agrume amaro.", meta:["Agrume"], qty:"1", unit:"pz"}
       ],
       botanicals: [
-        {name:"Ginepro", desc:"Resinoso, balsamico.", qty:"3", unit:"g"},
-        {name:"Lavanda", desc:"Floreale, delicata.", qty:"1", unit:"g"},
-        {name:"Osmanto", desc:"Floreale, albicocca.", qty:"2", unit:"g"},
-        {name:"China", desc:"Amara, tonica.", qty:"2", unit:"g"},
-        {name:"Rosmarino", desc:"Mediterraneo, resinoso.", qty:"2", unit:"g"},
-        {name:"Timo", desc:"Erbaceo, secco.", qty:"2", unit:"g"},
-        {name:"Genziana", desc:"Amara, radicale.", qty:"2", unit:"g"},
-        {name:"Camomilla", desc:"Floreale, morbida.", qty:"2", unit:"g"},
-        {name:"Verbena", desc:"Agrumata, fresca.", qty:"2", unit:"g"},
-        {name:"Basilico", desc:"Verde, aromatico.", qty:"2", unit:"g"}
+        {name:"Ginepro", desc:"Resinoso, balsamico.", meta:["Botanica","Gin"], qty:"3", unit:"g"},
+        {name:"Lavanda", desc:"Floreale, delicata.", meta:["Botanica","Floreale"], qty:"1", unit:"g"},
+        {name:"Osmanto", desc:"Floreale, albicocca.", meta:["Botanica","Floreale"], qty:"2", unit:"g"},
+        {name:"China", desc:"Amara, tonica.", meta:["Botanica","Bitter"], qty:"2", unit:"g"},
+        {name:"Rosmarino", desc:"Mediterraneo, resinoso.", meta:["Erba"], qty:"2", unit:"g"},
+        {name:"Timo", desc:"Erbaceo, secco.", meta:["Erba"], qty:"2", unit:"g"},
+        {name:"Genziana", desc:"Amara, radicale.", meta:["Bitter"], qty:"2", unit:"g"},
+        {name:"Camomilla", desc:"Floreale, morbida.", meta:["Floreale"], qty:"2", unit:"g"},
+        {name:"Verbena", desc:"Agrumata, fresca.", meta:["Erba"], qty:"2", unit:"g"},
+        {name:"Basilico", desc:"Verde, aromatico.", meta:["Erba"], qty:"2", unit:"g"}
       ],
-      lacto: [
-        {name:"L. plantarum", desc:"Acidificazione rapida e pulita.", qty:"1", unit:"dose"},
-        {name:"L. helveticus", desc:"Acidità più morbida.", qty:"1", unit:"dose"},
-        {name:"L. brevis", desc:"Acidità e complessità.", qty:"1", unit:"dose"},
-        {name:"L. casei", desc:"Uso tecnico specifico.", qty:"1", unit:"dose"},
-        {name:"Blend lattico", desc:"Mix più stratificato.", qty:"1", unit:"dose"},
-        {name:"Starter lattico", desc:"Base tecnica di inoculo.", qty:"1", unit:"dose"}
-      ],
-      acids: [
-        {name:"Acido malico", desc:"Mela verde, fruttato.", qty:"1", unit:"g/L"},
-        {name:"Acido citrico", desc:"Agrumato e brillante.", qty:"1", unit:"g/L"},
-        {name:"Acido lattico", desc:"Morbido e rotondo.", qty:"1", unit:"g/L"},
-        {name:"Acido tartarico", desc:"Più vinoso.", qty:"1", unit:"g/L"},
-        {name:"Acido ascorbico", desc:"Tecnico, antiossidante.", qty:"0.5", unit:"g/L"},
-        {name:"Blend acidi", desc:"Acidità multilivello.", qty:"1", unit:"g/L"}
+      spices: [
+        {name:"Cardamomo", desc:"Agrumato, fresco.", meta:["Spezia"], qty:"2", unit:"g"},
+        {name:"Coriandolo", desc:"Agrumato, speziato.", meta:["Spezia"], qty:"3", unit:"g"},
+        {name:"Cannella", desc:"Calda, dolce.", meta:["Spezia"], qty:"2", unit:"g"},
+        {name:"Zenzero", desc:"Pungente, vibrante.", meta:["Spezia"], qty:"4", unit:"g"},
+        {name:"Vaniglia", desc:"Cremosa, morbida.", meta:["Spezia"], qty:"1", unit:"bacca"},
+        {name:"Anice stellato", desc:"Dolce, balsamico.", meta:["Spezia"], qty:"1", unit:"pz"},
+        {name:"Noce moscata", desc:"Calda, profonda.", meta:["Spezia"], qty:"1", unit:"g"},
+        {name:"Chiodi di garofano", desc:"Intensi, balsamici.", meta:["Spezia"], qty:"1", unit:"g"}
       ],
       teas: [
-        {name:"Tè oolong", desc:"Floreale, elegante.", qty:"8", unit:"g"},
-        {name:"Tè verde", desc:"Vegetale, fresco.", qty:"8", unit:"g"},
-        {name:"Tè nero", desc:"Corposo, tannico.", qty:"8", unit:"g"},
-        {name:"Tè bianco", desc:"Fine, delicato.", qty:"8", unit:"g"},
-        {name:"Tè al gelsomino", desc:"Floreale e profumato.", qty:"8", unit:"g"},
-        {name:"Lapsang Souchong", desc:"Affumicato, intenso.", qty:"8", unit:"g"},
-        {name:"Genmaicha", desc:"Verde con riso tostato.", qty:"8", unit:"g"},
-        {name:"Sencha", desc:"Verde giapponese.", qty:"8", unit:"g"},
-        {name:"Gyokuro", desc:"Umami, fine.", qty:"8", unit:"g"},
-        {name:"Pu-erh", desc:"Terroso, profondo.", qty:"8", unit:"g"},
-        {name:"Darjeeling", desc:"Floreale, moscatel.", qty:"8", unit:"g"},
-        {name:"Earl Grey", desc:"Bergamotto classico.", qty:"8", unit:"g"}
+        {name:"Tè oolong", desc:"Floreale, elegante.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Tè verde", desc:"Vegetale, fresco.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Tè nero", desc:"Corposo, tannico.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Tè bianco", desc:"Fine, delicato.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Tè gelsomino", desc:"Floreale e profumato.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Lapsang Souchong", desc:"Affumicato, intenso.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Genmaicha", desc:"Verde con riso tostato.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Sencha", desc:"Verde giapponese.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Gyokuro", desc:"Umami, fine.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Pu-erh", desc:"Terroso, profondo.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Darjeeling", desc:"Floreale, moscatel.", meta:["Tè"], qty:"8", unit:"g"},
+        {name:"Earl Grey", desc:"Bergamotto classico.", meta:["Tè"], qty:"8", unit:"g"}
+      ],
+      lacto: [
+        {name:"L. plantarum", desc:"Acidificazione rapida e pulita.", meta:["Lattico"], qty:"1", unit:"dose"},
+        {name:"L. helveticus", desc:"Acidità più morbida.", meta:["Lattico"], qty:"1", unit:"dose"},
+        {name:"L. brevis", desc:"Acidità e complessità.", meta:["Lattico"], qty:"1", unit:"dose"},
+        {name:"L. casei", desc:"Uso tecnico specifico.", meta:["Lattico"], qty:"1", unit:"dose"},
+        {name:"Blend lattico", desc:"Mix più stratificato.", meta:["Lattico"], qty:"1", unit:"dose"},
+        {name:"Starter lattico", desc:"Base tecnica di inoculo.", meta:["Lattico"], qty:"1", unit:"dose"}
+      ],
+      acids: [
+        {name:"Acido malico", desc:"Mela verde, fruttato.", meta:["Acido"], qty:"1", unit:"g/L"},
+        {name:"Acido citrico", desc:"Agrumato e brillante.", meta:["Acido"], qty:"1", unit:"g/L"},
+        {name:"Acido lattico", desc:"Morbido e rotondo.", meta:["Acido"], qty:"1", unit:"g/L"},
+        {name:"Acido tartarico", desc:"Più vinoso.", meta:["Acido"], qty:"1", unit:"g/L"},
+        {name:"Acido ascorbico", desc:"Tecnico, antiossidante.", meta:["Acido"], qty:"0.5", unit:"g/L"},
+        {name:"Blend acidi", desc:"Acidità multilivello.", meta:["Acido"], qty:"1", unit:"g/L"}
       ],
       salts: [
-        {name:"Sale marino", desc:"Sapido classico.", qty:"1", unit:"g/L"},
-        {name:"Sale rosa", desc:"Minerale e delicato.", qty:"1", unit:"g/L"},
-        {name:"Sale affumicato", desc:"Con nota smoky.", qty:"1", unit:"g/L"},
-        {name:"Fleur de sel", desc:"Fine ed elegante.", qty:"1", unit:"g/L"},
-        {name:"Sale nero", desc:"Più minerale.", qty:"1", unit:"g/L"},
-        {name:"Sale di Maldon", desc:"Cristallo delicato.", qty:"1", unit:"g/L"}
+        {name:"Sale marino", desc:"Sapido classico.", meta:["Sale"], qty:"1", unit:"g/L"},
+        {name:"Sale rosa", desc:"Minerale e delicato.", meta:["Sale"], qty:"1", unit:"g/L"},
+        {name:"Sale affumicato", desc:"Con nota smoky.", meta:["Sale"], qty:"1", unit:"g/L"},
+        {name:"Fleur de sel", desc:"Fine ed elegante.", meta:["Sale"], qty:"1", unit:"g/L"},
+        {name:"Sale nero", desc:"Più minerale.", meta:["Sale"], qty:"1", unit:"g/L"},
+        {name:"Sale di Maldon", desc:"Cristallo delicato.", meta:["Sale"], qty:"1", unit:"g/L"}
       ]
     };
 
     const libraryLabels = {
-      hops: "Luppoli",
-      yeasts: "Lieviti",
-      fruits: "Frutta",
-      peppers: "Pepe",
-      spices: "Spezie",
-      botanicals: "Botaniche",
-      lacto: "Lattobacilli",
-      acids: "Acidi",
-      teas: "Tè",
-      salts: "Sali"
+      hops:"Luppoli",
+      yeasts:"Lieviti",
+      fruits:"Frutta",
+      botanicals:"Botaniche",
+      spices:"Spezie",
+      teas:"Tè",
+      lacto:"Lattobacilli",
+      acids:"Acidi",
+      salts:"Sali"
     };
 
     let fermentationPoints = [];
@@ -1707,6 +1599,10 @@
       }
     }
 
+    function saveArchive(arr){
+      localStorage.setItem(ARCHIVE_KEY, JSON.stringify(arr));
+    }
+
     function loadArchive(){
       try{
         return JSON.parse(localStorage.getItem(ARCHIVE_KEY) || "[]");
@@ -1715,8 +1611,8 @@
       }
     }
 
-    function saveArchive(arr){
-      localStorage.setItem(ARCHIVE_KEY, JSON.stringify(arr));
+    function saveChart(){
+      localStorage.setItem(CHART_KEY, JSON.stringify(fermentationPoints));
     }
 
     function loadChart(){
@@ -1725,10 +1621,6 @@
       }catch{
         return [];
       }
-    }
-
-    function saveChart(){
-      localStorage.setItem(CHART_KEY, JSON.stringify(fermentationPoints));
     }
 
     function fillData(data){
@@ -1824,7 +1716,10 @@
 
     function addRecipeItem(name, qty, unit, desc = ""){
       const box = $("ingredientsText");
-      const line = `${name.trim()} — ${String(qty).trim()} ${String(unit).trim()}${desc ? " • " + desc : ""}`;
+      const cleanName = name.trim();
+      const cleanQty = String(qty).trim();
+      const cleanUnit = String(unit).trim();
+      const line = `${cleanName} — ${cleanQty} ${cleanUnit}${desc ? " • " + desc : ""}`;
 
       const currentLines = box.value
         .split("\n")
@@ -1889,73 +1784,12 @@
       if(yeast.includes("kveik") || yeast.includes("lutra")) tags.push("kveik");
       if(ingredients.includes("mela")) tags.push("sidro");
       if(ingredients.includes("pera")) tags.push("perry");
-      if(ingredients.includes("tè") || ingredients.includes("tea")) tags.push("tea-based");
-      if(ingredients.includes("latt") || ingredients.includes("plantarum")) tags.push("lattico");
+      if(ingredients.includes("tè")) tags.push("tea-based");
+      if(ingredients.includes("plantarum") || ingredients.includes("latt")) tags.push("lattico");
       if(data.srm >= 18) tags.push("scura");
       if(data.srm <= 6) tags.push("chiara");
 
       return [...new Set(tags)];
-    }
-
-    function newRecipe(){
-      if(!confirm("Creare una nuova ricetta vuota?")) return;
-      fillData({
-        ...defaults,
-        recipeName: "",
-        lotNumber: "",
-        batchDate: "",
-        yeast: "",
-        ingredientsText: "",
-        additionsText: "",
-        notesText: ""
-      });
-      fermentationPoints = [];
-      saveChart();
-      drawChart();
-      saveData();
-    }
-
-    function applyPreset(name){
-      const preset = presets[name];
-      if(!preset) return;
-      fillData({
-        ...collectData(),
-        ...preset
-      });
-      saveData();
-    }
-
-    function exportJSON(){
-      const data = collectData();
-      data.ingredientsText = renumberLines(data.ingredientsText);
-      data.additionsText = renumberLines(data.additionsText);
-      data.fermentationPoints = fermentationPoints;
-      const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = (data.lotNumber || "xa-fermentation") + ".json";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function importJSON(file){
-      const reader = new FileReader();
-      reader.onload = () => {
-        try{
-          const data = JSON.parse(reader.result);
-          if(data.ingredientsText) data.ingredientsText = renumberLines(data.ingredientsText);
-          if(data.additionsText) data.additionsText = renumberLines(data.additionsText);
-          fillData({...defaults, ...data});
-          fermentationPoints = Array.isArray(data.fermentationPoints) ? data.fermentationPoints : [];
-          saveChart();
-          drawChart();
-          saveData();
-        }catch{
-          alert("File JSON non valido");
-        }
-      };
-      reader.readAsText(file);
     }
 
     function saveCurrentRecipeToArchive(){
@@ -1980,7 +1814,7 @@
         srm: data.srm,
         master: data.master,
         tags: generateTags(data),
-        fermentationPoints: [...fermentationPoints]
+        fermentationPoints:[...fermentationPoints]
       };
       archive.unshift(entry);
       saveArchive(archive);
@@ -2014,9 +1848,7 @@
           <div>
             <h4>${item.recipeName}</h4>
             <p>Lotto: ${item.lotNumber || "—"} • Data: ${item.batchDate || "—"} • Lievito: ${item.yeast || "—"}</p>
-            <div class="tag-row">
-              ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join("")}
-            </div>
+            <div class="tag-row">${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
           </div>
           <div class="archive-actions">
             <button class="mini-btn top-btn blue">Apri</button>
@@ -2034,8 +1866,7 @@
         });
         delBtn.addEventListener("click", () => {
           if(!confirm("Eliminare questa ricetta dall'archivio?")) return;
-          const next = loadArchive().filter(v => v.id !== item.id);
-          saveArchive(next);
+          saveArchive(loadArchive().filter(v => v.id !== item.id));
           renderArchive();
         });
         list.appendChild(box);
@@ -2063,110 +1894,121 @@
       return `https://www.google.com/search?q=${encodeURIComponent(term || libraryLabels[key])}`;
     }
 
-    function buildLibraryAccordion(){
-      const root = $("libraryAccordion");
+    function buildLibraries(){
+      const root = $("librariesContainer");
       root.innerHTML = "";
 
       Object.keys(libraryData).forEach(key => {
         const card = document.createElement("div");
         card.className = "lib-card";
-        card.dataset.key = key;
 
         card.innerHTML = `
           <div class="lib-head">
             <div class="lib-title">${libraryLabels[key]}</div>
-            <button class="lib-toggle">ON / OFF</button>
+            <button class="lib-head-btn">ON / OFF</button>
           </div>
           <div class="lib-body">
-            <div class="search-row">
+            <div class="lib-toolbar">
               <input class="search-input" type="text" placeholder="Cerca in ${libraryLabels[key]}..." />
-              <button class="mini-btn top-btn orange web-search-btn">Ricerca web</button>
+              <button class="top-btn orange mini-btn">Ricerca web</button>
             </div>
-            <div class="library-grid"></div>
+            <div class="lib-grid"></div>
+            <div class="detail-panel"></div>
           </div>
         `;
 
-        const toggle = card.querySelector(".lib-toggle");
+        const headBtn = card.querySelector(".lib-head-btn");
+        const body = card.querySelector(".lib-body");
         const search = card.querySelector(".search-input");
-        const grid = card.querySelector(".library-grid");
-        const webBtn = card.querySelector(".web-search-btn");
+        const webBtn = card.querySelector(".mini-btn");
+        const grid = card.querySelector(".lib-grid");
+        const detailPanel = card.querySelector(".detail-panel");
 
-        function render(filterText = ""){
-          const q = filterText.trim().toLowerCase();
-          const items = libraryData[key].filter(item =>
-            !q ||
-            item.name.toLowerCase().includes(q) ||
-            item.desc.toLowerCase().includes(q)
-          );
-
-          grid.innerHTML = "";
-
-          if(items.length === 0){
-            grid.innerHTML = `<div class="lib-item"><h4>Nessun risultato</h4><p>Prova un altro termine oppure usa Ricerca web.</p></div>`;
-            return;
-          }
-
-          items.forEach(item => {
-            const div = document.createElement("div");
-            div.className = "lib-item";
-            div.innerHTML = `
-              <h4>${item.name}</h4>
-              <p>${item.desc}</p>
-              <div class="mini-row">
-                <input type="number" step="0.1" value="${item.qty}" />
-                <select>
-                  <option value="${item.unit}">${item.unit}</option>
-                  <option value="g">g</option>
-                  <option value="kg">kg</option>
-                  <option value="ml">ml</option>
-                  <option value="L">L</option>
-                  <option value="g/L">g/L</option>
-                  <option value="pz">pz</option>
-                  <option value="dose">dose</option>
-                  <option value="bacca">bacca</option>
-                </select>
-                <button class="add-lib-btn">Aggiungi</button>
-              </div>
-            `;
-
-            const qtyInput = div.querySelector("input");
-            const unitSelect = div.querySelector("select");
-            const addBtn = div.querySelector(".add-lib-btn");
-
-            addBtn.addEventListener("click", () => {
-              addRecipeItem(item.name, qtyInput.value || item.qty, unitSelect.value || item.unit, item.desc);
-            });
-
-            grid.appendChild(div);
-          });
-        }
-
-        toggle.addEventListener("click", () => {
+        headBtn.addEventListener("click", () => {
           card.classList.toggle("open");
-          toggle.classList.toggle("active");
+          headBtn.classList.toggle("active");
         });
-
-        search.addEventListener("input", () => render(search.value));
 
         webBtn.addEventListener("click", () => {
           const term = search.value.trim();
           window.open(smartSearchUrl(key, term), "_blank");
         });
 
-        render();
+        function renderGrid(filterText = ""){
+          const q = filterText.trim().toLowerCase();
+          const items = libraryData[key].filter(item =>
+            !q ||
+            item.name.toLowerCase().includes(q) ||
+            item.desc.toLowerCase().includes(q) ||
+            (item.meta || []).join(" ").toLowerCase().includes(q)
+          );
+
+          grid.innerHTML = "";
+
+          items.forEach(item => {
+            const chip = document.createElement("div");
+            chip.className = "lib-chip";
+            chip.innerHTML = `
+              <div class="lib-chip-name">${item.name}</div>
+              <button class="zoom-btn">+</button>
+            `;
+
+            chip.addEventListener("click", (e) => {
+              if(e.target.tagName === "BUTTON" || e.target.classList.contains("zoom-btn")){
+                e.stopPropagation();
+              }
+              openDetail(item);
+            });
+
+            chip.querySelector(".zoom-btn").addEventListener("click", (e) => {
+              e.stopPropagation();
+              openDetail(item);
+            });
+
+            grid.appendChild(chip);
+          });
+
+          if(items.length === 0){
+            grid.innerHTML = `<div class="lib-chip"><div class="lib-chip-name">Nessun risultato</div><button class="zoom-btn">?</button></div>`;
+          }
+        }
+
+        function openDetail(item){
+          detailPanel.classList.add("show");
+          detailPanel.innerHTML = `
+            <div class="detail-title">${item.name}</div>
+            <div class="detail-desc">${item.desc}</div>
+            <div class="detail-meta">
+              ${(item.meta || []).map(v => `<span class="meta-pill">${v}</span>`).join("")}
+            </div>
+            <div class="detail-form">
+              <input class="detail-input" id="qty-${key}" type="number" step="0.1" value="${item.qty}" />
+              <select class="detail-select" id="unit-${key}">
+                <option value="${item.unit}">${item.unit}</option>
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="ml">ml</option>
+                <option value="L">L</option>
+                <option value="g/L">g/L</option>
+                <option value="pz">pz</option>
+                <option value="dose">dose</option>
+                <option value="bacca">bacca</option>
+              </select>
+              <button class="detail-add-btn">Aggiungi alla ricetta</button>
+            </div>
+          `;
+
+          detailPanel.querySelector(".detail-add-btn").addEventListener("click", () => {
+            const qty = detailPanel.querySelector(`#qty-${key}`).value || item.qty;
+            const unit = detailPanel.querySelector(`#unit-${key}`).value || item.unit;
+            addRecipeItem(item.name, qty, unit, item.desc);
+          });
+        }
+
+        search.addEventListener("input", () => renderGrid(search.value));
+        renderGrid();
         root.appendChild(card);
       });
-    }
-
-    function switchScreen(name){
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-      $(`screen-${name}`).classList.add("active");
-      document.querySelector(`.nav-btn[data-screen="${name}"]`).classList.add("active");
-
-      if(name === "recipe") updateRecipePreview();
-      if(name === "archive") renderArchive();
-      if(name === "mixer") drawChart();
     }
 
     function drawChart(){
@@ -2176,7 +2018,6 @@
       const h = canvas.height;
 
       ctx.clearRect(0,0,w,h);
-
       ctx.fillStyle = "#05080d";
       ctx.fillRect(0,0,w,h);
 
@@ -2226,15 +2067,15 @@
         return bottom - ratio * (bottom - top);
       }
 
-      ctx.strokeStyle = "#ff9d39";
+      ctx.strokeStyle = "#ff9f3b";
       ctx.lineWidth = 3;
       ctx.beginPath();
 
       fermentationPoints.forEach((p, i) => {
         const x = mapX(i);
         const y = mapY(p.value);
-        if(i === 0) ctx.moveTo(x,y);
-        else ctx.lineTo(x,y);
+        if(i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
       });
       ctx.stroke();
 
@@ -2242,12 +2083,12 @@
         const x = mapX(i);
         const y = mapY(p.value);
 
-        ctx.fillStyle = "#4aa3ff";
+        ctx.fillStyle = "#58a8ff";
         ctx.beginPath();
-        ctx.arc(x,y,5,0,Math.PI*2);
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = "rgba(255,255,255,.8)";
+        ctx.fillStyle = "rgba(255,255,255,.82)";
         ctx.font = "11px Arial";
         ctx.fillText(`G${p.day}`, x - 10, h - 12);
         ctx.fillText(p.value.toFixed(3), x - 16, y - 10);
@@ -2268,7 +2109,7 @@
       }
 
       fermentationPoints.push({
-        day: parseInt(day,10) || fermentationPoints.length + 1,
+        day: parseInt(day, 10) || fermentationPoints.length + 1,
         value: num
       });
 
@@ -2337,6 +2178,74 @@
       setTimeout(() => w.print(), 300);
     }
 
+    function newRecipe(){
+      if(!confirm("Creare una nuova ricetta vuota?")) return;
+      fillData({
+        ...defaults,
+        recipeName:"",
+        lotNumber:"",
+        batchDate:"",
+        yeast:"",
+        ingredientsText:"",
+        additionsText:"",
+        notesText:""
+      });
+      fermentationPoints = [];
+      saveChart();
+      drawChart();
+      saveData();
+    }
+
+    function applyPreset(name){
+      const preset = presets[name];
+      if(!preset) return;
+      fillData({...collectData(), ...preset});
+      saveData();
+    }
+
+    function exportJSON(){
+      const data = collectData();
+      data.ingredientsText = renumberLines(data.ingredientsText);
+      data.additionsText = renumberLines(data.additionsText);
+      data.fermentationPoints = fermentationPoints;
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = (data.lotNumber || "xa-fermentation") + ".json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importJSON(file){
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const data = JSON.parse(reader.result);
+          if(data.ingredientsText) data.ingredientsText = renumberLines(data.ingredientsText);
+          if(data.additionsText) data.additionsText = renumberLines(data.additionsText);
+          fillData({...defaults, ...data});
+          fermentationPoints = Array.isArray(data.fermentationPoints) ? data.fermentationPoints : [];
+          saveChart();
+          drawChart();
+          saveData();
+        }catch{
+          alert("File JSON non valido");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function switchScreen(name){
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      $(`screen-${name}`).classList.add("active");
+      document.querySelector(`.nav-btn[data-screen="${name}"]`).classList.add("active");
+      if(name === "recipe") updateRecipePreview();
+      if(name === "archive") renderArchive();
+      if(name === "mixer") drawChart();
+    }
+
     [
       "recipeName","lotNumber","batchDate","yeast",
       "ingredientsText","additionsText","notesText",
@@ -2380,7 +2289,7 @@
       e.target.value = "";
     });
 
-    buildLibraryAccordion();
+    buildLibraries();
     fillData(loadData());
     fermentationPoints = loadChart();
     renderArchive();
@@ -2390,133 +2299,6 @@
     setInterval(() => {
       updateUI(collectData());
     }, 450);
-
-    function buildLibraryAccordion(){
-      const root = $("libraryAccordion");
-      root.innerHTML = "";
-
-      Object.keys(libraryData).forEach(key => {
-        const card = document.createElement("div");
-        card.className = "lib-card";
-        card.dataset.key = key;
-
-        card.innerHTML = `
-          <div class="lib-head">
-            <div class="lib-title">${libraryLabels[key]}</div>
-            <button class="lib-toggle">ON / OFF</button>
-          </div>
-          <div class="lib-body">
-            <div class="search-row">
-              <input class="search-input" type="text" placeholder="Cerca in ${libraryLabels[key]}..." />
-              <button class="mini-btn top-btn orange web-search-btn">Ricerca web</button>
-            </div>
-            <div class="library-grid"></div>
-          </div>
-        `;
-
-        const toggle = card.querySelector(".lib-toggle");
-        const search = card.querySelector(".search-input");
-        const grid = card.querySelector(".library-grid");
-        const webBtn = card.querySelector(".web-search-btn");
-
-        function render(filterText = ""){
-          const q = filterText.trim().toLowerCase();
-          const items = libraryData[key].filter(item =>
-            !q ||
-            item.name.toLowerCase().includes(q) ||
-            item.desc.toLowerCase().includes(q)
-          );
-
-          grid.innerHTML = "";
-
-          if(items.length === 0){
-            grid.innerHTML = `<div class="lib-item"><h4>Nessun risultato</h4><p>Prova un altro termine oppure usa Ricerca web.</p></div>`;
-            return;
-          }
-
-          items.forEach(item => {
-            const div = document.createElement("div");
-            div.className = "lib-item";
-            div.innerHTML = `
-              <h4>${item.name}</h4>
-              <p>${item.desc}</p>
-              <div class="mini-row">
-                <input type="number" step="0.1" value="${item.qty}" />
-                <select>
-                  <option value="${item.unit}">${item.unit}</option>
-                  <option value="g">g</option>
-                  <option value="kg">kg</option>
-                  <option value="ml">ml</option>
-                  <option value="L">L</option>
-                  <option value="g/L">g/L</option>
-                  <option value="pz">pz</option>
-                  <option value="dose">dose</option>
-                  <option value="bacca">bacca</option>
-                </select>
-                <button class="add-lib-btn">Aggiungi</button>
-              </div>
-            `;
-
-            const qtyInput = div.querySelector("input");
-            const unitSelect = div.querySelector("select");
-            const addBtn = div.querySelector(".add-lib-btn");
-
-            addBtn.addEventListener("click", () => {
-              addRecipeItem(item.name, qtyInput.value || item.qty, unitSelect.value || item.unit, item.desc);
-            });
-
-            grid.appendChild(div);
-          });
-        }
-
-        toggle.addEventListener("click", () => {
-          card.classList.toggle("open");
-          toggle.classList.toggle("active");
-        });
-
-        search.addEventListener("input", () => render(search.value));
-
-        webBtn.addEventListener("click", () => {
-          const term = search.value.trim();
-          window.open(smartSearchUrl(key, term), "_blank");
-        });
-
-        render();
-        root.appendChild(card);
-      });
-    }
-
-    function smartSearchUrl(key, term){
-      const t = (term || "").trim().toLowerCase();
-
-      if(key === "yeasts"){
-        if(t.includes("omega") || t.includes("lutra")) return "https://omegayeast.com/";
-        if(t.includes("lallemand") || t.includes("lalbrew") || t.includes("verdant")) return "https://www.lallemandbrewing.com/";
-        if(t.includes("fermentis") || t.includes("safale") || t.includes("saflager") || t.includes("s-04") || t.includes("us-05") || t.includes("w-34/70")) return "https://fermentis.com/";
-        if(t.includes("mangrove")) return "https://mangrovejacks.com/";
-        return `https://www.google.com/search?q=${encodeURIComponent(term + " yeast producer official site")}`;
-      }
-
-      if(key === "hops"){
-        if(t.includes("yakima")) return "https://yakimavalleyhops.com/";
-        if(t.includes("barth")) return "https://www.barthhaas.com/";
-        if(t.includes("hopsteiner") || t.includes("citra") || t.includes("mosaic") || t.includes("simcoe")) return "https://hopsteiner.com/";
-        return `https://www.google.com/search?q=${encodeURIComponent(term + " hop producer official technical sheet")}`;
-      }
-
-      return `https://www.google.com/search?q=${encodeURIComponent(term || libraryLabels[key])}`;
-    }
-
-    function switchScreen(name){
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-      $(`screen-${name}`).classList.add("active");
-      document.querySelector(`.nav-btn[data-screen="${name}"]`).classList.add("active");
-
-      if(name === "recipe") updateRecipePreview();
-      if(name === "archive") renderArchive();
-      if(name === "mixer") drawChart();
-    }
   </script>
 </body>
 </html>
