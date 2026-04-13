@@ -3,32 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation Ultra VST</title>
+  <title>XA Fermentation Ultra VST Pro</title>
   <meta name="theme-color" content="#12090c" />
   <style>
     :root{
       --bg1:#12090c;
       --bg2:#1a0f15;
-      --bg3:#23131b;
+      --bg3:#24131b;
       --panel:#1a1017;
       --panel2:#120b11;
       --metal:#24161e;
       --metal2:#0f0a0d;
       --stroke:rgba(255,255,255,.08);
       --text:#f5f7fb;
-      --muted:#a89aa3;
+      --muted:#aa99a3;
 
-      --red:#ff3f50;
-      --red2:#ff6673;
+      --red:#ff4253;
+      --red2:#ff6b78;
       --orange:#ff9a38;
       --yellow:#ffd44d;
       --green:#36d49d;
-      --blue:#62a8ff;
-      --cyan:#6ae7ff;
+      --blue:#63a9ff;
+      --cyan:#69e7ff;
       --violet:#b975ff;
-      --pink:#ff74ae;
+      --pink:#ff75ac;
 
-      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --shadow:0 24px 60px rgba(0,0,0,.46);
       --radius:26px;
     }
 
@@ -44,8 +44,8 @@
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top, rgba(255,63,80,.14), transparent 18%),
-        radial-gradient(circle at bottom, rgba(255,154,56,.08), transparent 20%),
+        radial-gradient(circle at top, rgba(255,66,83,.15), transparent 18%),
+        radial-gradient(circle at bottom, rgba(255,154,56,.08), transparent 22%),
         linear-gradient(180deg,var(--bg1),var(--bg2) 45%, var(--bg3));
     }
 
@@ -54,7 +54,7 @@
     }
 
     .app{
-      width:min(1540px,100%);
+      width:min(1580px,100%);
       margin:0 auto;
     }
 
@@ -123,7 +123,7 @@
       width:320px;
       height:320px;
       border-radius:50%;
-      background:radial-gradient(circle, rgba(255,63,80,.16), transparent 68%);
+      background:radial-gradient(circle, rgba(255,66,83,.16), transparent 68%);
       pointer-events:none;
     }
 
@@ -234,7 +234,6 @@
       border:1px solid rgba(255,255,255,.06);
       border-radius:20px;
       padding:14px;
-      cursor:pointer;
       transition:transform .12s ease;
     }
 
@@ -252,6 +251,44 @@
       font-size:12px;
       color:var(--muted);
       line-height:1.45;
+      margin-bottom:10px;
+    }
+
+    .mini-row{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .mini-row input,
+    .mini-row select{
+      border:none;
+      outline:none;
+      border-radius:12px;
+      padding:9px 10px;
+      font-size:13px;
+      background:rgba(255,255,255,.94);
+      color:#111827;
+    }
+
+    .mini-row input{
+      width:84px;
+    }
+
+    .mini-row select{
+      width:88px;
+    }
+
+    .add-lib-btn{
+      border:none;
+      cursor:pointer;
+      border-radius:12px;
+      padding:10px 12px;
+      font-size:12px;
+      font-weight:800;
+      color:#fff;
+      background:linear-gradient(180deg,#ff4d5d,#d53343);
     }
 
     .shell{
@@ -292,7 +329,7 @@
 
     .strip{
       width:128px;
-      min-height:660px;
+      min-height:700px;
       border-radius:26px;
       padding:14px 12px;
       position:relative;
@@ -310,7 +347,7 @@
     }
 
     .master-strip{
-      width:170px;
+      width:188px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.015)),
         linear-gradient(180deg,#241219,#10090d);
@@ -343,11 +380,9 @@
     .strip.orange{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,154,56,.20), 0 14px 36px rgba(255,154,56,.10);}
     .strip.yellow{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,212,77,.20), 0 14px 36px rgba(255,212,77,.08);}
     .strip.green{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(51,213,157,.20), 0 14px 36px rgba(51,213,157,.09);}
-    .strip.violet{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(185,117,255,.20), 0 14px 36px rgba(185,117,255,.10);}
     .strip.red{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,62,77,.22), 0 14px 36px rgba(255,62,77,.12);}
-    .strip.blue{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(90,168,255,.20), 0 14px 36px rgba(90,168,255,.10);}
-    .strip.cyan{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(99,229,255,.20), 0 14px 36px rgba(99,229,255,.09);}
-    .strip.pink{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,111,168,.22), 0 14px 36px rgba(255,111,168,.12);}
+    .strip.pink{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,117,172,.22), 0 14px 36px rgba(255,117,172,.12);}
+    .strip.cyan{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(106,231,255,.20), 0 14px 36px rgba(106,231,255,.09);}
 
     .strip-label{
       position:relative;
@@ -408,9 +443,7 @@
     .orange-bar{color:var(--orange); background:var(--orange);}
     .yellow-bar{color:var(--yellow); background:var(--yellow);}
     .green-bar{color:var(--green); background:var(--green);}
-    .violet-bar{color:var(--violet); background:var(--violet);}
     .red-bar{color:var(--red); background:var(--red);}
-    .blue-bar{color:var(--blue); background:var(--blue);}
     .cyan-bar{color:var(--cyan); background:var(--cyan);}
     .pink-bar{color:var(--pink); background:var(--pink);}
 
@@ -426,7 +459,7 @@
     }
 
     .vu{
-      height:320px;
+      height:330px;
       width:14px;
       border-radius:999px;
       background:#06090e;
@@ -445,8 +478,8 @@
       height:10px;
       border-radius:999px;
       background:rgba(255,255,255,.08);
-      opacity:.12;
-      transition:all .12s linear;
+      opacity:.10;
+      transition:all .08s linear;
     }
 
     .vu span.on.green{background:#35d39a; opacity:1; box-shadow:0 0 8px #35d39a;}
@@ -464,7 +497,7 @@
     .slider-vertical{
       -webkit-appearance:none;
       appearance:none;
-      width:340px;
+      width:350px;
       height:40px;
       transform:rotate(-90deg);
       background:transparent;
@@ -521,6 +554,7 @@
     .fg-thumb{color:var(--green);}
     .ibu-thumb{color:var(--pink);}
     .co2-thumb{color:var(--cyan);}
+    .master-thumb{color:var(--red);}
 
     .strip-footer{
       width:100%;
@@ -591,6 +625,51 @@
     .led-box .v{
       font-size:18px;
       font-weight:800;
+    }
+
+    .master-fader-wrap{
+      width:100%;
+      margin:8px 0 10px;
+      position:relative;
+      z-index:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100px;
+    }
+
+    .master-fader{
+      width:100%;
+      max-width:120px;
+      -webkit-appearance:none;
+      appearance:none;
+      height:18px;
+      background:linear-gradient(180deg,#1d2a39,#0c141e);
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.05);
+      box-shadow:inset 0 2px 6px rgba(0,0,0,.45);
+    }
+
+    .master-fader::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      appearance:none;
+      width:42px;
+      height:28px;
+      border-radius:10px;
+      background:var(--red);
+      border:none;
+      box-shadow:0 0 20px rgba(255,66,83,.55), 0 6px 14px rgba(0,0,0,.4);
+      cursor:pointer;
+    }
+
+    .master-fader::-moz-range-thumb{
+      width:42px;
+      height:28px;
+      border-radius:10px;
+      background:var(--red);
+      border:none;
+      box-shadow:0 0 20px rgba(255,66,83,.55), 0 6px 14px rgba(0,0,0,.4);
+      cursor:pointer;
     }
 
     .grid{
@@ -737,7 +816,7 @@
       <div class="logo">XA</div>
       <div>
         <h1>XA Fermentation Ultra VST</h1>
-        <p>Dark luxury • master section • display LED • browser ingredienti tecnici</p>
+        <p>Master section centrale • browser tecnico espandibile • ricetta professionale numerata</p>
       </div>
     </div>
 
@@ -759,41 +838,32 @@
     </div>
 
     <div class="browser-shell">
-      <div class="section-title">Browser tecnico</div>
-      <div class="section-sub">Tocca una categoria. Poi tocca un elemento per inserirlo nella ricetta con le sue caratteristiche.</div>
+      <div class="section-title">Browser tecnico espandibile</div>
+      <div class="section-sub">Tocca una categoria, si apre il pannello. Poi scegli quantità, unità e aggiungi alla ricetta numerata.</div>
 
       <div class="browser-toolbar">
         <button class="lib-btn active" data-lib="hops">Luppoli</button>
         <button class="lib-btn" data-lib="yeasts">Lieviti</button>
+        <button class="lib-btn" data-lib="fruits">Frutta</button>
+        <button class="lib-btn" data-lib="peppers">Pepe</button>
+        <button class="lib-btn" data-lib="spices">Spezie</button>
         <button class="lib-btn" data-lib="botanicals">Botaniche</button>
         <button class="lib-btn" data-lib="lacto">Lattobacilli</button>
         <button class="lib-btn" data-lib="acids">Acidi</button>
         <button class="lib-btn" data-lib="teas">Tè</button>
+        <button class="lib-btn" data-lib="salts">Sali</button>
       </div>
 
-      <div class="library-panel active" id="lib-hops">
-        <div class="library-grid" id="hopsGrid"></div>
-      </div>
-
-      <div class="library-panel" id="lib-yeasts">
-        <div class="library-grid" id="yeastsGrid"></div>
-      </div>
-
-      <div class="library-panel" id="lib-botanicals">
-        <div class="library-grid" id="botanicalsGrid"></div>
-      </div>
-
-      <div class="library-panel" id="lib-lacto">
-        <div class="library-grid" id="lactoGrid"></div>
-      </div>
-
-      <div class="library-panel" id="lib-acids">
-        <div class="library-grid" id="acidsGrid"></div>
-      </div>
-
-      <div class="library-panel" id="lib-teas">
-        <div class="library-grid" id="teasGrid"></div>
-      </div>
+      <div class="library-panel active" id="lib-hops"><div class="library-grid" id="hopsGrid"></div></div>
+      <div class="library-panel" id="lib-yeasts"><div class="library-grid" id="yeastsGrid"></div></div>
+      <div class="library-panel" id="lib-fruits"><div class="library-grid" id="fruitsGrid"></div></div>
+      <div class="library-panel" id="lib-peppers"><div class="library-grid" id="peppersGrid"></div></div>
+      <div class="library-panel" id="lib-spices"><div class="library-grid" id="spicesGrid"></div></div>
+      <div class="library-panel" id="lib-botanicals"><div class="library-grid" id="botanicalsGrid"></div></div>
+      <div class="library-panel" id="lib-lacto"><div class="library-grid" id="lactoGrid"></div></div>
+      <div class="library-panel" id="lib-acids"><div class="library-grid" id="acidsGrid"></div></div>
+      <div class="library-panel" id="lib-teas"><div class="library-grid" id="teasGrid"></div></div>
+      <div class="library-panel" id="lib-salts"><div class="library-grid" id="saltsGrid"></div></div>
     </div>
 
     <div class="shell">
@@ -808,7 +878,7 @@
       </div>
 
       <div class="section-title">Mixer digitale parametri</div>
-      <div class="section-sub">Canali colorati, fader illuminati, meter laterali, pulsanti mute/solo/rec e master centrale.</div>
+      <div class="section-sub">LED più realistici, master fader centrale vero, pulsanti mute/solo/rec.</div>
 
       <div class="mixer-wrap">
         <div class="mixer">
@@ -880,6 +950,7 @@
 
           <div class="strip master-strip">
             <div class="strip-label">MASTER</div>
+
             <div class="master-leds">
               <div class="led-box">
                 <div class="n">ABV</div>
@@ -902,12 +973,16 @@
 
             <div class="channel-color red-bar"></div>
 
+            <div class="master-fader-wrap">
+              <input id="masterSlider" class="master-fader" type="range" min="0" max="100" step="1" value="72" />
+            </div>
+
             <div class="meter-and-slider">
               <div class="vu" id="vu-master-l"></div>
               <div class="slider-zone" style="text-align:center; color:var(--muted); font-size:13px; line-height:1.5;">
-                controllo centrale<br>
-                valori live<br>
-                mixer summary
+                output analyzer<br>
+                master gain<br>
+                leds live
               </div>
               <div class="vu" id="vu-master-r"></div>
             </div>
@@ -917,7 +992,7 @@
               <button class="chan-btn solo" data-btn="master-solo">SOLO</button>
               <button class="chan-btn rec" data-btn="master-rec">REC</button>
             </div>
-            <div class="strip-footer">master</div>
+            <div class="strip-footer">master output</div>
           </div>
 
           <div class="strip green">
@@ -1018,8 +1093,8 @@
           </div>
 
           <div class="field">
-            <label for="ingredientsText">Ingredienti</label>
-            <textarea id="ingredientsText" placeholder="Gli ingredienti selezionati appaiono qui..."></textarea>
+            <label for="ingredientsText">Ingredienti ricetta</label>
+            <textarea id="ingredientsText" placeholder="La ricetta viene numerata automaticamente..."></textarea>
           </div>
 
           <div class="field">
@@ -1036,56 +1111,40 @@
 
       <div class="info-card span-6">
         <div class="section-title">Ingredienti rapidi</div>
-        <div class="section-sub">Questi pulsanti adesso funzionano correttamente.</div>
+        <div class="section-sub">Anche questi inseriscono righe pulite e professionali nella ricetta.</div>
 
         <div class="ingredient-grid">
-          <button class="ingredient-btn" data-ingredient="Mela">
+          <button class="ingredient-btn" data-quick-name="Mela" data-quick-qty="1" data-quick-unit="kg">
             <span class="emoji">🍎</span>
             <span class="txt">Mela</span>
           </button>
-          <button class="ingredient-btn" data-ingredient="Pera">
+          <button class="ingredient-btn" data-quick-name="Pera" data-quick-qty="1" data-quick-unit="kg">
             <span class="emoji">🍐</span>
             <span class="txt">Pera</span>
           </button>
-          <button class="ingredient-btn" data-ingredient="Tè">
+          <button class="ingredient-btn" data-quick-name="Tè oolong" data-quick-qty="8" data-quick-unit="g">
             <span class="emoji">🍵</span>
             <span class="txt">Tè</span>
           </button>
-          <button class="ingredient-btn" data-ingredient="Miele">
+          <button class="ingredient-btn" data-quick-name="Miele" data-quick-qty="250" data-quick-unit="g">
             <span class="emoji">🍯</span>
             <span class="txt">Miele</span>
           </button>
-          <button class="ingredient-btn" data-ingredient="Limone">
+          <button class="ingredient-btn" data-quick-name="Limone" data-quick-qty="1" data-quick-unit="pz">
             <span class="emoji">🍋</span>
             <span class="txt">Limone</span>
           </button>
-          <button class="ingredient-btn" data-ingredient="Arancia">
+          <button class="ingredient-btn" data-quick-name="Arancia" data-quick-qty="1" data-quick-unit="pz">
             <span class="emoji">🍊</span>
             <span class="txt">Arancia</span>
           </button>
-          <button class="ingredient-btn" data-ingredient="Botaniche">
+          <button class="ingredient-btn" data-quick-name="Botaniche miste" data-quick-qty="5" data-quick-unit="g">
             <span class="emoji">🌿</span>
             <span class="txt">Botaniche</span>
           </button>
-          <button class="ingredient-btn" data-ingredient="Malto">
+          <button class="ingredient-btn" data-quick-name="Malto" data-quick-qty="1" data-quick-unit="kg">
             <span class="emoji">🌾</span>
             <span class="txt">Malto</span>
-          </button>
-          <button class="ingredient-btn" data-ingredient="Zucchero">
-            <span class="emoji">🧁</span>
-            <span class="txt">Zucchero</span>
-          </button>
-          <button class="ingredient-btn" data-ingredient="Sale">
-            <span class="emoji">🧂</span>
-            <span class="txt">Sale</span>
-          </button>
-          <button class="ingredient-btn" data-ingredient="Uva">
-            <span class="emoji">🍇</span>
-            <span class="txt">Uva</span>
-          </button>
-          <button class="ingredient-btn" data-ingredient="Spezie">
-            <span class="emoji">🫚</span>
-            <span class="txt">Spezie</span>
           </button>
         </div>
 
@@ -1103,14 +1162,14 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xaFermentationUltraVST_v1";
+    const STORAGE_KEY = "xaFermentationUltraVST_v2";
 
     const defaults = {
       recipeName: "Sidro Secco XA",
       lotNumber: "XA-001",
       batchDate: "",
       yeast: "Lievito autoctono",
-      ingredientsText: "Mela\\nLievito autoctono",
+      ingredientsText: "1. Mela — 1 kg",
       additionsText: "",
       notesText: "",
       ph: 3.50,
@@ -1118,7 +1177,8 @@
       og: 1.050,
       fg: 1.010,
       ibu: 28,
-      co2: 2.4
+      co2: 2.4,
+      master: 72
     };
 
     const presets = {
@@ -1131,8 +1191,8 @@
         fg: 1.004,
         ibu: 0,
         co2: 2.4,
-        ingredientsText: "Mela\\nLievito autoctono",
-        additionsText: "Giorno 1 inoculo\\nGiorno 5 travaso",
+        ingredientsText: "1. Mela — 20 L succo\\n2. Lievito autoctono — 1 dose",
+        additionsText: "1. Inoculo lievito — giorno 1\\n2. Travaso — giorno 5",
         notesText: "Profilo secco e pulito"
       },
       perry: {
@@ -1144,8 +1204,8 @@
         fg: 1.006,
         ibu: 0,
         co2: 2.5,
-        ingredientsText: "Pera\\nLievito da sidro",
-        additionsText: "Giorno 1 inoculo",
+        ingredientsText: "1. Pera — 20 L succo\\n2. Lievito da sidro — 1 dose",
+        additionsText: "1. Inoculo — giorno 1",
         notesText: "Profilo fruttato da pera"
       },
       kombucha: {
@@ -1157,8 +1217,8 @@
         fg: 1.008,
         ibu: 0,
         co2: 2.8,
-        ingredientsText: "Tè\\nZucchero\\nSCOBY",
-        additionsText: "Seconda fermentazione opzionale",
+        ingredientsText: "1. Tè nero — 8 g\\n2. Zucchero — 80 g/L\\n3. SCOBY — 1 coltura",
+        additionsText: "1. Seconda fermentazione opzionale",
         notesText: "Acidità viva e bollicina"
       },
       blonde: {
@@ -1170,8 +1230,8 @@
         fg: 1.010,
         ibu: 20,
         co2: 2.3,
-        ingredientsText: "Malto\\nLuppolo\\nLievito US-05",
-        additionsText: "Bollitura 60 min",
+        ingredientsText: "1. Malto pils — 4.5 kg\\n2. Luppolo Saaz — 35 g\\n3. Lievito US-05 — 11 g",
+        additionsText: "1. Bollitura — 60 min",
         notesText: "Pulita e semplice"
       },
       ipa: {
@@ -1183,8 +1243,8 @@
         fg: 1.012,
         ibu: 55,
         co2: 2.4,
-        ingredientsText: "Malto\\nLuppolo\\nLievito US-05",
-        additionsText: "Dry hop giorno 5",
+        ingredientsText: "1. Malto pale — 5.5 kg\\n2. Citra — 60 g\\n3. Simcoe — 60 g\\n4. Lievito US-05 — 11 g",
+        additionsText: "1. Dry hop — giorno 5",
         notesText: "Luppolata, secca, moderna"
       },
       gose: {
@@ -1196,60 +1256,92 @@
         fg: 1.010,
         ibu: 10,
         co2: 2.6,
-        ingredientsText: "Malto\\nSale\\nCoriandolo",
-        additionsText: "Acidificazione controllata",
+        ingredientsText: "1. Malto — 4.5 kg\\n2. Sale — 8 g\\n3. Coriandolo — 12 g",
+        additionsText: "1. Acidificazione controllata",
         notesText: "Acida e sapida"
       }
     };
 
     const libraryData = {
       hops: [
-        ["Citra","Agrumi, mango, tropicale. Ottimo per aroma e dry hop."],
-        ["Simcoe","Pino, resina, frutta scura. Forte identità moderna."],
-        ["Saaz","Speziato, erbaceo, nobile. Classico lager e pils."],
-        ["Hallertau","Floreale, delicato, nobile. Profilo elegante."],
-        ["Cascade","Agrumi e floreale. Classico americano."],
-        ["Mosaic","Tropicale, berry, complesso. Molto usato in IPA."]
+        {name:"Citra", desc:"Agrumi, mango, tropicale. Ottimo per aroma e dry hop.", qty:"20", unit:"g"},
+        {name:"Simcoe", desc:"Pino, resina, frutta scura. Profilo intenso e moderno.", qty:"20", unit:"g"},
+        {name:"Saaz", desc:"Speziato, erbaceo, nobile. Classico pils e lager.", qty:"20", unit:"g"},
+        {name:"Hallertau", desc:"Floreale, delicato, nobile.", qty:"20", unit:"g"},
+        {name:"Cascade", desc:"Agrumi e floreale. Classico americano.", qty:"20", unit:"g"},
+        {name:"Mosaic", desc:"Tropicale, berry, molto complesso.", qty:"20", unit:"g"}
       ],
       yeasts: [
-        ["US-05","Pulito, neutro, molto versatile. Ale americana."],
-        ["Belle Saison","Molto attenuante, speziato, secco."],
-        ["Kveik","Veloce, tollera alte temperature, profilo fruttato."],
-        ["Lievito da sidro","Pulito, secco, adatto a succo di mela/pera."],
-        ["SCOBY","Coltura simbiotica per kombucha."],
-        ["Lievito autoctono","Profilo unico, più complesso e meno prevedibile."]
+        {name:"US-05", desc:"Pulito, neutro, versatile. Ale americana.", qty:"11", unit:"g"},
+        {name:"Belle Saison", desc:"Molto attenuante, speziato, secco.", qty:"11", unit:"g"},
+        {name:"Kveik", desc:"Veloce, tollera alte temperature, fruttato.", qty:"11", unit:"g"},
+        {name:"Lievito da sidro", desc:"Pulito, secco, adatto a mela e pera.", qty:"1", unit:"dose"},
+        {name:"SCOBY", desc:"Coltura simbiotica per kombucha.", qty:"1", unit:"pz"},
+        {name:"Lievito autoctono", desc:"Profilo unico, più complesso.", qty:"1", unit:"dose"}
+      ],
+      fruits: [
+        {name:"Mela", desc:"Base fruttata fresca, acidità naturale.", qty:"1", unit:"kg"},
+        {name:"Pera", desc:"Frutto delicato, rotondo, elegante.", qty:"1", unit:"kg"},
+        {name:"Uva", desc:"Profilo vinoso, fruttato, più strutturato.", qty:"1", unit:"kg"},
+        {name:"Limone", desc:"Acidità e freschezza agrumata.", qty:"1", unit:"pz"},
+        {name:"Arancia", desc:"Dolcezza agrumata e oli essenziali.", qty:"1", unit:"pz"},
+        {name:"Pompelmo", desc:"Agrume amaro, fresco, secco.", qty:"1", unit:"pz"}
+      ],
+      peppers: [
+        {name:"Pepe Timut", desc:"Agrumato, pompelmo, molto aromatico.", qty:"2", unit:"g"},
+        {name:"Pepe Sichuan", desc:"Agrumato, vibrante, leggermente anestetico.", qty:"2", unit:"g"},
+        {name:"Pepe Cubebe", desc:"Speziato, balsamico, fresco.", qty:"2", unit:"g"},
+        {name:"Pepe nero", desc:"Caldo, classico, pungente.", qty:"2", unit:"g"},
+        {name:"Pepe lungo", desc:"Caldo, profondo, più complesso.", qty:"2", unit:"g"},
+        {name:"Pepe rosa", desc:"Floreale, morbido, decorativo.", qty:"2", unit:"g"}
+      ],
+      spices: [
+        {name:"Cardamomo", desc:"Agrumato, fresco, elegante.", qty:"2", unit:"g"},
+        {name:"Coriandolo", desc:"Agrumato, speziato, brillante.", qty:"3", unit:"g"},
+        {name:"Cannella", desc:"Calda, dolce, avvolgente.", qty:"2", unit:"g"},
+        {name:"Zenzero", desc:"Fresco, pungente, vibrante.", qty:"4", unit:"g"},
+        {name:"Vaniglia", desc:"Dolce, morbida, cremosa.", qty:"1", unit:"bacca"},
+        {name:"Anice stellato", desc:"Dolce, balsamico, intenso.", qty:"1", unit:"pz"}
       ],
       botanicals: [
-        ["Ginepro","Resinoso, balsamico, secco."],
-        ["Cardamomo","Agrumato, speziato, fresco."],
-        ["Lavanda","Floreale, delicata, da dosare con attenzione."],
-        ["Osmanto","Floreale, albicocca, elegante."],
-        ["China","Amara, tonica, cortecciosa."],
-        ["Coriandolo","Agrumato, speziato, fresco."]
+        {name:"Ginepro", desc:"Resinoso, balsamico, secco.", qty:"3", unit:"g"},
+        {name:"Lavanda", desc:"Floreale, da dosare con attenzione.", qty:"1", unit:"g"},
+        {name:"Osmanto", desc:"Floreale, albicocca, elegante.", qty:"2", unit:"g"},
+        {name:"China", desc:"Amara, tonica, cortecciosa.", qty:"2", unit:"g"},
+        {name:"Rosmarino", desc:"Resinoso, mediterraneo.", qty:"2", unit:"g"},
+        {name:"Timo", desc:"Erbaceo, secco, aromatico.", qty:"2", unit:"g"}
       ],
       lacto: [
-        ["Plantarum","Acidificazione rapida e pulita, molto usato."],
-        ["Helveticus","Acido lattico morbido, interessante per profilo elegante."],
-        ["Brevis","Può sviluppare acidità e complessità."],
-        ["Casei","Meno comune, da valutare per applicazioni specifiche."],
-        ["Rhamnosus","Usato in contesti più particolari."],
-        ["Blend lattico","Mix per acidificazioni più complesse."]
+        {name:"L. plantarum", desc:"Acidificazione rapida e pulita.", qty:"1", unit:"dose"},
+        {name:"L. helveticus", desc:"Acidità più morbida ed elegante.", qty:"1", unit:"dose"},
+        {name:"L. brevis", desc:"Acidità e complessità.", qty:"1", unit:"dose"},
+        {name:"L. casei", desc:"Uso più specifico, interessante.", qty:"1", unit:"dose"},
+        {name:"Blend lattico", desc:"Mix per acidificazioni stratificate.", qty:"1", unit:"dose"},
+        {name:"Starter lattico", desc:"Base tecnica per inoculo controllato.", qty:"1", unit:"dose"}
       ],
       acids: [
-        ["Acido malico","Mela verde, acidità viva e fruttata."],
-        ["Acido citrico","Agrumato, brillante, diretto."],
-        ["Acido lattico","Morbido, rotondo, da fermentazione o aggiunta."],
-        ["Acido tartarico","Più vinoso, utile in alcune strutture."],
-        ["Acido ascorbico","Antiossidante, tecnico."],
-        ["Blend acidi","Per costruire acidità più stratificata."]
+        {name:"Acido malico", desc:"Mela verde, acidità fruttata.", qty:"1", unit:"g/L"},
+        {name:"Acido citrico", desc:"Agrumato, diretto, brillante.", qty:"1", unit:"g/L"},
+        {name:"Acido lattico", desc:"Morbido, rotondo.", qty:"1", unit:"g/L"},
+        {name:"Acido tartarico", desc:"Più vinoso, strutturante.", qty:"1", unit:"g/L"},
+        {name:"Acido ascorbico", desc:"Tecnico, antiossidante.", qty:"0.5", unit:"g/L"},
+        {name:"Blend acidi", desc:"Per acidità multilivello.", qty:"1", unit:"g/L"}
       ],
       teas: [
-        ["Tè Oolong","Floreale, ossidazione media, molto elegante."],
-        ["Tè verde","Vegetale, fresco, delicato."],
-        ["Tè nero","Corposo, tannico, profondo."],
-        ["Tè bianco","Fine, leggero, più delicato."],
-        ["Jasmine","Floreale, profumato, netto."],
-        ["Lapsang","Affumicato, intenso, molto caratterizzante."]
+        {name:"Tè oolong", desc:"Floreale, elegante, ossidazione media.", qty:"8", unit:"g"},
+        {name:"Tè verde", desc:"Vegetale, fresco, pulito.", qty:"8", unit:"g"},
+        {name:"Tè nero", desc:"Corposo, tannico, profondo.", qty:"8", unit:"g"},
+        {name:"Tè bianco", desc:"Fine, delicato, leggero.", qty:"8", unit:"g"},
+        {name:"Tè al gelsomino", desc:"Floreale e profumato.", qty:"8", unit:"g"},
+        {name:"Lapsang Souchong", desc:"Affumicato, deciso, molto caratterizzante.", qty:"8", unit:"g"}
+      ],
+      salts: [
+        {name:"Sale marino", desc:"Sapido pulito, classico.", qty:"1", unit:"g/L"},
+        {name:"Sale rosa", desc:"Minerale, delicato.", qty:"1", unit:"g/L"},
+        {name:"Sale affumicato", desc:"Sapido con nota smoky.", qty:"1", unit:"g/L"},
+        {name:"Fleur de sel", desc:"Fine, elegante, più delicato.", qty:"1", unit:"g/L"},
+        {name:"Sale nero", desc:"Più scenografico e minerale.", qty:"1", unit:"g/L"},
+        {name:"Sale di Maldon", desc:"Cristallo delicato, elegante.", qty:"1", unit:"g/L"}
       ]
     };
 
@@ -1266,8 +1358,8 @@
 
     [
       "vu-ph-l","vu-ph-r","vu-temp-l","vu-temp-r","vu-og-l","vu-og-r",
-      "vu-fg-l","vu-fg-r","vu-abv-l","vu-abv-r","vu-ibu-l","vu-ibu-r",
-      "vu-co2-l","vu-co2-r","vu-master-l","vu-master-r"
+      "vu-fg-l","vu-fg-r","vu-ibu-l","vu-ibu-r","vu-co2-l","vu-co2-r",
+      "vu-master-l","vu-master-r"
     ].forEach(buildVu);
 
     function setVu(id, ratio){
@@ -1325,7 +1417,8 @@
         og: parseFloat($("ogSlider").value) / 1000,
         fg: parseFloat($("fgSlider").value) / 1000,
         ibu: parseFloat($("ibuSlider").value),
-        co2: parseFloat($("co2Slider").value) / 10
+        co2: parseFloat($("co2Slider").value) / 10,
+        master: parseFloat($("masterSlider").value)
       };
     }
 
@@ -1361,6 +1454,7 @@
       $("fgSlider").value = Math.round((data.fg ?? defaults.fg) * 1000);
       $("ibuSlider").value = Math.round(data.ibu ?? defaults.ibu);
       $("co2Slider").value = Math.round((data.co2 ?? defaults.co2) * 10);
+      $("masterSlider").value = Math.round(data.master ?? defaults.master);
 
       updateUI(data);
     }
@@ -1375,7 +1469,6 @@
       $("tempVal").textContent = data.temp.toFixed(1) + "°";
       $("ogVal").textContent = data.og.toFixed(3);
       $("fgVal").textContent = data.fg.toFixed(3);
-      $("abvVal").textContent = abv.toFixed(2) + "%";
       $("ibuVal").textContent = data.ibu.toFixed(0);
       $("co2Val").textContent = data.co2.toFixed(1);
 
@@ -1407,33 +1500,47 @@
       setVu("vu-fg-l", (data.fg - 0.998) / (1.040 - 0.998));
       setVu("vu-fg-r", (data.fg - 0.998) / (1.040 - 0.998));
 
-      setVu("vu-abv-l", Math.min(abv / 12, 1));
-      setVu("vu-abv-r", Math.min(abv / 12, 1));
-
       setVu("vu-ibu-l", data.ibu / 120);
       setVu("vu-ibu-r", data.ibu / 120);
 
       setVu("vu-co2-l", (data.co2 - 1.0) / (4.0 - 1.0));
       setVu("vu-co2-r", (data.co2 - 1.0) / (4.0 - 1.0));
 
-      const masterRatio = Math.min((abv / 12 + att / 100 + data.co2 / 4) / 3, 1);
+      const masterRatio = Math.min((((abv / 12) + (att / 100) + (data.co2 / 4)) / 3) * (data.master / 100), 1);
       setVu("vu-master-l", masterRatio);
       setVu("vu-master-r", masterRatio);
     }
 
-    function addIngredient(name){
+    function renumberRecipeLines(text){
+      const lines = text
+        .split("\n")
+        .map(v => v.trim())
+        .filter(Boolean)
+        .map(v => v.replace(/^\d+\.\s*/, ""));
+
+      return lines.map((line, idx) => `${idx + 1}. ${line}`).join("\n");
+    }
+
+    function addRecipeItem(name, qty, unit, desc = ""){
       const box = $("ingredientsText");
-      const current = box.value.trim();
-      box.value = current ? current + "\\n" + name : name;
+      const cleanName = name.trim();
+      const cleanQty = String(qty).trim();
+      const cleanUnit = String(unit).trim();
+      const line = `${cleanName} — ${cleanQty} ${cleanUnit}${desc ? " • " + desc : ""}`;
+
+      const currentLines = box.value
+        .split("\n")
+        .map(v => v.trim())
+        .filter(Boolean)
+        .map(v => v.replace(/^\d+\.\s*/, ""));
+
+      currentLines.push(line);
+      box.value = currentLines.map((v, i) => `${i + 1}. ${v}`).join("\n");
       saveData();
     }
 
-    function addLibraryItem(name, desc){
-      const box = $("ingredientsText");
-      const line = `${name} — ${desc}`;
-      const current = box.value.trim();
-      box.value = current ? current + "\\n" + line : line;
-      saveData();
+    function addQuickIngredient(name, qty, unit){
+      addRecipeItem(name, qty, unit, "");
     }
 
     function newRecipe(){
@@ -1463,6 +1570,7 @@
 
     function exportJSON(){
       const data = collectData();
+      data.ingredientsText = renumberRecipeLines(data.ingredientsText);
       const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -1477,6 +1585,9 @@
       reader.onload = () => {
         try{
           const data = JSON.parse(reader.result);
+          if(data.ingredientsText){
+            data.ingredientsText = renumberRecipeLines(data.ingredientsText);
+          }
           fillData({...defaults, ...data});
           saveData();
         }catch{
@@ -1489,11 +1600,38 @@
     function renderLibrary(gridId, items){
       const grid = $(gridId);
       grid.innerHTML = "";
-      items.forEach(([name, desc]) => {
+
+      items.forEach(item => {
         const div = document.createElement("div");
         div.className = "lib-item";
-        div.innerHTML = `<h4>${name}</h4><p>${desc}</p>`;
-        div.addEventListener("click", () => addLibraryItem(name, desc));
+        div.innerHTML = `
+          <h4>${item.name}</h4>
+          <p>${item.desc}</p>
+          <div class="mini-row">
+            <input type="number" step="0.1" value="${item.qty}" />
+            <select>
+              <option value="${item.unit}">${item.unit}</option>
+              <option value="g">g</option>
+              <option value="kg">kg</option>
+              <option value="ml">ml</option>
+              <option value="L">L</option>
+              <option value="g/L">g/L</option>
+              <option value="pz">pz</option>
+              <option value="dose">dose</option>
+              <option value="bacca">bacca</option>
+            </select>
+            <button class="add-lib-btn">Aggiungi</button>
+          </div>
+        `;
+
+        const qtyInput = div.querySelector("input");
+        const unitSelect = div.querySelector("select");
+        const addBtn = div.querySelector("button");
+
+        addBtn.addEventListener("click", () => {
+          addRecipeItem(item.name, qtyInput.value || item.qty, unitSelect.value || item.unit, item.desc);
+        });
+
         grid.appendChild(div);
       });
     }
@@ -1508,14 +1646,16 @@
     [
       "recipeName","lotNumber","batchDate","yeast",
       "ingredientsText","additionsText","notesText",
-      "phSlider","tempSlider","ogSlider","fgSlider","ibuSlider","co2Slider"
+      "phSlider","tempSlider","ogSlider","fgSlider","ibuSlider","co2Slider","masterSlider"
     ].forEach(id => {
       $(id).addEventListener("input", saveData);
       $(id).addEventListener("change", saveData);
     });
 
     document.querySelectorAll(".ingredient-btn").forEach(btn => {
-      btn.addEventListener("click", () => addIngredient(btn.dataset.ingredient));
+      btn.addEventListener("click", () => {
+        addQuickIngredient(btn.dataset.quickName, btn.dataset.quickQty, btn.dataset.quickUnit);
+      });
     });
 
     document.querySelectorAll(".preset-btn").forEach(btn => {
@@ -1542,13 +1682,22 @@
 
     renderLibrary("hopsGrid", libraryData.hops);
     renderLibrary("yeastsGrid", libraryData.yeasts);
+    renderLibrary("fruitsGrid", libraryData.fruits);
+    renderLibrary("peppersGrid", libraryData.peppers);
+    renderLibrary("spicesGrid", libraryData.spices);
     renderLibrary("botanicalsGrid", libraryData.botanicals);
     renderLibrary("lactoGrid", libraryData.lacto);
     renderLibrary("acidsGrid", libraryData.acids);
     renderLibrary("teasGrid", libraryData.teas);
+    renderLibrary("saltsGrid", libraryData.salts);
 
     fillData(loadData());
     saveData();
+
+    setInterval(() => {
+      const data = collectData();
+      updateUI(data);
+    }, 400);
   </script>
 </body>
 </html>
