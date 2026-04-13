@@ -1,2195 +1,268 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation Ultra VST Final</title>
-  <meta name="theme-color" content="#14090d" />
-  <style>
-    :root{
-      --bg1:#12080c;
-      --bg2:#1b1016;
-      --bg3:#24131b;
-      --panel:#1b1017;
-      --panel2:#120b10;
-      --glass:rgba(255,255,255,.04);
-      --stroke:rgba(255,255,255,.08);
-      --text:#f5f7fb;
-      --muted:#aa99a4;
-
-      --red:#ff4253;
-      --red2:#ff6c78;
-      --orange:#ff9b39;
-      --yellow:#ffd54d;
-      --green:#33d49c;
-      --cyan:#62e8ff;
-      --violet:#b674ff;
-      --pink:#ff74ae;
-      --blue:#65a8ff;
-
-      --shadow:0 24px 60px rgba(0,0,0,.45);
-      --radius:26px;
-    }
-
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      -webkit-tap-highlight-color:transparent;
-    }
-
-    html,body{
-      min-height:100%;
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, rgba(255,66,83,.14), transparent 18%),
-        radial-gradient(circle at bottom, rgba(255,155,57,.08), transparent 18%),
-        linear-gradient(180deg,var(--bg1),var(--bg2) 45%,var(--bg3));
-    }
-
-    body{
-      padding:14px 12px 28px;
-    }
-
-    .app{
-      width:min(1600px,100%);
-      margin:0 auto;
-    }
-
-    .hero{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      margin-bottom:14px;
-      flex-wrap:wrap;
-    }
-
-    .logo{
-      width:82px;
-      height:82px;
-      border-radius:24px;
-      display:grid;
-      place-items:center;
-      font-size:32px;
-      font-weight:800;
-      color:#fff;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.02)),
-        linear-gradient(180deg,#2d1820,#12090f);
-      border:1px solid rgba(255,255,255,.09);
-      box-shadow:
-        0 20px 40px rgba(0,0,0,.45),
-        inset 0 1px 0 rgba(255,255,255,.08);
-      flex:0 0 auto;
-    }
-
-    .hero h1{
-      font-size:clamp(28px,7vw,58px);
-      line-height:.92;
-      font-weight:800;
-      letter-spacing:-.05em;
-    }
-
-    .hero p{
-      margin-top:6px;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .shell,
-    .top-shell,
-    .browser-shell,
-    .screen-shell{
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012)),
-        linear-gradient(180deg,var(--panel),var(--panel2));
-      border:1px solid var(--stroke);
-      border-radius:30px;
-      box-shadow:var(--shadow);
-    }
-
-    .top-shell{
-      padding:16px;
-      margin-bottom:14px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .top-shell::after{
-      content:"";
-      position:absolute;
-      right:-120px;
-      top:-120px;
-      width:320px;
-      height:320px;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(255,66,83,.16), transparent 68%);
-      pointer-events:none;
-    }
-
-    .title-top{
-      position:relative;
-      z-index:1;
-      display:flex;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-      align-items:flex-start;
-    }
-
-    .recipe-big{
-      font-size:clamp(28px,7vw,54px);
-      font-weight:800;
-      line-height:.92;
-      letter-spacing:-.05em;
-      text-transform:uppercase;
-    }
-
-    .recipe-sub{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .top-actions,
-    .nav-row,
-    .preset-row{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .top-btn,
-    .nav-btn,
-    .preset-btn,
-    .lib-toggle,
-    .mini-btn{
-      border:none;
-      cursor:pointer;
-      border-radius:16px;
-      padding:12px 14px;
-      font-size:14px;
-      font-weight:800;
-      color:#fff;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.07);
-      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-    }
-
-    .top-btn:active,
-    .nav-btn:active,
-    .preset-btn:active,
-    .lib-toggle:active,
-    .mini-btn:active{
-      transform:scale(.985);
-    }
-
-    .top-btn.red,.nav-btn.active,.lib-toggle.active{
-      background:linear-gradient(180deg,#ff4f5f,#d53142);
-      box-shadow:0 0 18px rgba(255,79,95,.18);
-    }
-
-    .top-btn.blue{background:linear-gradient(180deg,#428cff,#205fcb);}
-    .top-btn.green{background:linear-gradient(180deg,#12b97d,#078f60);}
-    .top-btn.orange{background:linear-gradient(180deg,#ff9d3d,#d8740a);}
-
-    .nav-shell{
-      padding:12px;
-      margin-bottom:14px;
-    }
-
-    .nav-btn{
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-    }
-
-    .screen{
-      display:none;
-    }
-
-    .screen.active{
-      display:block;
-    }
-
-    .section-title{
-      font-size:18px;
-      font-weight:800;
-      margin-bottom:8px;
-    }
-
-    .section-sub{
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:12px;
-    }
-
-    .shell,
-    .browser-shell,
-    .screen-shell{
-      padding:14px;
-      margin-bottom:14px;
-    }
-
-    .mixer-wrap{
-      overflow-x:auto;
-      padding-bottom:6px;
-    }
-
-    .mixer{
-      display:flex;
-      gap:12px;
-      min-width:max-content;
-      align-items:stretch;
-    }
-
-    .strip{
-      width:126px;
-      min-height:500px;
-      border-radius:28px;
-      padding:14px 12px;
-      position:relative;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.09);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.01)),
-        linear-gradient(180deg,#201219,#110a0f);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.05),
-        inset 0 -30px 60px rgba(0,0,0,.18),
-        0 10px 30px rgba(0,0,0,.35);
-    }
-
-    .strip::before{
-      content:"";
-      position:absolute;
-      left:0;
-      top:0;
-      bottom:0;
-      width:3px;
-      background:linear-gradient(180deg, transparent, rgba(255,255,255,.18), transparent);
-      opacity:.25;
-      pointer-events:none;
-    }
-
-    .strip::after{
-      content:"";
-      position:absolute;
-      right:0;
-      top:0;
-      bottom:0;
-      width:3px;
-      background:linear-gradient(180deg, transparent, rgba(255,255,255,.08), transparent);
-      opacity:.18;
-      pointer-events:none;
-    }
-
-    .master-strip{
-      width:184px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 0 0 1px rgba(255,66,83,.16),
-        0 14px 36px rgba(255,66,83,.10);
-    }
-
-    .strip.orange{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,155,57,.18), 0 14px 36px rgba(255,155,57,.08);}
-    .strip.red{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,66,83,.18), 0 14px 36px rgba(255,66,83,.08);}
-    .strip.yellow{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,213,77,.18), 0 14px 36px rgba(255,213,77,.08);}
-    .strip.green{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(51,212,156,.18), 0 14px 36px rgba(51,212,156,.08);}
-    .strip.pink{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,116,174,.18), 0 14px 36px rgba(255,116,174,.08);}
-    .strip.cyan{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(98,232,255,.18), 0 14px 36px rgba(98,232,255,.08);}
-    .strip.srm{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(201,141,66,.20), 0 14px 36px rgba(201,141,66,.10);}
-
-    .strip-label{
-      min-height:32px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:12px;
-      font-weight:800;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      margin-bottom:8px;
-    }
-
-    .strip-display{
-      width:100%;
-      border-radius:18px;
-      padding:12px 8px;
-      text-align:center;
-      background:
-        linear-gradient(180deg,#10161d,#06090d);
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.02),
-        inset 0 0 24px rgba(0,0,0,.55),
-        0 8px 20px rgba(0,0,0,.25);
-      margin-bottom:12px;
-    }
-
-    .strip-value{
-      font-size:30px;
-      font-weight:800;
-      line-height:.95;
-      letter-spacing:-.04em;
-      text-shadow:0 0 18px currentColor;
-    }
-
-    .strip-unit{
-      margin-top:4px;
-      font-size:11px;
-      color:var(--muted);
-    }
-
-    .channel-color{
-      width:100%;
-      height:10px;
-      border-radius:999px;
-      margin-bottom:10px;
-      box-shadow:0 0 18px currentColor;
-    }
-
-    .orange-bar{color:var(--orange); background:var(--orange);}
-    .red-bar{color:var(--red); background:var(--red);}
-    .yellow-bar{color:var(--yellow); background:var(--yellow);}
-    .green-bar{color:var(--green); background:var(--green);}
-    .pink-bar{color:var(--pink); background:var(--pink);}
-    .cyan-bar{color:var(--cyan); background:var(--cyan);}
-    .srm-bar{color:#c58b2f; background:#c58b2f;}
-
-    .meter-and-slider{
-      flex:1;
-      width:100%;
-      display:grid;
-      grid-template-columns:14px 1fr 14px;
-      gap:10px;
-      align-items:center;
-    }
-
-    .vu{
-      height:165px;
-      width:14px;
-      border-radius:999px;
-      background:#06090e;
-      border:1px solid rgba(255,255,255,.06);
-      padding:3px 2px;
-      display:flex;
-      flex-direction:column-reverse;
-      gap:2px;
-      box-shadow:inset 0 0 14px rgba(0,0,0,.55);
-    }
-
-    .vu span{
-      display:block;
-      width:100%;
-      height:9px;
-      border-radius:999px;
-      background:rgba(255,255,255,.08);
-      opacity:.10;
-      transition:all .08s linear;
-    }
-
-    .vu span.on.green{background:#35d39a; opacity:1; box-shadow:0 0 8px #35d39a;}
-    .vu span.on.yellow{background:#ffd44d; opacity:1; box-shadow:0 0 8px #ffd44d;}
-    .vu span.on.red{background:#ff4a5a; opacity:1; box-shadow:0 0 8px #ff4a5a;}
-
-    .slider-zone{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .slider-vertical{
-      -webkit-appearance:none;
-      appearance:none;
-      width:190px;
-      height:40px;
-      transform:rotate(-90deg);
-      background:transparent;
-    }
-
-    .slider-vertical::-webkit-slider-runnable-track{
-      height:14px;
-      background:linear-gradient(180deg,#1f2a37,#0d141c);
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.05);
-      box-shadow:inset 0 2px 6px rgba(0,0,0,.45);
-    }
-
-    .slider-vertical::-webkit-slider-thumb{
-      -webkit-appearance:none;
-      appearance:none;
-      width:32px;
-      height:32px;
-      border-radius:10px;
-      margin-top:-10px;
-      border:none;
-      box-shadow:
-        0 6px 14px rgba(0,0,0,.38),
-        inset 0 1px 0 rgba(255,255,255,.50),
-        0 0 18px currentColor;
-      cursor:pointer;
-      background:currentColor;
-    }
-
-    .slider-vertical::-moz-range-track{
-      height:14px;
-      background:linear-gradient(180deg,#1f2a37,#0d141c);
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.05);
-    }
-
-    .slider-vertical::-moz-range-thumb{
-      width:32px;
-      height:32px;
-      border-radius:10px;
-      border:none;
-      box-shadow:
-        0 6px 14px rgba(0,0,0,.38),
-        inset 0 1px 0 rgba(255,255,255,.50),
-        0 0 18px currentColor;
-      cursor:pointer;
-      background:currentColor;
-    }
-
-    .ph-thumb{color:var(--orange);}
-    .temp-thumb{color:var(--red2);}
-    .og-thumb{color:var(--yellow);}
-    .fg-thumb{color:var(--green);}
-    .ibu-thumb{color:var(--pink);}
-    .co2-thumb{color:var(--cyan);}
-    .srm-thumb{color:#c58b2f;}
-
-    .master-fader{
-      width:120px;
-      -webkit-appearance:none;
-      appearance:none;
-      height:18px;
-      background:linear-gradient(180deg,#1f2a37,#0d141c);
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.05);
-    }
-
-    .master-fader::-webkit-slider-thumb{
-      -webkit-appearance:none;
-      appearance:none;
-      width:40px;
-      height:28px;
-      border-radius:10px;
-      background:var(--red);
-      border:none;
-      box-shadow:0 0 20px rgba(255,66,83,.55), 0 6px 14px rgba(0,0,0,.4);
-    }
-
-    .master-fader::-moz-range-thumb{
-      width:40px;
-      height:28px;
-      border-radius:10px;
-      background:var(--red);
-      border:none;
-      box-shadow:0 0 20px rgba(255,66,83,.55), 0 6px 14px rgba(0,0,0,.4);
-    }
-
-    .master-leds{
-      width:100%;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:8px;
-      margin-bottom:12px;
-    }
-
-    .led-box{
-      border-radius:14px;
-      padding:10px 6px;
-      text-align:center;
-      background:#080d13;
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:inset 0 0 18px rgba(0,0,0,.35);
-    }
-
-    .led-box .n{
-      font-size:12px;
-      color:var(--muted);
-      margin-bottom:6px;
-      text-transform:uppercase;
-    }
-
-    .led-box .v{
-      font-size:18px;
-      font-weight:800;
-    }
-
-    .channel-buttons{
-      width:100%;
-      margin-top:10px;
-      display:grid;
-      gap:8px;
-    }
-
-    .chan-btn{
-      border:none;
-      cursor:pointer;
-      border-radius:14px;
-      padding:10px 8px;
-      font-size:12px;
-      font-weight:800;
-      color:#fff;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.06);
-    }
-
-    .chan-btn.active{
-      box-shadow:0 0 16px rgba(255,255,255,.10);
-    }
-
-    .mute.active{background:#ffb000;color:#2a1500;}
-    .solo.active{background:#42d49d;color:#052114;}
-    .rec.active{background:#ff4a5a;}
-
-    .strip-footer{
-      margin-top:10px;
-      text-align:center;
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .hardware-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-    }
-
-    .hardware-port{
-      padding:10px 12px;
-      border-radius:14px;
-      background:linear-gradient(180deg,#2a3138,#101419);
-      border:1px solid rgba(255,255,255,.08);
-      font-size:12px;
-      color:#d5dce5;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
-      letter-spacing:.08em;
-    }
-
-    .accordion{
-      display:grid;
-      gap:10px;
-    }
-
-    .lib-card{
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:22px;
-      overflow:hidden;
-      background:rgba(255,255,255,.03);
-    }
-
-    .lib-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:14px;
-    }
-
-    .lib-title{
-      font-weight:800;
-      font-size:16px;
-    }
-
-    .lib-body{
-      display:none;
-      padding:0 14px 14px;
-    }
-
-    .lib-card.open .lib-body{
-      display:block;
-    }
-
-    .library-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .lib-item{
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:20px;
-      padding:14px;
-      transition:transform .12s ease, box-shadow .12s ease;
-    }
-
-    .lib-item:hover{
-      box-shadow:0 0 18px rgba(255,255,255,.05);
-    }
-
-    .lib-item h4{
-      font-size:15px;
-      margin-bottom:6px;
-    }
-
-    .lib-item p{
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.45;
-      margin-bottom:10px;
-      min-height:52px;
-    }
-
-    .mini-row{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-
-    .mini-row input,
-    .mini-row select,
-    .search-input,
-    .archive-search,
-    .field input,
-    .field textarea{
-      border:none;
-      outline:none;
-      border-radius:14px;
-      padding:12px 12px;
-      font-size:14px;
-      background:rgba(255,255,255,.96);
-      color:#111827;
-      box-shadow:inset 0 2px 8px rgba(0,0,0,.08);
-    }
-
-    .mini-row input{
-      width:84px;
-    }
-
-    .mini-row select{
-      width:94px;
-    }
-
-    .search-row{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-
-    .search-input{
-      flex:1;
-      min-width:180px;
-    }
-
-    .add-lib-btn{
-      border:none;
-      cursor:pointer;
-      border-radius:12px;
-      padding:10px 12px;
-      font-size:12px;
-      font-weight:800;
-      color:#fff;
-      background:linear-gradient(180deg,#ff4d5d,#d53343);
-      box-shadow:0 0 16px rgba(255,77,93,.18);
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:12px;
-    }
-
-    .screen-shell{
-      grid-column:span 12;
-      padding:16px;
-    }
-
-    .span-6{grid-column:span 6;}
-
-    .form{
-      display:grid;
-      gap:12px;
-    }
-
-    .two{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-
-    .field label{
-      font-size:13px;
-      font-weight:700;
-      color:#dce6f1;
-    }
-
-    .field textarea{
-      min-height:120px;
-      resize:vertical;
-    }
-
-    .ingredient-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-      margin-bottom:12px;
-    }
-
-    .ingredient-btn{
-      border:none;
-      cursor:pointer;
-      border-radius:20px;
-      padding:12px 8px;
-      text-align:center;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.06);
-      color:#fff;
-      min-height:90px;
-      font-weight:700;
-    }
-
-    .ingredient-btn .emoji{
-      font-size:30px;
-      display:block;
-      margin-bottom:6px;
-      filter:drop-shadow(0 0 10px rgba(255,255,255,.14));
-    }
-
-    .ingredient-btn .txt{
-      font-size:12px;
-      color:#dbe6f1;
-    }
-
-    .result-box{
-      border-radius:22px;
-      padding:16px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.06);
-    }
-
-    .result-line{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:10px 0;
-      border-bottom:1px dashed rgba(255,255,255,.08);
-    }
-
-    .result-line:last-child{border-bottom:none;}
-    .result-line span:first-child{color:var(--muted);}
-    .result-line span:last-child{font-weight:800;}
-
-    .recipe-preview{
-      white-space:pre-wrap;
-      line-height:1.55;
-      font-size:15px;
-      color:#fff;
-      background:rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:20px;
-      padding:16px;
-      min-height:260px;
-    }
-
-    .print-bar{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-    }
-
-    .archive-list{
-      display:grid;
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .archive-item{
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:20px;
-      padding:14px;
-      background:rgba(255,255,255,.04);
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
-
-    .archive-item h4{
-      font-size:16px;
-      margin-bottom:6px;
-    }
-
-    .archive-item p{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
-      margin-bottom:6px;
-    }
-
-    .tag-row{
-      display:flex;
-      gap:6px;
-      flex-wrap:wrap;
-      margin-top:6px;
-    }
-
-    .tag{
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:800;
-      background:rgba(255,255,255,.08);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.07);
-    }
-
-    .archive-actions{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .save-note{
-      margin-top:10px;
-      text-align:center;
-      color:rgba(255,255,255,.42);
-      font-size:12px;
-    }
-
-    @media (max-width:900px){
-      .library-grid,
-      .ingredient-grid,
-      .two{
-        grid-template-columns:1fr 1fr;
-      }
-      .span-6{
-        grid-column:span 12;
-      }
-    }
-
-    @media (max-width:640px){
-      .library-grid,
-      .ingredient-grid,
-      .two{
-        grid-template-columns:1fr;
-      }
-      .strip{
-        width:118px;
-      }
-      .master-strip{
-        width:172px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>XA Fermentation PRO</title>
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+:root{
+  --bg1:#050b14;
+  --bg2:#081c2e;
+  --card:#0e2235;
+  --red:#ff3b3b;
+  --orange:#ff9d2f;
+  --yellow:#ffd84a;
+  --green:#38d996;
+  --blue:#4aa3ff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+
+body{
+  background:linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:white;
+  padding:20px;
+}
+
+/* TITLE */
+.title{
+  text-align:center;
+  font-size:26px;
+  letter-spacing:6px;
+  margin-bottom:20px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:0 0 40px rgba(0,0,0,.6);
+}
+
+/* MIXER */
+.mixer{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.channel{
+  background:#091827;
+  border-radius:14px;
+  padding:10px;
+  text-align:center;
+}
+
+.display{
+  background:black;
+  border-radius:10px;
+  padding:10px;
+  font-size:20px;
+  margin-bottom:8px;
+}
+
+/* FADER */
+input[type=range]{
+  writing-mode: bt-lr;
+  -webkit-appearance: slider-vertical;
+  height:120px;
+}
+
+/* BUTTON */
+button{
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  margin:5px;
+  background:var(--red);
+  color:white;
+  font-weight:bold;
+}
+
+/* INGREDIENTS */
+.ingredients{
+  margin-top:10px;
+}
+
+.ingredients div{
+  background:#081421;
+  padding:8px;
+  border-radius:8px;
+  margin:5px 0;
+}
+
+/* GRAPH */
+canvas{
+  width:100%;
+  background:black;
+  border-radius:10px;
+}
+
+/* LIBRARY */
+.library{
+  display:none;
+  max-height:200px;
+  overflow:auto;
+  margin-top:10px;
+}
+
+.library div{
+  padding:6px;
+  border-bottom:1px solid #333;
+}
+</style>
 </head>
+
 <body>
-  <div class="app">
-    <div class="hero">
-      <div class="logo">XA</div>
-      <div>
-        <h1>XA Fermentation Ultra VST</h1>
-        <p>Final level • hardware dark • archivio intelligente • stampa professionale</p>
-      </div>
-    </div>
 
-    <div class="top-shell">
-      <div class="title-top">
-        <div>
-          <div class="recipe-big" id="recipeTitleBig">SIDRO SECCO XA</div>
-          <div class="recipe-sub">Lotto <span id="lotTitle">XA-001</span> • <span id="dateTitle">—</span></div>
-        </div>
+<div class="title">XA FERMENTATION</div>
+
+<!-- MIXER -->
+<div class="card mixer">
+
+<div class="channel">
+<div class="display" id="phVal">3.5</div>
+PH
+<input type="range" min="2.8" max="5" step="0.01" value="3.5" oninput="updateVal('ph')">
+</div>
+
+<div class="channel">
+<div class="display" id="tempVal">20</div>
+TEMP
+<input type="range" min="0" max="40" value="20" oninput="updateVal('temp')">
+</div>
+
+<div class="channel">
+<div class="display" id="ogVal">1.040</div>
+OG
+<input type="range" min="1.000" max="1.100" step="0.001" value="1.040" oninput="updateVal('og')">
+</div>
+
+<div class="channel">
+<div class="display" id="fgVal">1.010</div>
+FG
+<input type="range" min="1.000" max="1.100" step="0.001" value="1.010" oninput="updateVal('fg')">
+</div>
+
+<div class="channel">
+<div class="display" id="abvVal">5%</div>
+ABV
+<input type="range" min="0" max="15" value="5" oninput="updateVal('abv')">
+</div>
+
+<div class="channel">
+<div class="display" id="srmVal">10</div>
+SRM
+<input type="range" min="0" max="40" value="10" oninput="updateVal('srm')">
+</div>
+
+</div>
+
+<!-- INGREDIENTI -->
+<div class="card">
+<h3>Ingredienti</h3>
+
+<button onclick="addIngredient('Mela')">🍎</button>
+<button onclick="addIngredient('Pera')">🍐</button>
+<button onclick="addIngredient('Tè')">🍵</button>
+
+<div class="ingredients" id="ingredients"></div>
+</div>
+
+<!-- LIBRERIA -->
+<div class="card">
+<button onclick="toggleLib()">Lieviti</button>
+
+<div class="library" id="lib">
+<div onclick="addIngredient('Lutra Omega Yeast')">Lutra Omega</div>
+<div onclick="addIngredient('Lallemand Nottingham')">Nottingham</div>
+<div onclick="addIngredient('US-05')">US-05</div>
+</div>
+</div>
+
+<!-- GRAFICO -->
+<div class="card">
+<h3>Fermentazione</h3>
+<canvas id="chart"></canvas>
+<button onclick="addPoint()">AGGIUNGI PUNTO</button>
+</div>
+
+<!-- SALVA -->
+<div class="card">
+<button onclick="saveRecipe()">SALVA RICETTA</button>
+</div>
+
+<script>
+let ingredients=[];
+let data=[1.050];
+
+function updateVal(type){
+  document.getElementById(type+"Val").innerText =
+  event.target.value;
+}
+
+function addIngredient(name){
+  let qty=prompt("Quantità?");
+  if(!qty)return;
+
+  let item=name+" - "+qty;
+  ingredients.push(item);
+
+  let div=document.createElement("div");
+  div.innerText=(ingredients.length)+". "+item;
+
+  document.getElementById("ingredients").appendChild(div);
+}
+
+function toggleLib(){
+  let l=document.getElementById("lib");
+  l.style.display = l.style.display=="block" ? "none":"block";
+}
+
+/* GRAFICO */
+const ctx=document.getElementById("chart");
+const chart=new Chart(ctx,{
+type:'line',
+data:{
+labels:[0],
+datasets:[{
+label:'Densità',
+data:data,
+borderColor:'orange'
+}]
+}
+});
+
+function addPoint(){
+  let val=prompt("Valore densità?");
+  if(!val)return;
+
+  data.push(parseFloat(val));
+  chart.data.labels.push(data.length);
+  chart.update();
+}
+
+/* SAVE */
+function saveRecipe(){
+  let recipe={
+    ph:document.getElementById("phVal").innerText,
+    og:document.getElementById("ogVal").innerText,
+    fg:document.getElementById("fgVal").innerText,
+    ingredients
+  };
+
+  localStorage.setItem("recipe",JSON.stringify(recipe));
+  alert("Salvata");
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        <div class="top-actions">
-          <button class="top-btn red" id="newRecipeBtn">Nuova Ricetta</button>
-          <button class="top-btn blue" id="saveBtn">Salva</button>
-          <button class="top-btn green" id="saveArchiveBtn">Salva in Archivio</button>
-          <button class="top-btn orange" id="exportBtn">Export JSON</button>
-          <button class="top-btn green" id="printBtnTop">Stampa</button>
-          <label class="top-btn orange" for="importFile">Import JSON</label>
-          <input id="importFile" type="file" accept=".json" hidden />
-        </div>
-      </div>
-    </div>
-
-    <div class="shell nav-shell">
-      <div class="nav-row">
-        <button class="nav-btn active" data-screen="mixer">Mixer</button>
-        <button class="nav-btn" data-screen="recipe">Ricetta</button>
-        <button class="nav-btn" data-screen="archive">Archivio</button>
-      </div>
-    </div>
-
-    <section class="screen active" id="screen-mixer">
-      <div class="browser-shell">
-        <div class="section-title">Browser tecnico</div>
-        <div class="section-sub">Ogni categoria ha il suo pulsante ON/OFF, ricerca interna e ricerca web mirata.</div>
-
-        <div class="hardware-row">
-          <div class="hardware-port">USB</div>
-          <div class="hardware-port">ANALOG OUT</div>
-          <div class="hardware-port">DIGITAL BUS</div>
-          <div class="hardware-port">XA ENGINE</div>
-        </div>
-
-        <div class="accordion" id="libraryAccordion"></div>
-      </div>
-
-      <div class="shell">
-        <div class="section-title">Preset ricette</div>
-        <div class="preset-row">
-          <button class="preset-btn" data-preset="sidro">Sidro Secco</button>
-          <button class="preset-btn" data-preset="perry">Perry</button>
-          <button class="preset-btn" data-preset="kombucha">Kombucha</button>
-          <button class="preset-btn" data-preset="blonde">Blonde Ale</button>
-          <button class="preset-btn" data-preset="ipa">IPA</button>
-          <button class="preset-btn" data-preset="gose">Gose</button>
-        </div>
-
-        <div class="section-title">Mixer digitale parametri</div>
-        <div class="section-sub">Fader corti per vedere bene tutto sul telefono. Incluso SRM colore.</div>
-
-        <div class="mixer-wrap">
-          <div class="mixer">
-            <div class="strip orange">
-              <div class="strip-label">PH</div>
-              <div class="strip-display">
-                <div class="strip-value" id="phVal" style="color:var(--orange)">3.50</div>
-                <div class="strip-unit">acidità</div>
-              </div>
-              <div class="channel-color orange-bar"></div>
-              <div class="meter-and-slider">
-                <div class="vu" id="vu-ph-l"></div>
-                <div class="slider-zone">
-                  <input id="phSlider" class="slider-vertical ph-thumb" type="range" min="280" max="500" step="1" value="350" />
-                </div>
-                <div class="vu" id="vu-ph-r"></div>
-              </div>
-              <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="ph-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="ph-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="ph-rec">REC</button>
-              </div>
-              <div class="strip-footer">2.80 → 5.00</div>
-            </div>
-
-            <div class="strip red">
-              <div class="strip-label">TEMP</div>
-              <div class="strip-display">
-                <div class="strip-value" id="tempVal" style="color:var(--red2)">20.0°</div>
-                <div class="strip-unit">°C</div>
-              </div>
-              <div class="channel-color red-bar"></div>
-              <div class="meter-and-slider">
-                <div class="vu" id="vu-temp-l"></div>
-                <div class="slider-zone">
-                  <input id="tempSlider" class="slider-vertical temp-thumb" type="range" min="0" max="350" step="1" value="200" />
-                </div>
-                <div class="vu" id="vu-temp-r"></div>
-              </div>
-              <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="temp-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="temp-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="temp-rec">REC</button>
-              </div>
-              <div class="strip-footer">0 → 35 °C</div>
-            </div>
-
-            <div class="strip yellow">
-              <div class="strip-label">OG</div>
-              <div class="strip-display">
-                <div class="strip-value" id="ogVal" style="color:var(--yellow)">1.050</div>
-                <div class="strip-unit">original gravity</div>
-              </div>
-              <div class="channel-color yellow-bar"></div>
-              <div class="meter-and-slider">
-                <div class="vu" id="vu-og-l"></div>
-                <div class="slider-zone">
-                  <input id="ogSlider" class="slider-vertical og-thumb" type="range" min="1000" max="1120" step="1" value="1050" />
-                </div>
-                <div class="vu" id="vu-og-r"></div>
-              </div>
-              <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="og-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="og-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="og-rec">REC</button>
-              </div>
-              <div class="strip-footer">1.000 → 1.120</div>
-            </div>
-
-            <div class="strip master-strip">
-              <div class="strip-label">MASTER</div>
-
-              <div class="master-leds">
-                <div class="led-box">
-                  <div class="n">ABV</div>
-                  <div class="v" id="masterAbv" style="color:var(--violet)">5.25%</div>
-                </div>
-                <div class="led-box">
-                  <div class="n">ATT</div>
-                  <div class="v" id="masterAtt" style="color:var(--cyan)">80%</div>
-                </div>
-                <div class="led-box">
-                  <div class="n">CAL</div>
-                  <div class="v" id="masterCal" style="color:var(--red2)">160</div>
-                </div>
-              </div>
-
-              <div class="strip-display">
-                <div class="strip-value" id="masterTitle" style="color:var(--red2)">XA</div>
-                <div class="strip-unit">master section</div>
-              </div>
-
-              <div class="channel-color red-bar"></div>
-
-              <div style="margin:6px 0 12px;">
-                <input id="masterSlider" class="master-fader" type="range" min="0" max="100" step="1" value="72" />
-              </div>
-
-              <div class="meter-and-slider">
-                <div class="vu" id="vu-master-l"></div>
-                <div class="slider-zone" style="text-align:center; color:var(--muted); font-size:13px; line-height:1.5;">
-                  output analyzer<br>
-                  master gain<br>
-                  leds live
-                </div>
-                <div class="vu" id="vu-master-r"></div>
-              </div>
-
-              <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="master-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="master-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="master-rec">REC</button>
-              </div>
-              <div class="strip-footer">master output</div>
-            </div>
-
-            <div class="strip green">
-              <div class="strip-label">FG</div>
-              <div class="strip-display">
-                <div class="strip-value" id="fgVal" style="color:var(--green)">1.010</div>
-                <div class="strip-unit">final gravity</div>
-              </div>
-              <div class="channel-color green-bar"></div>
-              <div class="meter-and-slider">
-                <div class="vu" id="vu-fg-l"></div>
-                <div class="slider-zone">
-                  <input id="fgSlider" class="slider-vertical fg-thumb" type="range" min="998" max="1040" step="1" value="1010" />
-                </div>
-                <div class="vu" id="vu-fg-r"></div>
-              </div>
-              <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="fg-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="fg-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="fg-rec">REC</button>
-              </div>
-              <div class="strip-footer">0.998 → 1.040</div>
-            </div>
-
-            <div class="strip pink">
-              <div class="strip-label">IBU</div>
-              <div class="strip-display">
-                <div class="strip-value" id="ibuVal" style="color:var(--pink)">28</div>
-                <div class="strip-unit">amaro</div>
-              </div>
-              <div class="channel-color pink-bar"></div>
-              <div class="meter-and-slider">
-                <div class="vu" id="vu-ibu-l"></div>
-                <div class="slider-zone">
-                  <input id="ibuSlider" class="slider-vertical ibu-thumb" type="range" min="0" max="120" step="1" value="28" />
-                </div>
-                <div class="vu" id="vu-ibu-r"></div>
-              </div>
-              <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="ibu-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="ibu-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="ibu-rec">REC</button>
-              </div>
-              <div class="strip-footer">0 → 120</div>
-            </div>
-
-            <div class="strip cyan">
-              <div class="strip-label">CO₂</div>
-              <div class="strip-display">
-                <div class="strip-value" id="co2Val" style="color:var(--cyan)">2.4</div>
-                <div class="strip-unit">volumi</div>
-              </div>
-              <div class="channel-color cyan-bar"></div>
-              <div class="meter-and-slider">
-                <div class="vu" id="vu-co2-l"></div>
-                <div class="slider-zone">
-                  <input id="co2Slider" class="slider-vertical co2-thumb" type="range" min="10" max="40" step="1" value="24" />
-                </div>
-                <div class="vu" id="vu-co2-r"></div>
-              </div>
-              <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="co2-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="co2-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="co2-rec">REC</button>
-              </div>
-              <div class="strip-footer">1.0 → 4.0</div>
-            </div>
-
-            <div class="strip srm">
-              <div class="strip-label">SRM</div>
-              <div class="strip-display">
-                <div class="strip-value" id="srmVal" style="color:#c58b2f">10</div>
-                <div class="strip-unit">colore</div>
-              </div>
-              <div class="channel-color srm-bar" id="srmBar"></div>
-              <div class="meter-and-slider">
-                <div class="vu" id="vu-srm-l"></div>
-                <div class="slider-zone">
-                  <input id="srmSlider" class="slider-vertical srm-thumb" type="range" min="1" max="40" step="1" value="10" />
-                </div>
-                <div class="vu" id="vu-srm-r"></div>
-              </div>
-              <div class="channel-buttons">
-                <button class="chan-btn mute" data-btn="srm-mute">MUTE</button>
-                <button class="chan-btn solo" data-btn="srm-solo">SOLO</button>
-                <button class="chan-btn rec" data-btn="srm-rec">REC</button>
-              </div>
-              <div class="strip-footer">1 → 40 SRM</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="save-note" id="saveNote">Salvataggio automatico attivo</div>
-      </div>
-
-      <div class="grid">
-        <div class="screen-shell span-6">
-          <div class="section-title">Scheda ricetta</div>
-          <div class="form">
-            <div class="two">
-              <div class="field">
-                <label for="recipeName">Nome ricetta</label>
-                <input id="recipeName" type="text" placeholder="Es. Sidro Secco XA" />
-              </div>
-              <div class="field">
-                <label for="lotNumber">Numero lotto</label>
-                <input id="lotNumber" type="text" placeholder="Es. XA-001" />
-              </div>
-            </div>
-
-            <div class="two">
-              <div class="field">
-                <label for="batchDate">Data</label>
-                <input id="batchDate" type="date" />
-              </div>
-              <div class="field">
-                <label for="yeast">Lievito</label>
-                <input id="yeast" type="text" placeholder="Es. Omega Lutra / US-05 / Kveik" />
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="ingredientsText">Ingredienti ricetta</label>
-              <textarea id="ingredientsText" placeholder="La ricetta viene numerata automaticamente..."></textarea>
-            </div>
-
-            <div class="field">
-              <label for="additionsText">Aggiunte / Step</label>
-              <textarea id="additionsText" placeholder="Es. giorno 1 inoculo, giorno 3 nutrienti..."></textarea>
-            </div>
-
-            <div class="field">
-              <label for="notesText">Note</label>
-              <textarea id="notesText" placeholder="Osservazioni, profilo aromatico, problemi, andamento..."></textarea>
-            </div>
-          </div>
-        </div>
-
-        <div class="screen-shell span-6">
-          <div class="section-title">Ingredienti rapidi</div>
-          <div class="section-sub">Questi aggiungono righe professionali numerate.</div>
-
-          <div class="ingredient-grid">
-            <button class="ingredient-btn" data-quick-name="Mela" data-quick-qty="1" data-quick-unit="kg">
-              <span class="emoji">🍎</span>
-              <span class="txt">Mela</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Pera" data-quick-qty="1" data-quick-unit="kg">
-              <span class="emoji">🍐</span>
-              <span class="txt">Pera</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Mango" data-quick-qty="1" data-quick-unit="kg">
-              <span class="emoji">🥭</span>
-              <span class="txt">Mango</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Litchi" data-quick-qty="500" data-quick-unit="g">
-              <span class="emoji">🧺</span>
-              <span class="txt">Litchi</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Tè oolong" data-quick-qty="8" data-quick-unit="g">
-              <span class="emoji">🍵</span>
-              <span class="txt">Tè</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Miele" data-quick-qty="250" data-quick-unit="g">
-              <span class="emoji">🍯</span>
-              <span class="txt">Miele</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Limone" data-quick-qty="1" data-quick-unit="pz">
-              <span class="emoji">🍋</span>
-              <span class="txt">Limone</span>
-            </button>
-            <button class="ingredient-btn" data-quick-name="Botaniche miste" data-quick-qty="5" data-quick-unit="g">
-              <span class="emoji">🌿</span>
-              <span class="txt">Botaniche</span>
-            </button>
-          </div>
-
-          <div class="section-title">Riepilogo tecnico</div>
-          <div class="result-box">
-            <div class="result-line"><span>ABV</span><span id="resAbv">5.25 %</span></div>
-            <div class="result-line"><span>Attenuazione</span><span id="resAtt">80.0 %</span></div>
-            <div class="result-line"><span>Calorie / 330 ml</span><span id="resCal">160 kcal</span></div>
-            <div class="result-line"><span>Zucchero residuo</span><span id="resSugar">24.0 g/L</span></div>
-            <div class="result-line"><span>IBU</span><span id="resIbu">28</span></div>
-            <div class="result-line"><span>CO₂</span><span id="resCo2">2.4 vol</span></div>
-            <div class="result-line"><span>SRM</span><span id="resSrm">10</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="screen" id="screen-recipe">
-      <div class="screen-shell">
-        <div class="section-title">Scheda singola ricetta</div>
-        <div class="section-sub">Vista pulita e professionale, pronta anche per la stampa.</div>
-
-        <div class="print-bar">
-          <button class="top-btn green" id="printBtnRecipe">Stampa questa scheda</button>
-        </div>
-
-        <div class="recipe-preview" id="recipePreview"></div>
-      </div>
-    </section>
-
-    <section class="screen" id="screen-archive">
-      <div class="screen-shell">
-        <div class="section-title">Archivio ricette</div>
-        <div class="section-sub">Le ricette vengono catalogate e cercano anche per tag automatici.</div>
-        <input class="archive-search" id="archiveSearch" type="text" placeholder="Cerca una ricetta salvata..." />
-        <div class="archive-list" id="archiveList"></div>
-      </div>
-    </section>
-  </div>
-
-  <script>
-    const STORAGE_KEY = "xaFermentationUltraVST_final_v1";
-    const ARCHIVE_KEY = "xaFermentationUltraVST_archive_final_v1";
-
-    const defaults = {
-      recipeName: "Sidro Secco XA",
-      lotNumber: "XA-001",
-      batchDate: "",
-      yeast: "Lievito autoctono",
-      ingredientsText: "1. Mela — 1 kg",
-      additionsText: "",
-      notesText: "",
-      ph: 3.50,
-      temp: 20.0,
-      og: 1.050,
-      fg: 1.010,
-      ibu: 28,
-      co2: 2.4,
-      srm: 10,
-      master: 72
-    };
-
-    const presets = {
-      sidro: {
-        recipeName: "Sidro Secco XA",
-        yeast: "Lievito autoctono",
-        ph: 3.40,
-        temp: 18.0,
-        og: 1.050,
-        fg: 1.004,
-        ibu: 0,
-        co2: 2.4,
-        srm: 3,
-        ingredientsText: "1. Mela — 20 L succo\n2. Lievito autoctono — 1 dose",
-        additionsText: "1. Inoculo lievito — giorno 1\n2. Travaso — giorno 5",
-        notesText: "Profilo secco e pulito"
-      },
-      perry: {
-        recipeName: "Perry XA",
-        yeast: "Lievito da sidro",
-        ph: 3.55,
-        temp: 17.0,
-        og: 1.048,
-        fg: 1.006,
-        ibu: 0,
-        co2: 2.5,
-        srm: 2,
-        ingredientsText: "1. Pera — 20 L succo\n2. Lievito da sidro — 1 dose",
-        additionsText: "1. Inoculo — giorno 1",
-        notesText: "Profilo fruttato da pera"
-      },
-      kombucha: {
-        recipeName: "Kombucha XA",
-        yeast: "SCOBY",
-        ph: 3.20,
-        temp: 24.0,
-        og: 1.030,
-        fg: 1.008,
-        ibu: 0,
-        co2: 2.8,
-        srm: 6,
-        ingredientsText: "1. Tè nero — 8 g\n2. Zucchero — 80 g/L\n3. SCOBY — 1 coltura",
-        additionsText: "1. Seconda fermentazione opzionale",
-        notesText: "Acidità viva e bollicina"
-      },
-      blonde: {
-        recipeName: "Blonde Ale XA",
-        yeast: "US-05",
-        ph: 4.20,
-        temp: 20.0,
-        og: 1.048,
-        fg: 1.010,
-        ibu: 20,
-        co2: 2.3,
-        srm: 4,
-        ingredientsText: "1. Malto pils — 4.5 kg\n2. Luppolo Saaz — 35 g\n3. Lievito US-05 — 11 g",
-        additionsText: "1. Bollitura — 60 min",
-        notesText: "Pulita e semplice"
-      },
-      ipa: {
-        recipeName: "IPA XA",
-        yeast: "US-05",
-        ph: 4.10,
-        temp: 19.0,
-        og: 1.060,
-        fg: 1.012,
-        ibu: 55,
-        co2: 2.4,
-        srm: 8,
-        ingredientsText: "1. Malto pale — 5.5 kg\n2. Citra — 60 g\n3. Simcoe — 60 g\n4. Lievito US-05 — 11 g",
-        additionsText: "1. Dry hop — giorno 5",
-        notesText: "Luppolata, secca, moderna"
-      },
-      gose: {
-        recipeName: "Gose XA",
-        yeast: "Ale neutro",
-        ph: 3.30,
-        temp: 20.0,
-        og: 1.044,
-        fg: 1.010,
-        ibu: 10,
-        co2: 2.6,
-        srm: 4,
-        ingredientsText: "1. Malto — 4.5 kg\n2. Sale — 8 g\n3. Coriandolo — 12 g",
-        additionsText: "1. Acidificazione controllata",
-        notesText: "Acida e sapida"
-      }
-    };
-
-    const libraryData = {
-      hops: [
-        {name:"Citra", desc:"Agrumi, mango, tropicale.", qty:"20", unit:"g"},
-        {name:"Simcoe", desc:"Pino, resina, frutta scura.", qty:"20", unit:"g"},
-        {name:"Mosaic", desc:"Tropicale, berry, complesso.", qty:"20", unit:"g"},
-        {name:"Cascade", desc:"Agrumi e floreale.", qty:"20", unit:"g"},
-        {name:"Centennial", desc:"Agrumi, floreale, pulito.", qty:"20", unit:"g"},
-        {name:"Chinook", desc:"Resina, pino, spezia.", qty:"20", unit:"g"},
-        {name:"Columbus", desc:"Dank, resinoso, pungente.", qty:"20", unit:"g"},
-        {name:"Amarillo", desc:"Arancia dolce, floreale.", qty:"20", unit:"g"},
-        {name:"Galaxy", desc:"Passion fruit, pesca.", qty:"20", unit:"g"},
-        {name:"Nelson Sauvin", desc:"Uva bianca, gooseberry.", qty:"20", unit:"g"},
-        {name:"Motueka", desc:"Lime, agrumi, fresco.", qty:"20", unit:"g"},
-        {name:"Riwaka", desc:"Pompelmo, passion fruit.", qty:"20", unit:"g"},
-        {name:"Ekuanot", desc:"Papaya, lime.", qty:"20", unit:"g"},
-        {name:"Idaho 7", desc:"Albicocca, tropicale, resina.", qty:"20", unit:"g"},
-        {name:"Strata", desc:"Frutta tropicale, dank.", qty:"20", unit:"g"},
-        {name:"Sabro", desc:"Cocco, lime, tropicale.", qty:"20", unit:"g"},
-        {name:"Azacca", desc:"Mango, ananas, agrumi.", qty:"20", unit:"g"},
-        {name:"El Dorado", desc:"Pera, caramella, tropicale.", qty:"20", unit:"g"},
-        {name:"Hallertau", desc:"Floreale, delicato, nobile.", qty:"20", unit:"g"},
-        {name:"Saaz", desc:"Speziato, erbaceo, nobile.", qty:"20", unit:"g"},
-        {name:"Tettnang", desc:"Nobile, floreale, speziato.", qty:"20", unit:"g"},
-        {name:"Spalt", desc:"Elegante, nobile, erbaceo.", qty:"20", unit:"g"},
-        {name:"Styrian Goldings", desc:"Terroso, speziato.", qty:"20", unit:"g"},
-        {name:"Fuggle", desc:"Terroso, erbaceo, inglese.", qty:"20", unit:"g"},
-        {name:"East Kent Goldings", desc:"Miele, floreale.", qty:"20", unit:"g"},
-        {name:"Magnum", desc:"Amaro pulito.", qty:"20", unit:"g"},
-        {name:"Warrior", desc:"Amaro forte e pulito.", qty:"20", unit:"g"},
-        {name:"Nugget", desc:"Resina, spezia.", qty:"20", unit:"g"}
-      ],
-      yeasts: [
-        {name:"US-05", desc:"Ale americana pulita.", qty:"11", unit:"g"},
-        {name:"S-04", desc:"Inglese, più fruttato.", qty:"11", unit:"g"},
-        {name:"Nottingham", desc:"Versatile e attenuante.", qty:"11", unit:"g"},
-        {name:"Belle Saison", desc:"Saison secca e speziata.", qty:"11", unit:"g"},
-        {name:"BE-134", desc:"Saison molto attenuante.", qty:"11", unit:"g"},
-        {name:"Kveik Voss", desc:"Arancia, veloce, caldo.", qty:"11", unit:"g"},
-        {name:"Kveik Hornindal", desc:"Molto tropicale.", qty:"11", unit:"g"},
-        {name:"Omega Lutra", desc:"Kveik molto pulito, ottimo lager-like.", qty:"1", unit:"dose"},
-        {name:"W-34/70", desc:"Lager classica pulita.", qty:"11", unit:"g"},
-        {name:"S-23", desc:"Lager più fruttata.", qty:"11", unit:"g"},
-        {name:"LalBrew Verdant", desc:"Hazy, fruttata.", qty:"11", unit:"g"},
-        {name:"LalBrew New England", desc:"Esters morbidi.", qty:"11", unit:"g"},
-        {name:"WB-06", desc:"Weizen fenolica.", qty:"11", unit:"g"},
-        {name:"T-58", desc:"Belga pepata.", qty:"11", unit:"g"},
-        {name:"BE-256", desc:"Belga abbazia.", qty:"11", unit:"g"},
-        {name:"Mangrove M02", desc:"Yeast da sidro.", qty:"11", unit:"g"},
-        {name:"Mangrove M05", desc:"Yeast per mead e fermentazioni spinte.", qty:"11", unit:"g"},
-        {name:"Lievito autoctono", desc:"Profilo unico, complesso.", qty:"1", unit:"dose"},
-        {name:"SCOBY", desc:"Coltura kombucha.", qty:"1", unit:"pz"},
-        {name:"Brettanomyces", desc:"Funky, secco, evolutivo.", qty:"1", unit:"dose"}
-      ],
-      fruits: [
-        {name:"Mela", desc:"Base fresca, acidità naturale.", qty:"1", unit:"kg"},
-        {name:"Pera", desc:"Delicata, rotonda.", qty:"1", unit:"kg"},
-        {name:"Mango", desc:"Tropicale, dolce.", qty:"1", unit:"kg"},
-        {name:"Litchi", desc:"Floreale, delicato.", qty:"500", unit:"g"},
-        {name:"Ananas", desc:"Tropicale, brillante.", qty:"1", unit:"kg"},
-        {name:"Pesca", desc:"Morbida e rotonda.", qty:"1", unit:"kg"},
-        {name:"Albicocca", desc:"Matura, vellutata.", qty:"1", unit:"kg"},
-        {name:"Lampone", desc:"Acidulo, fragrante.", qty:"500", unit:"g"},
-        {name:"Fragola", desc:"Dolce, delicata.", qty:"500", unit:"g"},
-        {name:"Mirtillo", desc:"Scuro, fine.", qty:"500", unit:"g"},
-        {name:"Ribes nero", desc:"Vinoso e teso.", qty:"500", unit:"g"},
-        {name:"Passion fruit", desc:"Molto tropicale.", qty:"500", unit:"g"},
-        {name:"Uva", desc:"Profilo vinoso.", qty:"1", unit:"kg"},
-        {name:"Ciliegia", desc:"Frutto rosso intenso.", qty:"1", unit:"kg"},
-        {name:"Prugna", desc:"Scura e matura.", qty:"1", unit:"kg"},
-        {name:"Limone", desc:"Agrume acido e fresco.", qty:"1", unit:"pz"},
-        {name:"Arancia", desc:"Agrume dolce.", qty:"1", unit:"pz"},
-        {name:"Pompelmo", desc:"Agrume amaro.", qty:"1", unit:"pz"}
-      ],
-      peppers: [
-        {name:"Pepe Timut", desc:"Agrumato, pompelmo.", qty:"2", unit:"g"},
-        {name:"Pepe Sichuan", desc:"Agrumato, vibrante.", qty:"2", unit:"g"},
-        {name:"Pepe Cubebe", desc:"Balsamico, fresco.", qty:"2", unit:"g"},
-        {name:"Pepe nero", desc:"Caldo e pungente.", qty:"2", unit:"g"},
-        {name:"Pepe lungo", desc:"Profondo e caldo.", qty:"2", unit:"g"},
-        {name:"Pepe rosa", desc:"Floreale e morbido.", qty:"2", unit:"g"},
-        {name:"Pepe bianco", desc:"Più asciutto.", qty:"2", unit:"g"},
-        {name:"Pepe verde", desc:"Più fresco.", qty:"2", unit:"g"}
-      ],
-      spices: [
-        {name:"Cardamomo", desc:"Agrumato, fresco.", qty:"2", unit:"g"},
-        {name:"Coriandolo", desc:"Agrumato, speziato.", qty:"3", unit:"g"},
-        {name:"Cannella", desc:"Calda, dolce.", qty:"2", unit:"g"},
-        {name:"Zenzero", desc:"Pungente, vibrante.", qty:"4", unit:"g"},
-        {name:"Vaniglia", desc:"Cremosa, morbida.", qty:"1", unit:"bacca"},
-        {name:"Anice stellato", desc:"Dolce, balsamico.", qty:"1", unit:"pz"},
-        {name:"Noce moscata", desc:"Calda, profonda.", qty:"1", unit:"g"},
-        {name:"Chiodi di garofano", desc:"Intensi, balsamici.", qty:"1", unit:"g"}
-      ],
-      botanicals: [
-        {name:"Ginepro", desc:"Resinoso, balsamico.", qty:"3", unit:"g"},
-        {name:"Lavanda", desc:"Floreale, delicata.", qty:"1", unit:"g"},
-        {name:"Osmanto", desc:"Floreale, albicocca.", qty:"2", unit:"g"},
-        {name:"China", desc:"Amara, tonica.", qty:"2", unit:"g"},
-        {name:"Rosmarino", desc:"Mediterraneo, resinoso.", qty:"2", unit:"g"},
-        {name:"Timo", desc:"Erbaceo, secco.", qty:"2", unit:"g"},
-        {name:"Genziana", desc:"Amara, radicale.", qty:"2", unit:"g"},
-        {name:"Camomilla", desc:"Floreale, morbida.", qty:"2", unit:"g"},
-        {name:"Verbena", desc:"Agrumata, fresca.", qty:"2", unit:"g"},
-        {name:"Basilico", desc:"Verde, aromatico.", qty:"2", unit:"g"}
-      ],
-      lacto: [
-        {name:"L. plantarum", desc:"Acidificazione rapida e pulita.", qty:"1", unit:"dose"},
-        {name:"L. helveticus", desc:"Acidità più morbida.", qty:"1", unit:"dose"},
-        {name:"L. brevis", desc:"Acidità e complessità.", qty:"1", unit:"dose"},
-        {name:"L. casei", desc:"Uso tecnico specifico.", qty:"1", unit:"dose"},
-        {name:"Blend lattico", desc:"Mix più stratificato.", qty:"1", unit:"dose"},
-        {name:"Starter lattico", desc:"Base tecnica di inoculo.", qty:"1", unit:"dose"}
-      ],
-      acids: [
-        {name:"Acido malico", desc:"Mela verde, fruttato.", qty:"1", unit:"g/L"},
-        {name:"Acido citrico", desc:"Agrumato e brillante.", qty:"1", unit:"g/L"},
-        {name:"Acido lattico", desc:"Morbido e rotondo.", qty:"1", unit:"g/L"},
-        {name:"Acido tartarico", desc:"Più vinoso.", qty:"1", unit:"g/L"},
-        {name:"Acido ascorbico", desc:"Tecnico, antiossidante.", qty:"0.5", unit:"g/L"},
-        {name:"Blend acidi", desc:"Acidità multilivello.", qty:"1", unit:"g/L"}
-      ],
-      teas: [
-        {name:"Tè oolong", desc:"Floreale, elegante.", qty:"8", unit:"g"},
-        {name:"Tè verde", desc:"Vegetale, fresco.", qty:"8", unit:"g"},
-        {name:"Tè nero", desc:"Corposo, tannico.", qty:"8", unit:"g"},
-        {name:"Tè bianco", desc:"Fine, delicato.", qty:"8", unit:"g"},
-        {name:"Tè al gelsomino", desc:"Floreale e profumato.", qty:"8", unit:"g"},
-        {name:"Lapsang Souchong", desc:"Affumicato, intenso.", qty:"8", unit:"g"},
-        {name:"Genmaicha", desc:"Verde con riso tostato.", qty:"8", unit:"g"},
-        {name:"Sencha", desc:"Verde giapponese.", qty:"8", unit:"g"},
-        {name:"Gyokuro", desc:"Umami, fine.", qty:"8", unit:"g"},
-        {name:"Pu-erh", desc:"Terroso, profondo.", qty:"8", unit:"g"},
-        {name:"Darjeeling", desc:"Floreale, moscatel.", qty:"8", unit:"g"},
-        {name:"Earl Grey", desc:"Bergamotto classico.", qty:"8", unit:"g"}
-      ],
-      salts: [
-        {name:"Sale marino", desc:"Sapido classico.", qty:"1", unit:"g/L"},
-        {name:"Sale rosa", desc:"Minerale e delicato.", qty:"1", unit:"g/L"},
-        {name:"Sale affumicato", desc:"Con nota smoky.", qty:"1", unit:"g/L"},
-        {name:"Fleur de sel", desc:"Fine ed elegante.", qty:"1", unit:"g/L"},
-        {name:"Sale nero", desc:"Più minerale.", qty:"1", unit:"g/L"},
-        {name:"Sale di Maldon", desc:"Cristallo delicato.", qty:"1", unit:"g/L"}
-      ]
-    };
-
-    const libraryLabels = {
-      hops: "Luppoli",
-      yeasts: "Lieviti",
-      fruits: "Frutta",
-      peppers: "Pepe",
-      spices: "Spezie",
-      botanicals: "Botaniche",
-      lacto: "Lattobacilli",
-      acids: "Acidi",
-      teas: "Tè",
-      salts: "Sali"
-    };
-
-    function $(id){ return document.getElementById(id); }
-
-    function buildVu(id){
-      const vu = $(id);
-      vu.innerHTML = "";
-      for(let i=0;i<16;i++){
-        const s = document.createElement("span");
-        vu.appendChild(s);
-      }
-    }
-
-    [
-      "vu-ph-l","vu-ph-r","vu-temp-l","vu-temp-r","vu-og-l","vu-og-r",
-      "vu-fg-l","vu-fg-r","vu-ibu-l","vu-ibu-r","vu-co2-l","vu-co2-r",
-      "vu-master-l","vu-master-r","vu-srm-l","vu-srm-r"
-    ].forEach(buildVu);
-
-    function setVu(id, ratio){
-      const vu = $(id);
-      const bars = Array.from(vu.children);
-      const onCount = Math.max(0, Math.min(bars.length, Math.round(ratio * bars.length)));
-      bars.forEach((bar, i) => {
-        const active = i < onCount;
-        bar.className = "";
-        if(active){
-          if(i < 9) bar.classList.add("on","green");
-          else if(i < 13) bar.classList.add("on","yellow");
-          else bar.classList.add("on","red");
-        }
-      });
-    }
-
-    function sgToPlato(sg){
-      return -616.868 + (1111.14 * sg) - (630.272 * sg * sg) + (135.997 * sg * sg * sg);
-    }
-
-    function calcABV(og, fg){
-      return Math.max(0, (og - fg) * 131.25);
-    }
-
-    function calcAtt(og, fg){
-      const ogPts = (og - 1) * 1000;
-      const fgPts = (fg - 1) * 1000;
-      if(ogPts <= 0) return 0;
-      return Math.max(0, ((ogPts - fgPts) / ogPts) * 100);
-    }
-
-    function calcCaloriesPer330(og, fg, abv){
-      const abw = abv * 0.79;
-      const re = (0.1808 * sgToPlato(og)) + (0.8192 * sgToPlato(fg));
-      const calories12oz = ((6.9 * abw) + (4.0 * (re - 0.10))) * fg * 3.55;
-      return Math.max(0, calories12oz * (330 / 355));
-    }
-
-    function calcResidualSugarGL(fg){
-      return Math.max(0, (fg - 1) * 1000 * 2.4);
-    }
-
-    function srmToColor(srm){
-      const colors = [
-        "#FFE699","#FFD878","#FFCA5A","#FFBF42","#FBB123","#F8A600",
-        "#F39C00","#EA8F00","#E58500","#DE7C00","#D77200","#CF6900",
-        "#CB6200","#C35900","#BB5100","#B54C00","#B04500","#A63E00",
-        "#A13700","#9B3200","#952D00","#8E2900","#882300","#821E00",
-        "#7B1A00","#771900","#701400","#6A0E00","#660D00","#5E0B00",
-        "#5A0A02","#560A05","#520907","#4C0505","#470606","#440607",
-        "#3F0708","#3B0607","#3A070B","#36080A","#320A0A"
-      ];
-      return colors[Math.max(0, Math.min(colors.length - 1, srm - 1))];
-    }
-
-    function collectData(){
-      return {
-        recipeName: $("recipeName").value,
-        lotNumber: $("lotNumber").value,
-        batchDate: $("batchDate").value,
-        yeast: $("yeast").value,
-        ingredientsText: $("ingredientsText").value,
-        additionsText: $("additionsText").value,
-        notesText: $("notesText").value,
-        ph: parseFloat($("phSlider").value) / 100,
-        temp: parseFloat($("tempSlider").value) / 10,
-        og: parseFloat($("ogSlider").value) / 1000,
-        fg: parseFloat($("fgSlider").value) / 1000,
-        ibu: parseFloat($("ibuSlider").value),
-        co2: parseFloat($("co2Slider").value) / 10,
-        srm: parseFloat($("srmSlider").value),
-        master: parseFloat($("masterSlider").value)
-      };
-    }
-
-    function saveData(){
-      const data = collectData();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      $("saveNote").textContent = "Salvato automaticamente";
-      updateUI(data);
-      updateRecipePreview();
-    }
-
-    function loadData(){
-      try{
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if(!raw) return {...defaults};
-        return {...defaults, ...JSON.parse(raw)};
-      }catch{
-        return {...defaults};
-      }
-    }
-
-    function loadArchive(){
-      try{
-        return JSON.parse(localStorage.getItem(ARCHIVE_KEY) || "[]");
-      }catch{
-        return [];
-      }
-    }
-
-    function saveArchive(arr){
-      localStorage.setItem(ARCHIVE_KEY, JSON.stringify(arr));
-    }
-
-    function fillData(data){
-      $("recipeName").value = data.recipeName ?? defaults.recipeName;
-      $("lotNumber").value = data.lotNumber ?? defaults.lotNumber;
-      $("batchDate").value = data.batchDate ?? defaults.batchDate;
-      $("yeast").value = data.yeast ?? defaults.yeast;
-      $("ingredientsText").value = data.ingredientsText ?? defaults.ingredientsText;
-      $("additionsText").value = data.additionsText ?? defaults.additionsText;
-      $("notesText").value = data.notesText ?? defaults.notesText;
-
-      $("phSlider").value = Math.round((data.ph ?? defaults.ph) * 100);
-      $("tempSlider").value = Math.round((data.temp ?? defaults.temp) * 10);
-      $("ogSlider").value = Math.round((data.og ?? defaults.og) * 1000);
-      $("fgSlider").value = Math.round((data.fg ?? defaults.fg) * 1000);
-      $("ibuSlider").value = Math.round(data.ibu ?? defaults.ibu);
-      $("co2Slider").value = Math.round((data.co2 ?? defaults.co2) * 10);
-      $("srmSlider").value = Math.round(data.srm ?? defaults.srm);
-      $("masterSlider").value = Math.round(data.master ?? defaults.master);
-
-      updateUI(data);
-      updateRecipePreview();
-    }
-
-    function updateUI(data = collectData()){
-      const abv = calcABV(data.og, data.fg);
-      const att = calcAtt(data.og, data.fg);
-      const cal = calcCaloriesPer330(data.og, data.fg, abv);
-      const sugar = calcResidualSugarGL(data.fg);
-      const srmColor = srmToColor(data.srm);
-
-      $("phVal").textContent = data.ph.toFixed(2);
-      $("tempVal").textContent = data.temp.toFixed(1) + "°";
-      $("ogVal").textContent = data.og.toFixed(3);
-      $("fgVal").textContent = data.fg.toFixed(3);
-      $("ibuVal").textContent = data.ibu.toFixed(0);
-      $("co2Val").textContent = data.co2.toFixed(1);
-      $("srmVal").textContent = data.srm.toFixed(0);
-      $("srmVal").style.color = srmColor;
-      $("srmBar").style.background = srmColor;
-      $("srmBar").style.color = srmColor;
-      $("srmBar").style.boxShadow = `0 0 18px ${srmColor}`;
-
-      $("masterAbv").textContent = abv.toFixed(2) + "%";
-      $("masterAtt").textContent = att.toFixed(1) + "%";
-      $("masterCal").textContent = Math.round(cal);
-
-      $("resAbv").textContent = abv.toFixed(2) + " %";
-      $("resAtt").textContent = att.toFixed(1) + " %";
-      $("resCal").textContent = Math.round(cal) + " kcal";
-      $("resSugar").textContent = sugar.toFixed(1) + " g/L";
-      $("resIbu").textContent = data.ibu.toFixed(0);
-      $("resCo2").textContent = data.co2.toFixed(1) + " vol";
-      $("resSrm").textContent = data.srm.toFixed(0);
-
-      $("recipeTitleBig").textContent = (data.recipeName || "Nuova Ricetta").toUpperCase();
-      $("lotTitle").textContent = data.lotNumber || "—";
-      $("dateTitle").textContent = data.batchDate || "—";
-      $("masterTitle").textContent = (data.recipeName || "XA").slice(0,10).toUpperCase();
-
-      setVu("vu-ph-l", (data.ph - 2.8) / (5.0 - 2.8));
-      setVu("vu-ph-r", (data.ph - 2.8) / (5.0 - 2.8));
-      setVu("vu-temp-l", data.temp / 35);
-      setVu("vu-temp-r", data.temp / 35);
-      setVu("vu-og-l", (data.og - 1.000) / (1.120 - 1.000));
-      setVu("vu-og-r", (data.og - 1.000) / (1.120 - 1.000));
-      setVu("vu-fg-l", (data.fg - 0.998) / (1.040 - 0.998));
-      setVu("vu-fg-r", (data.fg - 0.998) / (1.040 - 0.998));
-      setVu("vu-ibu-l", data.ibu / 120);
-      setVu("vu-ibu-r", data.ibu / 120);
-      setVu("vu-co2-l", (data.co2 - 1.0) / (4.0 - 1.0));
-      setVu("vu-co2-r", (data.co2 - 1.0) / (4.0 - 1.0));
-      setVu("vu-srm-l", data.srm / 40);
-      setVu("vu-srm-r", data.srm / 40);
-
-      const masterRatio = Math.min((((abv / 12) + (att / 100) + (data.co2 / 4)) / 3) * (data.master / 100), 1);
-      setVu("vu-master-l", masterRatio);
-      setVu("vu-master-r", masterRatio);
-    }
-
-    function renumberLines(text){
-      const lines = text
-        .split("\n")
-        .map(v => v.trim())
-        .filter(Boolean)
-        .map(v => v.replace(/^\d+\.\s*/, ""));
-      return lines.map((line, idx) => `${idx + 1}. ${line}`).join("\n");
-    }
-
-    function addRecipeItem(name, qty, unit, desc = ""){
-      const box = $("ingredientsText");
-      const line = `${name.trim()} — ${String(qty).trim()} ${String(unit).trim()}${desc ? " • " + desc : ""}`;
-
-      const currentLines = box.value
-        .split("\n")
-        .map(v => v.trim())
-        .filter(Boolean)
-        .map(v => v.replace(/^\d+\.\s*/, ""));
-
-      currentLines.push(line);
-      box.value = currentLines.map((v, i) => `${i + 1}. ${v}`).join("\n");
-      saveData();
-    }
-
-    function addQuickIngredient(name, qty, unit){
-      addRecipeItem(name, qty, unit, "");
-    }
-
-    function updateRecipePreview(){
-      const data = collectData();
-      const abv = calcABV(data.og, data.fg);
-
-      const text = [
-        `RICETTA: ${data.recipeName || "—"}`,
-        `LOTTO: ${data.lotNumber || "—"}`,
-        `DATA: ${data.batchDate || "—"}`,
-        `LIEVITO: ${data.yeast || "—"}`,
-        ``,
-        `PARAMETRI`,
-        `PH: ${data.ph.toFixed(2)}`,
-        `TEMP: ${data.temp.toFixed(1)} °C`,
-        `OG: ${data.og.toFixed(3)}`,
-        `FG: ${data.fg.toFixed(3)}`,
-        `ABV: ${abv.toFixed(2)} %`,
-        `IBU: ${data.ibu.toFixed(0)}`,
-        `CO₂: ${data.co2.toFixed(1)} vol`,
-        `SRM: ${data.srm.toFixed(0)}`,
-        ``,
-        `INGREDIENTI`,
-        `${renumberLines(data.ingredientsText || "") || "—"}`,
-        ``,
-        `AGGIUNTE / STEP`,
-        `${renumberLines(data.additionsText || "") || "—"}`,
-        ``,
-        `NOTE`,
-        `${data.notesText || "—"}`
-      ].join("\n");
-
-      $("recipePreview").textContent = text;
-    }
-
-    function generateTags(data){
-      const tags = [];
-      const ingredients = (data.ingredientsText || "").toLowerCase();
-      const yeast = (data.yeast || "").toLowerCase();
-
-      if(data.ibu >= 40) tags.push("amaro");
-      if(data.ibu <= 15) tags.push("low-ibu");
-      if(data.ph < 3.4) tags.push("acido");
-      if(calcABV(data.og, data.fg) >= 7) tags.push("strong");
-      if(calcABV(data.og, data.fg) < 4.2) tags.push("session");
-      if(yeast.includes("kveik") || yeast.includes("lutra")) tags.push("kveik");
-      if(ingredients.includes("mela")) tags.push("sidro");
-      if(ingredients.includes("pera")) tags.push("perry");
-      if(ingredients.includes("tè") || ingredients.includes("tea")) tags.push("tea-based");
-      if(ingredients.includes("latt") || ingredients.includes("plantarum")) tags.push("lattico");
-      if(data.srm >= 18) tags.push("scura");
-      if(data.srm <= 6) tags.push("chiara");
-
-      return [...new Set(tags)];
-    }
-
-    function newRecipe(){
-      if(!confirm("Creare una nuova ricetta vuota?")) return;
-      fillData({
-        ...defaults,
-        recipeName: "",
-        lotNumber: "",
-        batchDate: "",
-        yeast: "",
-        ingredientsText: "",
-        additionsText: "",
-        notesText: ""
-      });
-      saveData();
-    }
-
-    function applyPreset(name){
-      const preset = presets[name];
-      if(!preset) return;
-      fillData({
-        ...collectData(),
-        ...preset
-      });
-      saveData();
-    }
-
-    function exportJSON(){
-      const data = collectData();
-      data.ingredientsText = renumberLines(data.ingredientsText);
-      data.additionsText = renumberLines(data.additionsText);
-      const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = (data.lotNumber || "xa-fermentation") + ".json";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function importJSON(file){
-      const reader = new FileReader();
-      reader.onload = () => {
-        try{
-          const data = JSON.parse(reader.result);
-          if(data.ingredientsText) data.ingredientsText = renumberLines(data.ingredientsText);
-          if(data.additionsText) data.additionsText = renumberLines(data.additionsText);
-          fillData({...defaults, ...data});
-          saveData();
-        }catch{
-          alert("File JSON non valido");
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    function saveCurrentRecipeToArchive(){
-      const data = collectData();
-      const archive = loadArchive();
-      const entry = {
-        id: Date.now(),
-        recipeName: data.recipeName || "Ricetta senza nome",
-        lotNumber: data.lotNumber || "",
-        batchDate: data.batchDate || "",
-        yeast: data.yeast || "",
-        ingredientsText: renumberLines(data.ingredientsText || ""),
-        additionsText: renumberLines(data.additionsText || ""),
-        notesText: data.notesText || "",
-        ph: data.ph,
-        temp: data.temp,
-        og: data.og,
-        fg: data.fg,
-        ibu: data.ibu,
-        co2: data.co2,
-        srm: data.srm,
-        master: data.master,
-        tags: generateTags(data)
-      };
-      archive.unshift(entry);
-      saveArchive(archive);
-      renderArchive();
-      alert("Ricetta salvata in archivio.");
-    }
-
-    function renderArchive(){
-      const q = ($("archiveSearch").value || "").trim().toLowerCase();
-      const list = $("archiveList");
-      const archive = loadArchive().filter(item =>
-        !q ||
-        (item.recipeName || "").toLowerCase().includes(q) ||
-        (item.lotNumber || "").toLowerCase().includes(q) ||
-        (item.yeast || "").toLowerCase().includes(q) ||
-        (item.ingredientsText || "").toLowerCase().includes(q) ||
-        (item.tags || []).join(" ").toLowerCase().includes(q)
-      );
-
-      list.innerHTML = "";
-
-      if(archive.length === 0){
-        list.innerHTML = `<div class="archive-item"><div><h4>Nessuna ricetta trovata</h4><p>Salva una ricetta o cambia il termine di ricerca.</p></div></div>`;
-        return;
-      }
-
-      archive.forEach(item => {
-        const box = document.createElement("div");
-        box.className = "archive-item";
-        box.innerHTML = `
-          <div>
-            <h4>${item.recipeName}</h4>
-            <p>Lotto: ${item.lotNumber || "—"} • Data: ${item.batchDate || "—"} • Lievito: ${item.yeast || "—"}</p>
-            <div class="tag-row">
-              ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join("")}
-            </div>
-          </div>
-          <div class="archive-actions">
-            <button class="mini-btn top-btn blue">Apri</button>
-            <button class="mini-btn top-btn red">Elimina</button>
-          </div>
-        `;
-        const [openBtn, delBtn] = box.querySelectorAll("button");
-        openBtn.addEventListener("click", () => {
-          fillData(item);
-          saveData();
-          switchScreen("recipe");
-        });
-        delBtn.addEventListener("click", () => {
-          if(!confirm("Eliminare questa ricetta dall'archivio?")) return;
-          const next = loadArchive().filter(v => v.id !== item.id);
-          saveArchive(next);
-          renderArchive();
-        });
-        list.appendChild(box);
-      });
-    }
-
-    function smartSearchUrl(key, term){
-      const t = (term || "").trim().toLowerCase();
-
-      if(key === "yeasts"){
-        if(t.includes("omega") || t.includes("lutra")) return "https://omegayeast.com/";
-        if(t.includes("lallemand") || t.includes("lalbrew") || t.includes("verdant")) return "https://www.lallemandbrewing.com/";
-        if(t.includes("fermentis") || t.includes("safale") || t.includes("saflager") || t.includes("s-04") || t.includes("us-05") || t.includes("w-34/70")) return "https://fermentis.com/";
-        if(t.includes("mangrove")) return "https://mangrovejacks.com/";
-        return `https://www.google.com/search?q=${encodeURIComponent(term + " yeast producer official site")}`;
-      }
-
-      if(key === "hops"){
-        if(t.includes("yakima")) return "https://yakimavalleyhops.com/";
-        if(t.includes("barth")) return "https://www.barthhaas.com/";
-        if(t.includes("hopsteiner") || t.includes("citra") || t.includes("mosaic") || t.includes("simcoe")) return "https://hopsteiner.com/";
-        return `https://www.google.com/search?q=${encodeURIComponent(term + " hop producer official technical sheet")}`;
-      }
-
-      return `https://www.google.com/search?q=${encodeURIComponent(term || libraryLabels[key])}`;
-    }
-
-    function buildLibraryAccordion(){
-      const root = $("libraryAccordion");
-      root.innerHTML = "";
-
-      Object.keys(libraryData).forEach(key => {
-        const card = document.createElement("div");
-        card.className = "lib-card";
-        card.dataset.key = key;
-
-        card.innerHTML = `
-          <div class="lib-head">
-            <div class="lib-title">${libraryLabels[key]}</div>
-            <button class="lib-toggle">ON / OFF</button>
-          </div>
-          <div class="lib-body">
-            <div class="search-row">
-              <input class="search-input" type="text" placeholder="Cerca in ${libraryLabels[key]}..." />
-              <button class="mini-btn top-btn orange web-search-btn">Ricerca web</button>
-            </div>
-            <div class="library-grid"></div>
-          </div>
-        `;
-
-        const toggle = card.querySelector(".lib-toggle");
-        const search = card.querySelector(".search-input");
-        const grid = card.querySelector(".library-grid");
-        const webBtn = card.querySelector(".web-search-btn");
-
-        function render(filterText = ""){
-          const q = filterText.trim().toLowerCase();
-          const items = libraryData[key].filter(item =>
-            !q ||
-            item.name.toLowerCase().includes(q) ||
-            item.desc.toLowerCase().includes(q)
-          );
-
-          grid.innerHTML = "";
-
-          if(items.length === 0){
-            grid.innerHTML = `<div class="lib-item"><h4>Nessun risultato</h4><p>Prova un altro termine oppure usa Ricerca web.</p></div>`;
-            return;
-          }
-
-          items.forEach(item => {
-            const div = document.createElement("div");
-            div.className = "lib-item";
-            div.innerHTML = `
-              <h4>${item.name}</h4>
-              <p>${item.desc}</p>
-              <div class="mini-row">
-                <input type="number" step="0.1" value="${item.qty}" />
-                <select>
-                  <option value="${item.unit}">${item.unit}</option>
-                  <option value="g">g</option>
-                  <option value="kg">kg</option>
-                  <option value="ml">ml</option>
-                  <option value="L">L</option>
-                  <option value="g/L">g/L</option>
-                  <option value="pz">pz</option>
-                  <option value="dose">dose</option>
-                  <option value="bacca">bacca</option>
-                </select>
-                <button class="add-lib-btn">Aggiungi</button>
-              </div>
-            `;
-            const qtyInput = div.querySelector("input");
-            const unitSelect = div.querySelector("select");
-            const addBtn = div.querySelector(".add-lib-btn");
-
-            addBtn.addEventListener("click", () => {
-              addRecipeItem(item.name, qtyInput.value || item.qty, unitSelect.value || item.unit, item.desc);
-            });
-
-            grid.appendChild(div);
-          });
-        }
-
-        toggle.addEventListener("click", () => {
-          card.classList.toggle("open");
-          toggle.classList.toggle("active");
-        });
-
-        search.addEventListener("input", () => render(search.value));
-
-        webBtn.addEventListener("click", () => {
-          const term = search.value.trim();
-          window.open(smartSearchUrl(key, term), "_blank");
-        });
-
-        render();
-        root.appendChild(card);
-      });
-    }
-
-    function switchScreen(name){
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-      $(`screen-${name}`).classList.add("active");
-      document.querySelector(`.nav-btn[data-screen="${name}"]`).classList.add("active");
-      if(name === "recipe") updateRecipePreview();
-      if(name === "archive") renderArchive();
-    }
-
-    function printRecipe(){
-      const data = collectData();
-      const abv = calcABV(data.og, data.fg).toFixed(2);
-      const html = `
-      <html>
-      <head>
-        <meta charset="UTF-8">
-        <title>${data.recipeName || "Ricetta XA"}</title>
-        <style>
-          body{font-family:Arial,Helvetica,sans-serif;padding:28px;color:#111;}
-          h1{font-size:30px;margin:0 0 12px 0;}
-          h2{font-size:18px;margin:22px 0 8px 0;}
-          .meta{margin-bottom:16px;line-height:1.6;}
-          .box{background:#f4f4f4;border:1px solid #ddd;border-radius:12px;padding:14px;white-space:pre-wrap;line-height:1.5;}
-          .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px;}
-          .item{padding:8px 10px;background:#fafafa;border:1px solid #e6e6e6;border-radius:10px;}
-        </style>
-      </head>
-      <body>
-        <h1>${data.recipeName || "Ricetta XA"}</h1>
-        <div class="meta">
-          <div><b>Lotto:</b> ${data.lotNumber || "—"}</div>
-          <div><b>Data:</b> ${data.batchDate || "—"}</div>
-          <div><b>Lievito:</b> ${data.yeast || "—"}</div>
-        </div>
-        <h2>Parametri</h2>
-        <div class="grid">
-          <div class="item"><b>pH:</b> ${data.ph.toFixed(2)}</div>
-          <div class="item"><b>Temperatura:</b> ${data.temp.toFixed(1)} °C</div>
-          <div class="item"><b>OG:</b> ${data.og.toFixed(3)}</div>
-          <div class="item"><b>FG:</b> ${data.fg.toFixed(3)}</div>
-          <div class="item"><b>ABV:</b> ${abv} %</div>
-          <div class="item"><b>IBU:</b> ${data.ibu.toFixed(0)}</div>
-          <div class="item"><b>CO₂:</b> ${data.co2.toFixed(1)} vol</div>
-          <div class="item"><b>SRM:</b> ${data.srm.toFixed(0)}</div>
-        </div>
-        <h2>Ingredienti</h2>
-        <div class="box">${renumberLines(data.ingredientsText || "") || "—"}</div>
-        <h2>Aggiunte / Step</h2>
-        <div class="box">${renumberLines(data.additionsText || "") || "—"}</div>
-        <h2>Note</h2>
-        <div class="box">${data.notesText || "—"}</div>
-      </body>
-      </html>
-      `;
-      const w = window.open("", "_blank");
-      w.document.write(html);
-      w.document.close();
-      w.focus();
-      setTimeout(() => w.print(), 300);
-    }
-
-    [
-      "recipeName","lotNumber","batchDate","yeast",
-      "ingredientsText","additionsText","notesText",
-      "phSlider","tempSlider","ogSlider","fgSlider","ibuSlider","co2Slider","srmSlider","masterSlider"
-    ].forEach(id => {
-      $(id).addEventListener("input", saveData);
-      $(id).addEventListener("change", saveData);
-    });
-
-    document.querySelectorAll(".ingredient-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        addQuickIngredient(btn.dataset.quickName, btn.dataset.quickQty, btn.dataset.quickUnit);
-      });
-    });
-
-    document.querySelectorAll(".preset-btn").forEach(btn => {
-      btn.addEventListener("click", () => applyPreset(btn.dataset.preset));
-    });
-
-    document.querySelectorAll(".chan-btn").forEach(btn => {
-      btn.addEventListener("click", () => btn.classList.toggle("active"));
-    });
-
-    document.querySelectorAll(".nav-btn").forEach(btn => {
-      btn.addEventListener("click", () => switchScreen(btn.dataset.screen));
-    });
-
-    $("newRecipeBtn").addEventListener("click", newRecipe);
-    $("saveBtn").addEventListener("click", saveData);
-    $("saveArchiveBtn").addEventListener("click", saveCurrentRecipeToArchive);
-    $("exportBtn").addEventListener("click", exportJSON);
-    $("printBtnTop").addEventListener("click", printRecipe);
-    $("printBtnRecipe").addEventListener("click", printRecipe);
-    $("archiveSearch").addEventListener("input", renderArchive);
-
-    $("importFile").addEventListener("change", e => {
-      const file = e.target.files[0];
-      if(file) importJSON(file);
-      e.target.value = "";
-    });
-
-    buildLibraryAccordion();
-    fillData(loadData());
-    renderArchive();
-    saveData();
-
-    setInterval(() => {
-      updateUI(collectData());
-    }, 450);
-  </script>
 </body>
 </html>
