@@ -3,30 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation Mixer</title>
-  <meta name="theme-color" content="#071629" />
+  <title>XA Fermentation Ultra Mixer</title>
+  <meta name="theme-color" content="#12090c" />
   <style>
     :root{
-      --bg1:#061425;
-      --bg2:#0b2138;
-      --panel:#102742;
-      --panel2:#0a1a2d;
-      --strip:#0a1422;
-      --strip2:#0d1b2c;
+      --bg1:#12090c;
+      --bg2:#1b0f15;
+      --bg3:#24131b;
+      --panel:#1a1017;
+      --panel2:#120b11;
+      --metal:#2a1b23;
+      --metal2:#110b0f;
       --stroke:rgba(255,255,255,.08);
-      --text:#f4f7fb;
-      --muted:#94a9bd;
-
-      --ph:#58a6ff;
-      --temp:#ff934d;
-      --og:#ffd166;
-      --fg:#43d6a3;
-      --abv:#b56cff;
-      --ibu:#ff6b8a;
-      --co2:#7ad7ff;
-      --sugar:#f6c56b;
-      --radius:24px;
-      --shadow:0 18px 55px rgba(0,0,0,.38);
+      --text:#f5f7fb;
+      --muted:#a595a0;
+      --red:#ff3e4d;
+      --red2:#ff6672;
+      --red3:#781e2a;
+      --orange:#ff9a38;
+      --yellow:#ffd44d;
+      --green:#33d59d;
+      --blue:#5aa8ff;
+      --cyan:#63e5ff;
+      --violet:#b975ff;
+      --pink:#ff6fa8;
+      --shadow:0 22px 60px rgba(0,0,0,.45);
+      --radius:26px;
     }
 
     *{
@@ -41,16 +43,17 @@
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top, rgba(88,166,255,.14), transparent 22%),
-        linear-gradient(180deg,var(--bg1),var(--bg2));
+        radial-gradient(circle at top, rgba(255,70,90,.14), transparent 18%),
+        radial-gradient(circle at bottom, rgba(255,120,50,.08), transparent 22%),
+        linear-gradient(180deg,var(--bg1),var(--bg2) 45%, var(--bg3));
     }
 
     body{
-      padding:16px 14px 110px;
+      padding:14px 12px 40px;
     }
 
     .app{
-      width:min(1300px,100%);
+      width:min(1480px,100%);
       margin:0 auto;
     }
 
@@ -62,27 +65,28 @@
     }
 
     .logo{
-      width:80px;
-      height:80px;
-      border-radius:22px;
+      width:82px;
+      height:82px;
+      border-radius:24px;
       display:grid;
       place-items:center;
-      font-size:30px;
+      font-size:32px;
       font-weight:800;
       color:#fff;
+      letter-spacing:.5px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
-        linear-gradient(180deg,#132b46,#081728);
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:var(--shadow);
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02)),
+        linear-gradient(180deg,#2c1820,#120a0f);
+      border:1px solid rgba(255,255,255,.09);
+      box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.05);
       flex:0 0 auto;
     }
 
     .hero h1{
-      font-size:clamp(28px,7vw,50px);
-      line-height:.95;
+      font-size:clamp(28px,7vw,56px);
+      line-height:.92;
       font-weight:800;
-      letter-spacing:-.04em;
+      letter-spacing:-.05em;
     }
 
     .hero p{
@@ -91,30 +95,52 @@
       font-size:14px;
     }
 
-    .title-panel{
+    .top-shell,
+    .shell,
+    .info-card{
       background:
         linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)),
         linear-gradient(180deg,var(--panel),var(--panel2));
-      border:1px solid var(--stroke);
+      border:1px solid rgba(255,255,255,.08);
       border-radius:30px;
-      padding:16px;
       box-shadow:var(--shadow);
+    }
+
+    .top-shell{
+      padding:16px;
       margin-bottom:14px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .top-shell::after{
+      content:"";
+      position:absolute;
+      right:-120px;
+      top:-120px;
+      width:320px;
+      height:320px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,62,77,.16), transparent 68%);
+      pointer-events:none;
     }
 
     .title-top{
+      position:relative;
+      z-index:1;
       display:flex;
       justify-content:space-between;
-      gap:10px;
-      align-items:flex-start;
+      gap:16px;
       flex-wrap:wrap;
+      align-items:flex-start;
     }
 
     .recipe-big{
-      font-size:clamp(26px,7vw,46px);
+      font-size:clamp(28px,7vw,54px);
       font-weight:800;
-      line-height:.95;
-      letter-spacing:-.04em;
+      line-height:.92;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
     }
 
     .recipe-sub{
@@ -138,21 +164,16 @@
       font-weight:800;
       color:#fff;
       background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.07);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
     }
 
-    .top-btn.red{background:#ff4d4d;}
-    .top-btn.blue{background:#2563eb;}
-    .top-btn.green{background:#059669;}
-    .top-btn.orange{background:#d97706;}
+    .top-btn.red{background:linear-gradient(180deg,#ff4f5f,#d53142);}
+    .top-btn.blue{background:linear-gradient(180deg,#3e87ff,#205fcb);}
+    .top-btn.green{background:linear-gradient(180deg,#11b67b,#078f5f);}
+    .top-btn.orange{background:linear-gradient(180deg,#ff9e3d,#d87409);}
 
     .shell{
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)),
-        linear-gradient(180deg,var(--panel),var(--panel2));
-      border:1px solid var(--stroke);
-      border-radius:30px;
-      box-shadow:var(--shadow);
       padding:14px;
       margin-bottom:14px;
     }
@@ -169,6 +190,25 @@
       margin-bottom:12px;
     }
 
+    .preset-row{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .preset-btn{
+      border:none;
+      cursor:pointer;
+      border-radius:16px;
+      padding:11px 14px;
+      color:#fff;
+      font-size:13px;
+      font-weight:800;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.08);
+    }
+
     .mixer-wrap{
       overflow-x:auto;
       padding-bottom:6px;
@@ -182,60 +222,83 @@
     }
 
     .strip{
-      width:118px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
-        linear-gradient(180deg,var(--strip),var(--strip2));
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:24px;
+      width:126px;
+      min-height:590px;
+      border-radius:26px;
       padding:14px 12px;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05),
+        0 10px 30px rgba(0,0,0,.35);
       display:flex;
       flex-direction:column;
       align-items:center;
-      min-height:510px;
-      position:relative;
-      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.01)),
+        linear-gradient(180deg,#1b1017,#100a0f);
+    }
+
+    .strip::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at top, rgba(255,255,255,.10), transparent 30%);
+      pointer-events:none;
     }
 
     .strip::after{
       content:"";
       position:absolute;
-      right:-30px;
-      top:-30px;
-      width:90px;
-      height:90px;
+      right:-50px;
+      bottom:-80px;
+      width:140px;
+      height:140px;
       border-radius:50%;
-      background:radial-gradient(circle, rgba(255,255,255,.10), transparent 70%);
+      background:radial-gradient(circle, rgba(255,255,255,.12), transparent 70%);
       pointer-events:none;
     }
+
+    .strip.orange{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,154,56,.20), 0 14px 36px rgba(255,154,56,.10);}
+    .strip.yellow{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,212,77,.20), 0 14px 36px rgba(255,212,77,.08);}
+    .strip.green{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(51,213,157,.20), 0 14px 36px rgba(51,213,157,.09);}
+    .strip.violet{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(185,117,255,.20), 0 14px 36px rgba(185,117,255,.10);}
+    .strip.red{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,62,77,.22), 0 14px 36px rgba(255,62,77,.12);}
+    .strip.blue{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(90,168,255,.20), 0 14px 36px rgba(90,168,255,.10);}
+    .strip.cyan{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(99,229,255,.20), 0 14px 36px rgba(99,229,255,.09);}
+    .strip.pink{box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(255,111,168,.22), 0 14px 36px rgba(255,111,168,.12);}
 
     .strip-label{
       position:relative;
       z-index:1;
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:#dbe6f1;
-      margin-bottom:8px;
-      text-align:center;
-      min-height:30px;
+      min-height:34px;
       display:flex;
       align-items:center;
       justify-content:center;
+      text-align:center;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:#f4f7fb;
+      margin-bottom:8px;
     }
 
     .strip-display{
       position:relative;
       z-index:1;
       width:100%;
-      border-radius:16px;
+      border-radius:18px;
       padding:12px 8px;
       text-align:center;
-      background:#06111d;
+      background:
+        linear-gradient(180deg,#090e14,#04070c);
       border:1px solid rgba(255,255,255,.06);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), inset 0 0 24px rgba(0,0,0,.45);
-      margin-bottom:14px;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.02),
+        inset 0 0 24px rgba(0,0,0,.55);
+      margin-bottom:12px;
     }
 
     .strip-value{
@@ -243,6 +306,7 @@
       font-weight:800;
       line-height:.95;
       letter-spacing:-.04em;
+      text-shadow:0 0 18px currentColor;
     }
 
     .strip-unit{
@@ -251,66 +315,136 @@
       color:var(--muted);
     }
 
+    .channel-color{
+      width:100%;
+      height:10px;
+      border-radius:999px;
+      margin-bottom:12px;
+      box-shadow:0 0 18px currentColor;
+      opacity:.95;
+      position:relative;
+      z-index:1;
+    }
+
+    .orange-bar{color:var(--orange); background:var(--orange);}
+    .yellow-bar{color:var(--yellow); background:var(--yellow);}
+    .green-bar{color:var(--green); background:var(--green);}
+    .violet-bar{color:var(--violet); background:var(--violet);}
+    .red-bar{color:var(--red); background:var(--red);}
+    .blue-bar{color:var(--blue); background:var(--blue);}
+    .cyan-bar{color:var(--cyan); background:var(--cyan);}
+    .pink-bar{color:var(--pink); background:var(--pink);}
+
+    .meter-and-slider{
+      flex:1;
+      width:100%;
+      display:grid;
+      grid-template-columns:14px 1fr 14px;
+      gap:10px;
+      align-items:center;
+      position:relative;
+      z-index:1;
+    }
+
+    .vu{
+      height:300px;
+      width:14px;
+      border-radius:999px;
+      background:#06090e;
+      border:1px solid rgba(255,255,255,.06);
+      padding:3px 2px;
+      display:flex;
+      flex-direction:column-reverse;
+      justify-content:flex-start;
+      gap:2px;
+      box-shadow:inset 0 0 14px rgba(0,0,0,.55);
+    }
+
+    .vu span{
+      display:block;
+      width:100%;
+      height:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      opacity:.12;
+      transition:all .12s linear;
+    }
+
+    .vu span.on.green{background:#35d39a; opacity:1; box-shadow:0 0 8px #35d39a;}
+    .vu span.on.yellow{background:#ffd44d; opacity:1; box-shadow:0 0 8px #ffd44d;}
+    .vu span.on.red{background:#ff4a5a; opacity:1; box-shadow:0 0 8px #ff4a5a;}
+
     .slider-zone{
       flex:1;
       display:flex;
       align-items:center;
       justify-content:center;
       width:100%;
-      position:relative;
-      z-index:1;
     }
 
     .slider-vertical{
       -webkit-appearance:none;
       appearance:none;
-      width:280px;
-      height:34px;
+      width:320px;
+      height:40px;
       transform:rotate(-90deg);
       background:transparent;
     }
 
     .slider-vertical::-webkit-slider-runnable-track{
       height:14px;
-      background:linear-gradient(180deg,#1b2b42,#0d1624);
+      background:linear-gradient(180deg,#1d2a39,#0c141e);
       border-radius:999px;
       border:1px solid rgba(255,255,255,.05);
+      box-shadow:inset 0 2px 6px rgba(0,0,0,.45);
     }
 
     .slider-vertical::-webkit-slider-thumb{
       -webkit-appearance:none;
       appearance:none;
-      width:30px;
-      height:30px;
-      border-radius:50%;
-      margin-top:-9px;
+      width:34px;
+      height:34px;
+      border-radius:10px;
+      margin-top:-11px;
       border:none;
-      box-shadow:0 4px 12px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.5);
+      box-shadow:
+        0 6px 14px rgba(0,0,0,.38),
+        inset 0 1px 0 rgba(255,255,255,.50),
+        0 0 18px currentColor;
       cursor:pointer;
+      background:currentColor;
     }
 
     .slider-vertical::-moz-range-track{
       height:14px;
-      background:linear-gradient(180deg,#1b2b42,#0d1624);
+      background:linear-gradient(180deg,#1d2a39,#0c141e);
       border-radius:999px;
       border:1px solid rgba(255,255,255,.05);
+      box-shadow:inset 0 2px 6px rgba(0,0,0,.45);
     }
 
     .slider-vertical::-moz-range-thumb{
-      width:30px;
-      height:30px;
-      border-radius:50%;
+      width:34px;
+      height:34px;
+      border-radius:10px;
       border:none;
-      box-shadow:0 4px 12px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.5);
+      box-shadow:
+        0 6px 14px rgba(0,0,0,.38),
+        inset 0 1px 0 rgba(255,255,255,.50),
+        0 0 18px currentColor;
       cursor:pointer;
+      background:currentColor;
     }
 
-    .ph-thumb::-webkit-slider-thumb,.ph-thumb::-moz-range-thumb{background:var(--ph);}
-    .temp-thumb::-webkit-slider-thumb,.temp-thumb::-moz-range-thumb{background:var(--temp);}
-    .og-thumb::-webkit-slider-thumb,.og-thumb::-moz-range-thumb{background:var(--og);}
-    .fg-thumb::-webkit-slider-thumb,.fg-thumb::-moz-range-thumb{background:var(--fg);}
-    .ibu-thumb::-webkit-slider-thumb,.ibu-thumb::-moz-range-thumb{background:var(--ibu);}
-    .co2-thumb::-webkit-slider-thumb,.co2-thumb::-moz-range-thumb{background:var(--co2);}
+    .ph-thumb{color:var(--orange);}
+    .temp-thumb{color:var(--red);}
+    .og-thumb{color:var(--yellow);}
+    .fg-thumb{color:var(--green);}
+    .abv-thumb{color:var(--violet);}
+    .ibu-thumb{color:var(--pink);}
+    .co2-thumb{color:var(--cyan);}
+    .cal-thumb{color:var(--red2);}
+    .sugar-thumb{color:var(--orange);}
 
     .strip-footer{
       width:100%;
@@ -328,19 +462,12 @@
       gap:12px;
     }
 
-    .card{
+    .info-card{
       grid-column:span 12;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)),
-        rgba(6,14,24,.28);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:24px;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
       padding:16px;
     }
 
     .span-6{grid-column:span 6;}
-    .span-4{grid-column:span 4;}
 
     .form{
       display:grid;
@@ -386,6 +513,7 @@
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:10px;
+      margin-bottom:12px;
     }
 
     .ingredient-btn{
@@ -399,12 +527,18 @@
       color:#fff;
       min-height:90px;
       font-weight:700;
+      transition:transform .12s ease;
+    }
+
+    .ingredient-btn:active{
+      transform:scale(.97);
     }
 
     .ingredient-btn .emoji{
       font-size:30px;
       display:block;
       margin-bottom:6px;
+      filter:drop-shadow(0 0 10px rgba(255,255,255,.14));
     }
 
     .ingredient-btn .txt{
@@ -428,7 +562,6 @@
     }
 
     .result-line:last-child{border-bottom:none;}
-
     .result-line span:first-child{color:var(--muted);}
     .result-line span:last-child{font-weight:800;}
 
@@ -444,7 +577,7 @@
       .ingredient-grid{
         grid-template-columns:1fr 1fr;
       }
-      .span-6,.span-4{
+      .span-6{
         grid-column:span 12;
       }
     }
@@ -455,12 +588,12 @@
     <div class="hero">
       <div class="logo">XA</div>
       <div>
-        <h1>XA Fermentation Mixer</h1>
-        <p>Digitale, scenografica, veloce</p>
+        <h1>XA Fermentation Ultra Mixer</h1>
+        <p>Dark ultra pro • fader illuminati • preset ricette • red predominante</p>
       </div>
     </div>
 
-    <div class="title-panel">
+    <div class="top-shell">
       <div class="title-top">
         <div>
           <div class="recipe-big" id="recipeTitleBig">SIDRO SECCO XA</div>
@@ -478,115 +611,170 @@
     </div>
 
     <div class="shell">
+      <div class="section-title">Preset ricette</div>
+      <div class="preset-row">
+        <button class="preset-btn" data-preset="sidro">Sidro Secco</button>
+        <button class="preset-btn" data-preset="perry">Perry</button>
+        <button class="preset-btn" data-preset="kombucha">Kombucha</button>
+        <button class="preset-btn" data-preset="blonde">Blonde Ale</button>
+        <button class="preset-btn" data-preset="ipa">IPA</button>
+        <button class="preset-btn" data-preset="gose">Gose</button>
+      </div>
+
       <div class="section-title">Mixer digitale parametri</div>
-      <div class="section-sub">Muovi i cursori come un mixer digitale. OG e FG calcolano ABV, attenuazione, calorie e zucchero residuo.</div>
+      <div class="section-sub">Canali colorati, fader illuminati, vu meter laterali, calcoli automatici in tempo reale.</div>
 
       <div class="mixer-wrap">
         <div class="mixer">
-          <div class="strip">
-            <div class="strip-label">pH</div>
+          <div class="strip orange">
+            <div class="strip-label">PH</div>
             <div class="strip-display">
-              <div class="strip-value" id="phVal" style="color:var(--ph)">3.50</div>
+              <div class="strip-value" id="phVal" style="color:var(--orange)">3.50</div>
               <div class="strip-unit">acidità</div>
             </div>
-            <div class="slider-zone">
-              <input id="phSlider" class="slider-vertical ph-thumb" type="range" min="280" max="500" step="1" value="350" />
+            <div class="channel-color orange-bar"></div>
+            <div class="meter-and-slider">
+              <div class="vu" id="vu-ph-l"></div>
+              <div class="slider-zone">
+                <input id="phSlider" class="slider-vertical ph-thumb" type="range" min="280" max="500" step="1" value="350" />
+              </div>
+              <div class="vu" id="vu-ph-r"></div>
             </div>
             <div class="strip-footer">2.80 → 5.00</div>
           </div>
 
-          <div class="strip">
-            <div class="strip-label">Temperatura</div>
+          <div class="strip red">
+            <div class="strip-label">TEMP</div>
             <div class="strip-display">
-              <div class="strip-value" id="tempVal" style="color:var(--temp)">20.0°</div>
+              <div class="strip-value" id="tempVal" style="color:var(--red2)">20.0°</div>
               <div class="strip-unit">°C</div>
             </div>
-            <div class="slider-zone">
-              <input id="tempSlider" class="slider-vertical temp-thumb" type="range" min="0" max="350" step="1" value="200" />
+            <div class="channel-color red-bar"></div>
+            <div class="meter-and-slider">
+              <div class="vu" id="vu-temp-l"></div>
+              <div class="slider-zone">
+                <input id="tempSlider" class="slider-vertical temp-thumb" type="range" min="0" max="350" step="1" value="200" />
+              </div>
+              <div class="vu" id="vu-temp-r"></div>
             </div>
             <div class="strip-footer">0 → 35 °C</div>
           </div>
 
-          <div class="strip">
+          <div class="strip yellow">
             <div class="strip-label">OG</div>
             <div class="strip-display">
-              <div class="strip-value" id="ogVal" style="color:var(--og)">1.050</div>
+              <div class="strip-value" id="ogVal" style="color:var(--yellow)">1.050</div>
               <div class="strip-unit">original gravity</div>
             </div>
-            <div class="slider-zone">
-              <input id="ogSlider" class="slider-vertical og-thumb" type="range" min="1000" max="1120" step="1" value="1050" />
+            <div class="channel-color yellow-bar"></div>
+            <div class="meter-and-slider">
+              <div class="vu" id="vu-og-l"></div>
+              <div class="slider-zone">
+                <input id="ogSlider" class="slider-vertical og-thumb" type="range" min="1000" max="1120" step="1" value="1050" />
+              </div>
+              <div class="vu" id="vu-og-r"></div>
             </div>
             <div class="strip-footer">1.000 → 1.120</div>
           </div>
 
-          <div class="strip">
+          <div class="strip green">
             <div class="strip-label">FG</div>
             <div class="strip-display">
-              <div class="strip-value" id="fgVal" style="color:var(--fg)">1.010</div>
+              <div class="strip-value" id="fgVal" style="color:var(--green)">1.010</div>
               <div class="strip-unit">final gravity</div>
             </div>
-            <div class="slider-zone">
-              <input id="fgSlider" class="slider-vertical fg-thumb" type="range" min="998" max="1040" step="1" value="1010" />
+            <div class="channel-color green-bar"></div>
+            <div class="meter-and-slider">
+              <div class="vu" id="vu-fg-l"></div>
+              <div class="slider-zone">
+                <input id="fgSlider" class="slider-vertical fg-thumb" type="range" min="998" max="1040" step="1" value="1010" />
+              </div>
+              <div class="vu" id="vu-fg-r"></div>
             </div>
             <div class="strip-footer">0.998 → 1.040</div>
           </div>
 
-          <div class="strip">
+          <div class="strip violet">
             <div class="strip-label">ABV</div>
             <div class="strip-display">
-              <div class="strip-value" id="abvVal" style="color:var(--abv)">5.25%</div>
+              <div class="strip-value" id="abvVal" style="color:var(--violet)">5.25%</div>
               <div class="strip-unit">automatico</div>
             </div>
-            <div class="slider-zone">
-              <div style="width:100%; text-align:center; color:var(--muted); font-size:13px;">calcolato da OG / FG</div>
+            <div class="channel-color violet-bar"></div>
+            <div class="meter-and-slider">
+              <div class="vu" id="vu-abv-l"></div>
+              <div class="slider-zone" style="color:var(--muted);font-size:13px;text-align:center;">
+                calcolato<br>da OG/FG
+              </div>
+              <div class="vu" id="vu-abv-r"></div>
             </div>
             <div class="strip-footer">live</div>
           </div>
 
-          <div class="strip">
+          <div class="strip pink">
             <div class="strip-label">IBU</div>
             <div class="strip-display">
-              <div class="strip-value" id="ibuVal" style="color:var(--ibu)">28</div>
+              <div class="strip-value" id="ibuVal" style="color:var(--pink)">28</div>
               <div class="strip-unit">amaro</div>
             </div>
-            <div class="slider-zone">
-              <input id="ibuSlider" class="slider-vertical ibu-thumb" type="range" min="0" max="120" step="1" value="28" />
+            <div class="channel-color pink-bar"></div>
+            <div class="meter-and-slider">
+              <div class="vu" id="vu-ibu-l"></div>
+              <div class="slider-zone">
+                <input id="ibuSlider" class="slider-vertical ibu-thumb" type="range" min="0" max="120" step="1" value="28" />
+              </div>
+              <div class="vu" id="vu-ibu-r"></div>
             </div>
             <div class="strip-footer">0 → 120</div>
           </div>
 
-          <div class="strip">
+          <div class="strip cyan">
             <div class="strip-label">CO₂</div>
             <div class="strip-display">
-              <div class="strip-value" id="co2Val" style="color:var(--co2)">2.4</div>
+              <div class="strip-value" id="co2Val" style="color:var(--cyan)">2.4</div>
               <div class="strip-unit">volumi</div>
             </div>
-            <div class="slider-zone">
-              <input id="co2Slider" class="slider-vertical co2-thumb" type="range" min="10" max="40" step="1" value="24" />
+            <div class="channel-color cyan-bar"></div>
+            <div class="meter-and-slider">
+              <div class="vu" id="vu-co2-l"></div>
+              <div class="slider-zone">
+                <input id="co2Slider" class="slider-vertical co2-thumb" type="range" min="10" max="40" step="1" value="24" />
+              </div>
+              <div class="vu" id="vu-co2-r"></div>
             </div>
             <div class="strip-footer">1.0 → 4.0</div>
           </div>
 
-          <div class="strip">
-            <div class="strip-label">Calorie</div>
+          <div class="strip red">
+            <div class="strip-label">CAL</div>
             <div class="strip-display">
-              <div class="strip-value" id="calVal" style="color:var(--sugar)">160</div>
+              <div class="strip-value" id="calVal" style="color:var(--red2)">160</div>
               <div class="strip-unit">kcal / 330 ml</div>
             </div>
-            <div class="slider-zone">
-              <div style="width:100%; text-align:center; color:var(--muted); font-size:13px;">stima automatica</div>
+            <div class="channel-color red-bar"></div>
+            <div class="meter-and-slider">
+              <div class="vu" id="vu-cal-l"></div>
+              <div class="slider-zone" style="color:var(--muted);font-size:13px;text-align:center;">
+                stima<br>automatica
+              </div>
+              <div class="vu" id="vu-cal-r"></div>
             </div>
             <div class="strip-footer">live</div>
           </div>
 
-          <div class="strip">
-            <div class="strip-label">Zucchero</div>
+          <div class="strip orange">
+            <div class="strip-label">SUGAR</div>
             <div class="strip-display">
-              <div class="strip-value" id="sugarVal" style="color:var(--sugar)">24.0</div>
+              <div class="strip-value" id="sugarVal" style="color:var(--orange)">24.0</div>
               <div class="strip-unit">g/L residui</div>
             </div>
-            <div class="slider-zone">
-              <div style="width:100%; text-align:center; color:var(--muted); font-size:13px;">stima automatica</div>
+            <div class="channel-color orange-bar"></div>
+            <div class="meter-and-slider">
+              <div class="vu" id="vu-sugar-l"></div>
+              <div class="slider-zone" style="color:var(--muted);font-size:13px;text-align:center;">
+                stima<br>automatica
+              </div>
+              <div class="vu" id="vu-sugar-r"></div>
             </div>
             <div class="strip-footer">live</div>
           </div>
@@ -597,7 +785,7 @@
     </div>
 
     <div class="grid">
-      <div class="card span-6">
+      <div class="info-card span-6">
         <div class="section-title">Scheda ricetta</div>
         <div class="form">
           <div class="two">
@@ -639,9 +827,9 @@
         </div>
       </div>
 
-      <div class="card span-6">
+      <div class="info-card span-6">
         <div class="section-title">Ingredienti rapidi</div>
-        <div class="section-sub">Tocca una micro-icona per inserirla nella ricetta.</div>
+        <div class="section-sub">Tocca una micro-immagine per inserirla direttamente nella ricetta.</div>
 
         <div class="ingredient-grid">
           <button class="ingredient-btn" data-ingredient="Mela">
@@ -705,8 +893,6 @@
           </button>
         </div>
 
-        <div style="height:12px"></div>
-
         <div class="section-title">Riepilogo tecnico</div>
         <div class="result-box">
           <div class="result-line"><span>ABV</span><span id="resAbv">5.25 %</span></div>
@@ -721,7 +907,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xaFermentationMixer_v1";
+    const STORAGE_KEY = "xaFermentationUltraMixer_v1";
 
     const defaults = {
       recipeName: "Sidro Secco XA",
@@ -739,7 +925,118 @@
       co2: 2.4
     };
 
+    const presets = {
+      sidro: {
+        recipeName: "Sidro Secco XA",
+        yeast: "Lievito autoctono",
+        ph: 3.40,
+        temp: 18.0,
+        og: 1.050,
+        fg: 1.004,
+        ibu: 0,
+        co2: 2.4,
+        ingredientsText: "Mela\\nLievito autoctono",
+        additionsText: "Giorno 1 inoculo\\nGiorno 5 travaso",
+        notesText: "Profilo secco e pulito"
+      },
+      perry: {
+        recipeName: "Perry XA",
+        yeast: "Lievito da sidro",
+        ph: 3.55,
+        temp: 17.0,
+        og: 1.048,
+        fg: 1.006,
+        ibu: 0,
+        co2: 2.5,
+        ingredientsText: "Pera\\nLievito da sidro",
+        additionsText: "Giorno 1 inoculo",
+        notesText: "Profilo fruttato da pera"
+      },
+      kombucha: {
+        recipeName: "Kombucha XA",
+        yeast: "SCOBY",
+        ph: 3.20,
+        temp: 24.0,
+        og: 1.030,
+        fg: 1.008,
+        ibu: 0,
+        co2: 2.8,
+        ingredientsText: "Tè\\nZucchero\\nColtura kombucha",
+        additionsText: "Seconda fermentazione opzionale",
+        notesText: "Acidità viva e bollicina"
+      },
+      blonde: {
+        recipeName: "Blonde Ale XA",
+        yeast: "US-05",
+        ph: 4.20,
+        temp: 20.0,
+        og: 1.048,
+        fg: 1.010,
+        ibu: 20,
+        co2: 2.3,
+        ingredientsText: "Malto\\nLuppolo\\nLievito US-05",
+        additionsText: "Bollitura 60 min",
+        notesText: "Pulita e semplice"
+      },
+      ipa: {
+        recipeName: "IPA XA",
+        yeast: "US-05",
+        ph: 4.10,
+        temp: 19.0,
+        og: 1.060,
+        fg: 1.012,
+        ibu: 55,
+        co2: 2.4,
+        ingredientsText: "Malto\\nLuppolo\\nLievito US-05",
+        additionsText: "Dry hop giorno 5",
+        notesText: "Luppolata, secca, moderna"
+      },
+      gose: {
+        recipeName: "Gose XA",
+        yeast: "Ale neutro",
+        ph: 3.30,
+        temp: 20.0,
+        og: 1.044,
+        fg: 1.010,
+        ibu: 10,
+        co2: 2.6,
+        ingredientsText: "Malto\\nSale\\nSpezie",
+        additionsText: "Acidificazione controllata",
+        notesText: "Acida e sapida"
+      }
+    };
+
     function $(id){ return document.getElementById(id); }
+
+    function buildVu(id){
+      const vu = $(id);
+      vu.innerHTML = "";
+      for(let i=0;i<18;i++){
+        const s = document.createElement("span");
+        vu.appendChild(s);
+      }
+    }
+
+    [
+      "vu-ph-l","vu-ph-r","vu-temp-l","vu-temp-r","vu-og-l","vu-og-r",
+      "vu-fg-l","vu-fg-r","vu-abv-l","vu-abv-r","vu-ibu-l","vu-ibu-r",
+      "vu-co2-l","vu-co2-r","vu-cal-l","vu-cal-r","vu-sugar-l","vu-sugar-r"
+    ].forEach(buildVu);
+
+    function setVu(id, ratio){
+      const vu = $(id);
+      const bars = Array.from(vu.children);
+      const onCount = Math.max(0, Math.min(bars.length, Math.round(ratio * bars.length)));
+      bars.forEach((bar, i) => {
+        const active = i < onCount;
+        bar.className = "";
+        if(active){
+          if(i < 10) bar.classList.add("on","green");
+          else if(i < 14) bar.classList.add("on","yellow");
+          else bar.classList.add("on","red");
+        }
+      });
+    }
 
     function sgToPlato(sg){
       return -616.868 + (1111.14 * sg) - (630.272 * sg * sg) + (135.997 * sg * sg * sg);
@@ -847,6 +1144,33 @@
       $("recipeTitleBig").textContent = (data.recipeName || "Nuova Ricetta").toUpperCase();
       $("lotTitle").textContent = data.lotNumber || "—";
       $("dateTitle").textContent = data.batchDate || "—";
+
+      setVu("vu-ph-l", (data.ph - 2.8) / (5.0 - 2.8));
+      setVu("vu-ph-r", (data.ph - 2.8) / (5.0 - 2.8));
+
+      setVu("vu-temp-l", data.temp / 35);
+      setVu("vu-temp-r", data.temp / 35);
+
+      setVu("vu-og-l", (data.og - 1.000) / (1.120 - 1.000));
+      setVu("vu-og-r", (data.og - 1.000) / (1.120 - 1.000));
+
+      setVu("vu-fg-l", (data.fg - 0.998) / (1.040 - 0.998));
+      setVu("vu-fg-r", (data.fg - 0.998) / (1.040 - 0.998));
+
+      setVu("vu-abv-l", Math.min(abv / 12, 1));
+      setVu("vu-abv-r", Math.min(abv / 12, 1));
+
+      setVu("vu-ibu-l", data.ibu / 120);
+      setVu("vu-ibu-r", data.ibu / 120);
+
+      setVu("vu-co2-l", (data.co2 - 1.0) / (4.0 - 1.0));
+      setVu("vu-co2-r", (data.co2 - 1.0) / (4.0 - 1.0));
+
+      setVu("vu-cal-l", Math.min(cal / 260, 1));
+      setVu("vu-cal-r", Math.min(cal / 260, 1));
+
+      setVu("vu-sugar-l", Math.min(sugar / 60, 1));
+      setVu("vu-sugar-r", Math.min(sugar / 60, 1));
     }
 
     function addIngredient(name){
@@ -867,6 +1191,16 @@
         ingredientsText: "",
         additionsText: "",
         notesText: ""
+      });
+      saveData();
+    }
+
+    function applyPreset(name){
+      const preset = presets[name];
+      if(!preset) return;
+      fillData({
+        ...collectData(),
+        ...preset
       });
       saveData();
     }
@@ -907,6 +1241,10 @@
 
     document.querySelectorAll(".ingredient-btn").forEach(btn => {
       btn.addEventListener("click", () => addIngredient(btn.dataset.ingredient));
+    });
+
+    document.querySelectorAll(".preset-btn").forEach(btn => {
+      btn.addEventListener("click", () => applyPreset(btn.dataset.preset));
     });
 
     $("newRecipeBtn").addEventListener("click", newRecipe);
