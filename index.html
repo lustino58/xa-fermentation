@@ -1,570 +1,1929 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b1016" />
-  <title>XA Fermentation</title>
-  <link rel="manifest" href="manifest.json" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>XA Fermentation Pro</title>
   <style>
-    :root {
-      --bg: #071018;
-      --bg2: #0a1621;
-      --panel: rgba(170, 190, 210, 0.08);
-      --panel-strong: rgba(220, 235, 255, 0.12);
-      --line: rgba(180, 210, 235, 0.16);
-      --text: #eaf6ff;
-      --muted: #9eb5c9;
-      --ice: #b6e9ff;
-      --blue: #5ebdff;
-      --amber: #f0a54a;
-      --green: #79f0bd;
-      --red: #ff7a88;
-      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
-      --radius: 26px;
+    :root{
+      --bg:#0b0f14;
+      --bg2:#10161d;
+      --panel:#151d26;
+      --panel2:#1b2430;
+      --line:#324050;
+      --text:#eef4fa;
+      --muted:#9aacbd;
+      --gold:#d2ae6d;
+      --gold2:#f0d49b;
+      --green:#56df8d;
+      --red:#ff6e6e;
+      --blue:#7ebcff;
+      --amber:#ffd368;
+      --teal:#67e6cf;
+      --purple:#b58cff;
+      --shadow:0 16px 36px rgba(0,0,0,.35);
+      --lcd:#99ff7e;
     }
 
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:
-      radial-gradient(circle at top, rgba(94,189,255,0.12), transparent 26%),
-      radial-gradient(circle at 80% 15%, rgba(240,165,74,0.10), transparent 20%),
-      linear-gradient(180deg, var(--bg), var(--bg2)); color: var(--text); min-height: 100%; }
-    body { padding: 18px 14px 90px; }
-    .app { max-width: 1180px; margin: 0 auto; }
-
-    .topbar {
-      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(18px);
-      background: linear-gradient(180deg, rgba(6,12,18,0.88), rgba(6,12,18,0.52));
-      border: 1px solid rgba(255,255,255,0.05);
-      box-shadow: var(--shadow);
-      border-radius: 24px; padding: 16px 18px; margin-bottom: 18px;
-      display: flex; justify-content: space-between; gap: 10px; align-items: center;
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{
+      margin:0;padding:0;
+      background:linear-gradient(180deg,#0a0e13,#10161d);
+      color:var(--text);
+      font-family:Inter,Arial,sans-serif;
     }
+    body{padding-bottom:90px}
+    h1,h2,h3,h4,p{margin:0}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer;border:none}
+    .hidden{display:none!important}
 
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .xa-badge {
-      width: 54px; height: 54px; border-radius: 18px;
-      display: grid; place-items: center;
-      background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(94,189,255,0.12));
-      border: 1px solid rgba(182,233,255,0.25);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 0 25px rgba(94,189,255,0.15);
-      font-size: 1.2rem; font-weight: 800; letter-spacing: .06em;
-    }
-    .brand h1 { margin: 0; font-size: 1.3rem; letter-spacing: .04em; }
-    .brand p { margin: 2px 0 0; color: var(--muted); font-size: .82rem; }
+    .app{max-width:1600px;margin:0 auto;padding:14px}
 
-    .top-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn, .chip {
-      border: 1px solid rgba(182,233,255,0.14);
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-      color: var(--text); border-radius: 16px; padding: 12px 14px;
-      font-weight: 700; letter-spacing: .03em; cursor: pointer;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      margin:-14px -14px 14px;
+      padding:14px;
+      backdrop-filter:blur(12px);
+      background:rgba(10,13,17,.94);
+      border-bottom:1px solid rgba(255,255,255,.05);
     }
-    .btn.primary {
-      background: linear-gradient(180deg, rgba(94,189,255,0.22), rgba(94,189,255,0.12));
-      border-color: rgba(94,189,255,0.34);
-      box-shadow: 0 0 20px rgba(94,189,255,0.14), inset 0 1px 0 rgba(255,255,255,0.14);
+    .topbarInner{
+      max-width:1600px;margin:0 auto;
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
     }
 
-    .hero {
-      display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; margin-bottom: 18px;
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{
+      width:62px;height:62px;border-radius:18px;
+      display:grid;place-items:center;
+      font-size:24px;font-weight:900;color:#111;
+      background:radial-gradient(circle at 30% 30%,#f7e3ba 0%,#d9b774 38%,#8f6b36 70%,#3f2d17 100%);
+      box-shadow:inset 0 2px 8px rgba(255,255,255,.25),0 8px 20px rgba(0,0,0,.35);
     }
-    .panel {
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.08);
-      overflow: hidden;
-    }
-    .hero-left { padding: 24px; position: relative; }
-    .hero-left::before {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(120deg, rgba(255,255,255,0.08), transparent 24%, transparent 76%, rgba(255,255,255,0.03));
-      opacity: .7;
-    }
-    .eyebrow { color: var(--ice); font-size: .78rem; letter-spacing: .28em; text-transform: uppercase; }
-    .hero-title { margin: 10px 0 6px; font-size: clamp(2rem, 5vw, 3.7rem); line-height: .95; letter-spacing: .04em; }
-    .hero-sub { margin: 0; color: var(--muted); max-width: 54ch; font-size: .98rem; }
-    .hero-metrics { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-    .metric-pill {
-      padding: 10px 12px; border-radius: 16px; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08); color: var(--muted); font-size: .86rem;
-    }
-    .metric-pill b { color: var(--text); }
+    .brand h1{font-size:24px;font-weight:900;letter-spacing:.14em}
+    .brand p{margin-top:4px;font-size:12px;color:var(--muted);letter-spacing:.12em}
 
-    .hero-right { padding: 22px; }
-    .section-title { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
-    .section-title h2, .section-title h3 { margin: 0; font-size: 1rem; letter-spacing: .06em; text-transform: uppercase; }
-    .section-title small { color: var(--muted); }
-
-    .gauge-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .gauge {
-      background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.09), rgba(255,255,255,0.03) 58%, rgba(0,0,0,0.18) 64%, rgba(0,0,0,0.32) 100%);
-      border: 1px solid rgba(182,233,255,0.12);
-      border-radius: 22px; padding: 14px;
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn{
+      border-radius:14px;padding:12px 14px;font-weight:900;
+      border:1px solid var(--line);box-shadow:var(--shadow);
+      transition:.15s ease;
     }
-    .dial {
-      position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 50%;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,0.08) 0 30%, transparent 31%),
-        conic-gradient(from 220deg, rgba(255,122,136,.16), rgba(240,165,74,.20), rgba(121,240,189,.20), rgba(94,189,255,.20), rgba(255,122,136,.16));
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: inset 0 0 35px rgba(0,0,0,0.32), 0 0 18px rgba(94,189,255,0.06);
-      overflow: hidden;
-    }
-    .dial::before {
-      content: ""; position: absolute; inset: 14%; border-radius: 50%;
-      background: radial-gradient(circle at center, #101b25, #060b11 70%);
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .needle {
-      position: absolute; left: 50%; top: 50%; width: 42%; height: 4px; transform-origin: 0% 50%;
-      border-radius: 999px; background: linear-gradient(90deg, rgba(255,255,255,0.0), var(--ice));
-      box-shadow: 0 0 12px rgba(182,233,255,0.75);
-    }
-    .dial-cap {
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-      width: 14px; height: 14px; border-radius: 50%; background: var(--ice); box-shadow: 0 0 18px rgba(182,233,255,.8);
-    }
-    .dial-label {
-      position: absolute; left: 50%; top: 68%; transform: translateX(-50%); text-align: center; z-index: 2;
-    }
-    .dial-label strong { display: block; font-size: 1.2rem; }
-    .dial-label span { color: var(--muted); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; }
-    .gauge-title { margin-top: 10px; display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .82rem; }
-    .gauge-title b { color: var(--text); }
-
-    .status-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0; }
-    .status-card { padding: 18px; min-height: 110px; position: relative; }
-    .status-card h3 { margin: 4px 0 8px; font-size: 1.9rem; }
-    .status-card p { margin: 0; color: var(--muted); }
-    .status-dot {
-      width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px;
-      box-shadow: 0 0 12px currentColor;
+    .btn{background:linear-gradient(180deg,#26313e,#171f28);color:var(--text)}
+    .btnGold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c8a15a}
+    .btnDanger{background:linear-gradient(180deg,#6a2a2a,#431717);color:#ffd3d3;border-color:#7a3131}
+    .btnMixer{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111;border-color:#62ddc4}
+    .btn.active,.typeBtn.active{
+      box-shadow:0 0 0 2px rgba(255,255,255,.18), var(--shadow);
+      transform:translateY(-1px);
     }
 
-    .content-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; }
-    .calendar-panel, .lots-panel, .recipe-panel, .archive-panel { padding: 20px; }
+    .section{display:none}
+    .section.active{display:block}
 
-    .timeline { display: grid; gap: 10px; }
-    .event {
-      display: grid; grid-template-columns: 78px 1fr auto; gap: 12px; align-items: center;
-      padding: 12px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    .page{display:grid;gap:14px}
+    .layout2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .statsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+    .card{
+      background:linear-gradient(180deg,#151c25,#10151c);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
     }
-    .event-time { font-weight: 800; color: var(--ice); }
-    .event small, .muted { color: var(--muted); }
-    .event-tag {
-      padding: 8px 10px; border-radius: 999px; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase;
-      background: rgba(94,189,255,0.1); border: 1px solid rgba(94,189,255,0.18);
+    .cardHead{
+      padding:14px 16px;
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      background:linear-gradient(180deg,#1d2530,#141b24);
+    }
+    .cardHead h2{font-size:18px;font-weight:900;letter-spacing:.04em}
+    .sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+    .cardBody{padding:14px}
+
+    .stat{
+      border-radius:20px;padding:16px;
+      background:linear-gradient(180deg,#1b2330,#121821);
+      border:1px solid var(--line);
+    }
+    .stat .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+    .stat .v{font-size:30px;font-weight:900;margin-top:6px}
+    .stat .s{font-size:11px;color:var(--muted);margin-top:4px}
+
+    .formGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .field{display:flex;flex-direction:column;gap:7px}
+    .field label{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.05em}
+    .input,.select,.textarea{
+      width:100%;
+      padding:13px 14px;
+      border-radius:14px;
+      background:#0f141a;
+      color:var(--text);
+      border:1px solid #313c49;
+      outline:none;
+    }
+    .textarea{min-height:110px;resize:vertical}
+
+    .list{display:grid;gap:10px}
+    .item{
+      border-radius:18px;padding:14px;
+      background:linear-gradient(180deg,#1a212b,#11161d);
+      border:1px solid #313c48;
+    }
+    .itemTitle{font-size:16px;font-weight:900}
+    .meta{font-size:12px;color:var(--muted);line-height:1.5;margin-top:5px}
+    .itemActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap}
+
+    .badgeRow{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{
+      padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;
+      border:1px solid #384554;background:#11161d;color:var(--text);
+    }
+    .badge.gold{background:rgba(211,175,109,.12);color:#f0d49b;border-color:rgba(211,175,109,.28)}
+    .badge.green{background:rgba(86,223,141,.12);color:#b8ffd3;border-color:rgba(86,223,141,.28)}
+    .badge.blue{background:rgba(126,188,255,.12);color:#d8ebff;border-color:rgba(126,188,255,.28)}
+    .badge.red{background:rgba(255,110,110,.12);color:#ffc9c9;border-color:rgba(255,110,110,.28)}
+    .badge.purple{background:rgba(181,140,255,.12);color:#eadbff;border-color:rgba(181,140,255,.28)}
+
+    .recipeTypeGrid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    .typeBtn{
+      background:linear-gradient(180deg,#26313e,#171f28);
+      color:var(--text);
+      text-align:center;
+    }
+    .typeBtn.active.sidro{background:linear-gradient(180deg,#f0d49b,#d2ae6d);color:#111}
+    .typeBtn.active.te{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111}
+    .typeBtn.active.misto{background:linear-gradient(180deg,#d7c1ff,#9b7cff);color:#111}
+    .typeBtn.active.birra{background:linear-gradient(180deg,#ffd97f,#ffb347);color:#111}
+    .typeBtn.active.tonica{background:linear-gradient(180deg,#c8fff5,#88e9d8);color:#111}
+
+    .ingredientRow{
+      display:grid;
+      grid-template-columns:1fr 1.2fr .7fr .7fr 1fr auto;
+      gap:8px;
+      margin-top:8px;
     }
 
-    .lot-list { display: grid; gap: 12px; }
-    .lot-card {
-      padding: 16px; border-radius: 22px; background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.07);
+    .mixerOnlyPage{
+      min-height:100vh;
+      background:linear-gradient(180deg,#090d12,#0e141b);
     }
-    .lot-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
-    .lot-top h4 { margin: 0 0 4px; font-size: 1rem; }
-    .badges { display: flex; gap: 8px; flex-wrap: wrap; }
-    .badge {
-      padding: 7px 10px; border-radius: 999px; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04);
+    .mixerTopBar{
+      position:sticky;top:0;z-index:60;
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+      padding:10px 12px;
+      background:rgba(8,11,14,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,.05);
     }
-    .lot-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
-    .stat {
-      padding: 10px; border-radius: 16px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.05);
-    }
-    .stat span { display: block; color: var(--muted); font-size: .72rem; margin-bottom: 4px; }
-    .stat b { font-size: .96rem; }
+    .mixerTopLeft,.mixerTopRight{display:flex;gap:8px;flex-wrap:wrap}
 
-    .recipe-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .recipe-card {
-      padding: 15px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
-      min-height: 110px;
-    }
-    .recipe-card h4 { margin: 0 0 8px; }
-    .recipe-card p { margin: 0; color: var(--muted); font-size: .9rem; }
-
-    .archive-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
-    .archive-table th, .archive-table td { text-align: left; padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .archive-table th { color: var(--muted); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; font-size: .72rem; }
-
-    .fabbar {
-      position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 25;
-      max-width: 1180px; margin: 0 auto;
-    }
-    .fabwrap {
-      display: grid; grid-template-columns: 1.2fr repeat(3, .8fr); gap: 10px;
-      padding: 10px; border-radius: 22px; border: 1px solid rgba(255,255,255,0.07);
-      background: rgba(7,12,18,0.88); backdrop-filter: blur(18px); box-shadow: var(--shadow);
+    .mixerShell{
+      display:grid;
+      grid-template-columns:230px 1fr 230px;
+      gap:10px;
+      padding:10px;
+      min-height:calc(100vh - 68px);
     }
 
-    .install-note {
-      margin-top: 14px; padding: 14px; border-radius: 18px; color: var(--muted);
-      border: 1px dashed rgba(182,233,255,0.18); background: rgba(255,255,255,0.03);
+    .sideRack{
+      border-radius:22px;
+      background:linear-gradient(180deg,#1a222c,#11171e);
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+    .sideHead{
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      background:linear-gradient(180deg,#222c38,#171e27);
+    }
+    .sideHead h3{font-size:15px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+    .sideBody{padding:10px;display:grid;gap:8px;overflow:auto}
+    .rackBtn{
+      border-radius:16px;padding:12px;text-align:left;color:var(--text);
+      border:1px solid #425061;background:linear-gradient(180deg,#2b3643,#18202a);
+      font-weight:900;
+    }
+    .rackBtn small{display:block;color:var(--muted);font-size:11px;font-weight:700;margin-top:4px}
+
+    .centerMixer{
+      border-radius:26px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+      background:linear-gradient(180deg,#1b232d,#121820);
+      display:flex;
+      flex-direction:column;
+      min-width:0;
     }
 
-    .hidden { display: none; }
-
-    @media (max-width: 980px) {
-      .hero, .content-grid { grid-template-columns: 1fr; }
-      .status-grid { grid-template-columns: repeat(2, 1fr); }
+    .mixerHeader{
+      padding:14px;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      background:linear-gradient(180deg,#232d39,#171f28);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
     }
-    @media (max-width: 640px) {
-      body { padding: 12px 12px 100px; }
-      .topbar { flex-direction: column; align-items: stretch; }
-      .gauge-grid, .recipe-grid, .lot-stats { grid-template-columns: 1fr 1fr; }
-      .fabwrap { grid-template-columns: 1fr 1fr; }
-      .event { grid-template-columns: 66px 1fr; }
-      .event-tag { grid-column: 2; justify-self: start; }
-      .status-grid { grid-template-columns: 1fr 1fr; }
+    .lcdPanel{
+      border-radius:20px;
+      padding:14px;
+      border:1px solid #355530;
+      background:linear-gradient(180deg,#11200f,#0a1608);
+      box-shadow:inset 0 0 18px rgba(151,255,123,.08);
+    }
+    .lcdLabel{font-size:11px;color:#c0ffb0;letter-spacing:.14em;text-transform:uppercase}
+    .lcdMain{font-size:34px;font-weight:900;line-height:1;margin-top:8px;color:var(--lcd)}
+    .lcdSub{font-size:12px;line-height:1.45;margin-top:8px;color:#c0ffb0;opacity:.92}
+
+    .mixerViewport{
+      flex:1;
+      overflow-x:auto;
+      overflow-y:hidden;
+      padding:14px;
+      background:linear-gradient(180deg,#0f141b,#0b0f14);
+    }
+    .mixerViewport::-webkit-scrollbar{height:12px}
+    .mixerViewport::-webkit-scrollbar-track{background:#0d1116;border-radius:999px}
+    .mixerViewport::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#2a3442,#4a5a6c);border-radius:999px}
+
+    .mixerBoard{
+      display:flex;
+      gap:12px;
+      align-items:stretch;
+      min-width:max-content;
+    }
+
+    .channel{
+      width:168px;
+      border-radius:22px;
+      padding:12px;
+      border:1px solid #455567;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -14px 22px rgba(0,0,0,.25), 0 10px 22px rgba(0,0,0,.22);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+      color:#f2f7fc;
+    }
+    .channel.tech{background:linear-gradient(180deg,#35556f,#243848 20%,#14202a)}
+    .channel.acid{background:linear-gradient(180deg,#2f5f45,#1d402f 20%,#10261d)}
+    .channel.sugar{background:linear-gradient(180deg,#6f5a32,#4a3d22 20%,#2a2212)}
+    .channel.bitter{background:linear-gradient(180deg,#6f4330,#4b2c1f 20%,#2a1710)}
+    .channel.botanical{background:linear-gradient(180deg,#603f75,#3f284f 20%,#24162d)}
+    .channel.yeast{background:linear-gradient(180deg,#743b61,#4d2640 20%,#2b1523)}
+    .channel.lactic{background:linear-gradient(180deg,#2d6c68,#1d4846 20%,#112827)}
+    .channel.color{background:linear-gradient(180deg,#7c592d,#583f1e 20%,#31230f)}
+    .channel.gas{background:linear-gradient(180deg,#48577f,#2e3958 20%,#182031)}
+
+    .channelTop{
+      width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;
+    }
+    .channelNameWrap{flex:1;min-width:0}
+    .channelName{
+      font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .channelType{
+      font-size:10px;color:rgba(255,255,255,.78);margin-top:4px;text-transform:uppercase;letter-spacing:.1em
+    }
+    .tinyIconBtn{
+      width:30px;height:30px;border-radius:10px;
+      background:linear-gradient(180deg,#2b3642,#1a212b);
+      color:#d9e2ec;border:1px solid #4a5868;font-weight:900;
+    }
+
+    .miniLcd{
+      width:100%;
+      border-radius:14px;
+      background:linear-gradient(180deg,#12200f,#0b1508);
+      border:1px solid #355530;
+      padding:10px 8px;
+      text-align:center;
+      box-shadow:inset 0 0 10px rgba(151,255,123,.08);
+    }
+    .miniLcd .lbl{font-size:10px;color:#baffab;letter-spacing:.1em;text-transform:uppercase}
+    .miniLcd .val{font-size:20px;font-weight:900;margin-top:3px;color:var(--lcd)}
+
+    .knob{
+      width:72px;height:72px;border-radius:50%;
+      margin:12px 0 10px;
+      background:radial-gradient(circle at 30% 30%,#5a6673 0%,#39434e 32%,#232a33 58%,#151a20 100%);
+      border:2px solid #536172;position:relative;
+      box-shadow:inset 0 2px 10px rgba(255,255,255,.08),inset 0 -8px 14px rgba(0,0,0,.42),0 8px 18px rgba(0,0,0,.28);
+    }
+    .knob::after{
+      content:"";position:absolute;left:50%;top:8px;transform:translateX(-50%);
+      width:8px;height:20px;border-radius:999px;background:linear-gradient(180deg,var(--gold2),var(--gold));
+    }
+
+    .tinyMeter{
+      width:84%;height:10px;border-radius:999px;background:#0c1014;border:1px solid #2f3a47;overflow:hidden;margin-bottom:10px;
+    }
+    .tinyFill{
+      height:100%;width:0%;
+      background:linear-gradient(90deg,#2ee47f 0%, #a4ff64 45%, #ffd45d 75%, #ff6b6b 100%);
+    }
+
+    .faderWrap{
+      width:100%;flex:1;display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:stretch;
+    }
+    .vu{
+      border-radius:14px;border:1px solid #344250;background:linear-gradient(180deg,#0d1116,#141a22);
+      padding:6px 4px;display:flex;flex-direction:column-reverse;gap:3px;align-items:center;
+    }
+    .vuSeg{
+      width:8px;height:14px;border-radius:4px;background:#242c35;border:1px solid #313b46;
+    }
+    .vuSeg.g{background:linear-gradient(180deg,#8dffba,#31d872)}
+    .vuSeg.a{background:linear-gradient(180deg,#ffe5a0,#ffc74d)}
+    .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
+
+    .track{
+      border-radius:22px;border:1px solid #364352;background:linear-gradient(180deg,#0f1419,#181f27);
+      min-height:300px;display:flex;justify-content:center;align-items:center;position:relative;padding:14px 0;
+    }
+    .track::before{
+      content:"";position:absolute;top:16px;bottom:16px;left:50%;transform:translateX(-50%);
+      width:8px;border-radius:999px;background:#11161c;border:1px solid #2f3944;
+    }
+    .track input[type=range]{
+      -webkit-appearance:none;appearance:none;
+      width:280px;height:32px;transform:rotate(-90deg);background:transparent;position:relative;z-index:2;
+    }
+    .track input[type=range]::-webkit-slider-runnable-track{
+      height:12px;border-radius:999px;background:linear-gradient(90deg,#1b2129,#10141a);border:1px solid #394655;
+    }
+    .track input[type=range]::-webkit-slider-thumb{
+      -webkit-appearance:none;appearance:none;
+      width:52px;height:28px;border-radius:10px;margin-top:-8px;
+      border:1px solid #6a7888;background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
+      box-shadow:0 6px 14px rgba(0,0,0,.35), inset 0 1px 2px rgba(255,255,255,.78);
+    }
+
+    .channelButtons{
+      width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;
+    }
+    .miniBtn{
+      border-radius:12px;padding:10px 8px;font-size:12px;font-weight:900;
+      background:linear-gradient(180deg,#2a3441,#181f28);
+      color:var(--text);border:1px solid #475566;
+    }
+    .miniBtn.gold{
+      background:linear-gradient(180deg,var(--gold2),var(--gold));
+      color:#111;border-color:#c7a15a
+    }
+
+    .addSlot{
+      width:188px;border-radius:22px;padding:16px;
+      background:linear-gradient(180deg,#2a3440,#171f28);
+      border:1px dashed #526172;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      min-height:585px;
+    }
+    .addSlot .plus{
+      width:86px;height:86px;border-radius:24px;display:grid;place-items:center;
+      font-size:44px;font-weight:900;color:#111;background:linear-gradient(180deg,var(--gold2),var(--gold));
+    }
+    .addSlot h3{font-size:20px;font-weight:900;margin-top:14px}
+    .addSlot p{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+
+    @media (orientation:portrait){
+      .mixerShell,.layout2,.statsGrid,.mixerHeader,.recipeTypeGrid{grid-template-columns:1fr}
+    }
+    @media (max-width:860px){
+      .formGrid,.ingredientRow{grid-template-columns:1fr}
+      body{padding-bottom:120px}
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <div class="topbar panel">
-      <div class="brand">
-        <div class="xa-badge">XA</div>
-        <div>
-          <h1>XA Fermentation</h1>
-          <p>Control panel for cider, tea ferments, lactic cultures and experimental batches</p>
+  <div id="app-normal" class="app">
+    <div class="topbar" id="normalTopbar">
+      <div class="topbarInner">
+        <div class="brand">
+          <div class="logo">XA</div>
+          <div>
+            <h1>XA FERMENTATION PRO</h1>
+            <p>RICETTE GUIDATE · LOTTI · MIXER IN PAGINA SEPARATA</p>
+          </div>
         </div>
-      </div>
-      <div class="top-actions">
-        <button class="btn" id="exportBtn">Export JSON</button>
-        <button class="btn" id="importBtn">Import JSON</button>
-        <button class="btn primary" id="installBtn">Install App</button>
+        <div class="actions">
+          <button class="btn" id="demoBtn">Carica demo</button>
+          <button class="btn" id="exportBtn">Esporta backup</button>
+          <button class="btn" id="importBtn">Importa backup</button>
+          <input type="file" id="importFile" class="hidden" accept=".json">
+          <button class="btnGold" id="newRecipeBtnTop">+ Ricetta</button>
+          <button class="btnGold" id="newLotBtnTop">+ Lotto</button>
+          <button class="btnMixer" id="openMixerBtnTop">Mixer</button>
+          <button class="btnDanger" id="resetBtn">Reset</button>
+        </div>
       </div>
     </div>
 
-    <section class="hero">
-      <div class="hero-left panel">
-        <div class="eyebrow">XA Instrument Cluster</div>
-        <h2 class="hero-title">FERMENTATION<br>CONTROL</h2>
-        <p class="hero-sub">Track cider, kombucha, lactic ferments and mixed experiments through a premium dashboard with gauges, live metrics, production steps, calendar events and batch history.</p>
-        <div class="hero-metrics">
-          <div class="metric-pill"><b>5</b> active batches</div>
-          <div class="metric-pill"><b>3</b> tasks today</div>
-          <div class="metric-pill"><b>18</b> archived runs</div>
-          <div class="metric-pill"><b>4</b> culture profiles</div>
+    <section class="section active" id="sec-home">
+      <div class="page">
+        <div class="statsGrid">
+          <div class="stat"><div class="k">Ricette</div><div class="v" id="statRecipes">0</div><div class="s">salvate</div></div>
+          <div class="stat"><div class="k">Lotti</div><div class="v" id="statLots">0</div><div class="s">totali</div></div>
+          <div class="stat"><div class="k">Scene</div><div class="v" id="statScenes">0</div><div class="s">mixer</div></div>
+          <div class="stat"><div class="k">Canali</div><div class="v" id="statChannels">0</div><div class="s">lotto attuale</div></div>
         </div>
-        <div class="install-note" id="installNote">Use <b>Install App</b> to add XA Fermentation to your phone home screen. On hosted PWA pages it behaves like a real installable app.</div>
-      </div>
 
-      <div class="hero-right panel">
-        <div class="section-title">
-          <h2>Live Instruments</h2>
-          <small>Demo values</small>
-        </div>
-        <div class="gauge-grid">
-          <div class="gauge">
-            <div class="dial">
-              <div class="needle" style="transform: rotate(-22deg);"></div>
-              <div class="dial-cap"></div>
-              <div class="dial-label"><strong>3.28</strong><span>pH</span></div>
+        <div class="layout2">
+          <div class="card">
+            <div class="cardHead">
+              <div>
+                <h2>Ricette</h2>
+                <div class="sub">Creazione guidata</div>
+              </div>
+              <div class="toolbar">
+                <button class="btnGold" onclick="openRecipeEditor()">+ Crea ricetta</button>
+                <button class="btn" onclick="showSection('recipes')">Apri</button>
+              </div>
             </div>
-            <div class="gauge-title"><b>Acidity</b><span>Stable</span></div>
+            <div class="cardBody">
+              <div class="list" id="homeRecipesList"></div>
+            </div>
           </div>
-          <div class="gauge">
-            <div class="dial">
-              <div class="needle" style="transform: rotate(18deg);"></div>
-              <div class="dial-cap"></div>
-              <div class="dial-label"><strong>1.012</strong><span>Gravity</span></div>
+
+          <div class="card">
+            <div class="cardHead">
+              <div>
+                <h2>Lotti</h2>
+                <div class="sub">Produzione</div>
+              </div>
+              <div class="toolbar">
+                <button class="btnGold" onclick="openLotCreator()">+ Crea lotto</button>
+                <button class="btnMixer" onclick="openMixerPage()">Mixer</button>
+              </div>
             </div>
-            <div class="gauge-title"><b>Density</b><span>Dropping</span></div>
-          </div>
-          <div class="gauge">
-            <div class="dial">
-              <div class="needle" style="transform: rotate(44deg);"></div>
-              <div class="dial-cap"></div>
-              <div class="dial-label"><strong>23.6°</strong><span>Temp</span></div>
+            <div class="cardBody">
+              <div class="list" id="homeLotsList"></div>
             </div>
-            <div class="gauge-title"><b>Temperature</b><span>Warm phase</span></div>
-          </div>
-          <div class="gauge">
-            <div class="dial">
-              <div class="needle" style="transform: rotate(-6deg);"></div>
-              <div class="dial-cap"></div>
-              <div class="dial-label"><strong>0.8</strong><span>Bar</span></div>
-            </div>
-            <div class="gauge-title"><b>Pressure</b><span>Normal</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="status-grid">
-      <div class="panel status-card">
-        <div><span class="status-dot" style="color: var(--green);"></span><small class="muted">Active</small></div>
-        <h3>05</h3>
-        <p>Cider, tea and mixed ferments in progress</p>
-      </div>
-      <div class="panel status-card">
-        <div><span class="status-dot" style="color: var(--blue);"></span><small class="muted">Monitoring</small></div>
-        <h3>03</h3>
-        <p>Batches requiring pH, gravity or temperature checks</p>
-      </div>
-      <div class="panel status-card">
-        <div><span class="status-dot" style="color: var(--amber);"></span><small class="muted">Ready</small></div>
-        <h3>02</h3>
-        <p>Batches near packaging, priming or cold crash</p>
-      </div>
-      <div class="panel status-card">
-        <div><span class="status-dot" style="color: var(--red);"></span><small class="muted">Attention</small></div>
-        <h3>01</h3>
-        <p>One batch outside target window</p>
+    <section class="section" id="sec-recipes">
+      <div class="page">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h2>Ricette</h2>
+              <div class="sub">Archivio</div>
+            </div>
+            <div class="toolbar">
+              <button class="btnGold" onclick="openRecipeEditor()">+ Nuova ricetta</button>
+              <button class="btn" onclick="showSection('home')">Home</button>
+            </div>
+          </div>
+          <div class="cardBody">
+            <div class="list" id="recipesList"></div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="content-grid">
-      <div>
-        <div class="panel calendar-panel" style="margin-bottom: 16px;">
-          <div class="section-title">
-            <h3>Fermentation Calendar</h3>
-            <small>Today</small>
-          </div>
-          <div class="timeline" id="calendarList">
-            <div class="event">
-              <div class="event-time">09:30</div>
-              <div>
-                <div><b>Batch XA-CIDER-021</b> · Check gravity and temperature</div>
-                <small>Apple juice · yeast fermentation day 4</small>
-              </div>
-              <div class="event-tag">Gravity Check</div>
+    <section class="section" id="sec-recipe-edit">
+      <div class="page">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h2 id="recipeEditTitle">Nuova ricetta</h2>
+              <div class="sub">Editor semplificato</div>
             </div>
-            <div class="event">
-              <div class="event-time">13:00</div>
-              <div>
-                <div><b>Batch XA-LACTIC-006</b> · Measure pH and sensory note</div>
-                <small>L. plantarum · acidification window</small>
-              </div>
-              <div class="event-tag">pH Control</div>
-            </div>
-            <div class="event">
-              <div class="event-time">18:30</div>
-              <div>
-                <div><b>Batch XA-TEA-004</b> · Add second culture and log notes</div>
-                <small>Tea ferment · mixed cycle</small>
-              </div>
-              <div class="event-tag">Culture Add</div>
+            <div class="toolbar">
+              <button class="btn" onclick="showSection('recipes')">← Torna</button>
+              <button class="btnGold" id="saveRecipeBtn">Salva ricetta</button>
             </div>
           </div>
-        </div>
+          <div class="cardBody">
+            <div class="field">
+              <label>Tipo di fermentazione</label>
+              <div class="recipeTypeGrid">
+                <button class="typeBtn" id="type_sidro" type="button" onclick="setRecipeType('sidro')">Sidro</button>
+                <button class="typeBtn" id="type_te" type="button" onclick="setRecipeType('te')">Fermentato di tè</button>
+                <button class="typeBtn" id="type_misto" type="button" onclick="setRecipeType('misto')">Fermentato misto</button>
+                <button class="typeBtn" id="type_birra" type="button" onclick="setRecipeType('birra')">Birra</button>
+                <button class="typeBtn" id="type_tonica" type="button" onclick="setRecipeType('tonica')">Acqua tonica</button>
+              </div>
+            </div>
 
-        <div class="panel lots-panel">
-          <div class="section-title">
-            <h3>Recent Batches</h3>
-            <small>Operational view</small>
+            <div class="formGrid" style="margin-top:12px">
+              <div class="field">
+                <label>Nome ricetta</label>
+                <input class="input" id="recipe_name" placeholder="Es. Sidro XA Dry Apple">
+              </div>
+              <div class="field">
+                <label>Base</label>
+                <input class="input" id="recipe_base" placeholder="Es. Succo mela / tè oolong / mosto / acqua">
+              </div>
+            </div>
+
+            <div class="formGrid" style="margin-top:12px">
+              <div class="field">
+                <label>Stile / descrizione</label>
+                <input class="input" id="recipe_style" placeholder="Es. Secco, lattico, speziato, tonic dry">
+              </div>
+              <div class="field">
+                <label>Cultura / fermento principale</label>
+                <input class="input" id="recipe_culture" placeholder="Es. Hornindal / Plantarum / lievito">
+              </div>
+            </div>
+
+            <div class="field" style="margin-top:12px">
+              <label>Note ricetta</label>
+              <textarea class="textarea" id="recipe_notes" placeholder="Descrizione tecnica ricetta"></textarea>
+            </div>
+
+            <div style="margin-top:20px">
+              <div class="itemTitle">Ingredienti</div>
+              <div class="meta">Inserimento rapido degli ingredienti</div>
+              <div class="ingredientRow" style="margin-top:10px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">
+                <div>Categoria</div><div>Nome</div><div>Qtà</div><div>Unità</div><div>Note</div><div></div>
+              </div>
+              <div id="ingredientsWrap"></div>
+              <div class="toolbar" style="margin-top:10px">
+                <button class="btn" id="addIngredientBtn" type="button">+ Ingrediente</button>
+              </div>
+            </div>
+
+            <div style="margin-top:20px">
+              <div class="itemTitle">Parametri principali</div>
+              <div class="meta">Pochi parametri, chiari</div>
+
+              <div class="formGrid" style="margin-top:12px">
+                <div class="field">
+                  <label>pH iniziale</label>
+                  <input class="input" id="param_ph_start" type="number" step="0.01" placeholder="Es. 3.40">
+                </div>
+                <div class="field">
+                  <label>pH finale</label>
+                  <input class="input" id="param_ph_end" type="number" step="0.01" placeholder="Es. 3.10">
+                </div>
+              </div>
+
+              <div class="formGrid" style="margin-top:12px">
+                <div class="field">
+                  <label>OG</label>
+                  <input class="input" id="param_og" type="number" step="0.001" placeholder="Es. 1.048">
+                </div>
+                <div class="field">
+                  <label>FG</label>
+                  <input class="input" id="param_fg" type="number" step="0.001" placeholder="Es. 1.006">
+                </div>
+              </div>
+
+              <div class="formGrid" style="margin-top:12px">
+                <div class="field">
+                  <label>ABV %</label>
+                  <input class="input" id="param_abv" type="number" step="0.1" placeholder="Es. 5.2">
+                </div>
+                <div class="field">
+                  <label>Temperatura °C</label>
+                  <input class="input" id="param_temp" type="number" step="0.1" placeholder="Es. 22">
+                </div>
+              </div>
+
+              <div class="formGrid" style="margin-top:12px">
+                <div class="field">
+                  <label>CO₂ vol</label>
+                  <input class="input" id="param_co2" type="number" step="0.1" placeholder="Es. 2.5">
+                </div>
+                <div class="field">
+                  <label>SRM / Colore</label>
+                  <input class="input" id="param_srm" type="number" step="1" placeholder="Es. 4">
+                </div>
+              </div>
+
+              <div class="formGrid" style="margin-top:12px">
+                <div class="field">
+                  <label>Acqua tonica</label>
+                  <input class="input" id="param_tonica" type="number" step="0.1" placeholder="Es. 1.0">
+                </div>
+                <div class="field">
+                  <label>Tonic bitter</label>
+                  <input class="input" id="param_tonic_bitter" type="number" step="0.1" placeholder="Es. 6.0">
+                </div>
+              </div>
+            </div>
+
+            <div class="toolbar" style="margin-top:20px">
+              <button class="btnGold" id="saveRecipeBtnBottom" type="button">Salva ricetta</button>
+            </div>
           </div>
-          <div class="lot-list" id="lotList"></div>
         </div>
       </div>
+    </section>
 
-      <div>
-        <div class="panel recipe-panel" style="margin-bottom: 16px;">
-          <div class="section-title">
-            <h3>Categories</h3>
-            <small>Core modules</small>
+    <section class="section" id="sec-recipe-view">
+      <div class="page">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h2 id="recipeViewTitle">Ricetta</h2>
+              <div class="sub">Pagina ricetta completa</div>
+            </div>
+            <div class="toolbar">
+              <button class="btn" onclick="showSection('recipes')">← Torna</button>
+              <button class="btnGold" id="recipeViewEditBtn">Modifica</button>
+              <button class="btnMixer" id="recipeViewLotBtn">Crea lotto</button>
+            </div>
           </div>
-          <div class="recipe-grid">
-            <div class="recipe-card"><h4>Cider</h4><p>Apple juice fermentation, gravity, pH, temperature, packaging and ABV tracking.</p></div>
-            <div class="recipe-card"><h4>Tea Ferments</h4><p>Kombucha and tea-based fermentations with acidification and timing control.</p></div>
-            <div class="recipe-card"><h4>Lactic</h4><p>Plantarum, helveticus and related cultures with pH-centered process logging.</p></div>
-            <div class="recipe-card"><h4>Experimental</h4><p>Mixed cultures, unusual substrates, hybrid cycles and sensory observations.</p></div>
+          <div class="cardBody" id="recipeViewBody"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-lots">
+      <div class="page">
+        <div class="layout2">
+          <div class="card">
+            <div class="cardHead">
+              <div>
+                <h2>Lotti</h2>
+                <div class="sub">Archivio lotti</div>
+              </div>
+              <div class="toolbar">
+                <button class="btnGold" onclick="openLotCreator()">+ Nuovo lotto</button>
+                <button class="btn" onclick="showSection('home')">Home</button>
+              </div>
+            </div>
+            <div class="cardBody">
+              <div class="list" id="lotsList"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cardHead">
+              <div>
+                <h2>Scheda lotto</h2>
+                <div class="sub">Meta dati</div>
+              </div>
+              <div class="toolbar">
+                <button class="btnGold" id="saveLotMetaBtn">Salva</button>
+              </div>
+            </div>
+            <div class="cardBody">
+              <div class="formGrid">
+                <div class="field">
+                  <label>Nome lotto</label>
+                  <input class="input" id="lot_name" placeholder="Nome lotto">
+                </div>
+                <div class="field">
+                  <label>Codice</label>
+                  <input class="input" id="lot_code" placeholder="Codice">
+                </div>
+              </div>
+              <div class="formGrid" style="margin-top:12px">
+                <div class="field">
+                  <label>Tipo</label>
+                  <input class="input" id="lot_type" placeholder="Tipo">
+                </div>
+                <div class="field">
+                  <label>Stato</label>
+                  <select class="select" id="lot_stage">
+                    <option value="programmato">Programmato</option>
+                    <option value="primaria">Primaria</option>
+                    <option value="secondaria">Secondaria</option>
+                    <option value="maturazione">Maturazione</option>
+                    <option value="stabile">Stabile</option>
+                    <option value="imbottigliato">Imbottigliato</option>
+                    <option value="chiuso">Chiuso</option>
+                  </select>
+                </div>
+              </div>
+              <div class="formGrid" style="margin-top:12px">
+                <div class="field">
+                  <label>Volume litri</label>
+                  <input class="input" id="lot_volume" type="number" step="0.1" placeholder="20">
+                </div>
+                <div class="field">
+                  <label>Data</label>
+                  <input class="input" id="lot_date" type="date">
+                </div>
+              </div>
+              <div class="field" style="margin-top:12px">
+                <label>Cultura</label>
+                <input class="input" id="lot_culture" placeholder="Cultura">
+              </div>
+              <div class="field" style="margin-top:12px">
+                <label>Ricetta testo</label>
+                <textarea class="textarea" id="lot_recipe_text" placeholder="Ingredienti sintetici"></textarea>
+              </div>
+              <div class="field" style="margin-top:12px">
+                <label>Note lotto</label>
+                <textarea class="textarea" id="lot_notes" placeholder="Note"></textarea>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="panel archive-panel">
-          <div class="section-title">
-            <h3>Archive Snapshot</h3>
-            <small>Latest runs</small>
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h2>Scene mixer</h2>
+              <div class="sub">Snapshot</div>
+            </div>
           </div>
-          <table class="archive-table">
-            <thead>
-              <tr>
-                <th>Batch</th>
-                <th>Type</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>XA-CIDER-018</td><td>Cider</td><td>Finished</td></tr>
-              <tr><td>XA-LACTIC-004</td><td>Lactic</td><td>Archived</td></tr>
-              <tr><td>XA-TEA-002</td><td>Tea Ferment</td><td>Finished</td></tr>
-              <tr><td>XA-MIXED-003</td><td>Experimental</td><td>Conditioning</td></tr>
-            </tbody>
-          </table>
+          <div class="cardBody">
+            <div class="list" id="scenesList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-library">
+      <div class="page">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h2>Librerie</h2>
+              <div class="sub">Ingredienti disponibili</div>
+            </div>
+            <div class="toolbar">
+              <button class="btnGold" onclick="openLibraryAdd()">+ Elemento</button>
+              <button class="btn" onclick="showSection('home')">Home</button>
+            </div>
+          </div>
+          <div class="cardBody">
+            <div class="list" id="libraryList"></div>
+          </div>
         </div>
       </div>
     </section>
   </div>
 
-  <div class="fabbar">
-    <div class="fabwrap panel">
-      <button class="btn primary" id="newBatchBtn">+ New Batch</button>
-      <button class="btn">Calendar</button>
-      <button class="btn">Measures</button>
-      <button class="btn">Archive</button>
+  <div id="app-mixer-only" class="hidden">
+    <div class="mixerOnlyPage">
+      <div class="mixerTopBar">
+        <div class="mixerTopLeft">
+          <button class="btn" onclick="goBackToMain()">← Torna</button>
+          <button class="btnGold" onclick="saveLotMeta()">Salva lotto</button>
+          <button class="btn" onclick="saveScene()">Salva scena</button>
+          <button class="btn" onclick="openAddChannel()">+ Canale</button>
+        </div>
+        <div class="mixerTopRight">
+          <button class="btn" onclick="setBank('A')">Banco A</button>
+          <button class="btn" onclick="setBank('B')">Banco B</button>
+          <button class="btnMixer" onclick="alert('Per vedere il mixer al massimo, gira il telefono in orizzontale.')">Ruota schermo</button>
+        </div>
+      </div>
+
+      <div class="mixerShell">
+        <aside class="sideRack">
+          <div class="sideHead">
+            <h3>Rack sinistro</h3>
+            <div class="sub">Parametri rapidi</div>
+          </div>
+          <div class="sideBody">
+            <button class="rackBtn" onclick="addQuickChannel('ph_start')">+ pH iniziale<small>acidità iniziale</small></button>
+            <button class="rackBtn" onclick="addQuickChannel('ph_end')">+ pH finale<small>acidità finale</small></button>
+            <button class="rackBtn" onclick="addQuickChannel('og')">+ OG<small>densità iniziale</small></button>
+            <button class="rackBtn" onclick="addQuickChannel('fg')">+ FG<small>densità finale</small></button>
+            <button class="rackBtn" onclick="addQuickChannel('abv')">+ ABV<small>alcol</small></button>
+            <button class="rackBtn" onclick="addQuickChannel('srm')">+ SRM<small>colore</small></button>
+            <button class="rackBtn" onclick="addQuickChannel('temp')">+ Temp<small>temperatura</small></button>
+            <button class="rackBtn" onclick="addQuickChannel('co2')">+ CO₂<small>gasatura</small></button>
+            <button class="rackBtn" onclick="addQuickChannel('tonica')">+ Acqua tonica<small>fader tonica</small></button>
+            <button class="rackBtn" onclick="addQuickChannel('tonic_bitter')">+ Tonic bitter<small>china / amaro</small></button>
+          </div>
+        </aside>
+
+        <main class="centerMixer">
+          <div class="mixerHeader">
+            <div class="lcdPanel">
+              <div class="lcdLabel">Master LCD</div>
+              <div class="lcdMain" id="mixer_title">XA MIXER</div>
+              <div class="lcdSub" id="mixer_sub">Pagina separata solo mixer.</div>
+            </div>
+            <div class="lcdPanel">
+              <div class="lcdLabel">Lotto</div>
+              <div class="lcdMain" id="mixer_lot_name">NESSUNO</div>
+              <div class="lcdSub" id="mixer_lot_meta">Apri o crea un lotto.</div>
+              <div class="badgeRow" style="margin-top:10px">
+                <span class="badge gold" id="mixer_badge_type">Tipo -</span>
+                <span class="badge blue" id="mixer_badge_stage">Stato -</span>
+                <span class="badge green" id="mixer_badge_channels">Canali 0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mixerViewport">
+            <div class="mixerBoard" id="mixerBoard"></div>
+          </div>
+        </main>
+
+        <aside class="sideRack">
+          <div class="sideHead">
+            <h3>Rack destro</h3>
+            <div class="sub">A/B e scene</div>
+          </div>
+          <div class="sideBody">
+            <button class="rackBtn" onclick="assignBank('A')">Assegna lotto ad A<small>confronto</small></button>
+            <button class="rackBtn" onclick="assignBank('B')">Assegna lotto a B<small>confronto</small></button>
+            <button class="rackBtn" onclick="copyAtoB()">Copia A → B<small>duplicazione</small></button>
+            <button class="rackBtn" onclick="saveScene()">Salva scena<small>snapshot mixer</small></button>
+          </div>
+        </aside>
+      </div>
     </div>
   </div>
-
-  <input type="file" id="importFile" accept="application/json" class="hidden" />
 
   <script>
-    const demoBatches = [
-      {
-        name: 'XA-CIDER-021',
-        type: 'Cider',
-        status: 'Primary Ferment',
-        day: 4,
-        ph: '3.42',
-        gravity: '1.018',
-        temp: '21.8°',
-        culture: 'Yeast'
-      },
-      {
-        name: 'XA-LACTIC-006',
-        type: 'Lactic',
-        status: 'Acidification',
-        day: 2,
-        ph: '3.28',
-        gravity: '1.030',
-        temp: '31.2°',
-        culture: 'L. plantarum'
-      },
-      {
-        name: 'XA-TEA-004',
-        type: 'Tea Ferment',
-        status: 'Mixed Culture',
-        day: 6,
-        ph: '3.10',
-        gravity: '1.012',
-        temp: '24.6°',
-        culture: 'Yeast + SCOBY'
+    const STORAGE_KEY = "xa_fermentation_complete_v2";
+
+    const defaultLibraries = {
+      luppoli:[{name:"Saaz",note:"Nobile, delicato"},{name:"Hallertau Mittelfrüh",note:"Fine, erbaceo"},{name:"Cascade",note:"Agrumato"}],
+      botaniche:[{name:"Genziana",note:"Amaro profondo"},{name:"China",note:"Quinina / tonic"},{name:"Lavanda",note:"Floreale"},{name:"Osmanto",note:"Floreale-fruttato"}],
+      lieviti:[{name:"Hornindal Kveik",note:"Esters tropicali"},{name:"EC-1118",note:"Pulito e secco"},{name:"SafCider",note:"Per sidro"}],
+      fermenti_lattici:[{name:"L. plantarum",note:"Acidificazione pulita"},{name:"L. helveticus",note:"Più rotondo"}],
+      te:[{name:"Oolong",note:"Elegante"},{name:"Bianco",note:"Fine"},{name:"Verde",note:"Fresco"},{name:"Jasmine",note:"Floreale"}],
+      pepe:[{name:"Timut",note:"Agrumato"},{name:"Sichuan",note:"Elettrico"},{name:"Cubebe",note:"Balsamico"}],
+      frutta:[{name:"Succo di mela",note:"Base"},{name:"Mela Golden",note:"Morbida"},{name:"Mela Granny",note:"Acida"},{name:"Limone",note:"Brillante"},{name:"Pompelmo",note:"Amaro agrumato"}],
+      zuccheri:[{name:"Saccarosio",note:"Priming standard"},{name:"Destrosio",note:"Pulito"},{name:"Miele",note:"Aromatico"}],
+      nutrienti:[{name:"DAP",note:"Azoto assimilabile"},{name:"Nutriente complesso",note:"Supporto fermentazione"}],
+      acidi:[{name:"Acido malico",note:"Profilo mela"},{name:"Acido citrico",note:"Brillante"},{name:"Acido lattico",note:"Morbido"}]
+    };
+
+    let state = loadState();
+    let editingRecipeId = null;
+    let currentRecipeType = "sidro";
+
+    function getDefaultState(){
+      return {
+        recipes: [],
+        lots: [],
+        libraries: JSON.parse(JSON.stringify(defaultLibraries)),
+        scenes: [],
+        selectedLotId: null,
+        selectedRecipeId: null,
+        bankA: null,
+        bankB: null,
+        activeBank: "A"
+      };
+    }
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return getDefaultState();
+        const parsed = JSON.parse(raw);
+        return {
+          recipes: Array.isArray(parsed.recipes) ? parsed.recipes : [],
+          lots: Array.isArray(parsed.lots) ? parsed.lots : [],
+          libraries: parsed.libraries || JSON.parse(JSON.stringify(defaultLibraries)),
+          scenes: Array.isArray(parsed.scenes) ? parsed.scenes : [],
+          selectedLotId: parsed.selectedLotId || null,
+          selectedRecipeId: parsed.selectedRecipeId || null,
+          bankA: parsed.bankA || null,
+          bankB: parsed.bankB || null,
+          activeBank: parsed.activeBank || "A"
+        };
+      } catch(e) {
+        return getDefaultState();
       }
-    ];
+    }
 
-    const lotList = document.getElementById('lotList');
-    const storageKey = 'xaFermentationDataV1';
+    function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    function uid(prefix="id"){ return prefix + "_" + Math.random().toString(36).slice(2,10); }
+    function today(){ return new Date().toISOString().slice(0,10); }
+    function num(v,d=2){ const n=Number(v); return Number.isFinite(n) ? n.toFixed(d) : "0.00"; }
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#39;");
+    }
+    function getRecipe(id){ return state.recipes.find(r => r.id===id) || null; }
+    function getLot(id){ return state.lots.find(l => l.id===id) || null; }
+    function currentLot(){ return getLot(state.selectedLotId); }
+    function prettyKey(k){ return k.replaceAll("_"," ").replace(/\b\w/g, c => c.toUpperCase()); }
 
-    function renderBatches(data) {
-      lotList.innerHTML = data.map(batch => `
-        <div class="lot-card">
-          <div class="lot-top">
-            <div>
-              <h4>${batch.name}</h4>
-              <div class="badges">
-                <span class="badge">${batch.type}</span>
-                <span class="badge">${batch.status}</span>
-                <span class="badge">Day ${batch.day}</span>
-              </div>
-            </div>
-            <div class="badge">${batch.culture}</div>
-          </div>
-          <div class="lot-stats">
-            <div class="stat"><span>pH</span><b>${batch.ph}</b></div>
-            <div class="stat"><span>Gravity</span><b>${batch.gravity}</b></div>
-            <div class="stat"><span>Temp</span><b>${batch.temp}</b></div>
-            <div class="stat"><span>Culture</span><b>${batch.culture}</b></div>
+    function ensureSelected(){
+      if(!state.selectedRecipeId && state.recipes.length) state.selectedRecipeId = state.recipes[0].id;
+      if(!state.selectedLotId && state.lots.length) state.selectedLotId = state.lots[0].id;
+    }
+
+    function currentUrlLotId(){
+      return new URLSearchParams(window.location.search).get("lot");
+    }
+
+    function isMixerMode(){
+      return new URLSearchParams(window.location.search).get("view") === "mixer";
+    }
+
+    function mixerLot(){
+      return getLot(currentUrlLotId()) || currentLot();
+    }
+
+    function recipeTypeLabel(type){
+      if(type === "sidro") return "Sidro";
+      if(type === "te") return "Fermentato di tè";
+      if(type === "misto") return "Fermentato misto";
+      if(type === "birra") return "Birra";
+      if(type === "tonica") return "Acqua tonica";
+      return "Ricetta";
+    }
+
+    function resetTypeButtons(){
+      ["sidro","te","misto","birra","tonica"].forEach(t => {
+        const el = document.getElementById("type_" + t);
+        if(el){
+          el.classList.remove("active","sidro","te","misto","birra","tonica");
+        }
+      });
+    }
+
+    function setRecipeType(type){
+      currentRecipeType = type;
+      resetTypeButtons();
+      const el = document.getElementById("type_" + type);
+      if(el){
+        el.classList.add("active");
+        if(type === "sidro") el.classList.add("sidro");
+        if(type === "te") el.classList.add("te");
+        if(type === "misto") el.classList.add("misto");
+        if(type === "birra") el.classList.add("birra");
+        if(type === "tonica") el.classList.add("tonica");
+      }
+
+      const base = document.getElementById("recipe_base");
+      if(!base) return;
+
+      if(type === "sidro" && !base.value) base.value = "Succo di mela";
+      if(type === "te" && !base.value) base.value = "Tè";
+      if(type === "misto" && !base.value) base.value = "Succo + tè";
+      if(type === "birra" && !base.value) base.value = "Mosto";
+      if(type === "tonica" && !base.value) base.value = "Acqua";
+    }
+
+    function showSection(name){
+      document.querySelectorAll("#app-normal .section").forEach(s => s.classList.remove("active"));
+      const target = document.getElementById("sec-" + name);
+      if(target) target.classList.add("active");
+    }
+
+    function ingredientRowHtml(i={}){
+      return `
+        <div class="ingredientRow">
+          <select class="select ing_cat">
+            ${Object.keys(state.libraries).map(k => `<option value="${k}" ${i.category===k?'selected':''}>${prettyKey(k)}</option>`).join("")}
+          </select>
+          <input class="input ing_name" value="${escapeHtml(i.name || "")}" placeholder="Ingrediente">
+          <input class="input ing_qty" type="number" step="0.01" value="${i.qty ?? ""}" placeholder="0">
+          <input class="input ing_unit" value="${escapeHtml(i.unit || "g")}" placeholder="g">
+          <input class="input ing_note" value="${escapeHtml(i.note || "")}" placeholder="Note">
+          <button class="btnDanger" type="button" onclick="this.parentNode.remove()">✕</button>
+        </div>
+      `;
+    }
+
+    function renderStats(){
+      document.getElementById("statRecipes").textContent = state.recipes.length;
+      document.getElementById("statLots").textContent = state.lots.length;
+      document.getElementById("statScenes").textContent = state.scenes.length;
+      document.getElementById("statChannels").textContent = currentLot()?.channels?.length || 0;
+    }
+
+    function renderHomeRecipes(){
+      const wrap = document.getElementById("homeRecipesList");
+      const items = state.recipes.slice(0,4);
+      wrap.innerHTML = items.length ? items.map(r => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(r.name)}</div>
+          <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
+          <div class="itemActions">
+            <button class="btn" onclick="openRecipeView('${r.id}')">Apri</button>
+            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
           </div>
         </div>
-      `).join('');
+      `).join("") : `<div class="item"><div class="meta">Nessuna ricetta.</div></div>`;
     }
 
-    function loadData() {
-      const saved = localStorage.getItem(storageKey);
-      if (!saved) return demoBatches;
-      try {
-        const parsed = JSON.parse(saved);
-        return Array.isArray(parsed.batches) ? parsed.batches : demoBatches;
-      } catch {
-        return demoBatches;
+    function renderRecipes(){
+      const wrap = document.getElementById("recipesList");
+      wrap.innerHTML = state.recipes.length ? state.recipes.map(r => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(r.name)}</div>
+          <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
+          <div class="badgeRow" style="margin-top:10px">
+            <span class="badge gold">${escapeHtml(recipeTypeLabel(r.type))}</span>
+            <span class="badge blue">${escapeHtml(r.base || "-")}</span>
+            <span class="badge.purple"></span>
+          </div>
+          <div class="itemActions">
+            <button class="btn" onclick="openRecipeView('${r.id}')">Vedi ricetta</button>
+            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
+            <button class="btnMixer" onclick="openLotCreator('${r.id}')">Crea lotto</button>
+            <button class="btnDanger" onclick="deleteRecipe('${r.id}')">Elimina</button>
+          </div>
+        </div>
+      `).replace('<span class="badge.purple"></span>', r => '') : `<div class="item"><div class="meta">Nessuna ricetta salvata.</div></div>`;
+      
+      if(state.recipes.length){
+        wrap.innerHTML = state.recipes.map(r => `
+          <div class="item">
+            <div class="itemTitle">${escapeHtml(r.name)}</div>
+            <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
+            <div class="badgeRow" style="margin-top:10px">
+              <span class="badge gold">${escapeHtml(recipeTypeLabel(r.type))}</span>
+              <span class="badge blue">${escapeHtml(r.base || "-")}</span>
+              <span class="badge purple">${escapeHtml(r.culture || "-")}</span>
+            </div>
+            <div class="itemActions">
+              <button class="btn" onclick="openRecipeView('${r.id}')">Vedi ricetta</button>
+              <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
+              <button class="btnMixer" onclick="openLotCreator('${r.id}')">Crea lotto</button>
+              <button class="btnDanger" onclick="deleteRecipe('${r.id}')">Elimina</button>
+            </div>
+          </div>
+        `).join("");
       }
     }
 
-    function saveData(batches) {
-      localStorage.setItem(storageKey, JSON.stringify({ batches }, null, 2));
+    function renderHomeLots(){
+      const wrap = document.getElementById("homeLotsList");
+      const items = state.lots.slice(0,4);
+      wrap.innerHTML = items.length ? items.map(l => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(l.name)}</div>
+          <div class="meta">${escapeHtml(l.type || "-")} · ${escapeHtml(l.recipeName || "-")} · ${l.channels.length} canali</div>
+          <div class="itemActions">
+            <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
+            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">Apri mixer</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
     }
 
-    const batches = loadData();
-    if (!localStorage.getItem(storageKey)) saveData(demoBatches);
-    renderBatches(batches);
+    function renderLots(){
+      const wrap = document.getElementById("lotsList");
+      wrap.innerHTML = state.lots.length ? state.lots.map(l => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(l.name)}</div>
+          <div class="meta">
+            Codice: ${escapeHtml(l.code || "-")}<br>
+            Tipo: ${escapeHtml(l.type || "-")}<br>
+            Ricetta: ${escapeHtml(l.recipeName || "-")}<br>
+            Canali: ${l.channels.length}
+          </div>
+          <div class="badgeRow" style="margin-top:10px">
+            <span class="badge gold">${escapeHtml(l.stage || "-")}</span>
+            <span class="badge blue">${escapeHtml(l.date || "-")}</span>
+          </div>
+          <div class="itemActions">
+            <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
+            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">Apri mixer</button>
+            <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
+    }
 
-    document.getElementById('newBatchBtn').addEventListener('click', () => {
-      const name = prompt('Batch name:', `XA-${new Date().getFullYear()}-NEW`);
-      if (!name) return;
-      const type = prompt('Type: Cider / Tea Ferment / Lactic / Experimental', 'Cider') || 'Cider';
-      const culture = prompt('Main culture:', 'Yeast') || 'Yeast';
-      const newBatch = {
+    function renderLotMeta(){
+      const lot = currentLot();
+      document.getElementById("lot_name").value = lot?.name || "";
+      document.getElementById("lot_code").value = lot?.code || "";
+      document.getElementById("lot_type").value = lot?.type || "";
+      document.getElementById("lot_stage").value = lot?.stage || "programmato";
+      document.getElementById("lot_volume").value = lot?.volume || "";
+      document.getElementById("lot_date").value = lot?.date || today();
+      document.getElementById("lot_culture").value = lot?.culture || "";
+      document.getElementById("lot_recipe_text").value = lot?.recipeText || "";
+      document.getElementById("lot_notes").value = lot?.notes || "";
+    }
+
+    function renderLibraries(){
+      const wrap = document.getElementById("libraryList");
+      wrap.innerHTML = Object.keys(state.libraries).map(k => `
+        <div class="item">
+          <div class="itemTitle">${prettyKey(k)}</div>
+          <div class="meta">${state.libraries[k].length} elementi</div>
+          <div class="badgeRow" style="margin-top:10px">
+            ${state.libraries[k].slice(0,6).map(x => `<span class="badge blue">${escapeHtml(x.name)}</span>`).join("")}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderScenes(){
+      const wrap = document.getElementById("scenesList");
+      wrap.innerHTML = state.scenes.length ? state.scenes.slice().reverse().map(s => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(s.name)}</div>
+          <div class="meta">${escapeHtml(s.date)} · ${s.channels.length} canali</div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessuna scena salvata.</div></div>`;
+    }
+
+    function gatherParamsFromEditor(){
+      const params = [];
+      const p = (id) => document.getElementById(id)?.value;
+
+      const pushParam = (key,name,type,min,max,step,value,unit,cat) => {
+        if(value !== "" && value !== null && value !== undefined){
+          const n = Number(value);
+          if(!Number.isNaN(n)){
+            params.push({key,name,type,min,max,step,value:n,unit,cat});
+          }
+        }
+      };
+
+      pushParam("param_ph_start","pH iniziale","Acidità",2.5,6,0.01,p("param_ph_start"),"","acid");
+      pushParam("param_ph_end","pH finale","Acidità",2.5,6,0.01,p("param_ph_end"),"","acid");
+      pushParam("param_og","OG","Densità iniziale",1,1.12,0.001,p("param_og"),"","tech");
+      pushParam("param_fg","FG","Densità finale",0.995,1.05,0.001,p("param_fg"),"","tech");
+      pushParam("param_abv","ABV","Alcol",0,15,0.1,p("param_abv"),"%","tech");
+      pushParam("param_temp","Temperatura","Temperatura",0,40,0.1,p("param_temp"),"°C","tech");
+      pushParam("param_co2","CO₂","Gasatura",0,4.5,0.1,p("param_co2")," vol","gas");
+      pushParam("param_srm","SRM","Colore",1,40,1,p("param_srm"),"","color");
+      pushParam("param_tonica","Acqua tonica","Tonica",0,10,0.1,p("param_tonica"),"","gas");
+      pushParam("param_tonic_bitter","Tonic bitter","Amaro tonica",0,20,0.1,p("param_tonic_bitter"),"","bitter");
+
+      return params;
+    }
+
+    function fillParamsInEditor(params){
+      const map = {};
+      (params || []).forEach(p => { map[p.key] = p.value; });
+
+      document.getElementById("param_ph_start").value = map.ph_start ?? map.ph_iniziale ?? "";
+      document.getElementById("param_ph_end").value = map.ph_end ?? map.ph_finale ?? "";
+      document.getElementById("param_og").value = map.og ?? "";
+      document.getElementById("param_fg").value = map.fg ?? "";
+      document.getElementById("param_abv").value = map.abv ?? "";
+      document.getElementById("param_temp").value = map.temp ?? "";
+      document.getElementById("param_co2").value = map.co2 ?? "";
+      document.getElementById("param_srm").value = map.srm ?? "";
+      document.getElementById("param_tonica").value = map.tonica ?? "";
+      document.getElementById("param_tonic_bitter").value = map.tonic_bitter ?? "";
+    }
+
+    function openRecipeEditor(id=null){
+      editingRecipeId = id;
+      const recipe = id ? getRecipe(id) : null;
+
+      document.getElementById("recipeEditTitle").textContent = recipe ? "Modifica ricetta" : "Nuova ricetta";
+      document.getElementById("recipe_name").value = recipe?.name || "";
+      document.getElementById("recipe_base").value = recipe?.base || "";
+      document.getElementById("recipe_style").value = recipe?.style || "";
+      document.getElementById("recipe_culture").value = recipe?.culture || "";
+      document.getElementById("recipe_notes").value = recipe?.notes || "";
+
+      currentRecipeType = recipe?.type || "sidro";
+      setRecipeType(currentRecipeType);
+      fillParamsInEditor(recipe?.params || []);
+
+      const ingWrap = document.getElementById("ingredientsWrap");
+      ingWrap.innerHTML = "";
+      const recipeIngredients = recipe ? recipe.ingredients : [];
+      if(recipeIngredients.length){
+        recipeIngredients.forEach(i => ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml(i)));
+      } else {
+        ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml({category:"frutta", name:"", qty:"", unit:"g", note:""}));
+      }
+
+      showSection("recipe-edit");
+    }
+
+    function gatherRecipeFromEditor(){
+      const ingredients = [...document.querySelectorAll("#ingredientsWrap .ingredientRow")].map(row => ({
+        category: row.querySelector(".ing_cat").value,
+        name: row.querySelector(".ing_name").value.trim(),
+        qty: Number(row.querySelector(".ing_qty").value) || 0,
+        unit: row.querySelector(".ing_unit").value.trim() || "g",
+        note: row.querySelector(".ing_note").value.trim()
+      })).filter(x => x.name);
+
+      return {
+        id: editingRecipeId || uid("recipe"),
+        type: currentRecipeType,
+        name: document.getElementById("recipe_name").value.trim(),
+        base: document.getElementById("recipe_base").value.trim(),
+        style: document.getElementById("recipe_style").value.trim(),
+        culture: document.getElementById("recipe_culture").value.trim(),
+        notes: document.getElementById("recipe_notes").value.trim(),
+        ingredients,
+        params: gatherParamsFromEditor()
+      };
+    }
+
+    function saveRecipe(){
+      const recipe = gatherRecipeFromEditor();
+      if(!recipe.name){
+        alert("Inserisci il nome della ricetta.");
+        return;
+      }
+
+      const idx = state.recipes.findIndex(r => r.id === recipe.id);
+      if(idx >= 0) state.recipes[idx] = recipe;
+      else state.recipes.unshift(recipe);
+
+      state.selectedRecipeId = recipe.id;
+      saveState();
+      renderAll();
+      openRecipeView(recipe.id);
+    }
+
+    function openRecipeView(id){
+      const recipe = getRecipe(id);
+      if(!recipe) return;
+
+      state.selectedRecipeId = id;
+      saveState();
+
+      document.getElementById("recipeViewTitle").textContent = recipe.name;
+      document.getElementById("recipeViewEditBtn").onclick = () => openRecipeEditor(id);
+      document.getElementById("recipeViewLotBtn").onclick = () => openLotCreator(id);
+
+      document.getElementById("recipeViewBody").innerHTML = `
+        <div class="layout2">
+          <div class="item">
+            <div class="itemTitle">Dati ricetta</div>
+            <div class="meta">
+              Nome: ${escapeHtml(recipe.name)}<br>
+              Tipo: ${escapeHtml(recipeTypeLabel(recipe.type))}<br>
+              Base: ${escapeHtml(recipe.base || "-")}<br>
+              Stile: ${escapeHtml(recipe.style || "-")}<br>
+              Cultura: ${escapeHtml(recipe.culture || "-")}<br>
+              Note: ${escapeHtml(recipe.notes || "-")}
+            </div>
+          </div>
+          <div class="item">
+            <div class="itemTitle">Sintesi</div>
+            <div class="meta">
+              Ingredienti: ${recipe.ingredients.length}<br>
+              Parametri: ${recipe.params.length}<br>
+              Canali mixer generati: ${recipe.ingredients.length + recipe.params.length}
+            </div>
+          </div>
+        </div>
+
+        <div class="layout2" style="margin-top:14px">
+          <div class="card">
+            <div class="cardHead"><div><h2>Ingredienti</h2><div class="sub">Ricetta completa</div></div></div>
+            <div class="cardBody">
+              ${recipe.ingredients.length ? recipe.ingredients.map(i => `
+                <div class="item" style="margin-bottom:10px">
+                  <div class="itemTitle">${escapeHtml(i.name)}</div>
+                  <div class="meta">
+                    Categoria: ${escapeHtml(i.category)}<br>
+                    Quantità: ${num(i.qty,2)} ${escapeHtml(i.unit)}<br>
+                    Note: ${escapeHtml(i.note || "-")}
+                  </div>
+                </div>
+              `).join("") : `<div class="item"><div class="meta">Nessun ingrediente.</div></div>`}
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cardHead"><div><h2>Parametri</h2><div class="sub">Principali</div></div></div>
+            <div class="cardBody">
+              ${recipe.params.length ? recipe.params.map(p => `
+                <div class="item" style="margin-bottom:10px">
+                  <div class="itemTitle">${escapeHtml(p.name)}</div>
+                  <div class="meta">
+                    Tipo: ${escapeHtml(p.type)}<br>
+                    Valore: ${num(p.value, p.step >= 1 ? 0 : p.step >= 0.1 ? 1 : 2)} ${escapeHtml(p.unit || "")}<br>
+                    Range: ${escapeHtml(String(p.min))} → ${escapeHtml(String(p.max))}
+                  </div>
+                </div>
+              `).join("") : `<div class="item"><div class="meta">Nessun parametro.</div></div>`}
+            </div>
+          </div>
+        </div>
+      `;
+
+      showSection("recipe-view");
+    }
+
+    function deleteRecipe(id){
+      if(!confirm("Eliminare questa ricetta?")) return;
+      state.recipes = state.recipes.filter(r => r.id !== id);
+      if(state.selectedRecipeId === id) state.selectedRecipeId = state.recipes[0]?.id || null;
+      saveState();
+      renderAll();
+      showSection("recipes");
+    }
+
+    function recipeToChannels(recipe){
+      const params = (recipe.params || []).map(p => ({
+        id: uid("ch"),
+        key: p.key,
+        name: p.name,
+        type: p.type,
+        min: Number(p.min),
+        max: Number(p.max),
+        step: Number(p.step),
+        value: Number(p.value),
+        unit: p.unit || "",
+        cat: p.cat || "tech"
+      }));
+
+      const ingredientCatMap = {
+        botaniche:"botanical",
+        lieviti:"yeast",
+        fermenti_lattici:"lactic",
+        te:"botanical",
+        pepe:"botanical",
+        frutta:"botanical",
+        zuccheri:"sugar",
+        nutrienti:"yeast",
+        acidi:"acid",
+        luppoli:"bitter"
+      };
+
+      const ingredients = recipe.ingredients.map(i => ({
+        id: uid("ch"),
+        key: "ing_" + i.name.toLowerCase().replace(/\s+/g,"_"),
+        name: i.name.toUpperCase().slice(0,16),
+        type: i.category,
+        min: 0,
+        max: Math.max(10, Number(i.qty) * 2 || 10),
+        step: 0.1,
+        value: Number(i.qty) || 0,
+        unit: " " + (i.unit || "g"),
+        cat: ingredientCatMap[i.category] || "botanical"
+      }));
+
+      return [...params, ...ingredients];
+    }
+
+    function openLotCreator(recipeId=null){
+      const rid = recipeId || state.selectedRecipeId || state.recipes[0]?.id || "";
+      if(!state.recipes.length){
+        alert("Prima crea una ricetta.");
+        return;
+      }
+
+      const recipe = getRecipe(rid);
+      if(!recipe){
+        alert("Ricetta non trovata.");
+        return;
+      }
+
+      const name = prompt("Nome lotto", recipe.name + " LOTTO");
+      if(name === null) return;
+      const code = prompt("Codice lotto", "") || "";
+      const volume = Number(prompt("Volume litri", "20")) || 0;
+
+      const lot = {
+        id: uid("lot"),
+        recipeId: recipe.id,
+        recipeName: recipe.name,
+        name: name || recipe.name + " LOTTO",
+        code,
+        type: recipeTypeLabel(recipe.type),
+        stage: "programmato",
+        volume,
+        date: today(),
+        culture: recipe.culture || "",
+        recipeText: recipe.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        notes: recipe.notes || "",
+        channels: recipeToChannels(recipe)
+      };
+
+      state.lots.unshift(lot);
+      state.selectedLotId = lot.id;
+      saveState();
+      renderAll();
+      showSection("lots");
+    }
+
+    function saveLotMeta(){
+      const lot = currentLot();
+      if(!lot) return;
+      const nameEl = document.getElementById("lot_name");
+      if(nameEl){
+        lot.name = nameEl.value.trim() || lot.name;
+        lot.code = document.getElementById("lot_code").value.trim();
+        lot.type = document.getElementById("lot_type").value.trim() || lot.type;
+        lot.stage = document.getElementById("lot_stage").value;
+        lot.volume = Number(document.getElementById("lot_volume").value) || 0;
+        lot.date = document.getElementById("lot_date").value || today();
+        lot.culture = document.getElementById("lot_culture").value.trim();
+        lot.recipeText = document.getElementById("lot_recipe_text").value.trim();
+        lot.notes = document.getElementById("lot_notes").value.trim();
+        saveState();
+        renderAll();
+      }
+    }
+
+    function selectLot(id){
+      state.selectedLotId = id;
+      saveState();
+      renderAll();
+    }
+
+    function deleteLot(id){
+      if(!confirm("Eliminare questo lotto?")) return;
+      state.lots = state.lots.filter(l => l.id !== id);
+      if(state.selectedLotId === id) state.selectedLotId = state.lots[0]?.id || null;
+      if(state.bankA === id) state.bankA = null;
+      if(state.bankB === id) state.bankB = null;
+      saveState();
+      renderAll();
+    }
+
+    function formatChannelValue(ch){
+      const step = Number(ch.step);
+      if(step >= 1) return num(ch.value,0) + (ch.unit || "");
+      if(step >= 0.1) return num(ch.value,1) + (ch.unit || "");
+      if(step >= 0.01) return num(ch.value,2) + (ch.unit || "");
+      return num(ch.value,3) + (ch.unit || "");
+    }
+
+    function buildVU(count){
+      let html = "";
+      for(let i=1;i<=16;i++){
+        let cls = "vuSeg";
+        if(i <= count){
+          cls += i <= 10 ? " g" : i <= 13 ? " a" : " r";
+        }
+        html += `<div class="${cls}"></div>`;
+      }
+      return html;
+    }
+
+    function renderMixer(){
+      const lot = mixerLot();
+      document.getElementById("mixer_title").textContent = lot ? (lot.stage || "READY").toUpperCase() : "XA MIXER";
+      document.getElementById("mixer_sub").textContent = lot ? "Pagina separata solo mixer." : "Apri o crea un lotto.";
+      document.getElementById("mixer_lot_name").textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
+      document.getElementById("mixer_lot_meta").textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${lot.recipeName || "-"} · ${lot.channels.length} canali` : "Apri o crea un lotto.";
+      document.getElementById("mixer_badge_type").textContent = "Tipo " + (lot?.type || "-");
+      document.getElementById("mixer_badge_stage").textContent = "Stato " + (lot?.stage || "-");
+      document.getElementById("mixer_badge_channels").textContent = "Canali " + (lot?.channels?.length || 0);
+
+      const board = document.getElementById("mixerBoard");
+      if(!lot){
+        board.innerHTML = `
+          <div class="addSlot">
+            <div class="plus">+</div>
+            <h3>Nessun lotto</h3>
+            <p>Crea una ricetta, poi un lotto, poi apri il mixer.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const channels = [...lot.channels];
+      while(channels.length < 18){
+        channels.push({empty:true});
+      }
+
+      board.innerHTML = channels.map(ch => {
+        if(ch.empty){
+          return `
+            <div class="addSlot">
+              <div class="plus">+</div>
+              <h3>Slot libero</h3>
+              <p>Aggiungi un canale nuovo.</p>
+              <div class="toolbar" style="margin-top:14px">
+                <button class="btnGold" onclick="openAddChannel()">Nuovo canale</button>
+              </div>
+            </div>
+          `;
+        }
+
+        const pct = Math.max(0, Math.min(100, ((Number(ch.value)-Number(ch.min)) / ((Number(ch.max)-Number(ch.min)) || 1)) * 100));
+        const cat = ch.cat || "tech";
+
+        return `
+          <div class="channel ${cat}">
+            <div class="channelTop">
+              <div class="channelNameWrap">
+                <div class="channelName">${escapeHtml(ch.name)}</div>
+                <div class="channelType">${escapeHtml(ch.type)}</div>
+              </div>
+              <button class="tinyIconBtn" onclick="openEditChannel('${ch.id}')">✎</button>
+            </div>
+
+            <div class="miniLcd">
+              <div class="lbl">Value</div>
+              <div class="val">${formatChannelValue(ch)}</div>
+            </div>
+
+            <div class="knob"></div>
+            <div class="tinyMeter"><div class="tinyFill" style="width:${pct}%"></div></div>
+
+            <div class="faderWrap">
+              <div class="vu">${buildVU(Math.round((pct/100)*16))}</div>
+              <div class="track">
+                <input type="range" min="${ch.min}" max="${ch.max}" step="${ch.step}" value="${ch.value}" oninput="updateChannel('${ch.id}', this.value)" />
+              </div>
+            </div>
+
+            <div class="channelButtons">
+              <button class="miniBtn" onclick="nudgeChannel('${ch.id}', -1)">-</button>
+              <button class="miniBtn gold" onclick="nudgeChannel('${ch.id}', 1)">+</button>
+            </div>
+
+            <div class="channelButtons" style="margin-top:8px">
+              <button class="miniBtn" onclick="duplicateChannel('${ch.id}')">Duplica</button>
+              <button class="miniBtn" onclick="removeChannel('${ch.id}')">Togli</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function quickChannelTemplate(key){
+      const m = {
+        ph_start:{key:"ph_start",name:"pH iniziale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.4,unit:"",cat:"acid"},
+        ph_end:{key:"ph_end",name:"pH finale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.1,unit:"",cat:"acid"},
+        og:{key:"og",name:"OG",type:"Densità iniziale",min:1,max:1.12,step:0.001,value:1.048,unit:"",cat:"tech"},
+        fg:{key:"fg",name:"FG",type:"Densità finale",min:0.995,max:1.05,step:0.001,value:1.006,unit:"",cat:"tech"},
+        abv:{key:"abv",name:"ABV",type:"Alcol",min:0,max:15,step:0.1,value:5,unit:"%",cat:"tech"},
+        srm:{key:"srm",name:"SRM",type:"Colore",min:1,max:40,step:1,value:4,unit:"",cat:"color"},
+        temp:{key:"temp",name:"Temperatura",type:"Temperatura",min:0,max:40,step:0.1,value:22,unit:"°C",cat:"tech"},
+        co2:{key:"co2",name:"CO₂",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.5,unit:" vol",cat:"gas"},
+        tonica:{key:"tonica",name:"Acqua tonica",type:"Tonica",min:0,max:10,step:0.1,value:1.0,unit:"",cat:"gas"},
+        tonic_bitter:{key:"tonic_bitter",name:"Tonic bitter",type:"Amaro tonica",min:0,max:20,step:0.1,value:6.0,unit:"",cat:"bitter"}
+      };
+      return m[key] || null;
+    }
+
+    function addQuickChannel(key){
+      const lot = mixerLot();
+      if(!lot) return;
+      const t = quickChannelTemplate(key);
+      if(!t) return;
+      lot.channels.push({...t, id: uid("ch")});
+      saveState();
+      renderMixer();
+      renderAll();
+    }
+
+    function updateChannel(id, value){
+      const lot = mixerLot();
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
+      ch.value = Number(value);
+      saveState();
+      renderMixer();
+    }
+
+    function nudgeChannel(id, dir){
+      const lot = mixerLot();
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
+      ch.value = Number(ch.value) + (Number(ch.step) * dir);
+      if(ch.value < Number(ch.min)) ch.value = Number(ch.min);
+      if(ch.value > Number(ch.max)) ch.value = Number(ch.max);
+      saveState();
+      renderMixer();
+    }
+
+    function duplicateChannel(id){
+      const lot = mixerLot();
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
+      lot.channels.push({...ch, id: uid("ch"), name: ch.name + " COPY"});
+      saveState();
+      renderMixer();
+      renderAll();
+    }
+
+    function removeChannel(id){
+      const lot = mixerLot();
+      if(!lot) return;
+      lot.channels = lot.channels.filter(x => x.id !== id);
+      saveState();
+      renderMixer();
+      renderAll();
+    }
+
+    function openAddChannel(){
+      const lot = mixerLot();
+      if(!lot) return;
+
+      const name = prompt("Nome canale");
+      if(!name) return;
+      const type = prompt("Tipo canale", "Custom") || "Custom";
+      const min = Number(prompt("Valore minimo", "0")) || 0;
+      const max = Number(prompt("Valore massimo", "10")) || 10;
+      const step = Number(prompt("Step", "0.1")) || 0.1;
+      const value = Number(prompt("Valore iniziale", "1")) || 1;
+      const unit = prompt("Unità", "") || "";
+      const cat = prompt("Categoria colore: tech / acid / sugar / bitter / botanical / yeast / lactic / color / gas", "tech") || "tech";
+
+      lot.channels.push({
+        id: uid("ch"),
+        key: name.toLowerCase().replace(/\s+/g,"_"),
         name,
         type,
-        status: 'New',
-        day: 0,
-        ph: '-',
-        gravity: '-',
-        temp: '-',
-        culture
-      };
-      const current = loadData();
-      current.unshift(newBatch);
-      saveData(current);
-      renderBatches(current);
-    });
+        min,
+        max,
+        step,
+        value,
+        unit,
+        cat
+      });
+      saveState();
+      renderMixer();
+      renderAll();
+    }
 
-    document.getElementById('exportBtn').addEventListener('click', () => {
-      const blob = new Blob([localStorage.getItem(storageKey) || JSON.stringify({batches: demoBatches}, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'xa-fermentation-backup.json';
+    function openEditChannel(id){
+      const lot = mixerLot();
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
+
+      const name = prompt("Nome canale", ch.name);
+      if(name === null) return;
+      const type = prompt("Tipo canale", ch.type);
+      if(type === null) return;
+      const min = prompt("Valore minimo", ch.min);
+      const max = prompt("Valore massimo", ch.max);
+      const step = prompt("Step", ch.step);
+      const value = prompt("Valore", ch.value);
+      const unit = prompt("Unità", ch.unit || "");
+      const cat = prompt("Categoria colore", ch.cat || "tech");
+
+      ch.name = name;
+      ch.type = type;
+      ch.min = Number(min);
+      ch.max = Number(max);
+      ch.step = Number(step);
+      ch.value = Number(value);
+      ch.unit = unit || "";
+      ch.cat = cat || "tech";
+
+      saveState();
+      renderMixer();
+      renderAll();
+    }
+
+    function assignBank(bank){
+      const lot = mixerLot();
+      if(!lot) return;
+      if(bank === "A") state.bankA = lot.id;
+      if(bank === "B") state.bankB = lot.id;
+      saveState();
+    }
+
+    function setBank(bank){
+      state.activeBank = bank;
+      saveState();
+    }
+
+    function copyAtoB(){
+      if(!state.bankA) return;
+      const a = getLot(state.bankA);
+      if(!a) return;
+      const copy = JSON.parse(JSON.stringify(a));
+      copy.id = uid("lot");
+      copy.name = (a.name || "LOTTO") + " B";
+      copy.code = (a.code || "") + "-B";
+      copy.channels = copy.channels.map(c => ({...c, id: uid("ch")}));
+      state.lots.unshift(copy);
+      state.bankB = copy.id;
+      saveState();
+      renderAll();
+    }
+
+    function saveScene(){
+      const lot = mixerLot();
+      if(!lot) return;
+      state.scenes.push({
+        id: uid("scene"),
+        name: "SCENA " + (lot.name || "LOTTO"),
+        date: today(),
+        channels: JSON.parse(JSON.stringify(lot.channels))
+      });
+      saveState();
+      renderAll();
+      renderMixer();
+      alert("Scena salvata.");
+    }
+
+    function openLibraryAdd(){
+      const cat = prompt("Categoria libreria (luppoli, botaniche, lieviti, fermenti_lattici, te, pepe, frutta, zuccheri, nutrienti, acidi)");
+      if(!cat || !state.libraries[cat]) return;
+      const name = prompt("Nome elemento");
+      if(!name) return;
+      const note = prompt("Nota") || "";
+      state.libraries[cat].push({name,note});
+      saveState();
+      renderLibraries();
+    }
+
+    function openMixerPageForLot(lotId){
+      const url = new URL(window.location.href);
+      url.searchParams.set("view","mixer");
+      url.searchParams.set("lot", lotId);
+      window.location.href = url.toString();
+    }
+
+    function openMixerPage(){
+      const lot = currentLot();
+      if(!lot){
+        alert("Seleziona prima un lotto.");
+        return;
+      }
+      openMixerPageForLot(lot.id);
+    }
+
+    function goBackToMain(){
+      const url = new URL(window.location.href);
+      url.searchParams.delete("view");
+      url.searchParams.delete("lot");
+      window.location.href = url.toString();
+    }
+
+    function exportBackup(){
+      const blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "xa-fermentation-backup.json";
       a.click();
-      URL.revokeObjectURL(url);
-    });
+      URL.revokeObjectURL(a.href);
+    }
 
-    const importFile = document.getElementById('importFile');
-    document.getElementById('importBtn').addEventListener('click', () => importFile.click());
-    importFile.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
+    function importBackup(file){
       const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const parsed = JSON.parse(reader.result);
-          if (!Array.isArray(parsed.batches)) throw new Error('Invalid format');
-          saveData(parsed.batches);
-          renderBatches(parsed.batches);
-          alert('Backup imported successfully.');
-        } catch {
-          alert('Invalid JSON backup file.');
+      reader.onload = e => {
+        try{
+          state = JSON.parse(e.target.result);
+          saveState();
+          init();
+        }catch(err){
+          alert("Backup non valido.");
         }
       };
       reader.readAsText(file);
-    });
-
-    let deferredPrompt = null;
-    const installBtn = document.getElementById('installBtn');
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.classList.add('primary');
-    });
-
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) {
-        alert('To install the app, open this project from a hosted HTTPS page such as GitHub Pages.');
-        return;
-      }
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
-    });
-
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      });
     }
+
+    function resetAll(){
+      if(!confirm("Cancellare tutti i dati?")) return;
+      state = getDefaultState();
+      saveState();
+      init();
+    }
+
+    function loadDemo(){
+      state = getDefaultState();
+
+      const recipe1 = {
+        id: uid("recipe"),
+        type: "sidro",
+        name: "SIDRO XA DRY GOLDEN",
+        base: "Succo di mela",
+        style: "Secco",
+        culture: "Hornindal Kveik",
+        notes: "Profilo secco, brillante, pulito.",
+        ingredients: [
+          {category:"frutta", name:"Succo di mela Golden", qty:20, unit:"L", note:"Base principale"},
+          {category:"lieviti", name:"Hornindal Kveik", qty:6, unit:"g", note:"Fermentazione"},
+          {category:"nutrienti", name:"Nutriente complesso", qty:6, unit:"g", note:"Supporto"}
+        ],
+        params: [
+          {key:"ph_start",name:"pH iniziale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.40,unit:"",cat:"acid"},
+          {key:"ph_end",name:"pH finale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.10,unit:"",cat:"acid"},
+          {key:"og",name:"OG",type:"Densità iniziale",min:1,max:1.12,step:0.001,value:1.048,unit:"",cat:"tech"},
+          {key:"fg",name:"FG",type:"Densità finale",min:0.995,max:1.05,step:0.001,value:1.006,unit:"",cat:"tech"},
+          {key:"abv",name:"ABV",type:"Alcol",min:0,max:15,step:0.1,value:5.2,unit:"%",cat:"tech"},
+          {key:"temp",name:"Temperatura",type:"Temperatura",min:0,max:40,step:0.1,value:22,unit:"°C",cat:"tech"},
+          {key:"co2",name:"CO₂",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.5,unit:" vol",cat:"gas"}
+        ]
+      };
+
+      const recipe2 = {
+        id: uid("recipe"),
+        type: "tonica",
+        name: "XA TONIC WATER DRY",
+        base: "Acqua",
+        style: "Tonic dry",
+        culture: "Nessuna / base aromatica",
+        notes: "Tonica secca, amara, agrumata.",
+        ingredients: [
+          {category:"botaniche", name:"China", qty:12, unit:"g", note:"Fonte amaro"},
+          {category:"botaniche", name:"Genziana", qty:3, unit:"g", note:"Supporto amaro"},
+          {category:"frutta", name:"Limone", qty:8, unit:"g", note:"Agrumato"},
+          {category:"frutta", name:"Pompelmo", qty:8, unit:"g", note:"Agrumato amaro"}
+        ],
+        params: [
+          {key:"ph_start",name:"pH iniziale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.20,unit:"",cat:"acid"},
+          {key:"tonica",name:"Acqua tonica",type:"Tonica",min:0,max:10,step:0.1,value:1.0,unit:"",cat:"gas"},
+          {key:"tonic_bitter",name:"Tonic bitter",type:"Amaro tonica",min:0,max:20,step:0.1,value:6.0,unit:"",cat:"bitter"},
+          {key:"co2",name:"CO₂",type:"Gasatura",min:0,max:4.5,step:0.1,value:3.0,unit:" vol",cat:"gas"}
+        ]
+      };
+
+      state.recipes = [recipe1, recipe2];
+      state.selectedRecipeId = recipe1.id;
+
+      const lot1 = {
+        id: uid("lot"),
+        recipeId: recipe1.id,
+        recipeName: recipe1.name,
+        name: "SIDRO XA LOTTO 01",
+        code: "XA-SID-01",
+        type: recipeTypeLabel(recipe1.type),
+        stage: "primaria",
+        volume: 24,
+        date: today(),
+        culture: recipe1.culture,
+        recipeText: recipe1.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        notes: recipe1.notes,
+        channels: recipeToChannels(recipe1)
+      };
+
+      const lot2 = {
+        id: uid("lot"),
+        recipeId: recipe2.id,
+        recipeName: recipe2.name,
+        name: "TONIC XA LOTTO 02",
+        code: "XA-TON-02",
+        type: recipeTypeLabel(recipe2.type),
+        stage: "stabile",
+        volume: 18,
+        date: today(),
+        culture: recipe2.culture,
+        recipeText: recipe2.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        notes: recipe2.notes,
+        channels: recipeToChannels(recipe2)
+      };
+
+      state.lots = [lot1, lot2];
+      state.selectedLotId = lot1.id;
+      state.bankA = lot1.id;
+      state.bankB = lot2.id;
+
+      saveState();
+      init();
+    }
+
+    function initNormal(){
+      ensureSelected();
+      document.getElementById("app-normal").classList.remove("hidden");
+      document.getElementById("app-mixer-only").classList.add("hidden");
+      showSection("home");
+      renderAll();
+    }
+
+    function initMixer(){
+      document.getElementById("app-normal").classList.add("hidden");
+      document.getElementById("app-mixer-only").classList.remove("hidden");
+      renderMixer();
+    }
+
+    function renderAll(){
+      renderStats();
+      renderHomeRecipes();
+      renderRecipes();
+      renderHomeLots();
+      renderLots();
+      renderLotMeta();
+      renderLibraries();
+      renderScenes();
+    }
+
+    function init(){
+      if(isMixerMode()) initMixer();
+      else initNormal();
+    }
+
+    document.getElementById("demoBtn").addEventListener("click", loadDemo);
+    document.getElementById("exportBtn").addEventListener("click", exportBackup);
+    document.getElementById("importBtn").addEventListener("click", ()=>document.getElementById("importFile").click());
+    document.getElementById("importFile").addEventListener("change", e => {
+      const file = e.target.files[0];
+      if(file) importBackup(file);
+    });
+    document.getElementById("newRecipeBtnTop").addEventListener("click", ()=>openRecipeEditor());
+    document.getElementById("newLotBtnTop").addEventListener("click", ()=>openLotCreator());
+    document.getElementById("openMixerBtnTop").addEventListener("click", openMixerPage);
+    document.getElementById("resetBtn").addEventListener("click", resetAll);
+    document.getElementById("saveRecipeBtn").addEventListener("click", saveRecipe);
+    document.getElementById("saveRecipeBtnBottom").addEventListener("click", saveRecipe);
+    document.getElementById("addIngredientBtn").addEventListener("click", ()=>document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({})));
+    document.getElementById("saveLotMetaBtn").addEventListener("click", saveLotMeta);
+
+    init();
   </script>
 </body>
 </html>
