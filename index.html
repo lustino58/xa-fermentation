@@ -1060,4 +1060,1040 @@
     function browserCategoryToRowCategory(key){
       const map = {
         luppoli:"luppoli",
-        frutta:"frutta
+        frutta:"frutta",
+        te:"te",
+        pepi:"pepe",
+        spezie:"botaniche",
+        lieviti:"lieviti",
+        fermenti_lattici:"fermenti_lattici",
+        botaniche:"botaniche",
+        aggiunte:"aggiunte",
+        dry_hopping:"luppoli"
+      };
+      return map[key] || "botaniche";
+    }
+
+    function ensureSelected(){
+      if(!state.selectedRecipeId && state.recipes.length) state.selectedRecipeId = state.recipes[0].id;
+      if(!state.selectedLotId && state.lots.length) state.selectedLotId = state.lots[0].id;
+    }
+
+    function currentUrlLotId(){
+      return new URLSearchParams(window.location.search).get("lot");
+    }
+
+    function isMixerMode(){
+      return new URLSearchParams(window.location.search).get("view") === "mixer";
+    }
+
+    function mixerLot(){
+      return getLot(currentUrlLotId()) || currentLot();
+    }
+
+    function recipeTypeLabel(type){
+      if(type === "sidro") return "Sidro";
+      if(type === "te") return "Fermentato di tè";
+      if(type === "misto") return "Fermentato misto";
+      if(type === "birra") return "Birra";
+      if(type === "tonica") return "Acqua tonica";
+      return "Ricetta";
+    }
+
+    function resetTypeButtons(){
+      ["sidro","te","misto","birra","tonica"].forEach(t => {
+        const el = document.getElementById("type_" + t);
+        if(el) el.classList.remove("active","sidro","te","misto","birra","tonica");
+      });
+    }
+
+    function setRecipeType(type){
+      currentRecipeType = type;
+      resetTypeButtons();
+      const el = document.getElementById("type_" + type);
+      if(el) el.classList.add("active", type);
+
+      const base = document.getElementById("recipe_base");
+      if(!base) return;
+      if(type === "sidro" && !base.value) base.value = "Succo di mela";
+      if(type === "te" && !base.value) base.value = "Tè";
+      if(type === "misto" && !base.value) base.value = "Succo + tè";
+      if(type === "birra" && !base.value) base.value = "Mosto";
+      if(type === "tonica" && !base.value) base.value = "Acqua";
+      renderLiveRecipePreview();
+    }
+
+    function showSection(name){
+      document.querySelectorAll("#app-normal .section").forEach(s => s.classList.remove("active"));
+      const target = document.getElementById("sec-" + name);
+      if(target) target.classList.add("active");
+    }
+
+    function ingredientRowHtml(i={}){
+      return `
+        <div class="ingredientRow">
+          <select class="select ing_cat" onchange="renderLiveRecipePreview()">
+            <option value="luppoli" ${i.category==="luppoli"?'selected':''}>Luppoli</option>
+            <option value="frutta" ${i.category==="frutta"?'selected':''}>Frutta</option>
+            <option value="te" ${i.category==="te"?'selected':''}>Tè</option>
+            <option value="pepe" ${i.category==="pepe"?'selected':''}>Pepe</option>
+            <option value="botaniche" ${i.category==="botaniche"?'selected':''}>Botaniche</option>
+            <option value="lieviti" ${i.category==="lieviti"?'selected':''}>Lieviti</option>
+            <option value="fermenti_lattici" ${i.category==="fermenti_lattici"?'selected':''}>Fermenti lattici</option>
+            <option value="aggiunte" ${i.category==="aggiunte"?'selected':''}>Aggiunte</option>
+          </select>
+          <input class="input ing_name" value="${escapeHtml(i.name || "")}" placeholder="Ingrediente" oninput="renderLiveRecipePreview()">
+          <input class="input ing_qty" type="number" step="0.01" value="${i.qty ?? ""}" placeholder="0" oninput="renderLiveRecipePreview()">
+          <input class="input ing_unit" value="${escapeHtml(i.unit || "g/L")}" placeholder="g/L" oninput="renderLiveRecipePreview()">
+          <input class="input ing_note" value="${escapeHtml(i.note || "")}" placeholder="Note" oninput="renderLiveRecipePreview()">
+          <button class="btnDanger" type="button" onclick="this.parentNode.remove();renderLiveRecipePreview();">✕</button>
+        </div>
+      `;
+    }
+
+    function getCurrentEditorIngredients(){
+      return [...document.querySelectorAll("#ingredientsWrap .ingredientRow")].map(row => ({
+        category: row.querySelector(".ing_cat").value,
+        name: row.querySelector(".ing_name").value.trim(),
+        qty: row.querySelector(".ing_qty").value,
+        unit: row.querySelector(".ing_unit").value.trim(),
+        note: row.querySelector(".ing_note").value.trim()
+      })).filter(x => x.name);
+    }
+
+    function renderImageBox(id, data){
+      const box = document.getElementById(id);
+      if(!box) return;
+      if(data){
+        box.innerHTML = `<img src="${data}" alt="Ricetta">`;
+      } else {
+        box.textContent = "Nessuna immagine caricata";
+      }
+    }
+
+    function renderLiveRecipePreview(){
+      const name = document.getElementById("recipe_name")?.value?.trim() || "Nuova ricetta";
+      const base = document.getElementById("recipe_base")?.value?.trim() || "-";
+      const culture = document.getElementById("recipe_culture")?.value?.trim() || "-";
+      const notes = document.getElementById("recipe_notes")?.value?.trim() || "Nessuna nota.";
+      const type = recipeTypeLabel(currentRecipeType);
+      const ings = getCurrentEditorIngredients();
+
+      document.getElementById("liveBarTitle").textContent = name;
+      document.getElementById("liveBarMeta").textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture} · Ingredienti: ${ings.length}`;
+
+      document.getElementById("previewRecipeTitle").textContent = name;
+      document.getElementById("previewRecipeMeta").textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture}`;
+      document.getElementById("previewRecipeNotes").textContent = notes;
+
+      renderImageBox("previewRecipeImage", currentRecipeImageData);
+
+      const wrap = document.getElementById("previewRecipeIngredients");
+      wrap.innerHTML = ings.length ? ings.map(i => `
+        <div class="item" style="margin-bottom:8px">
+          <div class="itemTitle">${escapeHtml(i.name)}</div>
+          <div class="meta">
+            Categoria: ${escapeHtml(i.category)}<br>
+            Quantità: ${escapeHtml(i.qty || "-")} ${escapeHtml(i.unit || "")}<br>
+            Note: ${escapeHtml(i.note || "-")}
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessun ingrediente aggiunto.</div></div>`;
+    }
+
+    function openRecipePreviewModal(){
+      renderLiveRecipePreview();
+      document.getElementById("recipePreviewModal").classList.add("show");
+    }
+
+    function closeRecipePreviewModal(){
+      document.getElementById("recipePreviewModal").classList.remove("show");
+    }
+
+    function addIngredientFromLibrary(key, idx){
+      const item = INGREDIENT_BROWSER[key][idx];
+      const category = browserCategoryToRowCategory(key);
+      const wrap = document.getElementById("ingredientsWrap");
+      if(!wrap || !item) return;
+      wrap.insertAdjacentHTML("beforeend", ingredientRowHtml({
+        category,
+        name:item.name,
+        qty:item.dose,
+        unit:item.unit,
+        note:`${item.note} · dose consigliata ${item.dose} ${item.unit}`
+      }));
+      renderLiveRecipePreview();
+      closeIngredientLibrary();
+    }
+
+    function openIngredientLibrary(key){
+      currentLibraryKey = key;
+      document.getElementById("ingredientModalTitle").textContent = "Libreria " + key.toUpperCase();
+      document.getElementById("ingredientSearch").value = "";
+      document.getElementById("ingredientModal").classList.add("show");
+      renderIngredientLibraryList();
+    }
+
+    function closeIngredientLibrary(){
+      document.getElementById("ingredientModal").classList.remove("show");
+    }
+
+    function renderIngredientLibraryList(){
+      const list = INGREDIENT_BROWSER[currentLibraryKey] || [];
+      const q = document.getElementById("ingredientSearch").value.trim().toLowerCase();
+      const filtered = list
+        .map((item, idx) => ({item, idx}))
+        .sort((a,b)=>a.item.name.localeCompare(b.item.name, "it"))
+        .filter(x => (`${x.item.name} ${x.item.note}`).toLowerCase().includes(q));
+
+      const wrap = document.getElementById("ingredientLibraryList");
+      wrap.innerHTML = filtered.length ? filtered.map(({item, idx}) => `
+        <div class="libItem">
+          <div>
+            <div class="libItemTitle">${escapeHtml(item.name)}</div>
+            <div class="libItemMeta">
+              ${escapeHtml(item.note)}<br>
+              <span class="badge green">Dose consigliata: ${escapeHtml(String(item.dose))} ${escapeHtml(item.unit)}</span>
+            </div>
+          </div>
+          <button class="btnGold" type="button" onclick="addIngredientFromLibrary('${currentLibraryKey}', ${idx})">Aggiungi</button>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessun ingrediente trovato.</div></div>`;
+    }
+
+    function handleRecipeImageFile(file){
+      if(!file) return;
+      const ok = ["image/jpeg","image/png"].includes(file.type) || /\.(jpg|jpeg|png)$/i.test(file.name);
+      if(!ok){
+        alert("Carica solo JPG, JPEG o PNG.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = e => {
+        currentRecipeImageData = e.target.result || "";
+        renderLiveRecipePreview();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearRecipeImage(){
+      currentRecipeImageData = "";
+      const input = document.getElementById("recipe_image_file");
+      if(input) input.value = "";
+      renderLiveRecipePreview();
+    }
+
+    function renderStats(){
+      document.getElementById("statRecipes").textContent = state.recipes.length;
+      document.getElementById("statLots").textContent = state.lots.length;
+      document.getElementById("statScenes").textContent = state.scenes.length;
+      document.getElementById("statChannels").textContent = currentLot()?.channels?.length || 0;
+    }
+
+    function recipeThumbHtml(recipe){
+      return recipe.image ? `
+        <div style="margin-top:10px;border-radius:14px;overflow:hidden;border:1px solid #334050;max-width:220px">
+          <img src="${recipe.image}" alt="Ricetta" style="width:100%;height:120px;object-fit:cover">
+        </div>
+      ` : "";
+    }
+
+    function renderHomeRecipes(){
+      const wrap = document.getElementById("homeRecipesList");
+      const items = state.recipes.slice(0,4);
+      wrap.innerHTML = items.length ? items.map(r => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(r.name)}</div>
+          <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
+          ${recipeThumbHtml(r)}
+          <div class="itemActions">
+            <button class="btn" onclick="openRecipeView('${r.id}')">Apri</button>
+            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessuna ricetta.</div></div>`;
+    }
+
+    function renderRecipes(){
+      const wrap = document.getElementById("recipesList");
+      wrap.innerHTML = state.recipes.length ? state.recipes.map(r => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(r.name)}</div>
+          <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
+          <div class="badgeRow" style="margin-top:10px">
+            <span class="badge gold">${escapeHtml(recipeTypeLabel(r.type))}</span>
+            <span class="badge blue">${escapeHtml(r.base || "-")}</span>
+            <span class="badge purple">${escapeHtml(r.culture || "-")}</span>
+          </div>
+          ${recipeThumbHtml(r)}
+          <div class="itemActions">
+            <button class="btn" onclick="openRecipeView('${r.id}')">Vedi ricetta</button>
+            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
+            <button class="btnMixer" onclick="openLotCreator('${r.id}')">Crea lotto</button>
+            <button class="btnDanger" onclick="deleteRecipe('${r.id}')">Elimina</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessuna ricetta salvata.</div></div>`;
+    }
+
+    function renderHomeLots(){
+      const wrap = document.getElementById("homeLotsList");
+      const items = state.lots.slice(0,4);
+      wrap.innerHTML = items.length ? items.map(l => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(l.name)}</div>
+          <div class="meta">${escapeHtml(l.type || "-")} · ${escapeHtml(l.recipeName || "-")} · ${l.channels.length} canali</div>
+          <div class="itemActions">
+            <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
+            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">ON</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
+    }
+
+    function renderLots(){
+      const wrap = document.getElementById("lotsList");
+      wrap.innerHTML = state.lots.length ? state.lots.map(l => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(l.name)}</div>
+          <div class="meta">
+            Codice: ${escapeHtml(l.code || "-")}<br>
+            Tipo: ${escapeHtml(l.type || "-")}<br>
+            Ricetta: ${escapeHtml(l.recipeName || "-")}<br>
+            Canali: ${l.channels.length}
+          </div>
+          <div class="badgeRow" style="margin-top:10px">
+            <span class="badge gold">${escapeHtml(l.stage || "-")}</span>
+            <span class="badge blue">${escapeHtml(l.date || "-")}</span>
+          </div>
+          <div class="itemActions">
+            <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
+            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">ON</button>
+            <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
+    }
+
+    function renderLotMeta(){
+      const lot = currentLot();
+      document.getElementById("lot_name").value = lot?.name || "";
+      document.getElementById("lot_code").value = lot?.code || "";
+      document.getElementById("lot_type").value = lot?.type || "";
+      document.getElementById("lot_stage").value = lot?.stage || "programmato";
+      document.getElementById("lot_volume").value = lot?.volume || "";
+      document.getElementById("lot_date").value = lot?.date || today();
+      document.getElementById("lot_culture").value = lot?.culture || "";
+      document.getElementById("lot_recipe_text").value = lot?.recipeText || "";
+      document.getElementById("lot_notes").value = lot?.notes || "";
+    }
+
+    function renderScenes(){
+      const wrap = document.getElementById("scenesList");
+      wrap.innerHTML = state.scenes.length ? state.scenes.slice().reverse().map(s => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(s.name)}</div>
+          <div class="meta">${escapeHtml(s.date)} · ${s.channels.length} canali</div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessuna scena salvata.</div></div>`;
+    }
+
+    function gatherParamsFromEditor(){
+      const params = [];
+      const p = (id) => document.getElementById(id)?.value;
+
+      const pushParam = (key,name,type,min,max,step,value,unit) => {
+        if(value !== "" && value !== null && value !== undefined){
+          const n = Number(value);
+          if(!Number.isNaN(n)){
+            params.push({key,name,type,min,max,step,value:n,unit});
+          }
+        }
+      };
+
+      pushParam("param_ph_start","pH iniziale","acidità",2.5,6,0.01,p("param_ph_start"),"");
+      pushParam("param_ph_end","pH finale","acidità",2.5,6,0.01,p("param_ph_end"),"");
+      pushParam("param_og","OG","densità iniziale",1,1.12,0.001,p("param_og"),"");
+      pushParam("param_fg","FG","densità finale",0.995,1.05,0.001,p("param_fg"),"");
+      pushParam("param_abv","ABV","alcol",0,15,0.1,p("param_abv"),"%");
+      pushParam("param_temp","Temperatura","temperatura",0,40,0.1,p("param_temp"),"°C");
+      pushParam("param_co2","CO₂","gasatura",0,4.5,0.1,p("param_co2")," vol");
+      pushParam("param_srm","SRM","colore",1,40,1,p("param_srm"),"");
+      pushParam("param_tonica","Acqua tonica","tonica",0,10,0.1,p("param_tonica"),"");
+      pushParam("param_tonic_bitter","Tonic bitter","amaro tonica",0,20,0.1,p("param_tonic_bitter"),"");
+
+      return params;
+    }
+
+    function fillParamsInEditor(params){
+      const map = {};
+      (params || []).forEach(p => { map[p.key] = p.value; });
+      document.getElementById("param_ph_start").value = map.param_ph_start ?? "";
+      document.getElementById("param_ph_end").value = map.param_ph_end ?? "";
+      document.getElementById("param_og").value = map.param_og ?? "";
+      document.getElementById("param_fg").value = map.param_fg ?? "";
+      document.getElementById("param_abv").value = map.param_abv ?? "";
+      document.getElementById("param_temp").value = map.param_temp ?? "";
+      document.getElementById("param_co2").value = map.param_co2 ?? "";
+      document.getElementById("param_srm").value = map.param_srm ?? "";
+      document.getElementById("param_tonica").value = map.param_tonica ?? "";
+      document.getElementById("param_tonic_bitter").value = map.param_tonic_bitter ?? "";
+    }
+
+    function openRecipeEditor(id=null){
+      editingRecipeId = id;
+      const recipe = id ? getRecipe(id) : null;
+
+      document.getElementById("recipeEditTitle").textContent = recipe ? "Modifica ricetta" : "Nuova ricetta";
+      document.getElementById("recipe_name").value = recipe?.name || "";
+      document.getElementById("recipe_base").value = recipe?.base || "";
+      document.getElementById("recipe_style").value = recipe?.style || "";
+      document.getElementById("recipe_culture").value = recipe?.culture || "";
+      document.getElementById("recipe_notes").value = recipe?.notes || "";
+      currentRecipeImageData = recipe?.image || "";
+
+      const fileInput = document.getElementById("recipe_image_file");
+      if(fileInput) fileInput.value = "";
+
+      currentRecipeType = recipe?.type || "sidro";
+      setRecipeType(currentRecipeType);
+      fillParamsInEditor(recipe?.params || []);
+
+      const ingWrap = document.getElementById("ingredientsWrap");
+      ingWrap.innerHTML = "";
+      const recipeIngredients = recipe ? recipe.ingredients : [];
+      if(recipeIngredients.length){
+        recipeIngredients.forEach(i => ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml(i)));
+      } else {
+        ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml({category:"frutta"}));
+      }
+
+      showSection("recipe-edit");
+      bindLiveInputs();
+      renderLiveRecipePreview();
+    }
+
+    function bindLiveInputs(){
+      document.querySelectorAll(".live-watch").forEach(el=>{
+        el.oninput = renderLiveRecipePreview;
+      });
+    }
+
+    function gatherRecipeFromEditor(){
+      const ingredients = [...document.querySelectorAll("#ingredientsWrap .ingredientRow")].map(row => ({
+        category: row.querySelector(".ing_cat").value,
+        name: row.querySelector(".ing_name").value.trim(),
+        qty: Number(row.querySelector(".ing_qty").value) || 0,
+        unit: row.querySelector(".ing_unit").value.trim() || "g/L",
+        note: row.querySelector(".ing_note").value.trim()
+      })).filter(x => x.name);
+
+      return {
+        id: editingRecipeId || uid("recipe"),
+        type: currentRecipeType,
+        name: document.getElementById("recipe_name").value.trim(),
+        base: document.getElementById("recipe_base").value.trim(),
+        style: document.getElementById("recipe_style").value.trim(),
+        culture: document.getElementById("recipe_culture").value.trim(),
+        notes: document.getElementById("recipe_notes").value.trim(),
+        image: currentRecipeImageData || "",
+        ingredients,
+        params: gatherParamsFromEditor()
+      };
+    }
+
+    function saveRecipe(){
+      const recipe = gatherRecipeFromEditor();
+      if(!recipe.name){
+        alert("Inserisci il nome della ricetta.");
+        return;
+      }
+
+      const idx = state.recipes.findIndex(r => r.id === recipe.id);
+      if(idx >= 0) state.recipes[idx] = recipe;
+      else state.recipes.unshift(recipe);
+
+      state.selectedRecipeId = recipe.id;
+      saveState();
+      renderAll();
+      openRecipeView(recipe.id);
+    }
+
+    function openRecipeView(id){
+      const recipe = getRecipe(id);
+      if(!recipe) return;
+
+      state.selectedRecipeId = id;
+      saveState();
+
+      document.getElementById("recipeViewTitle").textContent = recipe.name;
+      document.getElementById("recipeViewEditBtn").onclick = () => openRecipeEditor(id);
+      document.getElementById("recipeViewLotBtn").onclick = () => openLotCreator(id);
+
+      document.getElementById("recipeViewBody").innerHTML = `
+        ${recipe.image ? `
+          <div class="recipeHero">
+            <img src="${recipe.image}" alt="Ricetta">
+          </div>
+        ` : ""}
+
+        <div class="layout2">
+          <div class="item">
+            <div class="itemTitle">Dati ricetta</div>
+            <div class="meta">
+              Nome: ${escapeHtml(recipe.name)}<br>
+              Tipo: ${escapeHtml(recipeTypeLabel(recipe.type))}<br>
+              Base: ${escapeHtml(recipe.base || "-")}<br>
+              Stile: ${escapeHtml(recipe.style || "-")}<br>
+              Cultura: ${escapeHtml(recipe.culture || "-")}<br>
+              Note: ${escapeHtml(recipe.notes || "-")}
+            </div>
+          </div>
+          <div class="item">
+            <div class="itemTitle">Sintesi</div>
+            <div class="meta">
+              Ingredienti: ${recipe.ingredients.length}<br>
+              Parametri: ${recipe.params.length}<br>
+              Canali mixer generati: ${recipe.ingredients.length + recipe.params.length + 1}
+            </div>
+          </div>
+        </div>
+
+        <div class="layout2" style="margin-top:14px">
+          <div class="card">
+            <div class="cardHead"><div><h2>Ingredienti</h2><div class="sub">Ricetta completa</div></div></div>
+            <div class="cardBody">
+              ${recipe.ingredients.length ? recipe.ingredients.map(i => `
+                <div class="item" style="margin-bottom:10px">
+                  <div class="itemTitle">${escapeHtml(i.name)}</div>
+                  <div class="meta">
+                    Categoria: ${escapeHtml(i.category)}<br>
+                    Quantità: ${num(i.qty,2)} ${escapeHtml(i.unit)}<br>
+                    Note: ${escapeHtml(i.note || "-")}
+                  </div>
+                </div>
+              `).join("") : `<div class="item"><div class="meta">Nessun ingrediente.</div></div>`}
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cardHead"><div><h2>Parametri</h2><div class="sub">Principali</div></div></div>
+            <div class="cardBody">
+              ${recipe.params.length ? recipe.params.map(p => `
+                <div class="item" style="margin-bottom:10px">
+                  <div class="itemTitle">${escapeHtml(p.name)}</div>
+                  <div class="meta">
+                    Tipo: ${escapeHtml(p.type)}<br>
+                    Valore: ${escapeHtml(String(p.value))} ${escapeHtml(p.unit || "")}<br>
+                    Range: ${escapeHtml(String(p.min))} → ${escapeHtml(String(p.max))}
+                  </div>
+                </div>
+              `).join("") : `<div class="item"><div class="meta">Nessun parametro.</div></div>`}
+            </div>
+          </div>
+        </div>
+      `;
+
+      showSection("recipe-view");
+    }
+
+    function deleteRecipe(id){
+      if(!confirm("Eliminare questa ricetta?")) return;
+      state.recipes = state.recipes.filter(r => r.id !== id);
+      if(state.selectedRecipeId === id) state.selectedRecipeId = state.recipes[0]?.id || null;
+      saveState();
+      renderAll();
+      showSection("recipes");
+    }
+
+    function buildBaseChannel(recipe){
+      return {
+        id: uid("ch"),
+        key: "base",
+        name: recipe.base || "Base",
+        type: "base",
+        min: 0,
+        max: 100,
+        step: 1,
+        value: 100,
+        unit: "%",
+        palette: "base"
+      };
+    }
+
+    function paletteForIndex(index){
+      const arr = ["p1","p2","p3","p4","p5","p6","p7","p8"];
+      return arr[index % arr.length];
+    }
+
+    function recipeToChannels(recipe){
+      const channels = [buildBaseChannel(recipe)];
+
+      (recipe.params || []).forEach((p, idx) => {
+        channels.push({
+          id: uid("ch"),
+          key: p.key,
+          name: p.name,
+          type: p.type,
+          min: Number(p.min),
+          max: Number(p.max),
+          step: Number(p.step),
+          value: Number(p.value),
+          unit: p.unit || "",
+          palette: paletteForIndex(idx)
+        });
+      });
+
+      (recipe.ingredients || []).forEach((i, idx) => {
+        channels.push({
+          id: uid("ch"),
+          key: "ing_" + i.name.toLowerCase().replace(/\s+/g,"_"),
+          name: i.name,
+          type: i.category,
+          min: 0,
+          max: Math.max(10, Number(i.qty) * 3 || 10),
+          step: 0.1,
+          value: Number(i.qty) || 0,
+          unit: " " + (i.unit || "g/L"),
+          palette: paletteForIndex(idx + 2)
+        });
+      });
+
+      return channels;
+    }
+
+    function openLotCreator(recipeId=null){
+      const rid = recipeId || state.selectedRecipeId || state.recipes[0]?.id || "";
+      if(!state.recipes.length){
+        alert("Prima crea una ricetta.");
+        return;
+      }
+
+      const recipe = getRecipe(rid);
+      if(!recipe){
+        alert("Ricetta non trovata.");
+        return;
+      }
+
+      const name = prompt("Nome lotto", recipe.name + " LOTTO");
+      if(name === null) return;
+      const code = prompt("Codice lotto", "") || "";
+      const volume = Number(prompt("Volume litri", "20")) || 0;
+
+      const lot = {
+        id: uid("lot"),
+        recipeId: recipe.id,
+        recipeName: recipe.name,
+        name: name || recipe.name + " LOTTO",
+        code,
+        type: recipeTypeLabel(recipe.type),
+        stage: "programmato",
+        volume,
+        date: today(),
+        culture: recipe.culture || "",
+        recipeText: `Base: ${recipe.base || "-"} · ` + recipe.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        notes: recipe.notes || "",
+        channels: recipeToChannels(recipe)
+      };
+
+      state.lots.unshift(lot);
+      state.selectedLotId = lot.id;
+      saveState();
+      renderAll();
+      showSection("lots");
+    }
+
+    function saveLotMeta(){
+      const lot = currentLot();
+      if(!lot) return;
+      const nameEl = document.getElementById("lot_name");
+      if(nameEl){
+        lot.name = nameEl.value.trim() || lot.name;
+        lot.code = document.getElementById("lot_code").value.trim();
+        lot.type = document.getElementById("lot_type").value.trim() || lot.type;
+        lot.stage = document.getElementById("lot_stage").value;
+        lot.volume = Number(document.getElementById("lot_volume").value) || 0;
+        lot.date = document.getElementById("lot_date").value || today();
+        lot.culture = document.getElementById("lot_culture").value.trim();
+        lot.recipeText = document.getElementById("lot_recipe_text").value.trim();
+        lot.notes = document.getElementById("lot_notes").value.trim();
+        saveState();
+        renderAll();
+      }
+    }
+
+    function selectLot(id){
+      state.selectedLotId = id;
+      saveState();
+      renderAll();
+    }
+
+    function deleteLot(id){
+      if(!confirm("Eliminare questo lotto?")) return;
+      state.lots = state.lots.filter(l => l.id !== id);
+      if(state.selectedLotId === id) state.selectedLotId = state.lots[0]?.id || null;
+      if(state.bankA === id) state.bankA = null;
+      if(state.bankB === id) state.bankB = null;
+      saveState();
+      renderAll();
+    }
+
+    function formatChannelValue(ch){
+      const step = Number(ch.step);
+      if(step >= 1) return num(ch.value,0) + (ch.unit || "");
+      if(step >= 0.1) return num(ch.value,1) + (ch.unit || "");
+      if(step >= 0.01) return num(ch.value,2) + (ch.unit || "");
+      return num(ch.value,3) + (ch.unit || "");
+    }
+
+    function buildVU(count){
+      let html = "";
+      for(let i=1;i<=16;i++){
+        let cls = "vuSeg";
+        if(i <= count){
+          cls += i <= 10 ? " g" : i <= 13 ? " a" : " r";
+        }
+        html += `<div class="${cls}"></div>`;
+      }
+      return html;
+    }
+
+    function renderMixer(){
+      const lot = mixerLot();
+      document.getElementById("mixer_title").textContent = lot ? (lot.stage || "READY").toUpperCase() : "XA MIXER";
+      document.getElementById("mixer_sub").textContent = lot ? "Solo mixer." : "Apri o crea un lotto.";
+      document.getElementById("mixer_lot_name").textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
+      document.getElementById("mixer_lot_meta").textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${lot.recipeName || "-"} · ${lot.channels.length} canali` : "Apri o crea un lotto.";
+      document.getElementById("mixer_badge_type").textContent = "Tipo " + (lot?.type || "-");
+      document.getElementById("mixer_badge_stage").textContent = "Stato " + (lot?.stage || "-");
+      document.getElementById("mixer_badge_channels").textContent = "Canali " + (lot?.channels?.length || 0);
+
+      const compactBtn = document.getElementById("compactMixerBtn");
+      compactBtn.textContent = document.body.classList.contains("mixer-compact") ? "NORMALE" : "RIDUCI";
+
+      const board = document.getElementById("mixerBoard");
+      if(!lot){
+        board.innerHTML = `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
+        return;
+      }
+
+      board.innerHTML = lot.channels.map((ch, index) => {
+        const pct = Math.max(0, Math.min(100, ((Number(ch.value)-Number(ch.min)) / ((Number(ch.max)-Number(ch.min)) || 1)) * 100));
+        const palette = ch.palette || paletteForIndex(index);
+        return `
+          <div class="channel ${palette}">
+            <div class="channelTop">
+              <div class="channelType">${escapeHtml(ch.type)}</div>
+              <button class="tinyIconBtn" onclick="editChannel('${ch.id}')">✎</button>
+            </div>
+
+            <div class="miniLcd">
+              <div class="lbl">Value</div>
+              <div class="val">${formatChannelValue(ch)}</div>
+            </div>
+
+            <div class="knob"></div>
+            <div class="tinyMeter"><div class="tinyFill" style="width:${pct}%"></div></div>
+
+            <div class="faderWrap">
+              <div class="vu">${buildVU(Math.round((pct/100)*16))}</div>
+              <div class="track">
+                <input type="range" min="${ch.min}" max="${ch.max}" step="${ch.step}" value="${ch.value}" oninput="updateChannel('${ch.id}', this.value)" />
+              </div>
+            </div>
+
+            <div class="channelButtons">
+              <button class="miniBtn" onclick="nudgeChannel('${ch.id}', -1)">-</button>
+              <button class="miniBtn gold" onclick="nudgeChannel('${ch.id}', 1)">+</button>
+            </div>
+
+            <div class="channelFooterName">${escapeHtml(ch.name)}</div>
+            <button class="channelEditWide" onclick="editChannel('${ch.id}')">Modifica</button>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function updateChannel(id, value){
+      const lot = mixerLot();
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
+      ch.value = Number(value);
+      saveState();
+      renderMixer();
+    }
+
+    function nudgeChannel(id, dir){
+      const lot = mixerLot();
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
+      ch.value = Number(ch.value) + (Number(ch.step) * dir);
+      if(ch.value < Number(ch.min)) ch.value = Number(ch.min);
+      if(ch.value > Number(ch.max)) ch.value = Number(ch.max);
+      saveState();
+      renderMixer();
+    }
+
+    function editChannel(id){
+      const lot = mixerLot();
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
+
+      const name = prompt("Nome ingrediente / parametro", ch.name);
+      if(name === null) return;
+      const value = prompt("Valore attuale", ch.value);
+      if(value === null) return;
+      const unit = prompt("Unità", String(ch.unit || "").trim());
+      if(unit === null) return;
+      const min = prompt("Valore minimo", ch.min);
+      if(min === null) return;
+      const max = prompt("Valore massimo", ch.max);
+      if(max === null) return;
+      const step = prompt("Step", ch.step);
+      if(step === null) return;
+
+      ch.name = name;
+      ch.value = Number(value);
+      ch.unit = unit ? " " + unit : "";
+      ch.min = Number(min);
+      ch.max = Number(max);
+      ch.step = Number(step);
+
+      saveState();
+      renderMixer();
+      renderAll();
+    }
+
+    function openAddChannel(){
+      const lot = mixerLot();
+      if(!lot) return;
+
+      const name = prompt("Nome canale");
+      if(!name) return;
+      const type = prompt("Tipo canale", "ingrediente") || "ingrediente";
+      const min = Number(prompt("Valore minimo", "0")) || 0;
+      const max = Number(prompt("Valore massimo", "10")) || 10;
+      const step = Number(prompt("Step", "0.1")) || 0.1;
+      const value = Number(prompt("Valore iniziale", "1")) || 1;
+      const unit = prompt("Unità", "g/L") || "g/L";
+
+      lot.channels.push({
+        id: uid("ch"),
+        key: name.toLowerCase().replace(/\s+/g,"_"),
+        name,
+        type,
+        min,
+        max,
+        step,
+        value,
+        unit:" " + unit,
+        palette: paletteForIndex(lot.channels.length + 1)
+      });
+      saveState();
+      renderMixer();
+      renderAll();
+    }
+
+    function assignBank(bank){
+      const lot = mixerLot();
+      if(!lot) return;
+      if(bank === "A") state.bankA = lot.id;
+      if(bank === "B") state.bankB = lot.id;
+      saveState();
+    }
+
+    function setBank(bank){
+      state.activeBank = bank;
+      saveState();
+    }
+
+    function saveScene(){
+      const lot = mixerLot();
+      if(!lot) return;
+      state.scenes.push({
+        id: uid("scene"),
+        name: "SCENA " + (lot.name || "LOTTO"),
+        date: today(),
+        channels: JSON.parse(JSON.stringify(lot.channels))
+      });
+      saveState();
+      renderAll();
+      renderMixer();
+      alert("Scena salvata.");
+    }
+
+    function openMixerPageForLot(lotId){
+      const url = new URL(window.location.href);
+      url.searchParams.set("view","mixer");
+      url.searchParams.set("lot", lotId);
+      window.location.href = url.toString();
+    }
+
+    function openMixerPage(){
+      const lot = currentLot();
+      if(!lot){
+        alert("Seleziona prima un lotto.");
+        return;
+      }
+      openMixerPageForLot(lot.id);
+    }
+
+    function goBackToMain(){
+      const url = new URL(window.location.href);
+      url.searchParams.delete("view");
+      url.searchParams.delete("lot");
+      window.location.href = url.toString();
+    }
+
+    function exportBackup(){
+      const blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "xa-fermentation-backup.json";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function importBackup(file){
+      const reader = new FileReader();
+      reader.onload = e => {
+        try{
+          state = JSON.parse(e.target.result);
+          saveState();
+          init();
+        }catch(err){
+          alert("Backup non valido.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetAll(){
+      if(!confirm("Cancellare tutti i dati?")) return;
+      state = getDefaultState();
+      saveState();
+      init();
+    }
+
+    function loadDemo(){
+      state = getDefaultState();
+
+      const recipe1 = {
+        id: uid("recipe"),
+        type: "sidro",
+        name: "SIDRO XA ASSAM PEPE",
+        base: "Succo di mela",
+        style: "Secco speziato",
+        culture: "Hornindal Kveik",
+        notes: "Prova demo leggibile.",
+        image: "",
+        ingredients: [
+          {category:"te", name:"Assam", qty:3, unit:"g/L", note:"nero, maltato"},
+          {category:"pepe", name:"Pepe cubebe", qty:0.2, unit:"g/L", note:"balsamico"},
+          {category:"botaniche", name:"China", qty:0.5, unit:"g/L", note:"amaro tonic"}
+        ],
+        params: [
+          {key:"param_ph_start",name:"pH iniziale",type:"acidità",min:2.5,max:6,step:0.01,value:3.40,unit:""},
+          {key:"param_og",name:"OG",type:"densità iniziale",min:1,max:1.12,step:0.001,value:1.048,unit:""},
+          {key:"param_temp",name:"Temperatura",type:"temperatura",min:0,max:40,step:0.1,value:22,unit:"°C"}
+        ]
+      };
+
+      state.recipes = [recipe1];
+      state.selectedRecipeId = recipe1.id;
+
+      const lot1 = {
+        id: uid("lot"),
+        recipeId: recipe1.id,
+        recipeName: recipe1.name,
+        name: "SIDRO XA LOTTO 01",
+        code: "XA-SID-01",
+        type: recipeTypeLabel(recipe1.type),
+        stage: "primaria",
+        volume: 24,
+        date: today(),
+        culture: recipe1.culture,
+        recipeText: `Base: ${recipe1.base} · ` + recipe1.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        notes: recipe1.notes,
+        channels: recipeToChannels(recipe1)
+      };
+
+      state.lots = [lot1];
+      state.selectedLotId = lot1.id;
+      saveState();
+      init();
+    }
+
+    function applyCompactMixerState(){
+      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
+      document.body.classList.toggle("mixer-compact", compact);
+      const btn = document.getElementById("compactMixerBtn");
+      if(btn) btn.textContent = compact ? "NORMALE" : "RIDUCI";
+    }
+
+    function toggleCompactMixer(){
+      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
+      localStorage.setItem(MIXER_COMPACT_KEY, compact ? "0" : "1");
+      applyCompactMixerState();
+      renderMixer();
+    }
+
+    function initNormal(){
+      ensureSelected();
+      document.getElementById("app-normal").classList.remove("hidden");
+      document.getElementById("app-mixer-only").classList.add("hidden");
+      showSection("home");
+      renderAll();
+    }
+
+    function initMixer(){
+      document.getElementById("app-normal").classList.add("hidden");
+      document.getElementById("app-mixer-only").classList.remove("hidden");
+      applyCompactMixerState();
+      renderMixer();
+    }
+
+    function renderAll(){
+      renderStats();
+      renderHomeRecipes();
+      renderRecipes();
+      renderHomeLots();
+      renderLots();
+      renderLotMeta();
+      renderScenes();
+    }
+
+    function init(){
+      if(isMixerMode()) initMixer();
+      else initNormal();
+    }
+
+    document.getElementById("demoBtn").addEventListener("click", loadDemo);
+    document.getElementById("exportBtn").addEventListener("click", exportBackup);
+    document.getElementById("importBtn").addEventListener("click", ()=>document.getElementById("importFile").click());
+    document.getElementById("importFile").addEventListener("change", e => {
+      const file = e.target.files[0];
+      if(file) importBackup(file);
+    });
+    document.getElementById("newRecipeBtnTop").addEventListener("click", ()=>openRecipeEditor());
+    document.getElementById("newLotBtnTop").addEventListener("click", ()=>openLotCreator());
+    document.getElementById("openMixerBtnTop").addEventListener("click", openMixerPage);
+    document.getElementById("resetBtn").addEventListener("click", resetAll);
+    document.getElementById("saveRecipeBtn").addEventListener("click", saveRecipe);
+    document.getElementById("saveRecipeBtnBottom").addEventListener("click", saveRecipe);
+    document.getElementById("addIngredientBtn").addEventListener("click", ()=>{
+      document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({}));
+      renderLiveRecipePreview();
+    });
+    document.getElementById("saveLotMetaBtn").addEventListener("click", saveLotMeta);
+    document.getElementById("recipe_image_file").addEventListener("change", e => {
+      const file = e.target.files && e.target.files[0];
+      if(file) handleRecipeImageFile(file);
+    });
+
+    init();
+  </script>
+</body>
+</html>
