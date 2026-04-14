@@ -3,34 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation VST Mixer</title>
+  <title>XA Fermentation Ultra Pro Mixer</title>
   <style>
     :root{
-      --bg:#07090c;
-      --bg2:#0d1117;
-      --panel:#131922;
-      --panel2:#1b2430;
-      --panel3:#222c39;
-      --line:#334152;
+      --bg:#06080b;
+      --bg2:#0b1016;
+      --steel:#18202a;
+      --steel2:#232d39;
+      --steel3:#2c3744;
+      --panel:#11171e;
+      --panel2:#151c24;
+      --line:#3a4756;
+      --line2:#566578;
       --text:#eef4fa;
       --muted:#95a3b4;
-      --gold:#d3af6d;
+      --gold:#d2ae6d;
       --gold2:#f0d49b;
-      --green:#55df8b;
-      --red:#ff6c6c;
+      --green:#59e18f;
+      --red:#ff6d6d;
       --blue:#7ebcff;
-      --amber:#ffcf6a;
-      --shadow:0 18px 40px rgba(0,0,0,.35);
-      --radius:24px;
+      --amber:#ffcf69;
+      --lcd:#97ff7b;
+      --lcd-bg:#0a1608;
+      --shadow:0 18px 40px rgba(0,0,0,.38);
+      --radius:26px;
     }
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{
       margin:0;padding:0;
       background:
-        radial-gradient(circle at top left, rgba(240,212,155,.06), transparent 20%),
-        radial-gradient(circle at top right, rgba(126,188,255,.06), transparent 18%),
-        linear-gradient(180deg,#06080b,#0c1016 70%, #0a0d12);
+        radial-gradient(circle at 15% 0%, rgba(240,212,155,.06), transparent 22%),
+        radial-gradient(circle at 85% 0%, rgba(126,188,255,.06), transparent 22%),
+        linear-gradient(180deg,#06080b 0%, #0b1016 55%, #090d12 100%);
       color:var(--text);
       font-family:Inter,Arial,sans-serif;
     }
@@ -39,47 +44,410 @@
     button,input,select,textarea{font:inherit}
     button{cursor:pointer;border:none}
 
-    .app{max-width:1700px;margin:0 auto;padding:14px}
+    .app{max-width:1850px;margin:0 auto;padding:14px}
 
     .topbar{
-      position:sticky;top:0;z-index:70;
+      position:sticky;top:0;z-index:90;
       margin:-14px -14px 14px;
       padding:14px;
       backdrop-filter:blur(14px);
-      background:rgba(8,10,13,.93);
+      background:rgba(8,10,13,.94);
       border-bottom:1px solid rgba(255,255,255,.05);
     }
     .topbarInner{
-      max-width:1700px;margin:0 auto;
+      max-width:1850px;margin:0 auto;
       display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
     }
     .brand{display:flex;gap:14px;align-items:center}
     .logo{
-      width:62px;height:62px;border-radius:20px;
+      width:64px;height:64px;border-radius:20px;
       display:grid;place-items:center;
-      font-size:24px;font-weight:900;color:#111;
-      background:radial-gradient(circle at 30% 30%,#f7e3ba 0%,#d9b774 38%,#8d6a36 70%,#3d2b16 100%);
-      box-shadow:inset 0 2px 8px rgba(255,255,255,.25),0 8px 20px rgba(0,0,0,.35);
+      font-size:25px;font-weight:900;color:#111;
+      background:radial-gradient(circle at 30% 30%,#f8e4bc 0%,#d9b774 38%,#8d6a36 70%,#3e2b16 100%);
+      box-shadow:
+        inset 0 2px 8px rgba(255,255,255,.25),
+        inset 0 -8px 16px rgba(0,0,0,.18),
+        0 8px 22px rgba(0,0,0,.35);
     }
     .brand h1{font-size:24px;font-weight:900;letter-spacing:.14em}
     .brand p{margin-top:4px;font-size:12px;color:var(--muted);letter-spacing:.12em}
 
     .actions{display:flex;gap:8px;flex-wrap:wrap}
     .btn,.btnGold,.btnDanger{
-      border-radius:14px;padding:12px 14px;font-weight:800;
-      border:1px solid var(--line);box-shadow:var(--shadow)
+      border-radius:14px;padding:12px 14px;font-weight:900;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      transition:.14s transform ease;
     }
-    .btn{background:linear-gradient(180deg,#202936,#141b24);color:var(--text)}
-    .btnGold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c8a15a}
-    .btnDanger{background:linear-gradient(180deg,#6a2929,#451818);color:#ffd4d4;border-color:#7b3131}
+    .btn:active,.btnGold:active,.btnDanger:active{transform:scale(.98)}
+    .btn{
+      color:var(--text);
+      background:
+        linear-gradient(180deg,#26313e 0%, #1a212b 48%, #141a22 100%);
+    }
+    .btnGold{
+      color:#111;
+      border-color:#c7a15a;
+      background:
+        linear-gradient(180deg,var(--gold2) 0%, var(--gold) 100%);
+    }
+    .btnDanger{
+      color:#ffd4d4;
+      border-color:#7c3131;
+      background:
+        linear-gradient(180deg,#6d2a2a 0%, #451818 100%);
+    }
 
     .section{display:none}
     .section.active{display:block}
 
-    .page{
+    .consoleShell{
+      position:relative;
+      border-radius:34px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.06);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        linear-gradient(180deg,#1b232d 0%, #121820 100%);
+    }
+
+    .consoleScrews .screw{
+      position:absolute;
+      width:18px;height:18px;border-radius:50%;
+      background:
+        radial-gradient(circle at 30% 30%, #d9dee4 0%, #8d99a4 38%, #4e5966 70%, #2a3139 100%);
+      border:1px solid #74808c;
+      box-shadow:inset 0 1px 2px rgba(255,255,255,.4),0 2px 4px rgba(0,0,0,.35);
+      z-index:3;
+    }
+    .consoleScrews .s1{top:12px;left:12px}
+    .consoleScrews .s2{top:12px;right:12px}
+    .consoleScrews .s3{bottom:12px;left:12px}
+    .consoleScrews .s4{bottom:12px;right:12px}
+
+    .consoleTop{
+      padding:18px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background:
+        linear-gradient(180deg,#222c38 0%, #171e27 55%, #121820 100%);
       display:grid;
+      grid-template-columns:1.15fr .85fr;
       gap:14px;
     }
+
+    .masterPanel,.infoPanel{
+      border-radius:24px;
+      padding:18px;
+      background:
+        linear-gradient(180deg,#1d2530 0%, #131921 100%);
+      border:1px solid var(--line);
+      position:relative;
+      overflow:hidden;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -10px 20px rgba(0,0,0,.18);
+    }
+
+    .masterPanel::before,.infoPanel::before{
+      content:"";
+      position:absolute;left:0;right:0;top:0;height:1px;
+      background:rgba(255,255,255,.08);
+    }
+
+    .masterLabel{
+      font-size:12px;color:var(--muted);
+      letter-spacing:.14em;text-transform:uppercase;
+    }
+
+    .lcdScreen{
+      margin-top:10px;
+      border-radius:18px;
+      padding:16px 18px;
+      border:1px solid #355530;
+      background:
+        linear-gradient(180deg,#11200f 0%, #0a1608 100%);
+      box-shadow:
+        inset 0 0 24px rgba(151,255,123,.08),
+        inset 0 0 8px rgba(151,255,123,.10),
+        0 0 20px rgba(0,0,0,.18);
+    }
+    .lcdMain{
+      font-size:52px;line-height:.92;font-weight:900;
+      color:var(--lcd);
+      letter-spacing:.04em;
+      text-shadow:0 0 10px rgba(151,255,123,.15);
+    }
+    .lcdSub{
+      color:#b7ff9f;
+      font-size:13px;line-height:1.5;margin-top:8px;
+      opacity:.9;
+    }
+
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+    .badgeRow{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{
+      padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;
+      border:1px solid #384554;background:#11161d;color:var(--text);
+    }
+    .badge.gold{background:rgba(211,175,109,.12);color:#f0d49b;border-color:rgba(211,175,109,.28)}
+    .badge.green{background:rgba(89,225,143,.12);color:#b7ffd3;border-color:rgba(89,225,143,.28)}
+    .badge.blue{background:rgba(126,188,255,.12);color:#d8ebff;border-color:rgba(126,188,255,.28)}
+    .badge.red{background:rgba(255,109,109,.12);color:#ffc7c7;border-color:rgba(255,109,109,.28)}
+
+    .smallText{font-size:13px;color:var(--muted);line-height:1.5;margin-top:10px}
+
+    .ledRow{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+    .led{
+      width:14px;height:14px;border-radius:999px;
+      background:#202733;border:1px solid #374250;
+      box-shadow:inset 0 -2px 4px rgba(0,0,0,.4);
+    }
+    .led.green{background:radial-gradient(circle,#b8ffd5 0%,#45d97d 55%,#1b7a45 100%)}
+    .led.red{background:radial-gradient(circle,#ffc2c2 0%,#ff6565 55%,#8b2929 100%)}
+    .led.amber{background:radial-gradient(circle,#fff0bf 0%,#ffca4d 55%,#8b6518 100%)}
+    .led.blue{background:radial-gradient(circle,#d7e9ff 0%,#7dbbff 55%,#285d92 100%)}
+
+    .mixerHeader{
+      padding:12px 16px;
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      background:
+        linear-gradient(180deg,#1a222c 0%, #121820 100%);
+    }
+
+    .mixerViewport{
+      overflow-x:auto;
+      overflow-y:hidden;
+      padding:16px;
+      background:
+        linear-gradient(180deg,#10151b 0%, #0b0f14 100%);
+    }
+    .mixerViewport::-webkit-scrollbar{height:12px}
+    .mixerViewport::-webkit-scrollbar-track{background:#0d1116;border-radius:999px}
+    .mixerViewport::-webkit-scrollbar-thumb{
+      background:linear-gradient(90deg,#2a3442,#4a5a6c);
+      border-radius:999px;
+    }
+
+    .mixerBoard{
+      display:flex;
+      gap:14px;
+      align-items:stretch;
+      min-width:max-content;
+    }
+
+    .channel{
+      width:180px;
+      border-radius:26px;
+      padding:12px;
+      background:
+        linear-gradient(180deg,#334150 0%, #242f3b 18%, #171f28 60%, #121820 100%);
+      border:1px solid #455567;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.06),
+        inset 0 -14px 22px rgba(0,0,0,.25),
+        0 10px 22px rgba(0,0,0,.22);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .channel::before{
+      content:"";
+      position:absolute;left:0;right:0;top:0;height:44px;
+      background:linear-gradient(180deg,rgba(255,255,255,.06),transparent);
+      pointer-events:none;
+    }
+
+    .stripScrew{
+      position:absolute;
+      width:12px;height:12px;border-radius:50%;
+      background:
+        radial-gradient(circle at 30% 30%, #d9dee4 0%, #8d99a4 38%, #4e5966 70%, #2a3139 100%);
+      border:1px solid #74808c;
+      box-shadow:inset 0 1px 2px rgba(255,255,255,.35),0 2px 4px rgba(0,0,0,.35);
+    }
+    .stripScrew.a{top:8px;left:8px}
+    .stripScrew.b{top:8px;right:8px}
+
+    .channelTop{
+      width:100%;
+      display:flex;justify-content:space-between;align-items:flex-start;gap:8px;
+      margin-bottom:8px;
+      position:relative;z-index:2;
+    }
+
+    .channelNameWrap{flex:1;min-width:0}
+    .channelName{
+      font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .channelType{
+      font-size:10px;color:var(--muted);margin-top:4px;
+      text-transform:uppercase;letter-spacing:.1em
+    }
+
+    .tinyIconBtn{
+      width:30px;height:30px;border-radius:10px;
+      background:
+        linear-gradient(180deg,#2b3642 0%, #1a212b 100%);
+      color:#d9e2ec;border:1px solid #4a5868;font-weight:900;
+      box-shadow:0 4px 10px rgba(0,0,0,.2);
+      flex:0 0 auto;
+    }
+
+    .miniLcd{
+      width:100%;
+      border-radius:14px;
+      background:
+        linear-gradient(180deg,#12200f 0%, #0b1508 100%);
+      border:1px solid #355530;
+      padding:10px 8px;
+      text-align:center;
+      box-shadow:inset 0 0 10px rgba(151,255,123,.08);
+      position:relative;z-index:2;
+    }
+    .miniLcd .lbl{
+      font-size:10px;color:#baffab;letter-spacing:.1em;text-transform:uppercase
+    }
+    .miniLcd .val{
+      font-size:20px;font-weight:900;margin-top:3px;color:var(--lcd)
+    }
+
+    .knob{
+      width:76px;height:76px;border-radius:50%;
+      margin:12px 0 10px;
+      background:
+        radial-gradient(circle at 30% 30%,#5a6673 0%,#39434e 32%,#232a33 58%,#151a20 100%);
+      border:2px solid #536172;
+      position:relative;
+      box-shadow:
+        inset 0 2px 10px rgba(255,255,255,.08),
+        inset 0 -8px 14px rgba(0,0,0,.42),
+        0 8px 18px rgba(0,0,0,.28);
+      z-index:2;
+    }
+    .knob::after{
+      content:"";
+      position:absolute;left:50%;top:8px;transform:translateX(-50%);
+      width:8px;height:22px;border-radius:999px;
+      background:linear-gradient(180deg,var(--gold2),var(--gold));
+      box-shadow:0 0 8px rgba(240,212,155,.2);
+    }
+
+    .tinyMeter{
+      width:84%;height:10px;border-radius:999px;
+      background:#0c1014;border:1px solid #2f3a47;overflow:hidden;
+      margin-bottom:10px;z-index:2;
+    }
+    .tinyFill{
+      height:100%;width:0%;
+      background:linear-gradient(90deg,#32d777,#9dffbf);
+    }
+
+    .faderWrap{
+      width:100%;flex:1;
+      display:grid;grid-template-columns:20px 1fr;gap:10px;
+      align-items:stretch;
+      z-index:2;
+    }
+
+    .vu{
+      border-radius:14px;border:1px solid #344250;
+      background:
+        linear-gradient(180deg,#0d1116 0%, #141a22 100%);
+      padding:6px 4px;
+      display:flex;flex-direction:column-reverse;gap:3px;align-items:center;
+    }
+    .vuSeg{
+      width:8px;height:14px;border-radius:4px;
+      background:#242c35;border:1px solid #313b46;
+    }
+    .vuSeg.g{background:linear-gradient(180deg,#8dffba,#31d872)}
+    .vuSeg.a{background:linear-gradient(180deg,#ffe5a0,#ffc74d)}
+    .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
+
+    .track{
+      border-radius:22px;border:1px solid #364352;
+      background:
+        linear-gradient(180deg,#0f1419 0%, #181f27 100%);
+      min-height:306px;
+      display:flex;justify-content:center;align-items:center;
+      position:relative;padding:14px 0;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -10px 20px rgba(0,0,0,.18);
+    }
+    .track::before{
+      content:"";
+      position:absolute;top:16px;bottom:16px;left:50%;transform:translateX(-50%);
+      width:8px;border-radius:999px;background:#11161c;border:1px solid #2f3944;
+    }
+
+    .track input[type=range]{
+      -webkit-appearance:none;appearance:none;
+      width:284px;height:32px;transform:rotate(-90deg);background:transparent;
+      position:relative;z-index:2;
+    }
+    .track input[type=range]::-webkit-slider-runnable-track{
+      height:12px;border-radius:999px;
+      background:linear-gradient(90deg,#1b2129,#10141a);
+      border:1px solid #394655;
+    }
+    .track input[type=range]::-webkit-slider-thumb{
+      -webkit-appearance:none;appearance:none;
+      width:52px;height:28px;border-radius:10px;margin-top:-8px;
+      border:1px solid #6a7888;
+      background:
+        linear-gradient(180deg,#ecf2f8 0%, #a8b4bf 46%, #717d89 47%, #d2dce5 100%);
+      box-shadow:
+        0 6px 14px rgba(0,0,0,.35),
+        inset 0 1px 2px rgba(255,255,255,.78);
+    }
+
+    .channelButtons{
+      width:100%;
+      display:grid;grid-template-columns:1fr 1fr;gap:8px;
+      margin-top:10px;
+      z-index:2;
+    }
+
+    .miniBtn{
+      border-radius:12px;padding:10px 8px;font-size:12px;font-weight:900;
+      background:
+        linear-gradient(180deg,#2a3441 0%, #181f28 100%);
+      color:var(--text);border:1px solid #475566;
+      box-shadow:0 4px 10px rgba(0,0,0,.18);
+    }
+    .miniBtn.gold{
+      background:linear-gradient(180deg,var(--gold2),var(--gold));
+      color:#111;border-color:#c7a15a
+    }
+
+    .addChannelCard{
+      width:188px;
+      border-radius:26px;
+      padding:16px;
+      background:
+        linear-gradient(180deg,#2a3440 0%, #171f28 100%);
+      border:1px dashed #526172;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;
+      min-height:590px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -10px 18px rgba(0,0,0,.18);
+    }
+    .addChannelCard .plus{
+      width:88px;height:88px;border-radius:26px;
+      display:grid;place-items:center;
+      font-size:44px;font-weight:900;color:#111;
+      background:linear-gradient(180deg,var(--gold2),var(--gold));
+      box-shadow:var(--shadow);
+    }
+    .addChannelCard h3{font-size:20px;font-weight:900;margin-top:14px}
+    .addChannelCard p{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+
+    .page{display:grid;gap:14px}
+    .layout2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
     .card{
       background:linear-gradient(180deg,#151c25,#10151c);
@@ -95,262 +463,9 @@
       background:linear-gradient(180deg,#1c2430,#141b24);
     }
     .cardHead h2{font-size:18px;font-weight:900;letter-spacing:.04em}
-    .sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
     .cardBody{padding:14px}
 
-    .consoleShell{
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
-        linear-gradient(180deg,#151c25,#10151c);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:30px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-    }
-
-    .consoleTop{
-      padding:14px;
-      border-bottom:1px solid rgba(255,255,255,.05);
-      background:linear-gradient(180deg,#1a222d,#131922);
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      gap:12px;
-    }
-
-    .masterBox,.consoleInfo{
-      border-radius:22px;
-      background:linear-gradient(180deg,#1c2430,#11161d);
-      border:1px solid var(--line);
-      padding:18px;
-      min-height:150px;
-    }
-
-    .masterLabel{
-      font-size:12px;color:var(--muted);
-      letter-spacing:.14em;text-transform:uppercase;
-    }
-    .masterText{
-      font-size:50px;line-height:.93;font-weight:900;margin-top:8px;
-      text-shadow:0 2px 14px rgba(255,255,255,.05);
-    }
-    .smallText{font-size:13px;color:var(--muted);line-height:1.5;margin-top:10px}
-
-    .toolbar{
-      display:flex;gap:8px;flex-wrap:wrap;margin-top:12px
-    }
-
-    .badgeRow{display:flex;gap:8px;flex-wrap:wrap}
-    .badge{
-      padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;
-      border:1px solid #384554;background:#11161d;color:var(--text);
-    }
-    .badge.gold{background:rgba(211,175,109,.12);color:#f0d49b;border-color:rgba(211,175,109,.28)}
-    .badge.green{background:rgba(85,223,139,.12);color:#b7ffd3;border-color:rgba(85,223,139,.28)}
-    .badge.blue{background:rgba(126,188,255,.12);color:#d8ebff;border-color:rgba(126,188,255,.28)}
-    .badge.red{background:rgba(255,108,108,.12);color:#ffc7c7;border-color:rgba(255,108,108,.28)}
-
-    .ledRow{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
-    .led{
-      width:14px;height:14px;border-radius:999px;
-      background:#202733;border:1px solid #374250;
-      box-shadow:inset 0 -2px 4px rgba(0,0,0,.4);
-    }
-    .led.green{background:radial-gradient(circle,#b8ffd5 0%,#45d97d 55%,#1b7a45 100%)}
-    .led.red{background:radial-gradient(circle,#ffc2c2 0%,#ff6565 55%,#8b2929 100%)}
-    .led.amber{background:radial-gradient(circle,#fff0bf 0%,#ffca4d 55%,#8b6518 100%)}
-    .led.blue{background:radial-gradient(circle,#d7e9ff 0%,#7dbbff 55%,#285d92 100%)}
-
-    .mixerHeader{
-      padding:12px 14px;
-      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-      border-bottom:1px solid rgba(255,255,255,.05);
-      background:linear-gradient(180deg,#151c25,#10151c);
-    }
-
-    .mixerViewport{
-      overflow-x:auto;
-      overflow-y:hidden;
-      padding:14px;
-      background:
-        linear-gradient(180deg,#0f141b,#0b0f14);
-    }
-    .mixerViewport::-webkit-scrollbar{height:12px}
-    .mixerViewport::-webkit-scrollbar-track{background:#0e1218;border-radius:999px}
-    .mixerViewport::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#293444,#435164);border-radius:999px}
-
-    .mixerBoard{
-      display:flex;
-      gap:12px;
-      align-items:stretch;
-      min-width:max-content;
-    }
-
-    .channel{
-      width:172px;
-      border-radius:24px;
-      padding:12px;
-      background:
-        linear-gradient(180deg,#26303b 0%, #1a222c 20%, #131922 100%);
-      border:1px solid #344253;
-      box-shadow:
-        inset 0 2px 10px rgba(255,255,255,.03),
-        inset 0 -8px 18px rgba(0,0,0,.28),
-        0 8px 22px rgba(0,0,0,.22);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      position:relative;
-    }
-
-    .channelTop{
-      width:100%;
-      display:flex;justify-content:space-between;align-items:flex-start;gap:8px;
-      margin-bottom:6px;
-    }
-    .channelNameWrap{flex:1;min-width:0}
-    .channelName{
-      font-size:13px;font-weight:900;letter-spacing:.09em;text-transform:uppercase;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    }
-    .channelType{
-      font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.1em
-    }
-
-    .tinyIconBtn{
-      width:30px;height:30px;border-radius:10px;
-      background:linear-gradient(180deg,#212b37,#141b23);
-      color:#d7e0ea;border:1px solid #3a4757;font-weight:900;
-      flex:0 0 auto;
-    }
-
-    .miniScreen{
-      width:100%;
-      border-radius:14px;
-      background:linear-gradient(180deg,#10151b,#0a0f14);
-      border:1px solid #33404f;
-      text-align:center;
-      padding:10px 8px;
-      margin-top:6px;
-    }
-    .miniScreen .lbl{
-      font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase
-    }
-    .miniScreen .val{
-      font-size:20px;font-weight:900;margin-top:3px
-    }
-
-    .knob{
-      width:74px;height:74px;border-radius:50%;
-      margin:12px 0 10px;
-      background:radial-gradient(circle at 30% 30%,#495562 0%,#313944 35%,#202730 60%,#151a20 100%);
-      border:2px solid #455161;position:relative;
-      box-shadow:inset 0 2px 10px rgba(255,255,255,.08),inset 0 -8px 14px rgba(0,0,0,.4),0 8px 18px rgba(0,0,0,.28);
-    }
-    .knob::after{
-      content:"";
-      position:absolute;left:50%;top:8px;transform:translateX(-50%);
-      width:8px;height:22px;border-radius:999px;
-      background:linear-gradient(180deg,var(--gold2),var(--gold));
-    }
-
-    .tinyMeter{
-      width:82%;height:10px;border-radius:999px;
-      background:#0d1116;border:1px solid #2e3946;overflow:hidden;
-      margin-bottom:10px;
-    }
-    .tinyFill{
-      height:100%;width:0%;
-      background:linear-gradient(90deg,#35d978,#9effbf);
-    }
-
-    .faderWrap{
-      width:100%;flex:1;
-      display:grid;grid-template-columns:18px 1fr;gap:10px;
-      align-items:stretch;
-    }
-
-    .vu{
-      border-radius:14px;border:1px solid #32404f;
-      background:linear-gradient(180deg,#0d1116,#141a22);
-      padding:6px 4px;
-      display:flex;flex-direction:column-reverse;gap:3px;align-items:center;
-    }
-    .vuSeg{
-      width:8px;height:14px;border-radius:4px;background:#242c35;border:1px solid #313b46;
-    }
-    .vuSeg.g{background:linear-gradient(180deg,#8dffba,#31d872)}
-    .vuSeg.a{background:linear-gradient(180deg,#ffe5a0,#ffc74d)}
-    .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
-
-    .track{
-      border-radius:20px;border:1px solid #334150;
-      background:linear-gradient(180deg,#0f1419,#171d25);
-      min-height:292px;
-      display:flex;justify-content:center;align-items:center;
-      position:relative;padding:14px 0;
-    }
-    .track input[type=range]{
-      -webkit-appearance:none;appearance:none;
-      width:272px;height:32px;transform:rotate(-90deg);background:transparent;
-    }
-    .track input[type=range]::-webkit-slider-runnable-track{
-      height:12px;border-radius:999px;
-      background:linear-gradient(90deg,#1c232c,#10141a);
-      border:1px solid #394655;
-    }
-    .track input[type=range]::-webkit-slider-thumb{
-      -webkit-appearance:none;appearance:none;
-      width:48px;height:26px;border-radius:10px;margin-top:-8px;
-      border:1px solid #687687;
-      background:linear-gradient(180deg,#e6edf4,#9ba8b5 46%,#6c7986 47%,#c6d0da 100%);
-      box-shadow:0 6px 14px rgba(0,0,0,.35),inset 0 1px 2px rgba(255,255,255,.7);
-    }
-
-    .channelButtons{
-      width:100%;
-      display:grid;grid-template-columns:1fr 1fr;gap:8px;
-      margin-top:10px;
-    }
-    .miniBtn{
-      border-radius:12px;padding:10px 8px;font-size:12px;font-weight:900;
-      background:linear-gradient(180deg,#212a35,#151b23);color:var(--text);border:1px solid #36414e;
-    }
-    .miniBtn.gold{
-      background:linear-gradient(180deg,var(--gold2),var(--gold));
-      color:#111
-    }
-
-    .addChannelCard{
-      width:186px;
-      border-radius:24px;
-      padding:14px;
-      background:
-        linear-gradient(180deg,#1f2833,#121821);
-      border:1px dashed #445365;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      min-height:560px;
-    }
-    .addChannelCard .plus{
-      width:84px;height:84px;border-radius:24px;
-      display:grid;place-items:center;
-      font-size:44px;font-weight:900;color:#111;
-      background:linear-gradient(180deg,var(--gold2),var(--gold));
-      box-shadow:var(--shadow);
-    }
-    .addChannelCard h3{font-size:20px;font-weight:900;margin-top:14px}
-    .addChannelCard p{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
-
-    .layout2{
-      display:grid;grid-template-columns:1fr 1fr;gap:14px;
-    }
-
-    .formGrid{
-      display:grid;grid-template-columns:repeat(2,1fr);gap:12px
-    }
+    .formGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
     .field{display:flex;flex-direction:column;gap:7px}
     .field label{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.05em}
     .input,.select,.textarea{
@@ -370,13 +485,13 @@
     .itemActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 
     .modal{
-      position:fixed;inset:0;z-index:100;
-      background:rgba(0,0,0,.68);
+      position:fixed;inset:0;z-index:110;
+      background:rgba(0,0,0,.70);
       display:none;align-items:flex-end;justify-content:center;padding:14px;
     }
     .modal.show{display:flex}
     .modalBox{
-      width:min(960px,100%);max-height:92vh;overflow:auto;
+      width:min(980px,100%);max-height:92vh;overflow:auto;
       border-radius:24px;background:linear-gradient(180deg,#181f28,#0f141a);
       border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);
     }
@@ -392,14 +507,14 @@
     }
 
     .dock{
-      position:fixed;left:0;right:0;bottom:0;z-index:80;
+      position:fixed;left:0;right:0;bottom:0;z-index:100;
       padding:10px 12px;
       background:rgba(8,10,13,.95);
       backdrop-filter:blur(14px);
       border-top:1px solid rgba(255,255,255,.05);
     }
     .dockInner{
-      max-width:1700px;margin:0 auto;
+      max-width:1850px;margin:0 auto;
       display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
     }
     .dockBtn{
@@ -418,10 +533,12 @@
 
     @media (max-width:1100px){
       .consoleTop,.layout2{grid-template-columns:1fr}
+      .lcdMain{font-size:40px}
     }
     @media (max-width:860px){
       .formGrid,.dockInner{grid-template-columns:1fr}
-      .masterText{font-size:38px}
+      .brand h1{font-size:20px}
+      .lcdMain{font-size:32px}
     }
   </style>
 </head>
@@ -433,7 +550,7 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>CONSOLE VST · MIXER LOTTI · SIDRO · FERMENTATI · LIBRERIE TECNICHE</p>
+            <p>ULTRA PRO MIXER · CONSOLE VST · SIDRO · FERMENTATI · LIBRERIE TECNICHE</p>
           </div>
         </div>
         <div class="actions">
@@ -450,11 +567,20 @@
     <!-- CONSOLE -->
     <section class="section active" id="sec-console">
       <div class="consoleShell">
+        <div class="consoleScrews">
+          <div class="screw s1"></div>
+          <div class="screw s2"></div>
+          <div class="screw s3"></div>
+          <div class="screw s4"></div>
+        </div>
+
         <div class="consoleTop">
-          <div class="masterBox">
-            <div class="masterLabel">Master display</div>
-            <div class="masterText" id="masterText">XA CONSOLE</div>
-            <div class="smallText" id="masterSub">Console mixer completa. Aggiungi canali come un plugin VST e lavora il lotto in modo visivo.</div>
+          <div class="masterPanel">
+            <div class="masterLabel">Master LCD</div>
+            <div class="lcdScreen">
+              <div class="lcdMain" id="masterText">XA CONSOLE</div>
+              <div class="lcdSub" id="masterSub">Modalità Ultra Pro Mixer. Scroll orizzontale, canali dinamici, aggiunta strip come un vero plugin audio.</div>
+            </div>
             <div class="toolbar">
               <button class="btnGold" id="saveMixerLotBtn">Salva lotto mixer</button>
               <button class="btn" id="addChannelBtn">+ Aggiungi canale</button>
@@ -462,9 +588,9 @@
             </div>
           </div>
 
-          <div class="consoleInfo">
+          <div class="infoPanel">
             <div class="masterLabel">Lotto selezionato</div>
-            <div style="font-size:30px;font-weight:900;margin-top:8px" id="lotDisplay">NESSUNO</div>
+            <div style="font-size:30px;font-weight:900;margin-top:10px" id="lotDisplay">NESSUNO</div>
             <div class="smallText" id="lotDisplayMeta">Crea o apri un lotto dalla sezione Lotti.</div>
             <div class="badgeRow" style="margin-top:12px">
               <span class="badge gold" id="badgeType">Tipo -</span>
@@ -483,13 +609,13 @@
 
         <div class="mixerHeader">
           <div>
-            <h2 style="margin:0;font-size:18px;font-weight:900;letter-spacing:.04em">Banco audio completo</h2>
-            <div class="sub">In Console vedi solo il mixer, canale per canale</div>
+            <h2 style="margin:0;font-size:18px;font-weight:900;letter-spacing:.04em">Banco audio Ultra Pro</h2>
+            <div class="sub">Quando premi Console vedi solo il mixer, grande, separato, orizzontale</div>
           </div>
           <div class="badgeRow">
-            <span class="badge">Scroll orizzontale</span>
-            <span class="badge">Canali dinamici</span>
-            <span class="badge">Stile VST</span>
+            <span class="badge">Fullscreen feel</span>
+            <span class="badge">Channel strips</span>
+            <span class="badge">Custom VST style</span>
           </div>
         </div>
 
@@ -524,7 +650,7 @@
           <div class="cardHead">
             <div>
               <h2>Scene console</h2>
-              <div class="sub">Preset e snapshot mixer</div>
+              <div class="sub">Snapshot del mixer</div>
             </div>
           </div>
           <div class="cardBody">
@@ -660,14 +786,14 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_vst_console_v2";
+    const STORAGE_KEY = "xa_ultra_pro_mixer_v1";
 
     const defaultChannelTemplates = [
-      { key:"ph", name:"pH", type:"Acidità", min:2.5, max:4.5, step:0.01, value:3.20, unit:"", meter:"green" },
-      { key:"temp", name:"TEMP", type:"Temperatura", min:0, max:40, step:0.1, value:22.0, unit:"°", meter:"amber" },
-      { key:"sg", name:"SG", type:"Densità", min:0.995, max:1.080, step:0.001, value:1.010, unit:"", meter:"blue" },
-      { key:"abv", name:"ABV", type:"Alcol", min:0, max:12, step:0.1, value:5.0, unit:"%", meter:"red" },
-      { key:"co2", name:"CO2", type:"Gasatura", min:0, max:4.5, step:0.1, value:2.5, unit:" vol", meter:"green" }
+      { key:"ph", name:"pH", type:"Acidità", min:2.5, max:4.5, step:0.01, value:3.20, unit:"" },
+      { key:"temp", name:"TEMP", type:"Temperatura", min:0, max:40, step:0.1, value:22.0, unit:"°" },
+      { key:"sg", name:"SG", type:"Densità", min:0.995, max:1.080, step:0.001, value:1.010, unit:"" },
+      { key:"abv", name:"ABV", type:"Alcol", min:0, max:12, step:0.1, value:5.0, unit:"%" },
+      { key:"co2", name:"CO2", type:"Gasatura", min:0, max:4.5, step:0.1, value:2.5, unit:" vol" }
     ];
 
     const libraryDefaults = {
@@ -780,8 +906,7 @@
         max: ch.max,
         step: ch.step,
         value: ch.value,
-        unit: ch.unit,
-        meter: ch.meter
+        unit: ch.unit
       }));
     }
 
@@ -835,6 +960,14 @@
       return Math.max(0, Math.min(100, ((val - min) / (max - min)) * 100));
     }
 
+    function formatChannelValue(ch){
+      const step = Number(ch.step);
+      if(step >= 1) return num(ch.value,0) + (ch.unit || "");
+      if(step >= 0.1) return num(ch.value,1) + (ch.unit || "");
+      if(step >= 0.01) return num(ch.value,2) + (ch.unit || "");
+      return num(ch.value,3) + (ch.unit || "");
+    }
+
     function renderMixer(){
       const board = document.getElementById("mixerBoard");
       const lot = currentLot();
@@ -844,7 +977,7 @@
           <div class="addChannelCard">
             <div class="plus">+</div>
             <h3>Crea un lotto</h3>
-            <p>Prima crea o apri un lotto. Poi qui vedrai il mixer completo con tutti i canali.</p>
+            <p>Prima crea o apri un lotto. Poi qui vedrai il mixer completo, separato e spettacolare.</p>
             <div class="toolbar" style="margin-top:14px">
               <button class="btnGold" onclick="openLotModal()">Nuovo lotto</button>
             </div>
@@ -854,24 +987,24 @@
       }
 
       const channels = Array.isArray(lot.channels) ? lot.channels : [];
-      board.innerHTML = channels.map((ch, idx)=>{
+      board.innerHTML = channels.map((ch)=>{
         const percent = channelPercent(ch);
-        const valueDisplay = Number(ch.step) >= 1 ? num(ch.value,0) : (Number(ch.step) >= 0.1 ? num(ch.value,1) : (Number(ch.step) >= 0.01 ? num(ch.value,2) : num(ch.value,3)));
-        const title = ch.name || "Channel";
-        const type = ch.type || "Custom";
         return `
           <div class="channel">
+            <div class="stripScrew a"></div>
+            <div class="stripScrew b"></div>
+
             <div class="channelTop">
               <div class="channelNameWrap">
-                <div class="channelName">${title}</div>
-                <div class="channelType">${type}</div>
+                <div class="channelName">${escapeHtml(ch.name || "CHANNEL")}</div>
+                <div class="channelType">${escapeHtml(ch.type || "Custom")}</div>
               </div>
               <button class="tinyIconBtn" onclick="openEditChannelModal('${ch.id}')">✎</button>
             </div>
 
-            <div class="miniScreen">
+            <div class="miniLcd">
               <div class="lbl">Value</div>
-              <div class="val">${valueDisplay}${ch.unit || ""}</div>
+              <div class="val">${formatChannelValue(ch)}</div>
             </div>
 
             <div class="knob"></div>
@@ -906,7 +1039,7 @@
         <div class="addChannelCard">
           <div class="plus">+</div>
           <h3>Aggiungi canale</h3>
-          <p>Crea un nuovo canale libero, come in un vero mixer/plugin.</p>
+          <p>Crea un nuovo parametro libero, come una strip VST vera.</p>
           <div class="toolbar" style="margin-top:14px">
             <button class="btnGold" onclick="openAddChannelModal()">Nuovo canale</button>
           </div>
@@ -919,7 +1052,7 @@
 
       if(!lot){
         document.getElementById("masterText").textContent = "XA CONSOLE";
-        document.getElementById("masterSub").textContent = "Console mixer completa. Aggiungi canali come un plugin VST e lavora il lotto in modo visivo.";
+        document.getElementById("masterSub").textContent = "Modalità Ultra Pro Mixer. Scroll orizzontale, canali dinamici, aggiunta strip come un vero plugin audio.";
         document.getElementById("lotDisplay").textContent = "NESSUNO";
         document.getElementById("lotDisplayMeta").textContent = "Crea o apri un lotto dalla sezione Lotti.";
         document.getElementById("badgeType").textContent = "Tipo -";
@@ -931,7 +1064,7 @@
       }
 
       document.getElementById("masterText").textContent = (lot.stage || "READY").toUpperCase();
-      document.getElementById("masterSub").textContent = "Mixer attivo. Scrolla i canali orizzontalmente e regola ogni parametro come una strip da banco audio.";
+      document.getElementById("masterSub").textContent = "Mixer attivo. In Console vedi solo la regia, con strip canale grandi, scorrevoli e modificabili.";
       document.getElementById("lotDisplay").textContent = (lot.name || "LOTTO SENZA NOME").toUpperCase();
       document.getElementById("lotDisplayMeta").textContent = `${lot.code || "-"} · ${lot.type || "-"} · ${num(lot.volume || 0,1)} L · ${lot.culture || "-"}`;
       document.getElementById("badgeType").textContent = "Tipo " + (lot.type || "-");
@@ -962,10 +1095,10 @@
 
       wrap.innerHTML = db.lots.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).map(l=>`
         <div class="item">
-          <div class="itemTitle">${l.name || "Lotto senza nome"}</div>
-          <div class="meta">${l.code || "-"} · ${l.type || "-"} · ${num(l.volume || 0,1)} L · ${l.date || "-"}</div>
+          <div class="itemTitle">${escapeHtml(l.name || "Lotto senza nome")}</div>
+          <div class="meta">${escapeHtml(l.code || "-")} · ${escapeHtml(l.type || "-")} · ${num(l.volume || 0,1)} L · ${escapeHtml(l.date || "-")}</div>
           <div class="badgeRow" style="margin-top:10px">
-            <span class="badge gold">${l.stage || "-"}</span>
+            <span class="badge gold">${escapeHtml(l.stage || "-")}</span>
             <span class="badge blue">Canali ${(l.channels || []).length}</span>
           </div>
           <div class="itemActions">
@@ -986,8 +1119,8 @@
 
       wrap.innerHTML = db.scenes.slice().reverse().map(s=>`
         <div class="item">
-          <div class="itemTitle">${s.name}</div>
-          <div class="meta">${s.date} · ${s.channels.length} canali salvati</div>
+          <div class="itemTitle">${escapeHtml(s.name)}</div>
+          <div class="meta">${escapeHtml(s.date)} · ${s.channels.length} canali salvati</div>
           <div class="itemActions">
             <button class="btnGold" onclick="applyScene('${s.id}')">Carica scena</button>
           </div>
@@ -1008,7 +1141,7 @@
             <div class="itemTitle">${prettyKey(k)}</div>
             <div class="meta">${items.length} elementi</div>
             <div class="badgeRow" style="margin-top:10px">
-              ${items.slice(0,5).map(i=>`<span class="badge">${i.name}</span>`).join("")}
+              ${items.slice(0,5).map(i=>`<span class="badge">${escapeHtml(i.name)}</span>`).join("")}
             </div>
             <div class="itemActions">
               <button class="btn" onclick="openLibraryModal('${k}')">Apri</button>
@@ -1117,11 +1250,6 @@
     }
 
     function saveMixerLot(){
-      const lot = currentLot();
-      if(!lot){
-        alert("Nessun lotto selezionato.");
-        return;
-      }
       saveLotDetails();
     }
 
@@ -1283,8 +1411,7 @@
         max,
         step: Number.isFinite(step) && step > 0 ? step : 0.1,
         value: Number.isFinite(value) ? value : min,
-        unit,
-        meter: "blue"
+        unit
       });
 
       saveDB();
@@ -1351,7 +1478,6 @@
 
       const min = Number(document.getElementById("editChMin").value);
       const max = Number(document.getElementById("editChMax").value);
-
       if(max <= min){
         alert("Max deve essere maggiore di min.");
         return;
@@ -1461,8 +1587,7 @@
         max: ch.max,
         step: ch.step,
         value: ch.value,
-        unit: ch.unit,
-        meter: "blue"
+        unit: ch.unit
       }));
 
       saveDB();
@@ -1479,8 +1604,8 @@
           <div class="list">
             ${items.length ? items.map((item, idx)=>`
               <div class="item">
-                <div class="itemTitle">${item.name}</div>
-                <div class="meta">${item.note || "-"}</div>
+                <div class="itemTitle">${escapeHtml(item.name)}</div>
+                <div class="meta">${escapeHtml(item.note || "-")}</div>
                 <div class="itemActions">
                   <button class="btnDanger" onclick="deleteLibraryItem('${key}',${idx})">Elimina</button>
                 </div>
@@ -1584,7 +1709,7 @@
       const blob = new Blob([JSON.stringify(db,null,2)], {type:"application/json"});
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "xa-fermentation-vst-backup.json";
+      a.download = "xa-ultra-pro-mixer-backup.json";
       a.click();
       URL.revokeObjectURL(a.href);
     }
@@ -1631,13 +1756,14 @@
       lot1.recipe = "Succo mela Golden, nutriente, lieve tannino";
       lot1.notes = "Profilo secco, brillante e preciso";
       lot1.channels = [
-        {id:uid("ch"),key:"ph",name:"pH",type:"Acidità",min:2.5,max:4.5,step:0.01,value:3.28,unit:"",meter:"green"},
-        {id:uid("ch"),key:"temp",name:"TEMP",type:"Temperatura",min:0,max:40,step:0.1,value:27.5,unit:"°",meter:"amber"},
-        {id:uid("ch"),key:"sg",name:"SG",type:"Densità",min:0.995,max:1.080,step:0.001,value:1.010,unit:"",meter:"blue"},
-        {id:uid("ch"),key:"abv",name:"ABV",type:"Alcol",min:0,max:12,step:0.1,value:5.5,unit:"%",meter:"red"},
-        {id:uid("ch"),key:"co2",name:"CO2",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.7,unit:" vol",meter:"green"},
-        {id:uid("ch"),key:"tannino",name:"TANNINO",type:"Struttura",min:0,max:10,step:0.1,value:4.2,unit:"",meter:"blue"},
-        {id:uid("ch"),key:"acidita",name:"MALICO",type:"Acido",min:0,max:10,step:0.1,value:3.6,unit:" g/L",meter:"blue"}
+        {id:uid("ch"),key:"ph",name:"pH",type:"Acidità",min:2.5,max:4.5,step:0.01,value:3.28,unit:""},
+        {id:uid("ch"),key:"temp",name:"TEMP",type:"Temperatura",min:0,max:40,step:0.1,value:27.5,unit:"°"},
+        {id:uid("ch"),key:"sg",name:"SG",type:"Densità",min:0.995,max:1.080,step:0.001,value:1.010,unit:""},
+        {id:uid("ch"),key:"abv",name:"ABV",type:"Alcol",min:0,max:12,step:0.1,value:5.5,unit:"%"},
+        {id:uid("ch"),key:"co2",name:"CO2",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.7,unit:" vol"},
+        {id:uid("ch"),key:"tannino",name:"TANNINO",type:"Struttura",min:0,max:10,step:0.1,value:4.2,unit:""},
+        {id:uid("ch"),key:"malico",name:"MALICO",type:"Acido",min:0,max:10,step:0.1,value:3.6,unit:" g/L"},
+        {id:uid("ch"),key:"nutriente",name:"NUTRIENTE",type:"Fermentazione",min:0,max:10,step:0.1,value:5.2,unit:""}
       ];
 
       const lot2 = createBlankLotData();
@@ -1650,13 +1776,14 @@
       lot2.recipe = "Succo mela, tè oolong, osmanthus";
       lot2.notes = "Fine dining, acidità pulita";
       lot2.channels = [
-        {id:uid("ch"),key:"ph",name:"pH",type:"Acidità",min:2.5,max:4.5,step:0.01,value:3.14,unit:"",meter:"green"},
-        {id:uid("ch"),key:"temp",name:"TEMP",type:"Temperatura",min:0,max:40,step:0.1,value:21.0,unit:"°",meter:"amber"},
-        {id:uid("ch"),key:"sg",name:"SG",type:"Densità",min:0.995,max:1.080,step:0.001,value:1.008,unit:"",meter:"blue"},
-        {id:uid("ch"),key:"abv",name:"ABV",type:"Alcol",min:0,max:12,step:0.1,value:1.8,unit:"%",meter:"red"},
-        {id:uid("ch"),key:"co2",name:"CO2",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.3,unit:" vol",meter:"green"},
-        {id:uid("ch"),key:"oolong",name:"OOLONG",type:"Tè",min:0,max:10,step:0.1,value:5.0,unit:"",meter:"blue"},
-        {id:uid("ch"),key:"osmanto",name:"OSMANTO",type:"Botanica",min:0,max:10,step:0.1,value:4.2,unit:"",meter:"blue"}
+        {id:uid("ch"),key:"ph",name:"pH",type:"Acidità",min:2.5,max:4.5,step:0.01,value:3.14,unit:""},
+        {id:uid("ch"),key:"temp",name:"TEMP",type:"Temperatura",min:0,max:40,step:0.1,value:21.0,unit:"°"},
+        {id:uid("ch"),key:"sg",name:"SG",type:"Densità",min:0.995,max:1.080,step:0.001,value:1.008,unit:""},
+        {id:uid("ch"),key:"abv",name:"ABV",type:"Alcol",min:0,max:12,step:0.1,value:1.8,unit:"%"},
+        {id:uid("ch"),key:"co2",name:"CO2",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.3,unit:" vol"},
+        {id:uid("ch"),key:"oolong",name:"OOLONG",type:"Tè",min:0,max:10,step:0.1,value:5.0,unit:""},
+        {id:uid("ch"),key:"osmanto",name:"OSMANTO",type:"Botanica",min:0,max:10,step:0.1,value:4.2,unit:""},
+        {id:uid("ch"),key:"lattico",name:"LATTICO",type:"Fermento",min:0,max:10,step:0.1,value:7.4,unit:""}
       ];
 
       db.lots = [lot1, lot2];
