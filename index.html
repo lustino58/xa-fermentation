@@ -3,67 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>XA Fermentation Pro Ultimate</title>
+  <title>XA Fermentation Pro</title>
   <style>
     :root{
-      --bg:#07090c;
-      --bg2:#0d1117;
-      --panel:#11171e;
-      --panel2:#171f29;
-      --panel3:#202a36;
-      --line:#354353;
+      --bg:#0b0f14;
+      --bg2:#10161d;
+      --panel:#151d26;
+      --panel2:#1b2430;
+      --line:#324050;
       --text:#eef4fa;
-      --muted:#96a4b4;
-      --gold:#d3af6d;
+      --muted:#9aacbd;
+      --gold:#d2ae6d;
       --gold2:#f0d49b;
-      --green:#57df8e;
+      --green:#56df8d;
       --red:#ff6e6e;
       --blue:#7ebcff;
-      --amber:#ffd168;
-      --purple:#b48fff;
-      --teal:#61dfd2;
-      --lcd:#98ff7c;
-      --shadow:0 18px 40px rgba(0,0,0,.38);
-      --radius:24px;
+      --amber:#ffd368;
+      --shadow:0 16px 36px rgba(0,0,0,.35);
+      --radius:22px;
+      --lcd:#99ff7e;
+      --lcd-bg:#0c1709;
     }
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{
       margin:0;padding:0;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(240,212,155,.06), transparent 22%),
-        radial-gradient(circle at 90% 0%, rgba(126,188,255,.06), transparent 22%),
-        linear-gradient(180deg,#06080b 0%, #0b1016 55%, #090d12 100%);
+      background:linear-gradient(180deg,#0a0e13,#10161d);
       color:var(--text);
       font-family:Inter,Arial,sans-serif;
     }
-    body{padding-bottom:92px}
+    body{padding-bottom:88px}
     h1,h2,h3,h4,p{margin:0}
     button,input,select,textarea{font:inherit}
     button{cursor:pointer;border:none}
-    .hidden{display:none!important}
 
-    .app{max-width:1900px;margin:0 auto;padding:14px}
+    .hidden{display:none !important}
+    .app{max-width:1700px;margin:0 auto;padding:14px}
 
     .topbar{
-      position:sticky;top:0;z-index:90;
+      position:sticky;top:0;z-index:50;
       margin:-14px -14px 14px;
       padding:14px;
-      backdrop-filter:blur(14px);
-      background:rgba(8,10,13,.94);
+      backdrop-filter:blur(12px);
+      background:rgba(10,13,17,.94);
       border-bottom:1px solid rgba(255,255,255,.05);
     }
     .topbarInner{
-      max-width:1900px;margin:0 auto;
+      max-width:1700px;margin:0 auto;
       display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
     }
+
     .brand{display:flex;gap:14px;align-items:center}
     .logo{
-      width:64px;height:64px;border-radius:20px;
+      width:62px;height:62px;border-radius:18px;
       display:grid;place-items:center;
-      font-size:25px;font-weight:900;color:#111;
-      background:radial-gradient(circle at 30% 30%,#f8e4bc 0%,#d9b774 38%,#8d6a36 70%,#3e2b16 100%);
-      box-shadow:inset 0 2px 8px rgba(255,255,255,.25),0 8px 22px rgba(0,0,0,.35);
+      font-size:24px;font-weight:900;color:#111;
+      background:radial-gradient(circle at 30% 30%,#f7e3ba 0%,#d9b774 38%,#8f6b36 70%,#3f2d17 100%);
+      box-shadow:inset 0 2px 8px rgba(255,255,255,.25),0 8px 20px rgba(0,0,0,.35);
     }
     .brand h1{font-size:24px;font-weight:900;letter-spacing:.14em}
     .brand p{margin-top:4px;font-size:12px;color:var(--muted);letter-spacing:.12em}
@@ -71,37 +67,24 @@
     .actions{display:flex;gap:8px;flex-wrap:wrap}
     .btn,.btnGold,.btnDanger,.btnMixer{
       border-radius:14px;padding:12px 14px;font-weight:900;
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-      transition:.14s transform ease;
+      border:1px solid var(--line);box-shadow:var(--shadow);
     }
-    .btn:active,.btnGold:active,.btnDanger:active,.btnMixer:active{transform:scale(.98)}
-    .btn{
-      color:var(--text);
-      background:linear-gradient(180deg,#26313e 0%, #1a212b 48%, #141a22 100%);
-    }
-    .btnGold{
-      color:#111;border-color:#c7a15a;
-      background:linear-gradient(180deg,var(--gold2) 0%, var(--gold) 100%);
-    }
-    .btnDanger{
-      color:#ffd4d4;border-color:#7c3131;
-      background:linear-gradient(180deg,#6d2a2a 0%, #451818 100%);
-    }
-    .btnMixer{
-      color:#111;border-color:#6be3c6;
-      background:linear-gradient(180deg,#bbfff1 0%, #66e7cf 100%);
-    }
+    .btn{background:linear-gradient(180deg,#26313e,#171f28);color:var(--text)}
+    .btnGold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c8a15a}
+    .btnDanger{background:linear-gradient(180deg,#6a2a2a,#431717);color:#ffd3d3;border-color:#7a3131}
+    .btnMixer{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111;border-color:#62ddc4}
 
     .section{display:none}
     .section.active{display:block}
+
     .page{display:grid;gap:14px}
     .layout2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .layout3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 
     .card{
       background:linear-gradient(180deg,#151c25,#10151c);
       border:1px solid rgba(255,255,255,.06);
-      border-radius:28px;
+      border-radius:26px;
       box-shadow:var(--shadow);
       overflow:hidden;
     }
@@ -109,28 +92,33 @@
       padding:14px 16px;
       display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
       border-bottom:1px solid rgba(255,255,255,.05);
-      background:linear-gradient(180deg,#1c2430,#141b24);
+      background:linear-gradient(180deg,#1d2530,#141b24);
     }
     .cardHead h2{font-size:18px;font-weight:900;letter-spacing:.04em}
     .sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
     .cardBody{padding:14px}
 
-    .heroGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .heroStat{
+    .statsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .stat{
       border-radius:20px;padding:16px;
-      background:linear-gradient(180deg,#1b2330,#131922);
+      background:linear-gradient(180deg,#1b2330,#121821);
       border:1px solid var(--line);
     }
-    .heroStat .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
-    .heroStat .v{font-size:28px;font-weight:900;margin-top:6px}
-    .heroStat .s{font-size:11px;color:var(--muted);margin-top:4px}
+    .stat .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+    .stat .v{font-size:30px;font-weight:900;margin-top:6px}
+    .stat .s{font-size:11px;color:var(--muted);margin-top:4px}
 
     .formGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
     .field{display:flex;flex-direction:column;gap:7px}
     .field label{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.05em}
     .input,.select,.textarea{
-      width:100%;padding:13px 14px;border-radius:14px;
-      background:#0f141a;color:var(--text);border:1px solid #313c49;outline:none;
+      width:100%;
+      padding:13px 14px;
+      border-radius:14px;
+      background:#0f141a;
+      color:var(--text);
+      border:1px solid #313c49;
+      outline:none;
     }
     .textarea{min-height:110px;resize:vertical}
 
@@ -151,58 +139,56 @@
       border:1px solid #384554;background:#11161d;color:var(--text);
     }
     .badge.gold{background:rgba(211,175,109,.12);color:#f0d49b;border-color:rgba(211,175,109,.28)}
-    .badge.green{background:rgba(89,225,143,.12);color:#b7ffd3;border-color:rgba(89,225,143,.28)}
+    .badge.green{background:rgba(86,223,141,.12);color:#b8ffd3;border-color:rgba(86,223,141,.28)}
     .badge.blue{background:rgba(126,188,255,.12);color:#d8ebff;border-color:rgba(126,188,255,.28)}
-    .badge.red{background:rgba(255,109,109,.12);color:#ffc7c7;border-color:rgba(255,109,109,.28)}
-    .badge.purple{background:rgba(180,143,255,.12);color:#eadcff;border-color:rgba(180,143,255,.28)}
-
-    .recipeIngredientRow,.recipeParamRow{
-      display:grid;
-      grid-template-columns:1fr 1fr .8fr .8fr .8fr auto;
-      gap:8px;
-      margin-top:8px;
-    }
-    .recipeParamRow{
-      grid-template-columns:1fr 1fr .8fr .8fr .8fr .8fr .8fr auto;
-    }
+    .badge.red{background:rgba(255,110,110,.12);color:#ffc9c9;border-color:rgba(255,110,110,.28)}
 
     .tableHead{
       display:grid;
+      gap:8px;
       font-size:11px;
       color:var(--muted);
       text-transform:uppercase;
       letter-spacing:.1em;
-      margin-bottom:6px;
+      margin-bottom:8px;
+    }
+    .ingredientRow{
+      display:grid;
+      grid-template-columns:1fr 1fr .7fr .7fr 1fr auto;
       gap:8px;
+      margin-top:8px;
+    }
+    .paramRow{
+      display:grid;
+      grid-template-columns:1fr 1fr .6fr .6fr .6fr .7fr .7fr auto;
+      gap:8px;
+      margin-top:8px;
     }
 
-    /* mixer page */
-    #sec-mixer{padding:0;margin:0}
-    .mixerPage{
-      min-height:100vh;
-      background:linear-gradient(180deg,#0a0f14 0%, #070a0f 100%);
-    }
+    /* mixer */
+    #sec-mixer{padding:0}
+    .mixerPage{min-height:100vh;background:linear-gradient(180deg,#090d12,#0e141b)}
     .mixerTopBar{
-      position:sticky;top:0;z-index:110;
+      position:sticky;top:0;z-index:60;
       display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
       padding:10px 12px;
       background:rgba(8,11,14,.96);
       backdrop-filter:blur(14px);
       border-bottom:1px solid rgba(255,255,255,.05);
     }
-    .mixerTopLeft,.mixerTopRight{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .mixerTopLeft,.mixerTopRight{display:flex;gap:8px;flex-wrap:wrap}
 
     .mixerShell{
       display:grid;
-      grid-template-columns:280px 1fr 280px;
+      grid-template-columns:250px 1fr 250px;
       gap:10px;
       padding:10px;
-      min-height:calc(100vh - 66px);
+      min-height:calc(100vh - 68px);
     }
 
     .sideRack{
       border-radius:22px;
-      background:linear-gradient(180deg,#1a222c 0%, #11171e 100%);
+      background:linear-gradient(180deg,#1a222c,#11171e);
       border:1px solid rgba(255,255,255,.06);
       box-shadow:var(--shadow);
       overflow:hidden;
@@ -213,22 +199,14 @@
     .sideHead{
       padding:12px 14px;
       border-bottom:1px solid rgba(255,255,255,.05);
-      background:linear-gradient(180deg,#222c38 0%, #171e27 100%);
+      background:linear-gradient(180deg,#222c38,#171e27);
     }
     .sideHead h3{font-size:15px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
     .sideBody{padding:10px;display:grid;gap:8px;overflow:auto}
-    .rackGroup{
-      border-radius:18px;border:1px solid #334050;overflow:hidden;
-      background:linear-gradient(180deg,#1a212b,#121820);
-    }
-    .rackGroupHead{
-      padding:10px 12px;font-size:12px;font-weight:900;letter-spacing:.08em;
-      text-transform:uppercase;color:#dce6ef;border-bottom:1px solid rgba(255,255,255,.05);
-    }
-    .rackGroupBody{padding:8px;display:grid;gap:8px}
+
     .rackBtn{
       border-radius:16px;padding:12px;text-align:left;color:var(--text);
-      border:1px solid #425061;background:linear-gradient(180deg,#2b3643 0%, #18202a 100%);
+      border:1px solid #425061;background:linear-gradient(180deg,#2b3643,#18202a);
       font-weight:900;
     }
     .rackBtn small{display:block;color:var(--muted);font-size:11px;font-weight:700;margin-top:4px}
@@ -238,36 +216,36 @@
       overflow:hidden;
       border:1px solid rgba(255,255,255,.06);
       box-shadow:var(--shadow);
-      background:linear-gradient(180deg,#1b232d 0%, #121820 100%);
-      display:flex;flex-direction:column;min-width:0;
+      background:linear-gradient(180deg,#1b232d,#121820);
+      display:flex;
+      flex-direction:column;
+      min-width:0;
     }
-    .consoleHeader{
+
+    .mixerHeader{
       padding:14px;
       border-bottom:1px solid rgba(255,255,255,.05);
-      background:linear-gradient(180deg,#232d39 0%, #171f28 100%);
+      background:linear-gradient(180deg,#232d39,#171f28);
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:10px;
     }
     .lcdPanel{
-      border-radius:20px;padding:14px;border:1px solid #355530;
-      background:linear-gradient(180deg,#11200f 0%, #0a1608 100%);
+      border-radius:20px;
+      padding:14px;
+      border:1px solid #355530;
+      background:linear-gradient(180deg,#11200f,#0a1608);
       box-shadow:inset 0 0 18px rgba(151,255,123,.08);
     }
     .lcdLabel{font-size:11px;color:#c0ffb0;letter-spacing:.14em;text-transform:uppercase}
     .lcdMain{font-size:34px;font-weight:900;line-height:1;margin-top:8px;color:var(--lcd)}
     .lcdSub{font-size:12px;line-height:1.45;margin-top:8px;color:#c0ffb0;opacity:.92}
 
-    .abWrap{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 14px 0}
-    .bankPanel{
-      border-radius:18px;border:1px solid #394756;background:linear-gradient(180deg,#1c2430,#11171e);padding:12px;
-    }
-    .bankPanel.activeA{box-shadow:inset 0 0 0 2px rgba(128,188,255,.25)}
-    .bankPanel.activeB{box-shadow:inset 0 0 0 2px rgba(255,208,104,.25)}
-    .bankTitle{font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
-
     .mixerViewport{
-      flex:1;overflow-x:auto;overflow-y:hidden;padding:14px;
+      flex:1;
+      overflow-x:auto;
+      overflow-y:hidden;
+      padding:14px;
       background:linear-gradient(180deg,#0f141b,#0b0f14);
     }
     .mixerViewport::-webkit-scrollbar{height:12px}
@@ -275,41 +253,37 @@
     .mixerViewport::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#2a3442,#4a5a6c);border-radius:999px}
 
     .mixerBoard{
-      display:flex;gap:12px;align-items:stretch;min-width:max-content;
+      display:flex;
+      gap:12px;
+      align-items:stretch;
+      min-width:max-content;
     }
 
     .channel{
-      width:170px;border-radius:24px;padding:12px;border:1px solid #455567;
+      width:168px;
+      border-radius:22px;
+      padding:12px;
+      border:1px solid #455567;
       box-shadow:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -14px 22px rgba(0,0,0,.25), 0 10px 22px rgba(0,0,0,.22);
-      display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden;color:#f2f7fc;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+      color:#f2f7fc;
     }
-    .channel.tech{background:linear-gradient(180deg,#32516a 0%, #243848 20%, #14202a 100%)}
-    .channel.acid{background:linear-gradient(180deg,#2d5c43 0%, #1d402f 20%, #10261d 100%)}
-    .channel.sugar{background:linear-gradient(180deg,#695732 0%, #4a3d22 20%, #2a2212 100%)}
-    .channel.bitter{background:linear-gradient(180deg,#6f4330 0%, #4b2c1f 20%, #2a1710 100%)}
-    .channel.botanical{background:linear-gradient(180deg,#5b3d70 0%, #3f284f 20%, #24162d 100%)}
-    .channel.yeast{background:linear-gradient(180deg,#713a5e 0%, #4d2640 20%, #2b1523 100%)}
-    .channel.lactic{background:linear-gradient(180deg,#2d6a67 0%, #1d4846 20%, #112827 100%)}
-    .channel.color{background:linear-gradient(180deg,#7a582c 0%, #583f1e 20%, #31230f 100%)}
-    .channel.gas{background:linear-gradient(180deg,#45547d 0%, #2e3958 20%, #182031 100%)}
-
-    .channel::before{
-      content:"";position:absolute;left:0;right:0;top:0;height:42px;
-      background:linear-gradient(180deg,rgba(255,255,255,.08),transparent);
-      pointer-events:none;
-    }
-
-    .stripScrew{
-      position:absolute;width:12px;height:12px;border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, #d9dee4 0%, #8d99a4 38%, #4e5966 70%, #2a3139 100%);
-      border:1px solid #74808c;box-shadow:inset 0 1px 2px rgba(255,255,255,.35),0 2px 4px rgba(0,0,0,.35);
-    }
-    .stripScrew.a{top:8px;left:8px}
-    .stripScrew.b{top:8px;right:8px}
+    .channel.tech{background:linear-gradient(180deg,#35556f,#243848 20%,#14202a)}
+    .channel.acid{background:linear-gradient(180deg,#2f5f45,#1d402f 20%,#10261d)}
+    .channel.sugar{background:linear-gradient(180deg,#6f5a32,#4a3d22 20%,#2a2212)}
+    .channel.bitter{background:linear-gradient(180deg,#6f4330,#4b2c1f 20%,#2a1710)}
+    .channel.botanical{background:linear-gradient(180deg,#603f75,#3f284f 20%,#24162d)}
+    .channel.yeast{background:linear-gradient(180deg,#743b61,#4d2640 20%,#2b1523)}
+    .channel.lactic{background:linear-gradient(180deg,#2d6c68,#1d4846 20%,#112827)}
+    .channel.color{background:linear-gradient(180deg,#7c592d,#583f1e 20%,#31230f)}
+    .channel.gas{background:linear-gradient(180deg,#48577f,#2e3958 20%,#182031)}
 
     .channelTop{
-      width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;
-      margin-bottom:8px;position:relative;z-index:2;
+      width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;
     }
     .channelNameWrap{flex:1;min-width:0}
     .channelName{
@@ -317,38 +291,40 @@
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
     .channelType{
-      font-size:10px;color:rgba(255,255,255,.72);margin-top:4px;text-transform:uppercase;letter-spacing:.1em
+      font-size:10px;color:rgba(255,255,255,.78);margin-top:4px;text-transform:uppercase;letter-spacing:.1em
     }
-
     .tinyIconBtn{
       width:30px;height:30px;border-radius:10px;
-      background:linear-gradient(180deg,#2b3642 0%, #1a212b 100%);
+      background:linear-gradient(180deg,#2b3642,#1a212b);
       color:#d9e2ec;border:1px solid #4a5868;font-weight:900;
-      box-shadow:0 4px 10px rgba(0,0,0,.2);flex:0 0 auto;
     }
 
     .miniLcd{
-      width:100%;border-radius:14px;background:linear-gradient(180deg,#12200f 0%, #0b1508 100%);
-      border:1px solid #355530;padding:10px 8px;text-align:center;box-shadow:inset 0 0 10px rgba(151,255,123,.08);
-      position:relative;z-index:2;
+      width:100%;
+      border-radius:14px;
+      background:linear-gradient(180deg,#12200f,#0b1508);
+      border:1px solid #355530;
+      padding:10px 8px;
+      text-align:center;
+      box-shadow:inset 0 0 10px rgba(151,255,123,.08);
     }
     .miniLcd .lbl{font-size:10px;color:#baffab;letter-spacing:.1em;text-transform:uppercase}
     .miniLcd .val{font-size:20px;font-weight:900;margin-top:3px;color:var(--lcd)}
 
     .knob{
-      width:74px;height:74px;border-radius:50%;
-      margin:12px 0 10px;background:radial-gradient(circle at 30% 30%,#5a6673 0%,#39434e 32%,#232a33 58%,#151a20 100%);
+      width:72px;height:72px;border-radius:50%;
+      margin:12px 0 10px;
+      background:radial-gradient(circle at 30% 30%,#5a6673 0%,#39434e 32%,#232a33 58%,#151a20 100%);
       border:2px solid #536172;position:relative;
       box-shadow:inset 0 2px 10px rgba(255,255,255,.08),inset 0 -8px 14px rgba(0,0,0,.42),0 8px 18px rgba(0,0,0,.28);
-      z-index:2;
     }
     .knob::after{
       content:"";position:absolute;left:50%;top:8px;transform:translateX(-50%);
-      width:8px;height:22px;border-radius:999px;background:linear-gradient(180deg,var(--gold2),var(--gold));
+      width:8px;height:20px;border-radius:999px;background:linear-gradient(180deg,var(--gold2),var(--gold));
     }
 
     .tinyMeter{
-      width:84%;height:10px;border-radius:999px;background:#0c1014;border:1px solid #2f3a47;overflow:hidden;margin-bottom:10px;z-index:2;
+      width:84%;height:10px;border-radius:999px;background:#0c1014;border:1px solid #2f3a47;overflow:hidden;margin-bottom:10px;
     }
     .tinyFill{
       height:100%;width:0%;
@@ -356,10 +332,10 @@
     }
 
     .faderWrap{
-      width:100%;flex:1;display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:stretch;z-index:2;
+      width:100%;flex:1;display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:stretch;
     }
     .vu{
-      border-radius:14px;border:1px solid #344250;background:linear-gradient(180deg,#0d1116 0%, #141a22 100%);
+      border-radius:14px;border:1px solid #344250;background:linear-gradient(180deg,#0d1116,#141a22);
       padding:6px 4px;display:flex;flex-direction:column-reverse;gap:3px;align-items:center;
     }
     .vuSeg{
@@ -370,9 +346,8 @@
     .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
 
     .track{
-      border-radius:22px;border:1px solid #364352;background:linear-gradient(180deg,#0f1419 0%, #181f27 100%);
-      min-height:310px;display:flex;justify-content:center;align-items:center;position:relative;padding:14px 0;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -10px 20px rgba(0,0,0,.18);
+      border-radius:22px;border:1px solid #364352;background:linear-gradient(180deg,#0f1419,#181f27);
+      min-height:300px;display:flex;justify-content:center;align-items:center;position:relative;padding:14px 0;
     }
     .track::before{
       content:"";position:absolute;top:16px;bottom:16px;left:50%;transform:translateX(-50%);
@@ -380,7 +355,7 @@
     }
     .track input[type=range]{
       -webkit-appearance:none;appearance:none;
-      width:286px;height:32px;transform:rotate(-90deg);background:transparent;position:relative;z-index:2;
+      width:280px;height:32px;transform:rotate(-90deg);background:transparent;position:relative;z-index:2;
     }
     .track input[type=range]::-webkit-slider-runnable-track{
       height:12px;border-radius:999px;background:linear-gradient(90deg,#1b2129,#10141a);border:1px solid #394655;
@@ -388,46 +363,43 @@
     .track input[type=range]::-webkit-slider-thumb{
       -webkit-appearance:none;appearance:none;
       width:52px;height:28px;border-radius:10px;margin-top:-8px;
-      border:1px solid #6a7888;background:linear-gradient(180deg,#ecf2f8 0%, #a8b4bf 46%, #717d89 47%, #d2dce5 100%);
+      border:1px solid #6a7888;background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
       box-shadow:0 6px 14px rgba(0,0,0,.35), inset 0 1px 2px rgba(255,255,255,.78);
     }
 
     .channelButtons{
-      width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;z-index:2;
+      width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;
     }
     .miniBtn{
       border-radius:12px;padding:10px 8px;font-size:12px;font-weight:900;
-      background:linear-gradient(180deg,#2a3441 0%, #181f28 100%);
-      color:var(--text);border:1px solid #475566;box-shadow:0 4px 10px rgba(0,0,0,.18);
+      background:linear-gradient(180deg,#2a3441,#181f28);
+      color:var(--text);border:1px solid #475566;
     }
     .miniBtn.gold{
       background:linear-gradient(180deg,var(--gold2),var(--gold));
       color:#111;border-color:#c7a15a
     }
 
-    .addChannelCard{
-      width:188px;border-radius:24px;padding:16px;background:linear-gradient(180deg,#2a3440 0%, #171f28 100%);
-      border:1px dashed #526172;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-      min-height:595px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -10px 18px rgba(0,0,0,.18);
+    .addSlot{
+      width:188px;border-radius:22px;padding:16px;
+      background:linear-gradient(180deg,#2a3440,#171f28);
+      border:1px dashed #526172;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      min-height:585px;
     }
-    .addChannelCard .plus{
-      width:88px;height:88px;border-radius:26px;display:grid;place-items:center;
-      font-size:44px;font-weight:900;color:#111;background:linear-gradient(180deg,var(--gold2),var(--gold));box-shadow:var(--shadow);
+    .addSlot .plus{
+      width:86px;height:86px;border-radius:24px;display:grid;place-items:center;
+      font-size:44px;font-weight:900;color:#111;background:linear-gradient(180deg,var(--gold2),var(--gold));
     }
-    .addChannelCard h3{font-size:20px;font-weight:900;margin-top:14px}
-    .addChannelCard p{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+    .addSlot h3{font-size:20px;font-weight:900;margin-top:14px}
+    .addSlot p{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
 
     @media (orientation:portrait){
-      .mixerShell{grid-template-columns:1fr}
-      .consoleHeader,.abWrap,.layout2,.heroGrid{grid-template-columns:1fr}
-    }
-    @media (max-width:1100px){
-      .layout2,.heroGrid{grid-template-columns:1fr}
+      .mixerShell,.layout2,.layout3,.statsGrid,.mixerHeader{grid-template-columns:1fr}
     }
     @media (max-width:860px){
-      .formGrid,.dockInner{grid-template-columns:1fr}
-      .brand h1{font-size:20px}
-      body{padding-bottom:110px}
+      .formGrid,.ingredientRow,.paramRow{grid-template-columns:1fr}
+      body{padding-bottom:120px}
     }
   </style>
 </head>
@@ -439,14 +411,14 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>RICETTE · LOTTI · LIBRERIE · MIXER FULLSCREEN SEPARATO</p>
+            <p>VERSIONE STABILE · RICETTE · LOTTI · MIXER FULLSCREEN</p>
           </div>
         </div>
         <div class="actions">
           <button class="btn" id="demoBtn">Carica demo</button>
           <button class="btn" id="exportBtn">Esporta backup</button>
           <button class="btn" id="importBtn">Importa backup</button>
-          <input type="file" id="importFile" accept=".json" class="hidden">
+          <input type="file" id="importFile" class="hidden" accept=".json">
           <button class="btnGold" id="newRecipeBtnTop">+ Ricetta</button>
           <button class="btnGold" id="newLotBtnTop">+ Lotto</button>
           <button class="btnMixer" id="openMixerBtnTop">Mixer</button>
@@ -455,14 +427,13 @@
       </div>
     </div>
 
-    <!-- HOME -->
     <section class="section active" id="sec-home">
       <div class="page">
-        <div class="heroGrid">
-          <div class="heroStat"><div class="k">Ricette</div><div class="v" id="statRecipes">0</div><div class="s">salvate</div></div>
-          <div class="heroStat"><div class="k">Lotti</div><div class="v" id="statLots">0</div><div class="s">totali</div></div>
-          <div class="heroStat"><div class="k">Librerie</div><div class="v" id="statLibraries">0</div><div class="s">categorie</div></div>
-          <div class="heroStat"><div class="k">Canali mixer</div><div class="v" id="statChannels">0</div><div class="s">lotto selezionato</div></div>
+        <div class="statsGrid">
+          <div class="stat"><div class="k">Ricette</div><div class="v" id="statRecipes">0</div><div class="s">salvate</div></div>
+          <div class="stat"><div class="k">Lotti</div><div class="v" id="statLots">0</div><div class="s">totali</div></div>
+          <div class="stat"><div class="k">Scene</div><div class="v" id="statScenes">0</div><div class="s">mixer</div></div>
+          <div class="stat"><div class="k">Canali</div><div class="v" id="statChannels">0</div><div class="s">lotto attuale</div></div>
         </div>
 
         <div class="layout2">
@@ -470,11 +441,11 @@
             <div class="cardHead">
               <div>
                 <h2>Ricette</h2>
-                <div class="sub">Crea ricette complete</div>
+                <div class="sub">Creazione completa</div>
               </div>
               <div class="toolbar">
                 <button class="btnGold" onclick="openRecipeEditor()">+ Crea ricetta</button>
-                <button class="btn" onclick="showSection('recipes')">Apri ricette</button>
+                <button class="btn" onclick="showSection('recipes')">Apri</button>
               </div>
             </div>
             <div class="cardBody">
@@ -486,7 +457,7 @@
             <div class="cardHead">
               <div>
                 <h2>Lotti</h2>
-                <div class="sub">Produzione reale</div>
+                <div class="sub">Produzione</div>
               </div>
               <div class="toolbar">
                 <button class="btnGold" onclick="openLotCreator()">+ Crea lotto</button>
@@ -501,14 +472,13 @@
       </div>
     </section>
 
-    <!-- RECIPES -->
     <section class="section" id="sec-recipes">
       <div class="page">
         <div class="card">
           <div class="cardHead">
             <div>
               <h2>Ricette</h2>
-              <div class="sub">Archivio ricette complete</div>
+              <div class="sub">Archivio</div>
             </div>
             <div class="toolbar">
               <button class="btnGold" onclick="openRecipeEditor()">+ Nuova ricetta</button>
@@ -522,37 +492,202 @@
       </div>
     </section>
 
-    <!-- RECIPE DETAIL -->
-    <section class="section" id="sec-recipe-detail">
+    <section class="section" id="sec-recipe-edit">
       <div class="page">
         <div class="card">
           <div class="cardHead">
             <div>
-              <h2 id="recipeDetailTitle">Ricetta</h2>
-              <div class="sub">Pagina ricetta completa</div>
+              <h2 id="recipeEditTitle">Nuova ricetta</h2>
+              <div class="sub">Editor completo</div>
             </div>
             <div class="toolbar">
               <button class="btn" onclick="showSection('recipes')">← Torna</button>
-              <button class="btnGold" id="recipeDetailEditBtn">Modifica</button>
-              <button class="btnMixer" id="recipeDetailCreateLotBtn">Crea lotto</button>
+              <button class="btnGold" id="saveRecipeBtn">Salva ricetta</button>
             </div>
           </div>
-          <div class="cardBody" id="recipeDetailBody"></div>
+          <div class="cardBody">
+            <div class="formGrid">
+              <div class="field">
+                <label>Nome ricetta</label>
+                <input class="input" id="recipe_name" placeholder="Es. Sidro XA Dry Apple">
+              </div>
+              <div class="field">
+                <label>Stile</label>
+                <input class="input" id="recipe_style" placeholder="Es. Sidro secco / lattico">
+              </div>
+            </div>
+
+            <div class="formGrid" style="margin-top:12px">
+              <div class="field">
+                <label>Categoria</label>
+                <input class="input" id="recipe_category" placeholder="Sidro / Lattico / Ibrido">
+              </div>
+              <div class="field">
+                <label>Base</label>
+                <input class="input" id="recipe_base" placeholder="Succo mela / tè / blend">
+              </div>
+            </div>
+
+            <div class="field" style="margin-top:12px">
+              <label>Note</label>
+              <textarea class="textarea" id="recipe_notes" placeholder="Descrizione tecnica ricetta"></textarea>
+            </div>
+
+            <div style="margin-top:20px">
+              <div class="itemTitle">Ingredienti</div>
+              <div class="meta">Categoria, nome, quantità, unità, note</div>
+              <div class="tableHead ingredientRow" style="margin-top:10px">
+                <div>Categoria</div><div>Nome</div><div>Qtà</div><div>Unità</div><div>Note</div><div></div>
+              </div>
+              <div id="ingredientsWrap"></div>
+              <div class="toolbar" style="margin-top:10px">
+                <button class="btn" id="addIngredientBtn">+ Ingrediente</button>
+              </div>
+            </div>
+
+            <div style="margin-top:20px">
+              <div class="itemTitle">Parametri tecnici</div>
+              <div class="meta">Ogni parametro finirà nel mixer</div>
+              <div class="tableHead paramRow" style="margin-top:10px">
+                <div>Nome</div><div>Tipo</div><div>Min</div><div>Max</div><div>Step</div><div>Valore</div><div>Unità</div><div></div>
+              </div>
+              <div id="paramsWrap"></div>
+              <div class="toolbar" style="margin-top:10px">
+                <button class="btn" id="addParamBtn">+ Parametro</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- LIBRARY -->
+    <section class="section" id="sec-recipe-view">
+      <div class="page">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h2 id="recipeViewTitle">Ricetta</h2>
+              <div class="sub">Pagina ricetta completa</div>
+            </div>
+            <div class="toolbar">
+              <button class="btn" onclick="showSection('recipes')">← Torna</button>
+              <button class="btnGold" id="recipeViewEditBtn">Modifica</button>
+              <button class="btnMixer" id="recipeViewLotBtn">Crea lotto</button>
+            </div>
+          </div>
+          <div class="cardBody" id="recipeViewBody"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sec-lots">
+      <div class="page">
+        <div class="layout2">
+          <div class="card">
+            <div class="cardHead">
+              <div>
+                <h2>Lotti</h2>
+                <div class="sub">Archivio lotti</div>
+              </div>
+              <div class="toolbar">
+                <button class="btnGold" onclick="openLotCreator()">+ Nuovo lotto</button>
+                <button class="btn" onclick="showSection('home')">Home</button>
+              </div>
+            </div>
+            <div class="cardBody">
+              <div class="list" id="lotsList"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cardHead">
+              <div>
+                <h2>Scheda lotto</h2>
+                <div class="sub">Meta dati</div>
+              </div>
+              <div class="toolbar">
+                <button class="btnGold" id="saveLotMetaBtn">Salva</button>
+              </div>
+            </div>
+            <div class="cardBody">
+              <div class="formGrid">
+                <div class="field">
+                  <label>Nome lotto</label>
+                  <input class="input" id="lot_name" placeholder="Nome lotto">
+                </div>
+                <div class="field">
+                  <label>Codice</label>
+                  <input class="input" id="lot_code" placeholder="Codice">
+                </div>
+              </div>
+              <div class="formGrid" style="margin-top:12px">
+                <div class="field">
+                  <label>Tipo</label>
+                  <input class="input" id="lot_type" placeholder="Tipo">
+                </div>
+                <div class="field">
+                  <label>Stato</label>
+                  <select class="select" id="lot_stage">
+                    <option value="programmato">Programmato</option>
+                    <option value="primaria">Primaria</option>
+                    <option value="secondaria">Secondaria</option>
+                    <option value="maturazione">Maturazione</option>
+                    <option value="stabile">Stabile</option>
+                    <option value="imbottigliato">Imbottigliato</option>
+                    <option value="chiuso">Chiuso</option>
+                  </select>
+                </div>
+              </div>
+              <div class="formGrid" style="margin-top:12px">
+                <div class="field">
+                  <label>Volume litri</label>
+                  <input class="input" id="lot_volume" type="number" step="0.1" placeholder="20">
+                </div>
+                <div class="field">
+                  <label>Data</label>
+                  <input class="input" id="lot_date" type="date">
+                </div>
+              </div>
+              <div class="field" style="margin-top:12px">
+                <label>Cultura</label>
+                <input class="input" id="lot_culture" placeholder="Cultura">
+              </div>
+              <div class="field" style="margin-top:12px">
+                <label>Ricetta testo</label>
+                <textarea class="textarea" id="lot_recipe_text" placeholder="Ingredienti sintetici"></textarea>
+              </div>
+              <div class="field" style="margin-top:12px">
+                <label>Note lotto</label>
+                <textarea class="textarea" id="lot_notes" placeholder="Note"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h2>Scene mixer</h2>
+              <div class="sub">Snapshot</div>
+            </div>
+          </div>
+          <div class="cardBody">
+            <div class="list" id="scenesList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="sec-library">
       <div class="page">
         <div class="card">
           <div class="cardHead">
             <div>
               <h2>Librerie</h2>
-              <div class="sub">Ingredienti e categorie</div>
+              <div class="sub">Ingredienti disponibili</div>
             </div>
             <div class="toolbar">
-              <button class="btnGold" onclick="openLibraryGlobalModal()">+ Elemento libreria</button>
+              <button class="btnGold" onclick="openLibraryAdd()">+ Elemento</button>
               <button class="btn" onclick="showSection('home')">Home</button>
             </div>
           </div>
@@ -563,105 +698,57 @@
       </div>
     </section>
 
-    <!-- LOTS -->
-    <section class="section" id="sec-lots">
-      <div class="page">
-        <div class="card">
-          <div class="cardHead">
-            <div>
-              <h2>Lotti</h2>
-              <div class="sub">Lotti creati da ricetta</div>
-            </div>
-            <div class="toolbar">
-              <button class="btnGold" onclick="openLotCreator()">+ Nuovo lotto</button>
-              <button class="btn" onclick="showSection('home')">Home</button>
-            </div>
-          </div>
-          <div class="cardBody">
-            <div class="list" id="lotsList"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MIXER FULLSCREEN -->
     <section class="section" id="sec-mixer">
       <div class="mixerPage">
         <div class="mixerTopBar">
           <div class="mixerTopLeft">
             <button class="btn" onclick="closeMixerPage()">← Torna</button>
-            <button class="btnGold" onclick="saveCurrentLotMeta()">Salva lotto</button>
+            <button class="btnGold" onclick="saveLotMeta()">Salva lotto</button>
             <button class="btn" onclick="saveScene()">Salva scena</button>
-            <button class="btn" onclick="openAddChannelModal()">+ Canale</button>
+            <button class="btn" onclick="openAddChannel()">+ Canale</button>
           </div>
           <div class="mixerTopRight">
-            <button class="btn" onclick="setActiveBank('A')">Banco A</button>
-            <button class="btn" onclick="setActiveBank('B')">Banco B</button>
-            <button class="btnMixer" onclick="alert('Per vedere tutto il banco, gira il telefono in orizzontale.')">Ruota schermo</button>
+            <button class="btn" onclick="setBank('A')">Banco A</button>
+            <button class="btn" onclick="setBank('B')">Banco B</button>
+            <button class="btnMixer" onclick="alert('Per vedere il mixer steso al massimo, gira il telefono in orizzontale.')">Ruota schermo</button>
           </div>
         </div>
 
         <div class="mixerShell">
           <aside class="sideRack">
             <div class="sideHead">
-              <h3>Rack Sinistro</h3>
+              <h3>Rack sinistro</h3>
               <div class="sub">Parametri rapidi</div>
             </div>
             <div class="sideBody">
-              <div class="rackGroup">
-                <div class="rackGroupHead">Canali tecnici</div>
-                <div class="rackGroupBody">
-                  <button class="rackBtn" onclick="quickAddPresetChannel('ph')">+ pH<small>acidità</small></button>
-                  <button class="rackBtn" onclick="quickAddPresetChannel('og')">+ OG<small>densità iniziale</small></button>
-                  <button class="rackBtn" onclick="quickAddPresetChannel('fg')">+ FG<small>densità finale</small></button>
-                  <button class="rackBtn" onclick="quickAddPresetChannel('abv')">+ ABV<small>alcol</small></button>
-                  <button class="rackBtn" onclick="quickAddPresetChannel('srm')">+ SRM<small>colore</small></button>
-                  <button class="rackBtn" onclick="quickAddPresetChannel('temp')">+ TEMP<small>temperatura</small></button>
-                  <button class="rackBtn" onclick="quickAddPresetChannel('co2')">+ CO₂<small>gasatura</small></button>
-                </div>
-              </div>
-
-              <div class="rackGroup">
-                <div class="rackGroupHead">Corpo ed equilibrio</div>
-                <div class="rackGroupBody">
-                  <button class="rackBtn" onclick="quickAddPresetChannel('acidita')">+ Acidità<small>totale</small></button>
-                  <button class="rackBtn" onclick="quickAddPresetChannel('tannino')">+ Tannino<small>struttura</small></button>
-                  <button class="rackBtn" onclick="quickAddPresetChannel('pressione')">+ Pressione<small>sparkling</small></button>
-                  <button class="rackBtn" onclick="quickAddPresetChannel('dolcezza')">+ Dolcezza<small>equilibrio</small></button>
-                  <button class="rackBtn" onclick="quickAddPresetChannel('secchezza')">+ Secchezza<small>finale</small></button>
-                </div>
-              </div>
+              <button class="rackBtn" onclick="addQuickChannel('ph')">+ pH<small>acidità</small></button>
+              <button class="rackBtn" onclick="addQuickChannel('og')">+ OG<small>densità iniziale</small></button>
+              <button class="rackBtn" onclick="addQuickChannel('fg')">+ FG<small>densità finale</small></button>
+              <button class="rackBtn" onclick="addQuickChannel('abv')">+ ABV<small>alcol</small></button>
+              <button class="rackBtn" onclick="addQuickChannel('srm')">+ SRM<small>colore</small></button>
+              <button class="rackBtn" onclick="addQuickChannel('temp')">+ Temp<small>temperatura</small></button>
+              <button class="rackBtn" onclick="addQuickChannel('co2')">+ CO₂<small>gasatura</small></button>
+              <button class="rackBtn" onclick="addQuickChannel('acidita')">+ Acidità<small>totale</small></button>
+              <button class="rackBtn" onclick="addQuickChannel('tannino')">+ Tannino<small>struttura</small></button>
             </div>
           </aside>
 
           <main class="centerMixer">
-            <div class="consoleHeader">
+            <div class="mixerHeader">
               <div class="lcdPanel">
                 <div class="lcdLabel">Master LCD</div>
-                <div class="lcdMain" id="masterText">XA MIXER</div>
-                <div class="lcdSub" id="masterSub">Vista separata solo mixer. Il banco mostra parametri e ingredienti della ricetta collegata al lotto.</div>
+                <div class="lcdMain" id="mixer_title">XA MIXER</div>
+                <div class="lcdSub" id="mixer_sub">Mixer fullscreen separato. Solo banco mixer, nessuna finestra piccola.</div>
               </div>
-
               <div class="lcdPanel">
-                <div class="lcdLabel">Lotto selezionato</div>
-                <div class="lcdMain" id="lotDisplay">NESSUNO</div>
-                <div class="lcdSub" id="lotDisplayMeta">Apri o crea un lotto.</div>
+                <div class="lcdLabel">Lotto</div>
+                <div class="lcdMain" id="mixer_lot_name">NESSUNO</div>
+                <div class="lcdSub" id="mixer_lot_meta">Apri o crea un lotto.</div>
                 <div class="badgeRow" style="margin-top:10px">
-                  <span class="badge gold" id="badgeType">Tipo -</span>
-                  <span class="badge blue" id="badgeStage">Stato -</span>
-                  <span class="badge green" id="badgeChannels">Canali 0</span>
+                  <span class="badge gold" id="mixer_badge_type">Tipo -</span>
+                  <span class="badge blue" id="mixer_badge_stage">Stato -</span>
+                  <span class="badge green" id="mixer_badge_channels">Canali 0</span>
                 </div>
-              </div>
-            </div>
-
-            <div class="abWrap">
-              <div class="bankPanel activeA" id="bankAInfo">
-                <div class="bankTitle">Banco A</div>
-                <div class="meta" id="bankAText">Nessun lotto assegnato.</div>
-              </div>
-              <div class="bankPanel" id="bankBInfo">
-                <div class="bankTitle">Banco B</div>
-                <div class="meta" id="bankBText">Nessun lotto assegnato.</div>
               </div>
             </div>
 
@@ -672,34 +759,15 @@
 
           <aside class="sideRack">
             <div class="sideHead">
-              <h3>Rack Destro</h3>
-              <div class="sub">Librerie e A/B</div>
+              <h3>Rack destro</h3>
+              <div class="sub">A/B e librerie</div>
             </div>
             <div class="sideBody">
-              <div class="rackGroup">
-                <div class="rackGroupHead">A/B</div>
-                <div class="rackGroupBody">
-                  <button class="rackBtn" onclick="assignCurrentLotToBank('A')">Assegna lotto ad A<small>confronto</small></button>
-                  <button class="rackBtn" onclick="assignCurrentLotToBank('B')">Assegna lotto a B<small>confronto</small></button>
-                  <button class="rackBtn" onclick="copyBankAToB()">Copia A → B<small>duplicazione</small></button>
-                </div>
-              </div>
-
-              <div class="rackGroup">
-                <div class="rackGroupHead">Librerie</div>
-                <div class="rackGroupBody">
-                  <button class="rackBtn" onclick="openLibraryModal('botaniche')">Botaniche<small>erbe, fiori</small></button>
-                  <button class="rackBtn" onclick="openLibraryModal('lieviti')">Lieviti<small>ceppi</small></button>
-                  <button class="rackBtn" onclick="openLibraryModal('fermenti_lattici')">Fermenti lattici<small>plantarum</small></button>
-                  <button class="rackBtn" onclick="openLibraryModal('te')">Tè<small>oolong, bianco</small></button>
-                  <button class="rackBtn" onclick="openLibraryModal('pepe')">Pepe<small>timut, sichuan</small></button>
-                  <button class="rackBtn" onclick="openLibraryModal('frutta')">Frutta<small>mela, agrumi</small></button>
-                  <button class="rackBtn" onclick="openLibraryModal('zuccheri')">Zuccheri<small>priming</small></button>
-                  <button class="rackBtn" onclick="openLibraryModal('nutrienti')">Nutrienti<small>fermentazione</small></button>
-                  <button class="rackBtn" onclick="openLibraryModal('acidi')">Acidi<small>malico, lattico</small></button>
-                  <button class="rackBtn" onclick="openLibraryModal('luppoli')">Luppoli<small>lista base</small></button>
-                </div>
-              </div>
+              <button class="rackBtn" onclick="assignBank('A')">Assegna lotto ad A<small>confronto</small></button>
+              <button class="rackBtn" onclick="assignBank('B')">Assegna lotto a B<small>confronto</small></button>
+              <button class="rackBtn" onclick="copyAtoB()">Copia A → B<small>duplicazione</small></button>
+              <button class="rackBtn" onclick="showSection('library')">Apri librerie<small>ingredienti</small></button>
+              <button class="rackBtn" onclick="showSection('lots')">Scheda lotto<small>meta dati</small></button>
             </div>
           </aside>
         </div>
@@ -708,30 +776,31 @@
   </div>
 
   <div class="dock" id="normalDock">
-    <div class="dockInner">
-      <button class="dockBtn active" onclick="showSection('home')">Home</button>
-      <button class="dockBtn" onclick="showSection('recipes')">Ricette</button>
-      <button class="dockBtn" onclick="showSection('lots')">Lotti</button>
-      <button class="dockBtn" onclick="showSection('library')">Librerie</button>
-      <button class="dockBtn" onclick="openMixerPage()">Mixer</button>
-    </div>
-  </div>
-
-  <div class="modal" id="modal">
-    <div class="modalBox">
-      <div class="modalHead">
-        <div>
-          <h3 id="modalTitle">Titolo</h3>
-          <div class="meta" id="modalSub" style="margin-top:4px"></div>
-        </div>
-        <button class="closeBtn" onclick="closeModal()">✕</button>
-      </div>
-      <div class="modalBody" id="modalBody"></div>
+    <div class="toolbar" style="max-width:1700px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:10px 12px;background:rgba(8,10,13,.95);backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.05);position:fixed;left:0;right:0;bottom:0;z-index:55">
+      <button class="btn" onclick="showSection('home')">Home</button>
+      <button class="btn" onclick="showSection('recipes')">Ricette</button>
+      <button class="btn" onclick="showSection('lots')">Lotti</button>
+      <button class="btn" onclick="showSection('library')">Librerie</button>
+      <button class="btnMixer" onclick="openMixerPage()">Mixer</button>
     </div>
   </div>
 
   <script>
-    const defaultRecipeParams = [
+    const STORAGE_KEY = "xa_stable_app_v2";
+    const defaultLibraries = {
+      luppoli:[{name:"Saaz",note:"Nobile, delicato"},{name:"Hallertau Mittelfrüh",note:"Fine, erbaceo"},{name:"Cascade",note:"Agrumato"}],
+      botaniche:[{name:"Genziana",note:"Amaro profondo"},{name:"China",note:"Quinina / tonic"},{name:"Lavanda",note:"Floreale"},{name:"Osmanto",note:"Floreale-fruttato"}],
+      lieviti:[{name:"Hornindal Kveik",note:"Esters tropicali"},{name:"EC-1118",note:"Pulito e secco"},{name:"SafCider",note:"Per sidro"}],
+      fermenti_lattici:[{name:"L. plantarum",note:"Acidificazione pulita"},{name:"L. helveticus",note:"Più rotondo"}],
+      te:[{name:"Oolong",note:"Elegante"},{name:"Bianco",note:"Fine"},{name:"Verde",note:"Fresco"},{name:"Jasmine",note:"Floreale"}],
+      pepe:[{name:"Timut",note:"Agrumato"},{name:"Sichuan",note:"Elettrico"},{name:"Cubebe",note:"Balsamico"}],
+      frutta:[{name:"Mela Golden",note:"Morbida"},{name:"Mela Granny",note:"Acida"},{name:"Limone",note:"Brillante"},{name:"Pompelmo",note:"Amaro agrumato"}],
+      zuccheri:[{name:"Saccarosio",note:"Priming standard"},{name:"Destrosio",note:"Pulito"},{name:"Miele",note:"Aromatico"}],
+      nutrienti:[{name:"DAP",note:"Azoto assimilabile"},{name:"Nutriente complesso",note:"Supporto fermentazione"}],
+      acidi:[{name:"Acido malico",note:"Profilo mela"},{name:"Acido citrico",note:"Brillante"},{name:"Acido lattico",note:"Morbido"}]
+    };
+
+    const defaultParams = [
       {key:"ph", name:"pH", type:"Acidità", min:2.5, max:4.5, step:0.01, value:3.20, unit:"", cat:"acid"},
       {key:"og", name:"OG", type:"Densità iniziale", min:1.000, max:1.120, step:0.001, value:1.048, unit:"", cat:"tech"},
       {key:"fg", name:"FG", type:"Densità finale", min:0.995, max:1.050, step:0.001, value:1.006, unit:"", cat:"tech"},
@@ -740,178 +809,335 @@
       {key:"temp", name:"TEMP", type:"Temperatura", min:0, max:40, step:0.1, value:22, unit:"°", cat:"tech"},
       {key:"co2", name:"CO₂", type:"Gasatura", min:0, max:4.5, step:0.1, value:2.5, unit:" vol", cat:"gas"},
       {key:"acidita", name:"ACIDITÀ", type:"Totale", min:0, max:15, step:0.1, value:5.0, unit:" g/L", cat:"acid"},
-      {key:"tannino", name:"TANNINO", type:"Struttura", min:0, max:10, step:0.1, value:4.0, unit:"", cat:"bitter"},
-      {key:"pressione", name:"PRESSIONE", type:"Sparkling", min:0, max:40, step:0.5, value:16, unit:" PSI", cat:"gas"},
-      {key:"dolcezza", name:"DOLCEZZA", type:"Equilibrio", min:0, max:10, step:0.1, value:4.0, unit:"", cat:"sugar"},
-      {key:"secchezza", name:"SECCHEZZA", type:"Finale", min:0, max:10, step:0.1, value:6.0, unit:"", cat:"sugar"}
+      {key:"tannino", name:"TANNINO", type:"Struttura", min:0, max:10, step:0.1, value:4.0, unit:"", cat:"bitter"}
     ];
 
-    const defaultLibraries = {
-      luppoli:[
-        {name:"Saaz", note:"Nobile, delicato"},
-        {name:"Hallertau Mittelfrüh", note:"Fine, erbaceo"},
-        {name:"Cascade", note:"Agrumato"}
-      ],
-      botaniche:[
-        {name:"Genziana", note:"Amaro profondo"},
-        {name:"China", note:"Quinina / tonic"},
-        {name:"Lavanda", note:"Floreale"},
-        {name:"Osmanto", note:"Floreale-fruttato"}
-      ],
-      lieviti:[
-        {name:"Hornindal Kveik", note:"Esters tropicali"},
-        {name:"EC-1118", note:"Pulito e secco"},
-        {name:"SafCider", note:"Per sidro"}
-      ],
-      fermenti_lattici:[
-        {name:"L. plantarum", note:"Acidificazione pulita"},
-        {name:"L. helveticus", note:"Più rotondo"}
-      ],
-      te:[
-        {name:"Oolong", note:"Elegante"},
-        {name:"Bianco", note:"Fine"},
-        {name:"Verde", note:"Fresco"},
-        {name:"Jasmine", note:"Floreale"}
-      ],
-      pepe:[
-        {name:"Timut", note:"Agrumato"},
-        {name:"Sichuan", note:"Elettrico"},
-        {name:"Cubebe", note:"Balsamico"}
-      ],
-      frutta:[
-        {name:"Mela Golden", note:"Morbida"},
-        {name:"Mela Granny", note:"Acida"},
-        {name:"Limone", note:"Brillante"},
-        {name:"Pompelmo", note:"Amaro agrumato"}
-      ],
-      zuccheri:[
-        {name:"Saccarosio", note:"Priming standard"},
-        {name:"Destrosio", note:"Pulito"},
-        {name:"Miele", note:"Aromatico"}
-      ],
-      nutrienti:[
-        {name:"DAP", note:"Azoto assimilabile"},
-        {name:"Nutriente complesso", note:"Supporto fermentazione"}
-      ],
-      acidi:[
-        {name:"Acido malico", note:"Profilo mela"},
-        {name:"Acido citrico", note:"Brillante"},
-        {name:"Acido lattico", note:"Morbido"}
-      ]
-    };
-
-    const STORAGE_KEY = "xa_fermentation_recipes_mixer_v1";
-
-    const defaultState = {
-      recipes: [],
-      lots: [],
-      libraries: structuredClone(defaultLibraries),
-      selectedRecipeId: null,
-      selectedLotId: null,
-      scenes: [],
-      bankA: null,
-      bankB: null,
-      activeBank: "A",
-      mixerPageOpen: false
-    };
-
     let state = loadState();
+    let editingRecipeId = null;
 
     function loadState(){
       try{
         const raw = localStorage.getItem(STORAGE_KEY);
-        if(!raw) return structuredClone(defaultState);
-        const parsed = JSON.parse(raw);
-        return {
-          recipes: Array.isArray(parsed.recipes) ? parsed.recipes : [],
-          lots: Array.isArray(parsed.lots) ? parsed.lots : [],
-          libraries: parsed.libraries || structuredClone(defaultLibraries),
-          selectedRecipeId: parsed.selectedRecipeId || null,
-          selectedLotId: parsed.selectedLotId || null,
-          scenes: Array.isArray(parsed.scenes) ? parsed.scenes : [],
-          bankA: parsed.bankA || null,
-          bankB: parsed.bankB || null,
-          activeBank: parsed.activeBank || "A",
-          mixerPageOpen: !!parsed.mixerPageOpen
-        };
+        if(!raw){
+          return {
+            recipes: [],
+            lots: [],
+            libraries: structuredClone(defaultLibraries),
+            scenes: [],
+            selectedLotId: null,
+            selectedRecipeId: null,
+            bankA: null,
+            bankB: null,
+            activeBank: "A",
+            mixerOpen: false
+          };
+        }
+        return JSON.parse(raw);
       }catch(e){
-        return structuredClone(defaultState);
+        return {
+          recipes: [],
+          lots: [],
+          libraries: structuredClone(defaultLibraries),
+          scenes: [],
+          selectedLotId: null,
+          selectedRecipeId: null,
+          bankA: null,
+          bankB: null,
+          activeBank: "A",
+          mixerOpen: false
+        };
       }
     }
 
-    function saveState(){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    }
-
-    function uid(prefix="id"){
-      return prefix + "_" + Math.random().toString(36).slice(2,10);
-    }
-
-    function today(){
-      return new Date().toISOString().slice(0,10);
-    }
-
-    function num(v,d=2){
-      const n = Number(v);
-      return Number.isFinite(n) ? n.toFixed(d) : "0.00";
-    }
-
-    function escapeHtml(str){
-      return String(str ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#39;");
-    }
-
-    function getRecipe(id){ return state.recipes.find(r => r.id === id) || null; }
-    function getLot(id){ return state.lots.find(l => l.id === id) || null; }
+    function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    function uid(prefix="id"){ return prefix + "_" + Math.random().toString(36).slice(2,10); }
+    function today(){ return new Date().toISOString().slice(0,10); }
+    function num(v,d=2){ const n=Number(v); return Number.isFinite(n) ? n.toFixed(d) : "0.00"; }
+    function getRecipe(id){ return state.recipes.find(r => r.id===id) || null; }
+    function getLot(id){ return state.lots.find(l => l.id===id) || null; }
     function currentLot(){ return getLot(state.selectedLotId); }
-
+    function prettyKey(k){ return k.replaceAll("_"," ").replace(/\b\w/g, c => c.toUpperCase()); }
     function ensureSelected(){
       if(!state.selectedRecipeId && state.recipes.length) state.selectedRecipeId = state.recipes[0].id;
       if(!state.selectedLotId && state.lots.length) state.selectedLotId = state.lots[0].id;
     }
 
-    function categoryColorClass(cat){
-      const m = {
-        tech:"tech", acid:"acid", sugar:"sugar", bitter:"bitter", botanical:"botanical",
-        yeast:"yeast", lactic:"lactic", color:"color", gas:"gas"
-      };
-      return m[cat] || "tech";
+    function showSection(name){
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.getElementById("sec-" + name).classList.add("active");
+      document.getElementById("normalTopbar").classList.remove("hidden");
+      document.getElementById("normalDock").classList.remove("hidden");
+      document.body.style.paddingBottom = "88px";
+      state.mixerOpen = false;
+      saveState();
+      renderAll();
     }
 
-    function ingredientToChannel(ing){
-      const catMap = {
-        botaniche:"botanical",
-        lieviti:"yeast",
-        fermenti_lattici:"lactic",
-        te:"botanical",
-        pepe:"botanical",
-        frutta:"botanical",
-        zuccheri:"sugar",
-        nutrienti:"yeast",
-        acidi:"acid",
-        luppoli:"bitter"
-      };
+    function openMixerPage(){
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.getElementById("sec-mixer").classList.add("active");
+      document.getElementById("normalTopbar").classList.add("hidden");
+      document.getElementById("normalDock").classList.add("hidden");
+      document.body.style.paddingBottom = "0";
+      state.mixerOpen = true;
+      saveState();
+      renderMixer();
+      window.scrollTo({top:0,behavior:"instant"});
+    }
+
+    function closeMixerPage(){
+      showSection("home");
+    }
+
+    function renderStats(){
+      document.getElementById("statRecipes").textContent = state.recipes.length;
+      document.getElementById("statLots").textContent = state.lots.length;
+      document.getElementById("statScenes").textContent = state.scenes.length;
+      document.getElementById("statChannels").textContent = currentLot()?.channels?.length || 0;
+    }
+
+    function renderHomeRecipes(){
+      const wrap = document.getElementById("homeRecipesList");
+      const items = state.recipes.slice(0,4);
+      wrap.innerHTML = items.length ? items.map(r => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(r.name)}</div>
+          <div class="meta">${escapeHtml(r.style || "-")} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
+          <div class="itemActions">
+            <button class="btn" onclick="openRecipeView('${r.id}')">Apri</button>
+            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
+          </div>
+        </div>
+      `).join("") : `<div class="empty">Nessuna ricetta.</div>`;
+    }
+
+    function renderRecipes(){
+      const wrap = document.getElementById("recipesList");
+      wrap.innerHTML = state.recipes.length ? state.recipes.map(r => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(r.name)}</div>
+          <div class="meta">${escapeHtml(r.style || "-")} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
+          <div class="badgeRow" style="margin-top:10px">
+            <span class="badge gold">${escapeHtml(r.category || "-")}</span>
+            <span class="badge blue">${escapeHtml(r.base || "-")}</span>
+          </div>
+          <div class="itemActions">
+            <button class="btn" onclick="openRecipeView('${r.id}')">Vedi ricetta</button>
+            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
+            <button class="btnMixer" onclick="openLotCreator('${r.id}')">Crea lotto</button>
+            <button class="btnDanger" onclick="deleteRecipe('${r.id}')">Elimina</button>
+          </div>
+        </div>
+      `).join("") : `<div class="empty">Nessuna ricetta salvata.</div>`;
+    }
+
+    function ingredientRowHtml(i={}){
+      return `
+        <div class="ingredientRow">
+          <select class="select ing_cat">
+            ${Object.keys(state.libraries).map(k => `<option value="${k}" ${i.category===k?'selected':''}>${prettyKey(k)}</option>`).join("")}
+          </select>
+          <input class="input ing_name" value="${escapeHtml(i.name || "")}" placeholder="Ingrediente">
+          <input class="input ing_qty" type="number" step="0.01" value="${i.qty ?? ""}" placeholder="0">
+          <input class="input ing_unit" value="${escapeHtml(i.unit || "g")}" placeholder="g">
+          <input class="input ing_note" value="${escapeHtml(i.note || "")}" placeholder="Note">
+          <button class="btnDanger" onclick="this.parentNode.remove()">✕</button>
+        </div>
+      `;
+    }
+
+    function paramRowHtml(p={}){
+      return `
+        <div class="paramRow">
+          <input class="input par_name" value="${escapeHtml(p.name || "")}" placeholder="Parametro">
+          <input class="input par_type" value="${escapeHtml(p.type || "")}" placeholder="Tipo">
+          <input class="input par_min" type="number" step="0.001" value="${p.min ?? ""}" placeholder="0">
+          <input class="input par_max" type="number" step="0.001" value="${p.max ?? ""}" placeholder="10">
+          <input class="input par_step" type="number" step="0.001" value="${p.step ?? ""}" placeholder="0.1">
+          <input class="input par_value" type="number" step="0.001" value="${p.value ?? ""}" placeholder="1">
+          <input class="input par_unit" value="${escapeHtml(p.unit || "")}" placeholder="% / g/L">
+          <button class="btnDanger" onclick="this.parentNode.remove()">✕</button>
+        </div>
+      `;
+    }
+
+    function openRecipeEditor(id=null){
+      editingRecipeId = id;
+      const recipe = id ? getRecipe(id) : null;
+
+      document.getElementById("recipeEditTitle").textContent = recipe ? "Modifica ricetta" : "Nuova ricetta";
+      document.getElementById("recipe_name").value = recipe?.name || "";
+      document.getElementById("recipe_style").value = recipe?.style || "";
+      document.getElementById("recipe_category").value = recipe?.category || "";
+      document.getElementById("recipe_base").value = recipe?.base || "";
+      document.getElementById("recipe_notes").value = recipe?.notes || "";
+
+      const ingWrap = document.getElementById("ingredientsWrap");
+      ingWrap.innerHTML = "";
+      const recipeIngredients = recipe ? recipe.ingredients : [];
+      if(recipeIngredients.length){
+        recipeIngredients.forEach(i => ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml(i)));
+      } else {
+        ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml({}));
+      }
+
+      const paramWrap = document.getElementById("paramsWrap");
+      paramWrap.innerHTML = "";
+      const recipeParams = recipe ? recipe.params : structuredClone(defaultParams);
+      recipeParams.forEach(p => paramWrap.insertAdjacentHTML("beforeend", paramRowHtml(p)));
+
+      showSection("recipe-edit");
+    }
+
+    function gatherRecipeFromEditor(){
+      const ingredients = [...document.querySelectorAll("#ingredientsWrap .ingredientRow")].map(row => ({
+        category: row.querySelector(".ing_cat").value,
+        name: row.querySelector(".ing_name").value.trim(),
+        qty: Number(row.querySelector(".ing_qty").value) || 0,
+        unit: row.querySelector(".ing_unit").value.trim() || "g",
+        note: row.querySelector(".ing_note").value.trim()
+      })).filter(x => x.name);
+
+      const params = [...document.querySelectorAll("#paramsWrap .paramRow")].map(row => {
+        const name = row.querySelector(".par_name").value.trim();
+        const type = row.querySelector(".par_type").value.trim();
+        return {
+          key: name.toLowerCase().replace(/\s+/g,"_"),
+          name,
+          type,
+          min: Number(row.querySelector(".par_min").value),
+          max: Number(row.querySelector(".par_max").value),
+          step: Number(row.querySelector(".par_step").value) || 0.1,
+          value: Number(row.querySelector(".par_value").value) || 0,
+          unit: row.querySelector(".par_unit").value.trim(),
+          cat: inferCategory(name, type)
+        };
+      }).filter(x => x.name);
+
       return {
-        id: uid("ch"),
-        key: "ing_" + (ing.name || "ingrediente").toLowerCase().replace(/\s+/g,"_"),
-        name: String(ing.name || "INGREDIENTE").toUpperCase().slice(0,16),
-        type: ing.category || "Ingrediente",
-        min: 0,
-        max: Math.max(10, Number(ing.qty) * 2 || 10),
-        step: 0.1,
-        value: Number(ing.qty) || 0,
-        unit: " " + (ing.unit || "g"),
-        cat: catMap[ing.category] || "botanical",
-        ingredientRef: true
+        id: editingRecipeId || uid("recipe"),
+        name: document.getElementById("recipe_name").value.trim(),
+        style: document.getElementById("recipe_style").value.trim(),
+        category: document.getElementById("recipe_category").value.trim(),
+        base: document.getElementById("recipe_base").value.trim(),
+        notes: document.getElementById("recipe_notes").value.trim(),
+        ingredients,
+        params
       };
     }
 
-    function cloneParamsForLot(params){
-      return (params || []).map(p => ({
+    function inferCategory(name, type){
+      const s = (name + " " + type).toLowerCase();
+      if(s.includes("ph") || s.includes("acid")) return "acid";
+      if(s.includes("og") || s.includes("fg") || s.includes("abv") || s.includes("temp")) return "tech";
+      if(s.includes("srm") || s.includes("color")) return "color";
+      if(s.includes("co2") || s.includes("pression")) return "gas";
+      if(s.includes("dolce") || s.includes("secc")) return "sugar";
+      if(s.includes("tannin") || s.includes("amaro")) return "bitter";
+      if(s.includes("latt")) return "lactic";
+      if(s.includes("liev")) return "yeast";
+      return "tech";
+    }
+
+    function saveRecipe(){
+      const recipe = gatherRecipeFromEditor();
+      if(!recipe.name){
+        alert("Inserisci il nome della ricetta.");
+        return;
+      }
+
+      const idx = state.recipes.findIndex(r => r.id === recipe.id);
+      if(idx >= 0) state.recipes[idx] = recipe;
+      else state.recipes.unshift(recipe);
+
+      state.selectedRecipeId = recipe.id;
+      saveState();
+      renderAll();
+      openRecipeView(recipe.id);
+    }
+
+    function openRecipeView(id){
+      const recipe = getRecipe(id);
+      if(!recipe) return;
+
+      state.selectedRecipeId = id;
+      saveState();
+
+      document.getElementById("recipeViewTitle").textContent = recipe.name;
+      document.getElementById("recipeViewEditBtn").onclick = () => openRecipeEditor(id);
+      document.getElementById("recipeViewLotBtn").onclick = () => openLotCreator(id);
+
+      document.getElementById("recipeViewBody").innerHTML = `
+        <div class="layout2">
+          <div class="item">
+            <div class="itemTitle">Dati ricetta</div>
+            <div class="meta">
+              Nome: ${escapeHtml(recipe.name)}<br>
+              Stile: ${escapeHtml(recipe.style || "-")}<br>
+              Categoria: ${escapeHtml(recipe.category || "-")}<br>
+              Base: ${escapeHtml(recipe.base || "-")}<br>
+              Note: ${escapeHtml(recipe.notes || "-")}
+            </div>
+          </div>
+          <div class="item">
+            <div class="itemTitle">Sintesi</div>
+            <div class="meta">
+              Ingredienti: ${recipe.ingredients.length}<br>
+              Parametri: ${recipe.params.length}<br>
+              Canali mixer generati: ${recipe.ingredients.length + recipe.params.length}
+            </div>
+          </div>
+        </div>
+
+        <div class="layout2" style="margin-top:14px">
+          <div class="card">
+            <div class="cardHead"><div><h2>Ingredienti</h2><div class="sub">Ricetta completa</div></div></div>
+            <div class="cardBody">
+              ${recipe.ingredients.length ? recipe.ingredients.map(i => `
+                <div class="item" style="margin-bottom:10px">
+                  <div class="itemTitle">${escapeHtml(i.name)}</div>
+                  <div class="meta">
+                    Categoria: ${escapeHtml(i.category)}<br>
+                    Quantità: ${num(i.qty,2)} ${escapeHtml(i.unit)}<br>
+                    Note: ${escapeHtml(i.note || "-")}
+                  </div>
+                </div>
+              `).join("") : `<div class="empty">Nessun ingrediente.</div>`}
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cardHead"><div><h2>Parametri</h2><div class="sub">Tecnici</div></div></div>
+            <div class="cardBody">
+              ${recipe.params.length ? recipe.params.map(p => `
+                <div class="item" style="margin-bottom:10px">
+                  <div class="itemTitle">${escapeHtml(p.name)}</div>
+                  <div class="meta">
+                    Tipo: ${escapeHtml(p.type)}<br>
+                    Valore: ${num(p.value, p.step >= 1 ? 0 : p.step >= 0.1 ? 1 : p.step >= 0.01 ? 2 : 3)} ${escapeHtml(p.unit || "")}<br>
+                    Range: ${escapeHtml(String(p.min))} → ${escapeHtml(String(p.max))}
+                  </div>
+                </div>
+              `).join("") : `<div class="empty">Nessun parametro.</div>`}
+            </div>
+          </div>
+        </div>
+      `;
+
+      showSection("recipe-view");
+    }
+
+    function deleteRecipe(id){
+      if(!confirm("Eliminare questa ricetta?")) return;
+      state.recipes = state.recipes.filter(r => r.id !== id);
+      if(state.selectedRecipeId === id) state.selectedRecipeId = state.recipes[0]?.id || null;
+      saveState();
+      renderAll();
+      showSection("recipes");
+    }
+
+    function recipeToChannels(recipe){
+      const params = recipe.params.map(p => ({
         id: uid("ch"),
         key: p.key,
         name: p.name,
@@ -923,174 +1149,75 @@
         unit: p.unit || "",
         cat: p.cat || "tech"
       }));
-    }
 
-    function cloneIngredientsForLot(ingredients){
-      return (ingredients || []).map(ingredientToChannel);
-    }
+      const ingredientCatMap = {
+        botaniche:"botanical",
+        lieviti:"yeast",
+        fermenti_lattici:"lactic",
+        te:"botanical",
+        pepe:"botanical",
+        frutta:"botanical",
+        zuccheri:"sugar",
+        nutrienti:"yeast",
+        acidi:"acid",
+        luppoli:"bitter"
+      };
 
-    function recipeToChannels(recipe){
-      const params = cloneParamsForLot(recipe.params || []);
-      const ingredients = cloneIngredientsForLot(recipe.ingredients || []);
+      const ingredients = recipe.ingredients.map(i => ({
+        id: uid("ch"),
+        key: "ing_" + i.name.toLowerCase().replace(/\s+/g,"_"),
+        name: i.name.toUpperCase().slice(0,16),
+        type: i.category,
+        min: 0,
+        max: Math.max(10, Number(i.qty) * 2 || 10),
+        step: 0.1,
+        value: Number(i.qty) || 0,
+        unit: " " + (i.unit || "g"),
+        cat: ingredientCatMap[i.category] || "botanical"
+      }));
+
       return [...params, ...ingredients];
     }
 
-    function renderStats(){
-      document.getElementById("statRecipes").textContent = state.recipes.length;
-      document.getElementById("statLots").textContent = state.lots.length;
-      document.getElementById("statLibraries").textContent = Object.keys(state.libraries).length;
-      document.getElementById("statChannels").textContent = currentLot()?.channels?.length || 0;
-    }
+    function openLotCreator(recipeId=null){
+      const rid = recipeId || state.selectedRecipeId || state.recipes[0]?.id || "";
+      if(!state.recipes.length){
+        alert("Prima crea una ricetta.");
+        return;
+      }
 
-    function showSection(name){
-      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-      document.getElementById("sec-" + name).classList.add("active");
-      document.getElementById("normalTopbar").classList.remove("hidden");
-      document.getElementById("normalDock").classList.remove("hidden");
-      document.body.style.paddingBottom = "92px";
-      state.mixerPageOpen = false;
-      saveState();
-    }
-
-    function openMixerPage(){
-      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-      document.getElementById("sec-mixer").classList.add("active");
-      document.getElementById("normalTopbar").classList.add("hidden");
-      document.getElementById("normalDock").classList.add("hidden");
-      document.body.style.paddingBottom = "0px";
-      state.mixerPageOpen = true;
-      saveState();
-      renderMixerPage();
-      window.scrollTo({top:0,behavior:"instant"});
-    }
-
-    function closeMixerPage(){
-      showSection("home");
-      renderAll();
-    }
-
-    function renderHomeRecipes(){
-      const wrap = document.getElementById("homeRecipesList");
-      const items = state.recipes.slice(0,4);
-      wrap.innerHTML = items.length ? items.map(r => `
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(r.name)}</div>
-          <div class="meta">${escapeHtml(r.style || "-")} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
-          <div class="itemActions">
-            <button class="btn" onclick="openRecipeDetail('${r.id}')">Apri</button>
-            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
-          </div>
-        </div>
-      `).join("") : `<div class="empty">Nessuna ricetta.</div>`;
-    }
-
-    function renderRecipesPage(){
-      const wrap = document.getElementById("recipesList");
-      wrap.innerHTML = state.recipes.length ? state.recipes.map(r => `
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(r.name)}</div>
-          <div class="meta">${escapeHtml(r.style || "-")} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
-          <div class="badgeRow" style="margin-top:10px">
-            <span class="badge gold">${escapeHtml(r.category || "-")}</span>
-            <span class="badge blue">${escapeHtml(r.base || "-")}</span>
-          </div>
-          <div class="itemActions">
-            <button class="btn" onclick="openRecipeDetail('${r.id}')">Vedi ricetta</button>
-            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
-            <button class="btnMixer" onclick="openLotCreator('${r.id}')">Crea lotto</button>
-            <button class="btnDanger" onclick="deleteRecipe('${r.id}')">Elimina</button>
-          </div>
-        </div>
-      `).join("") : `<div class="empty">Nessuna ricetta salvata.</div>`;
-    }
-
-    function openRecipeDetail(id){
-      state.selectedRecipeId = id;
-      saveState();
-      const recipe = getRecipe(id);
+      const options = state.recipes.map(r => `<option value="${r.id}" ${r.id===rid?'selected':''}>${escapeHtml(r.name)}</option>`).join("");
+      const name = prompt("Nome lotto");
+      if(name === null) return;
+      const code = prompt("Codice lotto") || "";
+      const volume = Number(prompt("Volume litri", "20")) || 0;
+      const recipe = getRecipe(rid || state.recipes[0].id);
       if(!recipe) return;
-      document.getElementById("recipeDetailTitle").textContent = recipe.name;
-      document.getElementById("recipeDetailEditBtn").onclick = () => openRecipeEditor(id);
-      document.getElementById("recipeDetailCreateLotBtn").onclick = () => openLotCreator(id);
 
-      const body = document.getElementById("recipeDetailBody");
-      body.innerHTML = `
-        <div class="layout2">
-          <div>
-            <div class="item">
-              <div class="itemTitle">Dati ricetta</div>
-              <div class="meta">
-                Nome: ${escapeHtml(recipe.name)}<br>
-                Stile: ${escapeHtml(recipe.style || "-")}<br>
-                Categoria: ${escapeHtml(recipe.category || "-")}<br>
-                Base: ${escapeHtml(recipe.base || "-")}<br>
-                Note: ${escapeHtml(recipe.notes || "-")}
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="item">
-              <div class="itemTitle">Sintesi</div>
-              <div class="meta">
-                Ingredienti: ${recipe.ingredients.length}<br>
-                Parametri: ${recipe.params.length}<br>
-                Canali mixer generati: ${recipe.ingredients.length + recipe.params.length}
-              </div>
-            </div>
-          </div>
-        </div>
+      const lot = {
+        id: uid("lot"),
+        recipeId: recipe.id,
+        recipeName: recipe.name,
+        name: name || recipe.name + " LOTTO",
+        code,
+        type: recipe.category || "sidro",
+        stage: "programmato",
+        volume,
+        date: today(),
+        culture: "",
+        recipeText: recipe.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        notes: "",
+        channels: recipeToChannels(recipe)
+      };
 
-        <div class="card" style="margin-top:14px">
-          <div class="cardHead"><div><h2>Ingredienti</h2><div class="sub">Ricetta completa</div></div></div>
-          <div class="cardBody">
-            ${recipe.ingredients.length ? recipe.ingredients.map(i => `
-              <div class="item" style="margin-bottom:10px">
-                <div class="itemTitle">${escapeHtml(i.name)}</div>
-                <div class="meta">
-                  Categoria: ${escapeHtml(i.category)}<br>
-                  Quantità: ${num(i.qty,2)} ${escapeHtml(i.unit)}<br>
-                  Note: ${escapeHtml(i.note || "-")}
-                </div>
-              </div>
-            `).join("") : `<div class="empty">Nessun ingrediente.</div>`}
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:14px">
-          <div class="cardHead"><div><h2>Parametri tecnici</h2><div class="sub">Valori modificabili</div></div></div>
-          <div class="cardBody">
-            ${recipe.params.length ? recipe.params.map(p => `
-              <div class="item" style="margin-bottom:10px">
-                <div class="itemTitle">${escapeHtml(p.name)}</div>
-                <div class="meta">
-                  Tipo: ${escapeHtml(p.type)}<br>
-                  Valore: ${num(p.value, p.step >= 1 ? 0 : p.step >= 0.1 ? 1 : p.step >= 0.01 ? 2 : 3)} ${escapeHtml(p.unit || "")}<br>
-                  Range: ${escapeHtml(String(p.min))} → ${escapeHtml(String(p.max))}
-                </div>
-              </div>
-            `).join("") : `<div class="empty">Nessun parametro.</div>`}
-          </div>
-        </div>
-      `;
-      showSection("recipe-detail");
+      state.lots.unshift(lot);
+      state.selectedLotId = lot.id;
+      saveState();
+      renderAll();
+      showSection("lots");
     }
 
-    function renderHomeLots(){
-      const wrap = document.getElementById("homeLotsList");
-      const items = state.lots.slice(0,4);
-      wrap.innerHTML = items.length ? items.map(l => `
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(l.name)}</div>
-          <div class="meta">${escapeHtml(l.code || "-")} · ${escapeHtml(l.type || "-")} · ${l.channels.length} canali</div>
-          <div class="itemActions">
-            <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
-            <button class="btnMixer" onclick="selectLotAndOpenMixer('${l.id}')">Mixer</button>
-          </div>
-        </div>
-      `).join("") : `<div class="empty">Nessun lotto.</div>`;
-    }
-
-    function renderLotsPage(){
+    function renderLots(){
       const wrap = document.getElementById("lotsList");
       wrap.innerHTML = state.lots.length ? state.lots.map(l => `
         <div class="item">
@@ -1107,83 +1234,156 @@
           </div>
           <div class="itemActions">
             <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
-            <button class="btnMixer" onclick="selectLotAndOpenMixer('${l.id}')">Apri mixer</button>
+            <button class="btnMixer" onclick="selectLotAndOpenMixer('${l.id}')">Mixer</button>
             <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
           </div>
         </div>
-      `).join("") : `<div class="empty">Nessun lotto creato.</div>`;
+      `).join("") : `<div class="empty">Nessun lotto.</div>`;
     }
 
-    function renderLibrariesPage(){
+    function renderLotMeta(){
+      const lot = currentLot();
+      document.getElementById("lot_name").value = lot?.name || "";
+      document.getElementById("lot_code").value = lot?.code || "";
+      document.getElementById("lot_type").value = lot?.type || "";
+      document.getElementById("lot_stage").value = lot?.stage || "programmato";
+      document.getElementById("lot_volume").value = lot?.volume || "";
+      document.getElementById("lot_date").value = lot?.date || today();
+      document.getElementById("lot_culture").value = lot?.culture || "";
+      document.getElementById("lot_recipe_text").value = lot?.recipeText || "";
+      document.getElementById("lot_notes").value = lot?.notes || "";
+    }
+
+    function saveLotMeta(){
+      const lot = currentLot();
+      if(!lot){
+        alert("Seleziona un lotto.");
+        return;
+      }
+      lot.name = document.getElementById("lot_name").value.trim() || lot.name;
+      lot.code = document.getElementById("lot_code").value.trim();
+      lot.type = document.getElementById("lot_type").value.trim() || lot.type;
+      lot.stage = document.getElementById("lot_stage").value;
+      lot.volume = Number(document.getElementById("lot_volume").value) || 0;
+      lot.date = document.getElementById("lot_date").value || today();
+      lot.culture = document.getElementById("lot_culture").value.trim();
+      lot.recipeText = document.getElementById("lot_recipe_text").value.trim();
+      lot.notes = document.getElementById("lot_notes").value.trim();
+      saveState();
+      renderAll();
+    }
+
+    function selectLot(id){
+      state.selectedLotId = id;
+      saveState();
+      renderAll();
+    }
+
+    function selectLotAndOpenMixer(id){
+      state.selectedLotId = id;
+      saveState();
+      renderAll();
+      openMixerPage();
+    }
+
+    function deleteLot(id){
+      if(!confirm("Eliminare questo lotto?")) return;
+      state.lots = state.lots.filter(l => l.id !== id);
+      if(state.selectedLotId === id) state.selectedLotId = state.lots[0]?.id || null;
+      if(state.bankA === id) state.bankA = null;
+      if(state.bankB === id) state.bankB = null;
+      saveState();
+      renderAll();
+    }
+
+    function renderLibraries(){
       const wrap = document.getElementById("libraryList");
       wrap.innerHTML = Object.keys(state.libraries).map(k => `
         <div class="item">
           <div class="itemTitle">${prettyKey(k)}</div>
           <div class="meta">${state.libraries[k].length} elementi</div>
           <div class="badgeRow" style="margin-top:10px">
-            ${state.libraries[k].slice(0,6).map(it => `<span class="badge purple">${escapeHtml(it.name)}</span>`).join("")}
+            ${state.libraries[k].slice(0,6).map(x => `<span class="badge blue">${escapeHtml(x.name)}</span>`).join("")}
           </div>
           <div class="itemActions">
-            <button class="btn" onclick="openLibraryModal('${k}')">Apri</button>
+            <button class="btn" onclick="openLibraryCategory('${k}')">Apri</button>
           </div>
         </div>
       `).join("");
     }
 
-    function renderScenesPage(){
-      const wrap = document.getElementById("scenesList");
-      wrap.innerHTML = state.scenes.length ? state.scenes.slice().reverse().map(s => `
+    function openLibraryCategory(key){
+      const items = state.libraries[key] || [];
+      const html = items.map((x, idx) => `
         <div class="item">
-          <div class="itemTitle">${escapeHtml(s.name)}</div>
-          <div class="meta">${escapeHtml(s.date)} · ${s.channels.length} canali</div>
+          <div class="itemTitle">${escapeHtml(x.name)}</div>
+          <div class="meta">${escapeHtml(x.note || "-")}</div>
           <div class="itemActions">
-            <button class="btnGold" onclick="applyScene('${s.id}')">Carica scena</button>
+            <button class="btnDanger" onclick="deleteLibraryItem('${key}',${idx})">Elimina</button>
           </div>
         </div>
-      `).join("") : `<div class="empty">Nessuna scena salvata.</div>`;
+      `).join("") || `<div class="empty">Nessun elemento.</div>`;
+      openSimpleModal(prettyKey(key), html + `
+        <div class="toolbar" style="margin-top:14px">
+          <button class="btnGold" onclick="addLibraryItemPrompt('${key}')">+ Aggiungi</button>
+        </div>
+      `);
     }
 
-    function renderLotForm(){
-      const lot = currentLot();
-      document.getElementById("lotName").value = lot?.name || "";
-      document.getElementById("lotCode").value = lot?.code || "";
-      document.getElementById("lotType").value = lot?.type || "sidro";
-      document.getElementById("lotStage").value = lot?.stage || "programmato";
-      document.getElementById("lotVolume").value = lot?.volume || "";
-      document.getElementById("lotDate").value = lot?.date || today();
-      document.getElementById("lotCulture").value = lot?.culture || "";
-      document.getElementById("lotRecipe").value = lot?.recipeText || "";
-      document.getElementById("lotNotes").value = lot?.notes || "";
+    function openLibraryAdd(){
+      const cat = prompt("Categoria libreria (luppoli, botaniche, lieviti, fermenti_lattici, te, pepe, frutta, zuccheri, nutrienti, acidi)");
+      if(!cat || !state.libraries[cat]) return;
+      addLibraryItemPrompt(cat);
     }
 
-    function renderMixerHeader(){
-      const lot = currentLot();
-      if(!lot){
-        document.getElementById("masterText").textContent = "XA MIXER";
-        document.getElementById("masterSub").textContent = "Vista separata solo mixer. Il banco mostra parametri e ingredienti della ricetta collegata al lotto.";
-        document.getElementById("lotDisplay").textContent = "NESSUNO";
-        document.getElementById("lotDisplayMeta").textContent = "Apri o crea un lotto.";
-        document.getElementById("badgeType").textContent = "Tipo -";
-        document.getElementById("badgeStage").textContent = "Stato -";
-        document.getElementById("badgeChannels").textContent = "Canali 0";
-        return;
-      }
-      document.getElementById("masterText").textContent = (lot.stage || "READY").toUpperCase();
-      document.getElementById("masterSub").textContent = "Pagina separata solo mixer. Parametri e ingredienti sono modificabili direttamente sui canali.";
-      document.getElementById("lotDisplay").textContent = (lot.name || "LOTTO").toUpperCase();
-      document.getElementById("lotDisplayMeta").textContent = `${lot.code || "-"} · ${lot.type || "-"} · ${lot.recipeName || "-"} · ${lot.channels.length} canali`;
-      document.getElementById("badgeType").textContent = "Tipo " + (lot.type || "-");
-      document.getElementById("badgeStage").textContent = "Stato " + (lot.stage || "-");
-      document.getElementById("badgeChannels").textContent = "Canali " + lot.channels.length;
+    function addLibraryItemPrompt(cat){
+      const name = prompt("Nome elemento");
+      if(!name) return;
+      const note = prompt("Nota") || "";
+      state.libraries[cat].push({name,note});
+      saveState();
+      renderAll();
+      openLibraryCategory(cat);
     }
 
-    function renderBankInfo(){
-      const a = getLot(state.bankA);
-      const b = getLot(state.bankB);
-      document.getElementById("bankAText").textContent = a ? `${a.name} · ${a.type} · ${a.channels.length} canali` : "Nessun lotto assegnato.";
-      document.getElementById("bankBText").textContent = b ? `${b.name} · ${b.type} · ${b.channels.length} canali` : "Nessun lotto assegnato.";
-      document.getElementById("bankAInfo").className = "bankPanel" + (state.activeBank === "A" ? " activeA" : "");
-      document.getElementById("bankBInfo").className = "bankPanel" + (state.activeBank === "B" ? " activeB" : "");
+    function deleteLibraryItem(cat, idx){
+      state.libraries[cat].splice(idx,1);
+      saveState();
+      renderAll();
+      openLibraryCategory(cat);
+    }
+
+    function openSimpleModal(title, inner){
+      const old = document.getElementById("simpleModal");
+      if(old) old.remove();
+      const div = document.createElement("div");
+      div.id = "simpleModal";
+      div.style.position = "fixed";
+      div.style.inset = "0";
+      div.style.background = "rgba(0,0,0,.72)";
+      div.style.zIndex = "200";
+      div.style.display = "flex";
+      div.style.alignItems = "flex-end";
+      div.style.justifyContent = "center";
+      div.style.padding = "14px";
+      div.innerHTML = `
+        <div style="width:min(900px,100%);max-height:92vh;overflow:auto;border-radius:24px;background:linear-gradient(180deg,#181f28,#0f141a);border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 40px rgba(0,0,0,.38);">
+          <div style="position:sticky;top:0;background:rgba(24,31,40,.96);backdrop-filter:blur(10px);padding:16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;gap:12px;">
+            <div><h3 style="margin:0">${title}</h3></div>
+            <button onclick="document.getElementById('simpleModal').remove()" style="width:42px;height:42px;border-radius:14px;background:#222a34;color:#fff;border:1px solid #334050;font-weight:900">✕</button>
+          </div>
+          <div style="padding:16px">${inner}</div>
+        </div>
+      `;
+      document.body.appendChild(div);
+    }
+
+    function formatChannelValue(ch){
+      const step = Number(ch.step);
+      if(step >= 1) return num(ch.value,0) + (ch.unit || "");
+      if(step >= 0.1) return num(ch.value,1) + (ch.unit || "");
+      if(step >= 0.01) return num(ch.value,2) + (ch.unit || "");
+      return num(ch.value,3) + (ch.unit || "");
     }
 
     function buildVU(count){
@@ -1198,15 +1398,23 @@
       return html;
     }
 
-    function renderMixerBoard(){
+    function renderMixer(){
       const lot = currentLot();
+      document.getElementById("mixer_title").textContent = lot ? (lot.stage || "READY").toUpperCase() : "XA MIXER";
+      document.getElementById("mixer_sub").textContent = lot ? "Mixer fullscreen separato. Parametri e ingredienti della ricetta sono modificabili dai canali." : "Apri o crea un lotto.";
+      document.getElementById("mixer_lot_name").textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
+      document.getElementById("mixer_lot_meta").textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${lot.recipeName || "-"} · ${lot.channels.length} canali` : "Apri o crea un lotto.";
+      document.getElementById("mixer_badge_type").textContent = "Tipo " + (lot?.type || "-");
+      document.getElementById("mixer_badge_stage").textContent = "Stato " + (lot?.stage || "-");
+      document.getElementById("mixer_badge_channels").textContent = "Canali " + (lot?.channels?.length || 0);
+
       const board = document.getElementById("mixerBoard");
       if(!lot){
         board.innerHTML = `
-          <div class="addChannelCard">
+          <div class="addSlot">
             <div class="plus">+</div>
-            <h3>Crea un lotto</h3>
-            <p>Prima crea una ricetta, poi un lotto, poi apri il mixer fullscreen.</p>
+            <h3>Nessun lotto</h3>
+            <p>Crea una ricetta, poi un lotto, poi apri il mixer.</p>
             <div class="toolbar" style="margin-top:14px">
               <button class="btnGold" onclick="openRecipeEditor()">Nuova ricetta</button>
             </div>
@@ -1215,39 +1423,36 @@
         return;
       }
 
-      const channels = lot.channels || [];
-      const visual = [...channels];
-      while(visual.length < 24){
-        visual.push({empty:true,id:"empty_"+visual.length});
+      const channels = [...lot.channels];
+      while(channels.length < 24){
+        channels.push({empty:true});
       }
 
-      board.innerHTML = visual.map(ch => {
+      board.innerHTML = channels.map(ch => {
         if(ch.empty){
           return `
-            <div class="addChannelCard" style="min-height:595px">
+            <div class="addSlot">
               <div class="plus">+</div>
               <h3>Slot libero</h3>
-              <p>Aggiungi un canale nuovo qui.</p>
+              <p>Aggiungi un canale nuovo.</p>
               <div class="toolbar" style="margin-top:14px">
-                <button class="btnGold" onclick="openAddChannelModal()">Nuovo canale</button>
+                <button class="btnGold" onclick="openAddChannel()">Nuovo canale</button>
               </div>
             </div>
           `;
         }
 
-        const pct = Math.max(0, Math.min(100, ((Number(ch.value)-Number(ch.min)) / (Number(ch.max)-Number(ch.min) || 1)) * 100));
-        const catClass = categoryColorClass(ch.cat);
-        return `
-          <div class="channel ${catClass}">
-            <div class="stripScrew a"></div>
-            <div class="stripScrew b"></div>
+        const pct = Math.max(0, Math.min(100, ((Number(ch.value)-Number(ch.min)) / ((Number(ch.max)-Number(ch.min)) || 1)) * 100));
+        const cat = ch.cat || "tech";
 
+        return `
+          <div class="channel ${cat}">
             <div class="channelTop">
               <div class="channelNameWrap">
                 <div class="channelName">${escapeHtml(ch.name)}</div>
                 <div class="channelType">${escapeHtml(ch.type)}</div>
               </div>
-              <button class="tinyIconBtn" onclick="openEditChannelModal('${ch.id}')">✎</button>
+              <button class="tinyIconBtn" onclick="openEditChannel('${ch.id}')">✎</button>
             </div>
 
             <div class="miniLcd">
@@ -1261,14 +1466,7 @@
             <div class="faderWrap">
               <div class="vu">${buildVU(Math.round((pct/100)*16))}</div>
               <div class="track">
-                <input
-                  type="range"
-                  min="${ch.min}"
-                  max="${ch.max}"
-                  step="${ch.step}"
-                  value="${ch.value}"
-                  oninput="updateChannelValue('${ch.id}', this.value)"
-                />
+                <input type="range" min="${ch.min}" max="${ch.max}" step="${ch.step}" value="${ch.value}" oninput="updateChannel('${ch.id}', this.value)" />
               </div>
             </div>
 
@@ -1279,663 +1477,170 @@
 
             <div class="channelButtons" style="margin-top:8px">
               <button class="miniBtn" onclick="duplicateChannel('${ch.id}')">Duplica</button>
-              <button class="miniBtn" onclick="deleteChannel('${ch.id}')">Togli</button>
+              <button class="miniBtn" onclick="removeChannel('${ch.id}')">Togli</button>
             </div>
           </div>
         `;
       }).join("");
     }
 
-    function renderMixerPage(){
-      renderMixerHeader();
-      renderBankInfo();
-      renderMixerBoard();
-    }
-
-    function renderAll(){
-      ensureSelected();
-      saveState();
-      renderStats();
-      renderHomeRecipes();
-      renderHomeLots();
-      renderRecipesPage();
-      renderLibrariesPage();
-      renderLotsPage();
-      renderScenesPage();
-      renderLotForm();
-      renderMixerPage();
-
-      if(state.mixerPageOpen){
-        openMixerPage();
-      }else{
-        document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-        document.getElementById("sec-home").classList.add("active");
-        document.getElementById("normalTopbar").classList.remove("hidden");
-        document.getElementById("normalDock").classList.remove("hidden");
-        document.body.style.paddingBottom = "92px";
-      }
-    }
-
-    function selectLot(id){
-      state.selectedLotId = id;
-      saveState();
-      renderAll();
-    }
-
-    function selectLotAndOpenMixer(id){
-      state.selectedLotId = id;
-      saveState();
-      openMixerPage();
-      renderAll();
-    }
-
-    function deleteLot(id){
-      if(!confirm("Eliminare questo lotto?")) return;
-      state.lots = state.lots.filter(l => l.id !== id);
-      if(state.selectedLotId === id) state.selectedLotId = state.lots[0]?.id || null;
-      if(state.bankA === id) state.bankA = null;
-      if(state.bankB === id) state.bankB = null;
-      saveState();
-      renderAll();
-    }
-
-    function deleteRecipe(id){
-      if(!confirm("Eliminare questa ricetta?")) return;
-      state.recipes = state.recipes.filter(r => r.id !== id);
-      if(state.selectedRecipeId === id) state.selectedRecipeId = state.recipes[0]?.id || null;
-      saveState();
-      renderAll();
-      showSection("recipes");
-    }
-
-    function openRecipeEditor(id=null){
-      const recipe = id ? getRecipe(id) : null;
-      const ingredients = recipe ? recipe.ingredients : [];
-      const params = recipe ? recipe.params : structuredClone(defaultRecipeParams);
-
-      openModal(
-        recipe ? "Modifica ricetta" : "Nuova ricetta",
-        "Crea ricetta completa con ingredienti e parametri",
-        `
-          <div class="formGrid">
-            <div class="field">
-              <label>Nome ricetta</label>
-              <input class="input" id="r_name" value="${escapeHtml(recipe?.name || "")}" placeholder="Es. Sidro XA Dry Apple">
-            </div>
-            <div class="field">
-              <label>Stile</label>
-              <input class="input" id="r_style" value="${escapeHtml(recipe?.style || "")}" placeholder="Es. Sidro secco / lattico / sour tea">
-            </div>
-          </div>
-
-          <div class="formGrid" style="margin-top:12px">
-            <div class="field">
-              <label>Categoria</label>
-              <input class="input" id="r_category" value="${escapeHtml(recipe?.category || "")}" placeholder="Es. Sidro, Lattico, Ibrido">
-            </div>
-            <div class="field">
-              <label>Base</label>
-              <input class="input" id="r_base" value="${escapeHtml(recipe?.base || "")}" placeholder="Es. Succo mela / tè / blend">
-            </div>
-          </div>
-
-          <div class="field" style="margin-top:12px">
-            <label>Note ricetta</label>
-            <textarea class="textarea" id="r_notes" placeholder="Descrizione tecnica ricetta">${escapeHtml(recipe?.notes || "")}</textarea>
-          </div>
-
-          <div style="margin-top:18px">
-            <div class="itemTitle">Ingredienti</div>
-            <div class="meta">Categoria, nome, quantità, unità, note</div>
-            <div class="tableHead recipeIngredientRow" style="margin-top:10px">
-              <div>Categoria</div><div>Nome</div><div>Qtà</div><div>Unità</div><div>Note</div><div></div>
-            </div>
-            <div id="recipeIngredientsWrap">
-              ${ingredients.map(i => ingredientRowHtml(i)).join("")}
-            </div>
-            <div class="toolbar" style="margin-top:10px">
-              <button class="btn" onclick="addIngredientRow()">+ Ingrediente</button>
-              <button class="btnGold" onclick="openIngredientFromLibraryModal()">Da libreria</button>
-            </div>
-          </div>
-
-          <div style="margin-top:18px">
-            <div class="itemTitle">Parametri tecnici</div>
-            <div class="meta">Ogni parametro finirà come canale nel mixer</div>
-            <div class="tableHead recipeParamRow" style="margin-top:10px">
-              <div>Nome</div><div>Tipo</div><div>Min</div><div>Max</div><div>Step</div><div>Valore</div><div>Unità</div><div></div>
-            </div>
-            <div id="recipeParamsWrap">
-              ${params.map(p => paramRowHtml(p)).join("")}
-            </div>
-            <div class="toolbar" style="margin-top:10px">
-              <button class="btn" onclick="addParamRow()">+ Parametro</button>
-            </div>
-          </div>
-
-          <div class="toolbar" style="margin-top:18px">
-            <button class="btnGold" onclick="saveRecipe('${recipe?.id || ""}')">Salva ricetta</button>
-          </div>
-        `
-      );
-    }
-
-    function ingredientRowHtml(i={}){
-      return `
-        <div class="recipeIngredientRow">
-          <select class="select ri_cat">
-            ${Object.keys(state.libraries).map(k => `<option value="${k}" ${i.category===k?'selected':''}>${prettyKey(k)}</option>`).join("")}
-          </select>
-          <input class="input ri_name" value="${escapeHtml(i.name || "")}" placeholder="Ingrediente">
-          <input class="input ri_qty" type="number" step="0.01" value="${i.qty ?? ""}" placeholder="0">
-          <input class="input ri_unit" value="${escapeHtml(i.unit || "g")}" placeholder="g">
-          <input class="input ri_note" value="${escapeHtml(i.note || "")}" placeholder="Note">
-          <button class="btnDanger" onclick="this.parentNode.remove()">✕</button>
-        </div>
-      `;
-    }
-
-    function paramRowHtml(p={}){
-      return `
-        <div class="recipeParamRow">
-          <input class="input rp_name" value="${escapeHtml(p.name || "")}" placeholder="Parametro">
-          <input class="input rp_type" value="${escapeHtml(p.type || "")}" placeholder="Tipo">
-          <input class="input rp_min" type="number" step="0.001" value="${p.min ?? ""}" placeholder="0">
-          <input class="input rp_max" type="number" step="0.001" value="${p.max ?? ""}" placeholder="10">
-          <input class="input rp_step" type="number" step="0.001" value="${p.step ?? ""}" placeholder="0.1">
-          <input class="input rp_value" type="number" step="0.001" value="${p.value ?? ""}" placeholder="5">
-          <input class="input rp_unit" value="${escapeHtml(p.unit || "")}" placeholder="% / g/L / °">
-          <button class="btnDanger" onclick="this.parentNode.remove()">✕</button>
-        </div>
-      `;
-    }
-
-    function addIngredientRow(){
-      document.getElementById("recipeIngredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({}));
-    }
-
-    function addParamRow(){
-      document.getElementById("recipeParamsWrap").insertAdjacentHTML("beforeend", paramRowHtml({}));
-    }
-
-    function openIngredientFromLibraryModal(){
-      openModal(
-        "Aggiungi ingrediente da libreria",
-        "Seleziona categoria e nome",
-        `
-          <div class="formGrid">
-            <div class="field">
-              <label>Categoria</label>
-              <select class="select" id="libPickCat" onchange="refreshLibraryPickNames()">
-                ${Object.keys(state.libraries).map(k => `<option value="${k}">${prettyKey(k)}</option>`).join("")}
-              </select>
-            </div>
-            <div class="field">
-              <label>Nome</label>
-              <select class="select" id="libPickName"></select>
-            </div>
-          </div>
-          <div class="formGrid" style="margin-top:12px">
-            <div class="field">
-              <label>Quantità</label>
-              <input class="input" id="libPickQty" type="number" step="0.01" value="1">
-            </div>
-            <div class="field">
-              <label>Unità</label>
-              <input class="input" id="libPickUnit" value="g">
-            </div>
-          </div>
-          <div class="field" style="margin-top:12px">
-            <label>Nota</label>
-            <input class="input" id="libPickNote" placeholder="Note ingrediente">
-          </div>
-          <div class="toolbar" style="margin-top:14px">
-            <button class="btnGold" onclick="confirmIngredientFromLibrary()">Aggiungi</button>
-          </div>
-        `
-      );
-      setTimeout(refreshLibraryPickNames,0);
-    }
-
-    function refreshLibraryPickNames(){
-      const cat = document.getElementById("libPickCat").value;
-      const sel = document.getElementById("libPickName");
-      sel.innerHTML = (state.libraries[cat] || []).map(x => `<option value="${escapeHtml(x.name)}">${escapeHtml(x.name)}</option>`).join("");
-    }
-
-    function confirmIngredientFromLibrary(){
-      const cat = document.getElementById("libPickCat").value;
-      const name = document.getElementById("libPickName").value;
-      const qty = document.getElementById("libPickQty").value;
-      const unit = document.getElementById("libPickUnit").value;
-      const note = document.getElementById("libPickNote").value;
-
-      closeModal();
-      setTimeout(()=>{
-        openRecipeEditor(state.selectedRecipeId);
-        setTimeout(()=>{
-          addIngredientRow();
-          const rows = document.querySelectorAll("#recipeIngredientsWrap .recipeIngredientRow");
-          const last = rows[rows.length-1];
-          last.querySelector(".ri_cat").value = cat;
-          last.querySelector(".ri_name").value = name;
-          last.querySelector(".ri_qty").value = qty;
-          last.querySelector(".ri_unit").value = unit;
-          last.querySelector(".ri_note").value = note;
-        },50);
-      },50);
-    }
-
-    function saveRecipe(existingId=""){
-      const name = document.getElementById("r_name").value.trim();
-      if(!name){
-        alert("Inserisci il nome ricetta.");
-        return;
-      }
-
-      const ingredients = [...document.querySelectorAll("#recipeIngredientsWrap .recipeIngredientRow")].map(row => ({
-        category: row.querySelector(".ri_cat").value,
-        name: row.querySelector(".ri_name").value.trim(),
-        qty: Number(row.querySelector(".ri_qty").value) || 0,
-        unit: row.querySelector(".ri_unit").value.trim() || "g",
-        note: row.querySelector(".ri_note").value.trim()
-      })).filter(x => x.name);
-
-      const params = [...document.querySelectorAll("#recipeParamsWrap .recipeParamRow")].map(row => {
-        const name = row.querySelector(".rp_name").value.trim();
-        const type = row.querySelector(".rp_type").value.trim();
-        const min = Number(row.querySelector(".rp_min").value);
-        const max = Number(row.querySelector(".rp_max").value);
-        const step = Number(row.querySelector(".rp_step").value) || 0.1;
-        const value = Number(row.querySelector(".rp_value").value) || 0;
-        const unit = row.querySelector(".rp_unit").value.trim();
-        return {
-          key: name.toLowerCase().replace(/\s+/g,"_"),
-          name, type, min, max, step, value, unit,
-          cat: inferParamCategory(name, type)
-        };
-      }).filter(x => x.name);
-
-      const payload = {
-        id: existingId || uid("recipe"),
-        name,
-        style: document.getElementById("r_style").value.trim(),
-        category: document.getElementById("r_category").value.trim(),
-        base: document.getElementById("r_base").value.trim(),
-        notes: document.getElementById("r_notes").value.trim(),
-        ingredients,
-        params
-      };
-
-      if(existingId){
-        const idx = state.recipes.findIndex(r => r.id === existingId);
-        if(idx >= 0) state.recipes[idx] = payload;
-      }else{
-        state.recipes.unshift(payload);
-      }
-
-      state.selectedRecipeId = payload.id;
-      saveState();
-      closeModal();
-      renderAll();
-      openRecipeDetail(payload.id);
-    }
-
-    function inferParamCategory(name, type){
-      const s = (name + " " + type).toLowerCase();
-      if(s.includes("ph") || s.includes("acid")) return "acid";
-      if(s.includes("og") || s.includes("fg") || s.includes("abv") || s.includes("temp")) return "tech";
-      if(s.includes("srm") || s.includes("color")) return "color";
-      if(s.includes("co2") || s.includes("pression")) return "gas";
-      if(s.includes("dolce") || s.includes("secc")) return "sugar";
-      if(s.includes("tannin") || s.includes("amaro")) return "bitter";
-      if(s.includes("latt")) return "lactic";
-      if(s.includes("liev")) return "yeast";
-      return "tech";
-    }
-
-    function openLotCreator(recipeId=null){
-      const rid = recipeId || state.selectedRecipeId || state.recipes[0]?.id || "";
-      openModal(
-        "Crea lotto da ricetta",
-        "La ricetta genera i canali del mixer",
-        `
-          <div class="formGrid">
-            <div class="field">
-              <label>Ricetta</label>
-              <select class="select" id="lot_recipe_id">
-                ${state.recipes.map(r => `<option value="${r.id}" ${r.id===rid?'selected':''}>${escapeHtml(r.name)}</option>`).join("")}
-              </select>
-            </div>
-            <div class="field">
-              <label>Nome lotto</label>
-              <input class="input" id="lot_create_name" placeholder="Es. SIDRO XA LOTTO 01">
-            </div>
-          </div>
-
-          <div class="formGrid" style="margin-top:12px">
-            <div class="field">
-              <label>Codice</label>
-              <input class="input" id="lot_create_code" placeholder="XA-LOT-01">
-            </div>
-            <div class="field">
-              <label>Volume litri</label>
-              <input class="input" id="lot_create_volume" type="number" step="0.1" placeholder="20">
-            </div>
-          </div>
-
-          <div class="field" style="margin-top:12px">
-            <label>Note lotto</label>
-            <textarea class="textarea" id="lot_create_notes" placeholder="Note lotto"></textarea>
-          </div>
-
-          <div class="toolbar" style="margin-top:14px">
-            <button class="btnGold" onclick="createLotFromRecipe()">Crea lotto</button>
-          </div>
-        `
-      );
-    }
-
-    function createLotFromRecipe(){
-      const recipeId = document.getElementById("lot_recipe_id").value;
-      const recipe = getRecipe(recipeId);
-      if(!recipe){
-        alert("Seleziona una ricetta.");
-        return;
-      }
-
-      const lot = {
-        id: uid("lot"),
-        recipeId: recipe.id,
-        recipeName: recipe.name,
-        name: document.getElementById("lot_create_name").value.trim() || recipe.name + " LOTTO",
-        code: document.getElementById("lot_create_code").value.trim(),
-        type: recipe.category || "sidro",
-        stage: "programmato",
-        volume: Number(document.getElementById("lot_create_volume").value) || 0,
-        date: today(),
-        culture: "",
-        recipeText: recipe.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
-        notes: document.getElementById("lot_create_notes").value.trim(),
-        channels: recipeToChannels(recipe)
-      };
-
-      state.lots.unshift(lot);
-      state.selectedLotId = lot.id;
-      saveState();
-      closeModal();
-      renderAll();
-      openMixerPage();
-    }
-
-    function saveCurrentLotMeta(){
+    function updateChannel(id, value){
       const lot = currentLot();
       if(!lot) return;
-      lot.name = document.getElementById("lotName").value.trim() || lot.name;
-      lot.code = document.getElementById("lotCode").value.trim() || lot.code;
-      lot.type = document.getElementById("lotType").value;
-      lot.stage = document.getElementById("lotStage").value;
-      lot.volume = Number(document.getElementById("lotVolume").value) || 0;
-      lot.date = document.getElementById("lotDate").value || today();
-      lot.culture = document.getElementById("lotCulture").value.trim();
-      lot.recipeText = document.getElementById("lotRecipe").value.trim();
-      lot.notes = document.getElementById("lotNotes").value.trim();
-      saveState();
-      renderAll();
-    }
-
-    function updateChannelValue(channelId, value){
-      const lot = currentLot();
-      if(!lot) return;
-      const ch = lot.channels.find(c => c.id === channelId);
+      const ch = lot.channels.find(x => x.id === id);
       if(!ch) return;
       ch.value = Number(value);
       saveState();
-      renderMixerBoard();
+      renderMixer();
+      renderStats();
     }
 
-    function nudgeChannel(channelId, dir){
+    function nudgeChannel(id, dir){
       const lot = currentLot();
       if(!lot) return;
-      const ch = lot.channels.find(c => c.id === channelId);
+      const ch = lot.channels.find(x => x.id === id);
       if(!ch) return;
       ch.value = Number(ch.value) + (Number(ch.step) * dir);
       if(ch.value < Number(ch.min)) ch.value = Number(ch.min);
       if(ch.value > Number(ch.max)) ch.value = Number(ch.max);
       saveState();
-      renderMixerBoard();
+      renderMixer();
     }
 
-    function duplicateChannel(channelId){
+    function duplicateChannel(id){
       const lot = currentLot();
       if(!lot) return;
-      const ch = lot.channels.find(c => c.id === channelId);
+      const ch = lot.channels.find(x => x.id === id);
       if(!ch) return;
       lot.channels.push({...ch, id: uid("ch"), name: ch.name + " COPY"});
       saveState();
       renderAll();
+      openMixerPage();
     }
 
-    function deleteChannel(channelId){
+    function removeChannel(id){
       const lot = currentLot();
       if(!lot) return;
-      lot.channels = lot.channels.filter(c => c.id !== channelId);
+      lot.channels = lot.channels.filter(x => x.id !== id);
       saveState();
       renderAll();
+      openMixerPage();
     }
 
-    function quickAddPresetChannel(key){
+    function quickChannelTemplate(key){
+      const m = {
+        ph:{key:"ph",name:"pH",type:"Acidità",min:2.5,max:4.5,step:0.01,value:3.20,unit:"",cat:"acid"},
+        og:{key:"og",name:"OG",type:"Densità iniziale",min:1,max:1.12,step:0.001,value:1.048,unit:"",cat:"tech"},
+        fg:{key:"fg",name:"FG",type:"Densità finale",min:0.995,max:1.05,step:0.001,value:1.006,unit:"",cat:"tech"},
+        abv:{key:"abv",name:"ABV",type:"Alcol",min:0,max:15,step:0.1,value:5,unit:"%",cat:"tech"},
+        srm:{key:"srm",name:"SRM",type:"Colore",min:1,max:40,step:1,value:6,unit:"",cat:"color"},
+        temp:{key:"temp",name:"TEMP",type:"Temperatura",min:0,max:40,step:0.1,value:22,unit:"°",cat:"tech"},
+        co2:{key:"co2",name:"CO₂",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.5,unit:" vol",cat:"gas"},
+        acidita:{key:"acidita",name:"ACIDITÀ",type:"Totale",min:0,max:15,step:0.1,value:5,unit:" g/L",cat:"acid"},
+        tannino:{key:"tannino",name:"TANNINO",type:"Struttura",min:0,max:10,step:0.1,value:4,unit:"",cat:"bitter"}
+      };
+      return m[key] || null;
+    }
+
+    function addQuickChannel(key){
       const lot = currentLot();
       if(!lot) return;
-      const p = defaultRecipeParams.find(x => x.key === key);
-      if(!p) return;
+      const t = quickChannelTemplate(key);
+      if(!t) return;
+      lot.channels.push({...t, id: uid("ch")});
+      saveState();
+      renderAll();
+      openMixerPage();
+    }
+
+    function openAddChannel(){
+      const name = prompt("Nome canale");
+      if(!name) return;
+      const type = prompt("Tipo canale", "Custom") || "Custom";
+      const min = Number(prompt("Valore minimo", "0")) || 0;
+      const max = Number(prompt("Valore massimo", "10")) || 10;
+      const step = Number(prompt("Step", "0.1")) || 0.1;
+      const value = Number(prompt("Valore iniziale", "1")) || 1;
+      const unit = prompt("Unità", "g") || "";
+      const cat = prompt("Categoria colore: tech / acid / sugar / bitter / botanical / yeast / lactic / color / gas", "tech") || "tech";
+
+      const lot = currentLot();
+      if(!lot) return;
+
       lot.channels.push({
         id: uid("ch"),
-        key: p.key,
-        name: p.name,
-        type: p.type,
-        min: p.min,
-        max: p.max,
-        step: p.step,
-        value: p.value,
-        unit: p.unit,
-        cat: p.cat
+        key: name.toLowerCase().replace(/\s+/g,"_"),
+        name,
+        type,
+        min,
+        max,
+        step,
+        value,
+        unit: unit ? " " + unit : "",
+        cat
       });
       saveState();
       renderAll();
+      openMixerPage();
     }
 
-    function openAddChannelModal(){
-      openModal(
-        "Nuovo canale mixer",
-        "Parametro o ingrediente custom",
-        `
-          <div class="formGrid">
-            <div class="field">
-              <label>Nome canale</label>
-              <input class="input" id="ch_name" placeholder="Es. Botaniche">
-            </div>
-            <div class="field">
-              <label>Tipo</label>
-              <input class="input" id="ch_type" placeholder="Es. Grammi / Parametro">
-            </div>
-          </div>
-
-          <div class="formGrid" style="margin-top:12px">
-            <div class="field">
-              <label>Categoria colore</label>
-              <select class="select" id="ch_cat">
-                <option value="tech">Tech</option>
-                <option value="acid">Acid</option>
-                <option value="sugar">Sugar</option>
-                <option value="bitter">Bitter</option>
-                <option value="botanical">Botanical</option>
-                <option value="yeast">Yeast</option>
-                <option value="lactic">Lactic</option>
-                <option value="color">Color</option>
-                <option value="gas">Gas</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Unità</label>
-              <input class="input" id="ch_unit" placeholder="g / ml / % / g/L / vol">
-            </div>
-          </div>
-
-          <div class="formGrid" style="margin-top:12px">
-            <div class="field">
-              <label>Min</label>
-              <input class="input" id="ch_min" type="number" step="0.001" value="0">
-            </div>
-            <div class="field">
-              <label>Max</label>
-              <input class="input" id="ch_max" type="number" step="0.001" value="10">
-            </div>
-          </div>
-
-          <div class="formGrid" style="margin-top:12px">
-            <div class="field">
-              <label>Step</label>
-              <input class="input" id="ch_step" type="number" step="0.001" value="0.1">
-            </div>
-            <div class="field">
-              <label>Valore</label>
-              <input class="input" id="ch_value" type="number" step="0.001" value="1">
-            </div>
-          </div>
-
-          <div class="toolbar" style="margin-top:14px">
-            <button class="btnGold" onclick="createCustomChannel()">Aggiungi canale</button>
-          </div>
-        `
-      );
-    }
-
-    function createCustomChannel(){
+    function openEditChannel(id){
       const lot = currentLot();
-      if(!lot){
-        alert("Nessun lotto selezionato.");
-        return;
-      }
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
 
-      const ch = {
-        id: uid("ch"),
-        key: document.getElementById("ch_name").value.trim().toLowerCase().replace(/\s+/g,"_"),
-        name: document.getElementById("ch_name").value.trim(),
-        type: document.getElementById("ch_type").value.trim(),
-        min: Number(document.getElementById("ch_min").value),
-        max: Number(document.getElementById("ch_max").value),
-        step: Number(document.getElementById("ch_step").value),
-        value: Number(document.getElementById("ch_value").value),
-        unit: document.getElementById("ch_unit").value.trim(),
-        cat: document.getElementById("ch_cat").value
-      };
+      const name = prompt("Nome canale", ch.name);
+      if(name === null) return;
+      const type = prompt("Tipo canale", ch.type);
+      if(type === null) return;
+      const min = prompt("Valore minimo", ch.min);
+      const max = prompt("Valore massimo", ch.max);
+      const step = prompt("Step", ch.step);
+      const value = prompt("Valore", ch.value);
+      const unit = prompt("Unità", String(ch.unit || "").trim());
+      const cat = prompt("Categoria colore", ch.cat || "tech");
 
-      if(!ch.name){
-        alert("Inserisci il nome canale.");
-        return;
-      }
+      ch.name = name;
+      ch.type = type;
+      ch.min = Number(min);
+      ch.max = Number(max);
+      ch.step = Number(step);
+      ch.value = Number(value);
+      ch.unit = unit ? " " + unit : "";
+      ch.cat = cat || "tech";
 
-      lot.channels.push(ch);
       saveState();
-      closeModal();
       renderAll();
       openMixerPage();
     }
 
-    function openEditChannelModal(channelId){
+    function assignBank(bank){
       const lot = currentLot();
       if(!lot) return;
-      const ch = lot.channels.find(c => c.id === channelId);
-      if(!ch) return;
-
-      openModal(
-        "Modifica canale",
-        "Qui puoi cambiare nome, range e unità",
-        `
-          <div class="formGrid">
-            <div class="field">
-              <label>Nome</label>
-              <input class="input" id="ech_name" value="${escapeHtml(ch.name)}">
-            </div>
-            <div class="field">
-              <label>Tipo</label>
-              <input class="input" id="ech_type" value="${escapeHtml(ch.type)}">
-            </div>
-          </div>
-
-          <div class="formGrid" style="margin-top:12px">
-            <div class="field">
-              <label>Categoria</label>
-              <select class="select" id="ech_cat">
-                <option value="tech">Tech</option>
-                <option value="acid">Acid</option>
-                <option value="sugar">Sugar</option>
-                <option value="bitter">Bitter</option>
-                <option value="botanical">Botanical</option>
-                <option value="yeast">Yeast</option>
-                <option value="lactic">Lactic</option>
-                <option value="color">Color</option>
-                <option value="gas">Gas</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Unità</label>
-              <input class="input" id="ech_unit" value="${escapeHtml(ch.unit)}">
-            </div>
-          </div>
-
-          <div class="formGrid" style="margin-top:12px">
-            <div class="field">
-              <label>Min</label>
-              <input class="input" id="ech_min" type="number" step="0.001" value="${ch.min}">
-            </div>
-            <div class="field">
-              <label>Max</label>
-              <input class="input" id="ech_max" type="number" step="0.001" value="${ch.max}">
-            </div>
-          </div>
-
-          <div class="formGrid" style="margin-top:12px">
-            <div class="field">
-              <label>Step</label>
-              <input class="input" id="ech_step" type="number" step="0.001" value="${ch.step}">
-            </div>
-            <div class="field">
-              <label>Valore</label>
-              <input class="input" id="ech_value" type="number" step="0.001" value="${ch.value}">
-            </div>
-          </div>
-
-          <div class="toolbar" style="margin-top:14px">
-            <button class="btnGold" onclick="saveEditedChannel('${ch.id}')">Salva canale</button>
-          </div>
-        `
-      );
-      setTimeout(()=>{
-        document.getElementById("ech_cat").value = ch.cat || "tech";
-      },0);
+      if(bank === "A") state.bankA = lot.id;
+      if(bank === "B") state.bankB = lot.id;
+      saveState();
     }
 
-    function saveEditedChannel(channelId){
-      const lot = currentLot();
-      if(!lot) return;
-      const ch = lot.channels.find(c => c.id === channelId);
-      if(!ch) return;
-
-      ch.name = document.getElementById("ech_name").value.trim();
-      ch.type = document.getElementById("ech_type").value.trim();
-      ch.cat = document.getElementById("ech_cat").value;
-      ch.unit = document.getElementById("ech_unit").value.trim();
-      ch.min = Number(document.getElementById("ech_min").value);
-      ch.max = Number(document.getElementById("ech_max").value);
-      ch.step = Number(document.getElementById("ech_step").value);
-      ch.value = Number(document.getElementById("ech_value").value);
-
+    function setBank(bank){
+      state.activeBank = bank;
       saveState();
-      closeModal();
+    }
+
+    function copyAtoB(){
+      if(!state.bankA) return;
+      const a = getLot(state.bankA);
+      if(!a) return;
+      const copy = JSON.parse(JSON.stringify(a));
+      copy.id = uid("lot");
+      copy.name = (a.name || "LOTTO") + " B";
+      copy.code = (a.code || "") + "-B";
+      copy.channels = copy.channels.map(c => ({...c, id: uid("ch")}));
+      state.lots.unshift(copy);
+      state.bankB = copy.id;
+      saveState();
       renderAll();
-      openMixerPage();
     }
 
     function saveScene(){
@@ -1952,139 +1657,26 @@
       alert("Scena salvata.");
     }
 
-    function applyScene(sceneId){
+    function renderScenes(){
+      const wrap = document.getElementById("scenesList");
+      wrap.innerHTML = state.scenes.length ? state.scenes.slice().reverse().map(s => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(s.name)}</div>
+          <div class="meta">${escapeHtml(s.date)} · ${s.channels.length} canali</div>
+          <div class="itemActions">
+            <button class="btnGold" onclick="applyScene('${s.id}')">Carica scena</button>
+          </div>
+        </div>
+      `).join("") : `<div class="empty">Nessuna scena salvata.</div>`;
+    }
+
+    function applyScene(id){
       const lot = currentLot();
       if(!lot) return;
-      const scene = state.scenes.find(s => s.id === sceneId);
+      const scene = state.scenes.find(x => x.id === id);
       if(!scene) return;
       lot.channels = JSON.parse(JSON.stringify(scene.channels)).map(c => ({...c, id: uid("ch")}));
       saveState();
-      renderAll();
-    }
-
-    function setActiveBank(bank){
-      state.activeBank = bank;
-      saveState();
-      renderMixerPage();
-    }
-
-    function assignCurrentLotToBank(bank){
-      const lot = currentLot();
-      if(!lot) return;
-      if(bank === "A") state.bankA = lot.id;
-      if(bank === "B") state.bankB = lot.id;
-      saveState();
-      renderMixerPage();
-    }
-
-    function copyBankAToB(){
-      if(!state.bankA) return;
-      const a = getLot(state.bankA);
-      if(!a) return;
-      const copy = JSON.parse(JSON.stringify(a));
-      copy.id = uid("lot");
-      copy.name = (a.name || "LOTTO") + " B";
-      copy.code = (a.code || "") + "-B";
-      copy.channels = copy.channels.map(c => ({...c, id: uid("ch")}));
-      state.lots.unshift(copy);
-      state.bankB = copy.id;
-      saveState();
-      renderAll();
-    }
-
-    function prettyKey(k){
-      return k.replaceAll("_"," ").replace(/\b\w/g, c => c.toUpperCase());
-    }
-
-    function openLibraryModal(key){
-      const items = state.libraries[key] || [];
-      openModal(
-        prettyKey(key),
-        "Libreria categoria",
-        `
-          <div class="list">
-            ${items.length ? items.map((item, idx)=>`
-              <div class="item">
-                <div class="itemTitle">${escapeHtml(item.name)}</div>
-                <div class="meta">${escapeHtml(item.note || "-")}</div>
-                <div class="itemActions">
-                  <button class="btnDanger" onclick="deleteLibraryItem('${key}',${idx})">Elimina</button>
-                </div>
-              </div>
-            `).join("") : `<div class="empty">Nessun elemento.</div>`}
-          </div>
-
-          <div class="formGrid" style="margin-top:14px">
-            <div class="field">
-              <label>Nome</label>
-              <input class="input" id="libName" placeholder="Nuovo elemento">
-            </div>
-            <div class="field">
-              <label>Nota</label>
-              <input class="input" id="libNote" placeholder="Descrizione breve">
-            </div>
-          </div>
-
-          <div class="toolbar" style="margin-top:14px">
-            <button class="btnGold" onclick="addLibraryItem('${key}')">Aggiungi</button>
-          </div>
-        `
-      );
-    }
-
-    function addLibraryItem(key){
-      const name = document.getElementById("libName").value.trim();
-      const note = document.getElementById("libNote").value.trim();
-      if(!name) return;
-      state.libraries[key].push({name,note});
-      saveState();
-      openLibraryModal(key);
-      renderAll();
-    }
-
-    function deleteLibraryItem(key, idx){
-      state.libraries[key].splice(idx,1);
-      saveState();
-      openLibraryModal(key);
-      renderAll();
-    }
-
-    function openLibraryGlobalModal(){
-      openModal(
-        "Aggiungi elemento libreria",
-        "Scegli categoria",
-        `
-          <div class="formGrid">
-            <div class="field">
-              <label>Categoria</label>
-              <select class="select" id="gcat">
-                ${Object.keys(state.libraries).map(k => `<option value="${k}">${prettyKey(k)}</option>`).join("")}
-              </select>
-            </div>
-            <div class="field">
-              <label>Nome</label>
-              <input class="input" id="gname" placeholder="Es. Lavanda">
-            </div>
-          </div>
-          <div class="field" style="margin-top:12px">
-            <label>Nota</label>
-            <input class="input" id="gnote" placeholder="Es. floreale intenso">
-          </div>
-          <div class="toolbar" style="margin-top:14px">
-            <button class="btnGold" onclick="confirmLibraryGlobal()">Salva</button>
-          </div>
-        `
-      );
-    }
-
-    function confirmLibraryGlobal(){
-      const cat = document.getElementById("gcat").value;
-      const name = document.getElementById("gname").value.trim();
-      const note = document.getElementById("gnote").value.trim();
-      if(!name) return;
-      state.libraries[cat].push({name,note});
-      saveState();
-      closeModal();
       renderAll();
     }
 
@@ -2092,7 +1684,7 @@
       const blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "xa-fermentation-pro-backup.json";
+      a.download = "xa-fermentation-stable-backup.json";
       a.click();
       URL.revokeObjectURL(a.href);
     }
@@ -2101,19 +1693,7 @@
       const reader = new FileReader();
       reader.onload = e => {
         try{
-          const parsed = JSON.parse(e.target.result);
-          state = {
-            recipes: Array.isArray(parsed.recipes) ? parsed.recipes : [],
-            lots: Array.isArray(parsed.lots) ? parsed.lots : [],
-            libraries: parsed.libraries || structuredClone(defaultLibraries),
-            selectedRecipeId: parsed.selectedRecipeId || null,
-            selectedLotId: parsed.selectedLotId || null,
-            scenes: Array.isArray(parsed.scenes) ? parsed.scenes : [],
-            bankA: parsed.bankA || null,
-            bankB: parsed.bankB || null,
-            activeBank: parsed.activeBank || "A",
-            mixerPageOpen: !!parsed.mixerPageOpen
-          };
+          state = JSON.parse(e.target.result);
           saveState();
           renderAll();
         }catch(err){
@@ -2124,21 +1704,43 @@
     }
 
     function resetAll(){
-      if(!confirm("Cancellare tutti i dati dell'app?")) return;
-      state = structuredClone(defaultState);
+      if(!confirm("Cancellare tutti i dati?")) return;
+      state = {
+        recipes: [],
+        lots: [],
+        libraries: structuredClone(defaultLibraries),
+        scenes: [],
+        selectedLotId: null,
+        selectedRecipeId: null,
+        bankA: null,
+        bankB: null,
+        activeBank: "A",
+        mixerOpen: false
+      };
       saveState();
       renderAll();
     }
 
     function loadDemo(){
-      state = structuredClone(defaultState);
+      state = {
+        recipes: [],
+        lots: [],
+        libraries: structuredClone(defaultLibraries),
+        scenes: [],
+        selectedLotId: null,
+        selectedRecipeId: null,
+        bankA: null,
+        bankB: null,
+        activeBank: "A",
+        mixerOpen: false
+      };
 
       const recipe1 = {
         id: uid("recipe"),
         name: "SIDRO XA DRY GOLDEN",
         style: "Sidro secco",
         category: "sidro",
-        base: "Succo di mela Golden",
+        base: "Succo mela Golden",
         notes: "Profilo secco, brillante, pulito.",
         ingredients: [
           {category:"frutta", name:"Succo di mela Golden", qty:20, unit:"L", note:"Base principale"},
@@ -2146,7 +1748,7 @@
           {category:"nutrienti", name:"Nutriente complesso", qty:6, unit:"g", note:"Supporto"},
           {category:"acidi", name:"Acido malico", qty:2.5, unit:"g/L", note:"Precisione acidità"}
         ],
-        params: structuredClone(defaultRecipeParams)
+        params: structuredClone(defaultParams)
       };
 
       const recipe2 = {
@@ -2162,12 +1764,7 @@
           {category:"botaniche", name:"Osmanto", qty:12, unit:"g", note:"Floreale"},
           {category:"fermenti_lattici", name:"L. plantarum", qty:1, unit:"busta", note:"Acidificazione"}
         ],
-        params: structuredClone(defaultRecipeParams).map(p => {
-          if(p.key === "ph") p.value = 3.14;
-          if(p.key === "abv") p.value = 1.8;
-          if(p.key === "temp") p.value = 21;
-          return p;
-        })
+        params: structuredClone(defaultParams)
       };
 
       state.recipes = [recipe1, recipe2];
@@ -2185,7 +1782,7 @@
         date: today(),
         culture: "Hornindal Kveik",
         recipeText: recipe1.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
-        notes: "Demo lotto sidro",
+        notes: "Demo sidro",
         channels: recipeToChannels(recipe1)
       };
 
@@ -2201,7 +1798,7 @@
         date: today(),
         culture: "L. plantarum",
         recipeText: recipe2.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
-        notes: "Demo lotto lattico",
+        notes: "Demo lattico",
         channels: recipeToChannels(recipe2)
       };
 
@@ -2209,7 +1806,6 @@
       state.selectedLotId = lot1.id;
       state.bankA = lot1.id;
       state.bankB = lot2.id;
-      state.activeBank = "A";
 
       saveState();
       renderAll();
@@ -2218,7 +1814,7 @@
     document.getElementById("demoBtn").addEventListener("click", loadDemo);
     document.getElementById("exportBtn").addEventListener("click", exportBackup);
     document.getElementById("importBtn").addEventListener("click", ()=>document.getElementById("importFile").click());
-    document.getElementById("importFile").addEventListener("change", e=>{
+    document.getElementById("importFile").addEventListener("change", e => {
       const file = e.target.files[0];
       if(file) importBackup(file);
     });
@@ -2226,12 +1822,12 @@
     document.getElementById("newLotBtnTop").addEventListener("click", ()=>openLotCreator());
     document.getElementById("openMixerBtnTop").addEventListener("click", openMixerPage);
     document.getElementById("resetBtn").addEventListener("click", resetAll);
-    document.getElementById("saveLotDetailsBtn").addEventListener("click", saveCurrentLotMeta);
-    document.getElementById("clearLotBtn").addEventListener("click", ()=>{
-      state.selectedLotId = null;
-      renderAll();
-    });
+    document.getElementById("saveRecipeBtn").addEventListener("click", saveRecipe);
+    document.getElementById("addIngredientBtn").addEventListener("click", ()=>document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({})));
+    document.getElementById("addParamBtn").addEventListener("click", ()=>document.getElementById("paramsWrap").insertAdjacentHTML("beforeend", paramRowHtml({})));
+    document.getElementById("saveLotMetaBtn").addEventListener("click", saveLotMeta);
 
+    ensureSelected();
     renderAll();
   </script>
 </body>
