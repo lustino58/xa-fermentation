@@ -176,6 +176,43 @@
       margin-top:12px;
     }
 
+    .liveRecipeCard{
+      position:sticky;
+      top:10px;
+      z-index:5;
+      border-radius:20px;
+      padding:14px;
+      background:linear-gradient(180deg,#1a2430,#10161d);
+      border:1px solid #334050;
+      box-shadow:var(--shadow);
+      margin-bottom:14px;
+    }
+    .liveRecipeTitle{
+      font-size:20px;
+      font-weight:900;
+      letter-spacing:.04em;
+    }
+    .liveRecipeMeta{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:6px;
+      line-height:1.5;
+    }
+    .liveRecipeIngredients{
+      margin-top:10px;
+      display:grid;
+      gap:6px;
+      max-height:180px;
+      overflow:auto;
+    }
+    .liveIng{
+      border-radius:12px;
+      padding:10px 12px;
+      background:linear-gradient(180deg,#202836,#151c24);
+      border:1px solid #334050;
+      font-size:12px;
+    }
+
     .mixerOnlyPage{
       min-height:100vh;
       background:linear-gradient(180deg,#090d12,#0e141b);
@@ -435,14 +472,16 @@
     .libItemTitle{font-weight:900}
     .libItemMeta{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
 
-    /* compact mixer mode */
     body.mixer-compact .mixerShell{
-      grid-template-columns:110px 1fr 110px;
+      grid-template-columns:1fr;
       gap:6px;
       padding:6px;
     }
+    body.mixer-compact .sideRack{
+      display:none;
+    }
     body.mixer-compact .channel{
-      width:88px;
+      width:86px;
       padding:6px;
       border-radius:14px;
     }
@@ -456,11 +495,11 @@
       top:4px;height:12px;width:5px;
     }
     body.mixer-compact .track{
-      min-height:150px;
+      min-height:145px;
       border-radius:12px;
     }
     body.mixer-compact .track input[type=range]{
-      width:145px;height:20px;
+      width:140px;height:20px;
     }
     body.mixer-compact .track input[type=range]::-webkit-slider-thumb{
       width:28px;height:16px;margin-top:-4px;
@@ -472,16 +511,10 @@
       font-size:9px;padding:6px 4px;
     }
     body.mixer-compact .addSlot{
-      width:96px;min-height:290px;padding:8px;
+      width:92px;min-height:280px;padding:8px;
     }
     body.mixer-compact .addSlot .plus{
-      width:44px;height:44px;font-size:28px;
-    }
-    body.mixer-compact .sideRack{
-      border-radius:14px;
-    }
-    body.mixer-compact .rackBtn{
-      font-size:10px;padding:8px;
+      width:42px;height:42px;font-size:28px;
     }
     body.mixer-compact .lcdMain{
       font-size:18px;
@@ -506,7 +539,7 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>RICETTE GUIDATE · DOSI AUTOMATICHE · MIXER RIDUCI</p>
+            <p>RICETTE LIVE · BASE NEL MIXER · RIDUCI CORRETTO</p>
           </div>
         </div>
         <div class="actions">
@@ -589,11 +622,17 @@
 
     <section class="section" id="sec-recipe-edit">
       <div class="page">
+        <div class="liveRecipeCard">
+          <div class="liveRecipeTitle" id="liveRecipeName">Nuova ricetta</div>
+          <div class="liveRecipeMeta" id="liveRecipeMeta">Tipo: - · Base: - · Cultura: -</div>
+          <div class="liveRecipeIngredients" id="liveRecipeIngredients"></div>
+        </div>
+
         <div class="card">
           <div class="cardHead">
             <div>
               <h2 id="recipeEditTitle">Nuova ricetta</h2>
-              <div class="sub">Editor semplificato + librerie rapide</div>
+              <div class="sub">Editor semplificato + monitor live</div>
             </div>
             <div class="toolbar">
               <button class="btn" onclick="showSection('recipes')">← Torna</button>
@@ -613,18 +652,18 @@
             </div>
 
             <div class="formGrid" style="margin-top:12px">
-              <div class="field"><label>Nome ricetta</label><input class="input" id="recipe_name"></div>
-              <div class="field"><label>Base</label><input class="input" id="recipe_base"></div>
+              <div class="field"><label>Nome ricetta</label><input class="input live-watch" id="recipe_name"></div>
+              <div class="field"><label>Base</label><input class="input live-watch" id="recipe_base"></div>
             </div>
 
             <div class="formGrid" style="margin-top:12px">
-              <div class="field"><label>Stile / descrizione</label><input class="input" id="recipe_style"></div>
-              <div class="field"><label>Cultura / fermento principale</label><input class="input" id="recipe_culture"></div>
+              <div class="field"><label>Stile / descrizione</label><input class="input live-watch" id="recipe_style"></div>
+              <div class="field"><label>Cultura / fermento principale</label><input class="input live-watch" id="recipe_culture"></div>
             </div>
 
             <div class="field" style="margin-top:12px">
               <label>Note ricetta</label>
-              <textarea class="textarea" id="recipe_notes"></textarea>
+              <textarea class="textarea live-watch" id="recipe_notes"></textarea>
             </div>
 
             <div style="margin-top:20px">
@@ -828,6 +867,7 @@
             <div class="sub">Parametri rapidi</div>
           </div>
           <div class="sideBody">
+            <button class="rackBtn" onclick="addQuickChannel('base')">+ Base<small>ingrediente base</small></button>
             <button class="rackBtn" onclick="addQuickChannel('ph_start')">+ pH iniziale<small>acidità iniziale</small></button>
             <button class="rackBtn" onclick="addQuickChannel('ph_end')">+ pH finale<small>acidità finale</small></button>
             <button class="rackBtn" onclick="addQuickChannel('og')">+ OG<small>densità iniziale</small></button>
@@ -837,7 +877,6 @@
             <button class="rackBtn" onclick="addQuickChannel('temp')">+ Temp<small>temperatura</small></button>
             <button class="rackBtn" onclick="addQuickChannel('co2')">+ CO₂<small>gasatura</small></button>
             <button class="rackBtn" onclick="addQuickChannel('tonica')">+ Acqua tonica<small>fader tonica</small></button>
-            <button class="rackBtn" onclick="addQuickChannel('tonic_bitter')">+ Tonic bitter<small>china / amaro</small></button>
           </div>
         </aside>
 
@@ -891,6 +930,11 @@
         <button class="btnDanger" type="button" onclick="closeIngredientLibrary()">OFF</button>
       </div>
       <div class="modalBody">
+        <div class="liveRecipeCard" style="position:static;margin-bottom:12px;">
+          <div class="liveRecipeTitle" id="modalLiveRecipeName">Nuova ricetta</div>
+          <div class="liveRecipeMeta" id="modalLiveRecipeMeta">Tipo: - · Base: - · Cultura: -</div>
+          <div class="liveRecipeIngredients" id="modalLiveRecipeIngredients"></div>
+        </div>
         <input id="ingredientSearch" class="input libSearch" placeholder="Cerca ingrediente..." oninput="renderIngredientLibraryList()">
         <div class="libList" id="ingredientLibraryList"></div>
       </div>
@@ -898,7 +942,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_fermentation_complete_v5";
+    const STORAGE_KEY = "xa_fermentation_complete_v6";
     const MIXER_COMPACT_KEY = "xa_fermentation_mixer_compact";
 
     const defaultLibraries = {
@@ -919,132 +963,73 @@
         {name:"Amarillo", note:"agrumato, arancia", dose:2, unit:"g/L"},
         {name:"Cascade", note:"agrumato, floreale", dose:3, unit:"g/L"},
         {name:"Centennial", note:"amaro e agrumi", dose:2.5, unit:"g/L"},
-        {name:"Challenger", note:"speziato, erbaceo", dose:2, unit:"g/L"},
         {name:"Citra", note:"citrico, tropicale", dose:3, unit:"g/L"},
-        {name:"Columbus", note:"resinoso, amaro", dose:2, unit:"g/L"},
-        {name:"Comet", note:"pompelmo, resina", dose:2.5, unit:"g/L"},
-        {name:"Crystal", note:"speziato, floreale", dose:2, unit:"g/L"},
-        {name:"Ekuanot", note:"lime, tropicale", dose:2.5, unit:"g/L"},
-        {name:"El Dorado", note:"pera, tropicale", dose:2.5, unit:"g/L"},
-        {name:"Fuggle", note:"terroso, inglese", dose:2, unit:"g/L"},
         {name:"Galaxy", note:"passion fruit", dose:3, unit:"g/L"},
-        {name:"Goldings", note:"miele, floreale", dose:2, unit:"g/L"},
         {name:"Hallertau", note:"erbaceo, fine", dose:2, unit:"g/L"},
-        {name:"Hersbrucker", note:"delicato, nobile", dose:2, unit:"g/L"},
-        {name:"Idaho 7", note:"tropicale, resina", dose:2.5, unit:"g/L"},
         {name:"Magnum", note:"amaro pulito", dose:1, unit:"g/L"},
-        {name:"Mandarina Bavaria", note:"mandarino", dose:2.5, unit:"g/L"},
         {name:"Mosaic", note:"frutta mista", dose:3, unit:"g/L"},
-        {name:"Motueka", note:"lime, fresco", dose:2.5, unit:"g/L"},
-        {name:"Nelson Sauvin", note:"uva, vino bianco", dose:2.5, unit:"g/L"},
-        {name:"Perle", note:"erbaceo, speziato", dose:2, unit:"g/L"},
         {name:"Saaz", note:"nobile, delicato", dose:2, unit:"g/L"},
-        {name:"Simcoe", note:"pino, tropicale", dose:2.5, unit:"g/L"},
-        {name:"Sorachi Ace", note:"limone, aneto", dose:2, unit:"g/L"},
-        {name:"Styrian Golding", note:"speziato", dose:2, unit:"g/L"},
-        {name:"Tettnang", note:"nobile, erbaceo", dose:2, unit:"g/L"},
-        {name:"Warrior", note:"amaro deciso", dose:1, unit:"g/L"},
-        {name:"Willamette", note:"terroso, floreale", dose:2, unit:"g/L"}
+        {name:"Simcoe", note:"pino, tropicale", dose:2.5, unit:"g/L"}
       ],
       frutta: [
         {name:"Albicocca", note:"dolce, aromatica", dose:20, unit:"g/L"},
         {name:"Ananas", note:"tropicale, acido", dose:25, unit:"g/L"},
         {name:"Arancia", note:"agrumata, dolce", dose:8, unit:"g/L"},
-        {name:"Cedro", note:"agrumato intenso", dose:6, unit:"g/L"},
-        {name:"Ciliegia", note:"fruttata, rossa", dose:25, unit:"g/L"},
-        {name:"Fico", note:"dolce, maturo", dose:20, unit:"g/L"},
         {name:"Fragola", note:"dolce, fresca", dose:25, unit:"g/L"},
-        {name:"Lampone", note:"acidulo, rosso", dose:20, unit:"g/L"},
         {name:"Limone", note:"acido, brillante", dose:5, unit:"g/L"},
-        {name:"Lime", note:"agrumato, fresco", dose:5, unit:"g/L"},
         {name:"Mango", note:"tropicale, morbido", dose:25, unit:"g/L"},
         {name:"Mela Golden", note:"morbida, dolce", dose:50, unit:"g/L"},
         {name:"Mela Granny", note:"acida, verde", dose:50, unit:"g/L"},
-        {name:"Mirtillo", note:"frutto scuro", dose:20, unit:"g/L"},
         {name:"Pera", note:"morbida, elegante", dose:25, unit:"g/L"},
-        {name:"Pesca", note:"succosa, dolce", dose:25, unit:"g/L"},
-        {name:"Pompelmo", note:"amaro, agrumato", dose:6, unit:"g/L"},
-        {name:"Prugna", note:"matura, scura", dose:20, unit:"g/L"},
-        {name:"Ribes nero", note:"frutto intenso", dose:15, unit:"g/L"},
-        {name:"Yuzu", note:"agrumato fine", dose:4, unit:"g/L"}
+        {name:"Pompelmo", note:"amaro, agrumato", dose:6, unit:"g/L"}
       ],
       te: [
         {name:"Assam", note:"nero, maltato", dose:3, unit:"g/L"},
-        {name:"Bancha", note:"verde, morbido", dose:3, unit:"g/L"},
         {name:"Bianco", note:"delicato, fine", dose:2.5, unit:"g/L"},
         {name:"Darjeeling", note:"floreale, elegante", dose:3, unit:"g/L"},
-        {name:"Earl Grey", note:"bergamotto", dose:3, unit:"g/L"},
-        {name:"Genmaicha", note:"tostato, riso", dose:3, unit:"g/L"},
-        {name:"Gunpowder", note:"verde deciso", dose:3, unit:"g/L"},
-        {name:"Gyokuro", note:"umami, ricco", dose:2.5, unit:"g/L"},
-        {name:"Hojicha", note:"tostato, morbido", dose:3, unit:"g/L"},
         {name:"Jasmine", note:"floreale", dose:2.5, unit:"g/L"},
-        {name:"Keemun", note:"nero, raffinato", dose:3, unit:"g/L"},
         {name:"Lapsang Souchong", note:"affumicato", dose:2, unit:"g/L"},
-        {name:"Long Jing", note:"verde, castagna", dose:3, unit:"g/L"},
-        {name:"Matcha", note:"vegetale, intenso", dose:1, unit:"g/L"},
         {name:"Oolong", note:"elegante, complesso", dose:3, unit:"g/L"},
-        {name:"Pu-erh", note:"terroso, profondo", dose:2.5, unit:"g/L"},
-        {name:"Sencha", note:"verde, fresco", dose:3, unit:"g/L"},
-        {name:"Tie Guan Yin", note:"orchidea, floreale", dose:3, unit:"g/L"},
-        {name:"Yunnan", note:"nero, cacao", dose:3, unit:"g/L"}
+        {name:"Sencha", note:"verde, fresco", dose:3, unit:"g/L"}
       ],
       pepi: [
         {name:"Pepe bianco", note:"pulito, caldo", dose:0.2, unit:"g/L"},
         {name:"Pepe cubebe", note:"balsamico", dose:0.2, unit:"g/L"},
-        {name:"Pepe lungo", note:"speziato, caldo", dose:0.2, unit:"g/L"},
         {name:"Pepe nero", note:"piccante, classico", dose:0.15, unit:"g/L"},
         {name:"Pepe rosa", note:"delicato, aromatico", dose:0.2, unit:"g/L"},
         {name:"Pepe Sichuan", note:"elettrico, agrumato", dose:0.15, unit:"g/L"},
-        {name:"Pepe Timut", note:"pompelmo", dose:0.15, unit:"g/L"},
-        {name:"Pepe verde", note:"fresco, erbaceo", dose:0.2, unit:"g/L"}
+        {name:"Pepe Timut", note:"pompelmo", dose:0.15, unit:"g/L"}
       ],
       spezie: [
-        {name:"Anice stellato", note:"liquirizia", dose:0.2, unit:"g/L"},
         {name:"Cannella", note:"dolce, calda", dose:0.3, unit:"g/L"},
         {name:"Cardamomo", note:"balsamico, fresco", dose:0.15, unit:"g/L"},
         {name:"Chiodi di garofano", note:"caldo, intenso", dose:0.1, unit:"g/L"},
         {name:"Coriandolo", note:"agrumato, speziato", dose:0.4, unit:"g/L"},
-        {name:"Cumino", note:"terroso", dose:0.15, unit:"g/L"},
-        {name:"Finocchio", note:"anisato", dose:0.2, unit:"g/L"},
         {name:"Ginepro", note:"resinoso", dose:0.3, unit:"g/L"},
-        {name:"Noce moscata", note:"calda, dolce", dose:0.1, unit:"g/L"},
         {name:"Vaniglia", note:"dolce, rotonda", dose:0.25, unit:"g/L"},
         {name:"Zenzero", note:"piccante, fresco", dose:0.5, unit:"g/L"}
       ],
       lieviti: [
-        {name:"BE-134", note:"pepato, saison", dose:0.5, unit:"g/L"},
-        {name:"Belle Saison", note:"secco, speziato", dose:0.5, unit:"g/L"},
         {name:"EC-1118", note:"pulito, secco", dose:0.3, unit:"g/L"},
         {name:"Hornindal Kveik", note:"tropicale", dose:0.25, unit:"g/L"},
-        {name:"LalBrew Verdant", note:"fruttato", dose:0.5, unit:"g/L"},
-        {name:"Nottingham", note:"neutro, rapido", dose:0.5, unit:"g/L"},
         {name:"SafAle S-04", note:"inglese, fruttato", dose:0.5, unit:"g/L"},
         {name:"SafAle US-05", note:"pulito", dose:0.5, unit:"g/L"},
         {name:"SafCider", note:"sidro pulito", dose:0.3, unit:"g/L"},
-        {name:"W-34/70", note:"lager pulito", dose:0.6, unit:"g/L"},
-        {name:"WB-06", note:"fenolico, wheat", dose:0.5, unit:"g/L"}
+        {name:"W-34/70", note:"lager pulito", dose:0.6, unit:"g/L"}
       ],
       fermenti_lattici: [
         {name:"L. brevis", note:"acidità morbida", dose:0.1, unit:"g/L"},
-        {name:"L. casei", note:"acidulo delicato", dose:0.1, unit:"g/L"},
         {name:"L. helveticus", note:"rotondo", dose:0.1, unit:"g/L"},
         {name:"L. plantarum", note:"acidificazione pulita", dose:0.1, unit:"g/L"},
         {name:"Pediococcus", note:"acidità lenta", dose:0.1, unit:"g/L"}
       ],
       botaniche: [
-        {name:"Camomilla", note:"floreale, morbida", dose:0.5, unit:"g/L"},
         {name:"China", note:"amaro chinino", dose:0.6, unit:"g/L"},
-        {name:"Eucalipto", note:"balsamico", dose:0.15, unit:"g/L"},
-        {name:"Fiori d’arancio", note:"floreale", dose:0.4, unit:"g/L"},
-        {name:"Gelsomino", note:"floreale", dose:0.3, unit:"g/L"},
         {name:"Genziana", note:"amaro profondo", dose:0.25, unit:"g/L"},
         {name:"Ibisco", note:"floreale, acidulo", dose:0.6, unit:"g/L"},
         {name:"Lavanda", note:"floreale", dose:0.1, unit:"g/L"},
-        {name:"Melissa", note:"erbacea", dose:0.4, unit:"g/L"},
         {name:"Osmanto", note:"floreale-fruttato", dose:0.2, unit:"g/L"},
         {name:"Rosmarino", note:"resinoso", dose:0.2, unit:"g/L"},
-        {name:"Salvia", note:"erbacea", dose:0.25, unit:"g/L"},
         {name:"Timo", note:"erbaceo intenso", dose:0.15, unit:"g/L"}
       ],
       aggiunte: [
@@ -1055,7 +1040,6 @@
         {name:"Destrosio", note:"priming pulito", dose:6, unit:"g/L"},
         {name:"Glicerina alimentare", note:"morbidezza", dose:0.5, unit:"g/L"},
         {name:"Gomma arabica", note:"texture", dose:1, unit:"g/L"},
-        {name:"Miele", note:"dolce aromatico", dose:10, unit:"g/L"},
         {name:"Nutriente complesso", note:"supporto fermentazione", dose:0.3, unit:"g/L"},
         {name:"Pectolasi", note:"aiuta chiarifica", dose:0.05, unit:"g/L"},
         {name:"Saccarosio", note:"zucchero semplice", dose:6, unit:"g/L"}
@@ -1188,6 +1172,7 @@
       if(type === "misto" && !base.value) base.value = "Succo + tè";
       if(type === "birra" && !base.value) base.value = "Mosto";
       if(type === "tonica" && !base.value) base.value = "Acqua";
+      renderLiveRecipePreview();
     }
 
     function showSection(name){
@@ -1199,21 +1184,65 @@
     function ingredientRowHtml(i={}){
       return `
         <div class="ingredientRow">
-          <select class="select ing_cat">
+          <select class="select ing_cat" onchange="renderLiveRecipePreview()">
             ${Object.keys(state.libraries).map(k => `<option value="${k}" ${i.category===k?'selected':''}>${prettyKey(k)}</option>`).join("")}
           </select>
-          <input class="input ing_name" value="${escapeHtml(i.name || "")}" placeholder="Ingrediente">
-          <input class="input ing_qty" type="number" step="0.01" value="${i.qty ?? ""}" placeholder="0">
-          <input class="input ing_unit" value="${escapeHtml(i.unit || "g")}" placeholder="g">
-          <input class="input ing_note" value="${escapeHtml(i.note || "")}" placeholder="Note">
-          <button class="btnDanger" type="button" onclick="this.parentNode.remove()">✕</button>
+          <input class="input ing_name" value="${escapeHtml(i.name || "")}" placeholder="Ingrediente" oninput="renderLiveRecipePreview()">
+          <input class="input ing_qty" type="number" step="0.01" value="${i.qty ?? ""}" placeholder="0" oninput="renderLiveRecipePreview()">
+          <input class="input ing_unit" value="${escapeHtml(i.unit || "g")}" placeholder="g" oninput="renderLiveRecipePreview()">
+          <input class="input ing_note" value="${escapeHtml(i.note || "")}" placeholder="Note" oninput="renderLiveRecipePreview()">
+          <button class="btnDanger" type="button" onclick="this.parentNode.remove();renderLiveRecipePreview();">✕</button>
         </div>
       `;
     }
 
-    function addIngredientToRecipe(category, item){
+    function getCurrentEditorIngredients(){
+      return [...document.querySelectorAll("#ingredientsWrap .ingredientRow")].map(row => ({
+        category: row.querySelector(".ing_cat").value,
+        name: row.querySelector(".ing_name").value.trim(),
+        qty: row.querySelector(".ing_qty").value,
+        unit: row.querySelector(".ing_unit").value.trim(),
+        note: row.querySelector(".ing_note").value.trim()
+      })).filter(x => x.name);
+    }
+
+    function renderLiveRecipePreview(){
+      const name = document.getElementById("recipe_name")?.value?.trim() || "Nuova ricetta";
+      const base = document.getElementById("recipe_base")?.value?.trim() || "-";
+      const culture = document.getElementById("recipe_culture")?.value?.trim() || "-";
+      const type = recipeTypeLabel(currentRecipeType);
+
+      const ings = getCurrentEditorIngredients();
+
+      const html = ings.length ? ings.map(i => `
+        <div class="liveIng">
+          <strong>${escapeHtml(i.name)}</strong> · ${escapeHtml(i.category)} · ${escapeHtml(i.qty || "-")} ${escapeHtml(i.unit || "")}<br>
+          <span style="color:var(--muted)">${escapeHtml(i.note || "-")}</span>
+        </div>
+      `).join("") : `<div class="liveIng">Nessun ingrediente aggiunto.</div>`;
+
+      const meta = `Tipo: ${escapeHtml(type)} · Base: ${escapeHtml(base)} · Cultura: ${escapeHtml(culture)}`;
+
+      const a = document.getElementById("liveRecipeName");
+      const b = document.getElementById("liveRecipeMeta");
+      const c = document.getElementById("liveRecipeIngredients");
+      const d = document.getElementById("modalLiveRecipeName");
+      const e = document.getElementById("modalLiveRecipeMeta");
+      const f = document.getElementById("modalLiveRecipeIngredients");
+
+      if(a) a.textContent = name;
+      if(b) b.textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture}`;
+      if(c) c.innerHTML = html;
+      if(d) d.textContent = name;
+      if(e) e.textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture}`;
+      if(f) f.innerHTML = html;
+    }
+
+    function addIngredientFromLibrary(key, idx){
+      const item = INGREDIENT_BROWSER[key][idx];
+      const category = browserCategoryToRowCategory(key);
       const wrap = document.getElementById("ingredientsWrap");
-      if(!wrap) return;
+      if(!wrap || !item) return;
       wrap.insertAdjacentHTML("beforeend", ingredientRowHtml({
         category,
         name:item.name,
@@ -1221,6 +1250,7 @@
         unit:item.unit,
         note:`${item.note} · dose consigliata ${item.dose} ${item.unit}`
       }));
+      renderLiveRecipePreview();
       closeIngredientLibrary();
     }
 
@@ -1229,6 +1259,7 @@
       document.getElementById("ingredientModalTitle").textContent = "Libreria " + prettyKey(key);
       document.getElementById("ingredientSearch").value = "";
       document.getElementById("ingredientModal").classList.add("show");
+      renderLiveRecipePreview();
       renderIngredientLibraryList();
     }
 
@@ -1240,13 +1271,12 @@
       const list = INGREDIENT_BROWSER[currentLibraryKey] || [];
       const q = document.getElementById("ingredientSearch").value.trim().toLowerCase();
       const filtered = list
-        .slice()
-        .sort((a,b)=>a.name.localeCompare(b.name, "it"))
-        .filter(x => (`${x.name} ${x.note}`).toLowerCase().includes(q));
+        .map((item, idx) => ({item, idx}))
+        .sort((a,b)=>a.item.name.localeCompare(b.item.name, "it"))
+        .filter(x => (`${x.item.name} ${x.item.note}`).toLowerCase().includes(q));
 
-      const category = browserCategoryToRowCategory(currentLibraryKey);
       const wrap = document.getElementById("ingredientLibraryList");
-      wrap.innerHTML = filtered.length ? filtered.map((item, idx) => `
+      wrap.innerHTML = filtered.length ? filtered.map(({item, idx}) => `
         <div class="libItem">
           <div>
             <div class="libItemTitle">${escapeHtml(item.name)}</div>
@@ -1255,7 +1285,7 @@
               <span class="badge green">Dose consigliata: ${escapeHtml(String(item.dose))} ${escapeHtml(item.unit)}</span>
             </div>
           </div>
-          <button class="btnGold" type="button" onclick="addIngredientToRecipe('${escapeHtml(category)}', INGREDIENT_BROWSER['${currentLibraryKey}'].find(x => x.name === '${escapeHtml(item.name)}'))">Aggiungi</button>
+          <button class="btnGold" type="button" onclick="addIngredientFromLibrary('${currentLibraryKey}', ${idx})">Aggiungi</button>
         </div>
       `).join("") : `<div class="item"><div class="meta">Nessun ingrediente trovato.</div></div>`;
     }
@@ -1408,16 +1438,16 @@
     function fillParamsInEditor(params){
       const map = {};
       (params || []).forEach(p => { map[p.key] = p.value; });
-      document.getElementById("param_ph_start").value = map.param_ph_start ?? map.ph_start ?? "";
-      document.getElementById("param_ph_end").value = map.param_ph_end ?? map.ph_end ?? "";
-      document.getElementById("param_og").value = map.param_og ?? map.og ?? "";
-      document.getElementById("param_fg").value = map.param_fg ?? map.fg ?? "";
-      document.getElementById("param_abv").value = map.param_abv ?? map.abv ?? "";
-      document.getElementById("param_temp").value = map.param_temp ?? map.temp ?? "";
-      document.getElementById("param_co2").value = map.param_co2 ?? map.co2 ?? "";
-      document.getElementById("param_srm").value = map.param_srm ?? map.srm ?? "";
-      document.getElementById("param_tonica").value = map.param_tonica ?? map.tonica ?? "";
-      document.getElementById("param_tonic_bitter").value = map.param_tonic_bitter ?? map.tonic_bitter ?? "";
+      document.getElementById("param_ph_start").value = map.param_ph_start ?? "";
+      document.getElementById("param_ph_end").value = map.param_ph_end ?? "";
+      document.getElementById("param_og").value = map.param_og ?? "";
+      document.getElementById("param_fg").value = map.param_fg ?? "";
+      document.getElementById("param_abv").value = map.param_abv ?? "";
+      document.getElementById("param_temp").value = map.param_temp ?? "";
+      document.getElementById("param_co2").value = map.param_co2 ?? "";
+      document.getElementById("param_srm").value = map.param_srm ?? "";
+      document.getElementById("param_tonica").value = map.param_tonica ?? "";
+      document.getElementById("param_tonic_bitter").value = map.param_tonic_bitter ?? "";
     }
 
     function openRecipeEditor(id=null){
@@ -1445,6 +1475,14 @@
       }
 
       showSection("recipe-edit");
+      bindLiveInputs();
+      renderLiveRecipePreview();
+    }
+
+    function bindLiveInputs(){
+      document.querySelectorAll(".live-watch").forEach(el=>{
+        el.oninput = renderLiveRecipePreview;
+      });
     }
 
     function gatherRecipeFromEditor(){
@@ -1515,7 +1553,7 @@
             <div class="meta">
               Ingredienti: ${recipe.ingredients.length}<br>
               Parametri: ${recipe.params.length}<br>
-              Canali mixer generati: ${recipe.ingredients.length + recipe.params.length}
+              Canali mixer generati: ${recipe.ingredients.length + recipe.params.length + 1}
             </div>
           </div>
         </div>
@@ -1567,7 +1605,30 @@
       showSection("recipes");
     }
 
+    function buildBaseChannel(recipe){
+      const baseName = (recipe.base || "").trim() || "Base";
+      let cat = "tech";
+      if(recipe.type === "sidro") cat = "botanical";
+      if(recipe.type === "te") cat = "botanical";
+      if(recipe.type === "tonica") cat = "gas";
+      if(recipe.type === "birra") cat = "sugar";
+      return {
+        id: uid("ch"),
+        key: "base",
+        name: baseName.toUpperCase().slice(0,16),
+        type: "base",
+        min: 0,
+        max: 100,
+        step: 1,
+        value: 100,
+        unit: "%",
+        cat
+      };
+    }
+
     function recipeToChannels(recipe){
+      const baseChannel = buildBaseChannel(recipe);
+
       const params = (recipe.params || []).map(p => ({
         id: uid("ch"),
         key: p.key,
@@ -1607,7 +1668,7 @@
         cat: ingredientCatMap[i.category] || "botanical"
       }));
 
-      return [...params, ...ingredients];
+      return [baseChannel, ...params, ...ingredients];
     }
 
     function openLotCreator(recipeId=null){
@@ -1639,7 +1700,7 @@
         volume,
         date: today(),
         culture: recipe.culture || "",
-        recipeText: recipe.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        recipeText: `Base: ${recipe.base || "-"} · ` + recipe.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
         notes: recipe.notes || "",
         channels: recipeToChannels(recipe)
       };
@@ -1793,7 +1854,10 @@
     }
 
     function quickChannelTemplate(key){
+      const lot = mixerLot();
+      const baseLabel = lot?.channels?.find(c=>c.key==="base")?.name || "BASE";
       const m = {
+        base:{key:"base",name:baseLabel,type:"base",min:0,max:100,step:1,value:100,unit:"%",cat:"tech"},
         ph_start:{key:"ph_start",name:"pH iniziale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.4,unit:"",cat:"acid"},
         ph_end:{key:"ph_end",name:"pH finale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.1,unit:"",cat:"acid"},
         og:{key:"og",name:"OG",type:"Densità iniziale",min:1,max:1.12,step:0.001,value:1.048,unit:"",cat:"tech"},
@@ -1802,8 +1866,7 @@
         srm:{key:"srm",name:"SRM",type:"Colore",min:1,max:40,step:1,value:4,unit:"",cat:"color"},
         temp:{key:"temp",name:"Temperatura",type:"Temperatura",min:0,max:40,step:0.1,value:22,unit:"°C",cat:"tech"},
         co2:{key:"co2",name:"CO₂",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.5,unit:" vol",cat:"gas"},
-        tonica:{key:"tonica",name:"Acqua tonica",type:"Tonica",min:0,max:10,step:0.1,value:1.0,unit:"",cat:"gas"},
-        tonic_bitter:{key:"tonic_bitter",name:"Tonic bitter",type:"Amaro tonica",min:0,max:20,step:0.1,value:6.0,unit:"",cat:"bitter"}
+        tonica:{key:"tonica",name:"Acqua tonica",type:"Tonica",min:0,max:10,step:0.1,value:1.0,unit:"",cat:"gas"}
       };
       return m[key] || null;
     }
@@ -2042,9 +2105,9 @@
         culture: "Hornindal Kveik",
         notes: "Profilo secco, brillante, pulito.",
         ingredients: [
-          {category:"frutta", name:"Succo di mela Golden", qty:20, unit:"L", note:"Base principale"},
-          {category:"lieviti", name:"Hornindal Kveik", qty:6, unit:"g", note:"Fermentazione"},
-          {category:"nutrienti", name:"Nutriente complesso", qty:6, unit:"g", note:"Supporto"}
+          {category:"frutta", name:"Mela Golden", qty:50, unit:"g/L", note:"base fruttata"},
+          {category:"lieviti", name:"Hornindal Kveik", qty:0.25, unit:"g/L", note:"fermentazione"},
+          {category:"nutrienti", name:"Nutriente complesso", qty:0.3, unit:"g/L", note:"supporto"}
         ],
         params: [
           {key:"param_ph_start",name:"pH iniziale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.40,unit:"",cat:"acid"},
@@ -2066,11 +2129,11 @@
         culture: "Base aromatica",
         notes: "Tonica secca, amara, agrumata.",
         ingredients: [
-          {category:"botaniche", name:"China", qty:12, unit:"g", note:"Fonte amaro"},
-          {category:"botaniche", name:"Genziana", qty:3, unit:"g", note:"Supporto amaro"},
-          {category:"frutta", name:"Limone", qty:8, unit:"g", note:"Agrumato"},
-          {category:"frutta", name:"Pompelmo", qty:8, unit:"g", note:"Agrumato amaro"},
-          {category:"fermenti_lattici", name:"L. plantarum", qty:1, unit:"g", note:"Test"}
+          {category:"botaniche", name:"China", qty:0.6, unit:"g/L", note:"fonte amaro"},
+          {category:"botaniche", name:"Genziana", qty:0.25, unit:"g/L", note:"supporto amaro"},
+          {category:"frutta", name:"Limone", qty:5, unit:"g/L", note:"agrumato"},
+          {category:"frutta", name:"Pompelmo", qty:6, unit:"g/L", note:"agrumato amaro"},
+          {category:"fermenti_lattici", name:"L. plantarum", qty:0.1, unit:"g/L", note:"test"}
         ],
         params: [
           {key:"param_ph_start",name:"pH iniziale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.20,unit:"",cat:"acid"},
@@ -2094,7 +2157,7 @@
         volume: 24,
         date: today(),
         culture: recipe1.culture,
-        recipeText: recipe1.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        recipeText: `Base: ${recipe1.base} · ` + recipe1.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
         notes: recipe1.notes,
         channels: recipeToChannels(recipe1)
       };
@@ -2110,7 +2173,7 @@
         volume: 18,
         date: today(),
         culture: recipe2.culture,
-        recipeText: recipe2.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        recipeText: `Base: ${recipe2.base} · ` + recipe2.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
         notes: recipe2.notes,
         channels: recipeToChannels(recipe2)
       };
@@ -2182,7 +2245,10 @@
     document.getElementById("resetBtn").addEventListener("click", resetAll);
     document.getElementById("saveRecipeBtn").addEventListener("click", saveRecipe);
     document.getElementById("saveRecipeBtnBottom").addEventListener("click", saveRecipe);
-    document.getElementById("addIngredientBtn").addEventListener("click", ()=>document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({})));
+    document.getElementById("addIngredientBtn").addEventListener("click", ()=>{
+      document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({}));
+      renderLiveRecipePreview();
+    });
     document.getElementById("saveLotMetaBtn").addEventListener("click", saveLotMeta);
 
     init();
