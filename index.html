@@ -32,6 +32,7 @@
     }
     body{padding-bottom:92px}
     h1,h2,h3,h4,p{margin:0}
+    img{max-width:100%;display:block}
     button,input,select,textarea{font:inherit}
     button{cursor:pointer;border:none}
     .hidden{display:none!important}
@@ -198,6 +199,16 @@
       margin-top:6px;
       line-height:1.5;
     }
+    .liveRecipeNotes{
+      margin-top:8px;
+      font-size:12px;
+      color:#dbe6f2;
+      line-height:1.5;
+      padding:10px 12px;
+      border-radius:12px;
+      background:linear-gradient(180deg,#1f2935,#151c24);
+      border:1px solid #334050;
+    }
     .liveRecipeIngredients{
       margin-top:10px;
       display:grid;
@@ -211,6 +222,36 @@
       background:linear-gradient(180deg,#202836,#151c24);
       border:1px solid #334050;
       font-size:12px;
+    }
+    .liveRecipeImage{
+      margin-top:10px;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid #334050;
+      background:#0f141a;
+      min-height:120px;
+      display:grid;
+      place-items:center;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .liveRecipeImage img{
+      width:100%;
+      max-height:260px;
+      object-fit:cover;
+    }
+
+    .recipeHero{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid #334050;
+      background:#0f141a;
+      margin-bottom:14px;
+    }
+    .recipeHero img{
+      width:100%;
+      max-height:420px;
+      object-fit:cover;
     }
 
     .mixerOnlyPage{
@@ -539,7 +580,7 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>RICETTE LIVE · BASE NEL MIXER · RIDUCI CORRETTO</p>
+            <p>IMMAGINE RICETTA · MONITOR LIVE · MIXER COMPLETO</p>
           </div>
         </div>
         <div class="actions">
@@ -625,6 +666,8 @@
         <div class="liveRecipeCard">
           <div class="liveRecipeTitle" id="liveRecipeName">Nuova ricetta</div>
           <div class="liveRecipeMeta" id="liveRecipeMeta">Tipo: - · Base: - · Cultura: -</div>
+          <div class="liveRecipeImage" id="liveRecipeImage">Nessuna immagine caricata</div>
+          <div class="liveRecipeNotes" id="liveRecipeNotes">Nessuna nota.</div>
           <div class="liveRecipeIngredients" id="liveRecipeIngredients"></div>
         </div>
 
@@ -632,7 +675,7 @@
           <div class="cardHead">
             <div>
               <h2 id="recipeEditTitle">Nuova ricetta</h2>
-              <div class="sub">Editor semplificato + monitor live</div>
+              <div class="sub">Editor semplificato + monitor live + immagine</div>
             </div>
             <div class="toolbar">
               <button class="btn" onclick="showSection('recipes')">← Torna</button>
@@ -659,6 +702,15 @@
             <div class="formGrid" style="margin-top:12px">
               <div class="field"><label>Stile / descrizione</label><input class="input live-watch" id="recipe_style"></div>
               <div class="field"><label>Cultura / fermento principale</label><input class="input live-watch" id="recipe_culture"></div>
+            </div>
+
+            <div class="field" style="margin-top:12px">
+              <label>Immagine ricetta JPG / PNG</label>
+              <input class="input" id="recipe_image_file" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png">
+            </div>
+
+            <div class="toolbar" style="margin-top:8px">
+              <button class="btn" type="button" onclick="clearRecipeImage()">Togli immagine</button>
             </div>
 
             <div class="field" style="margin-top:12px">
@@ -933,6 +985,8 @@
         <div class="liveRecipeCard" style="position:static;margin-bottom:12px;">
           <div class="liveRecipeTitle" id="modalLiveRecipeName">Nuova ricetta</div>
           <div class="liveRecipeMeta" id="modalLiveRecipeMeta">Tipo: - · Base: - · Cultura: -</div>
+          <div class="liveRecipeImage" id="modalLiveRecipeImage">Nessuna immagine caricata</div>
+          <div class="liveRecipeNotes" id="modalLiveRecipeNotes">Nessuna nota.</div>
           <div class="liveRecipeIngredients" id="modalLiveRecipeIngredients"></div>
         </div>
         <input id="ingredientSearch" class="input libSearch" placeholder="Cerca ingrediente..." oninput="renderIngredientLibraryList()">
@@ -942,7 +996,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_fermentation_complete_v6";
+    const STORAGE_KEY = "xa_fermentation_complete_v7";
     const MIXER_COMPACT_KEY = "xa_fermentation_mixer_compact";
 
     const defaultLibraries = {
@@ -1057,6 +1111,7 @@
     let editingRecipeId = null;
     let currentRecipeType = "sidro";
     let currentLibraryKey = "luppoli";
+    let currentRecipeImageData = "";
 
     function getDefaultState(){
       return {
@@ -1206,10 +1261,21 @@
       })).filter(x => x.name);
     }
 
+    function renderImageBox(id, data){
+      const box = document.getElementById(id);
+      if(!box) return;
+      if(data){
+        box.innerHTML = `<img src="${data}" alt="Ricetta">`;
+      } else {
+        box.textContent = "Nessuna immagine caricata";
+      }
+    }
+
     function renderLiveRecipePreview(){
       const name = document.getElementById("recipe_name")?.value?.trim() || "Nuova ricetta";
       const base = document.getElementById("recipe_base")?.value?.trim() || "-";
       const culture = document.getElementById("recipe_culture")?.value?.trim() || "-";
+      const notes = document.getElementById("recipe_notes")?.value?.trim() || "Nessuna nota.";
       const type = recipeTypeLabel(currentRecipeType);
 
       const ings = getCurrentEditorIngredients();
@@ -1221,14 +1287,14 @@
         </div>
       `).join("") : `<div class="liveIng">Nessun ingrediente aggiunto.</div>`;
 
-      const meta = `Tipo: ${escapeHtml(type)} · Base: ${escapeHtml(base)} · Cultura: ${escapeHtml(culture)}`;
-
       const a = document.getElementById("liveRecipeName");
       const b = document.getElementById("liveRecipeMeta");
       const c = document.getElementById("liveRecipeIngredients");
       const d = document.getElementById("modalLiveRecipeName");
       const e = document.getElementById("modalLiveRecipeMeta");
       const f = document.getElementById("modalLiveRecipeIngredients");
+      const g = document.getElementById("liveRecipeNotes");
+      const h = document.getElementById("modalLiveRecipeNotes");
 
       if(a) a.textContent = name;
       if(b) b.textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture}`;
@@ -1236,6 +1302,11 @@
       if(d) d.textContent = name;
       if(e) e.textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture}`;
       if(f) f.innerHTML = html;
+      if(g) g.textContent = notes;
+      if(h) h.textContent = notes;
+
+      renderImageBox("liveRecipeImage", currentRecipeImageData);
+      renderImageBox("modalLiveRecipeImage", currentRecipeImageData);
     }
 
     function addIngredientFromLibrary(key, idx){
@@ -1290,11 +1361,41 @@
       `).join("") : `<div class="item"><div class="meta">Nessun ingrediente trovato.</div></div>`;
     }
 
+    function handleRecipeImageFile(file){
+      if(!file) return;
+      const ok = ["image/jpeg","image/png"].includes(file.type) || /\.(jpg|jpeg|png)$/i.test(file.name);
+      if(!ok){
+        alert("Carica solo JPG, JPEG o PNG.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = e => {
+        currentRecipeImageData = e.target.result || "";
+        renderLiveRecipePreview();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearRecipeImage(){
+      currentRecipeImageData = "";
+      const input = document.getElementById("recipe_image_file");
+      if(input) input.value = "";
+      renderLiveRecipePreview();
+    }
+
     function renderStats(){
       document.getElementById("statRecipes").textContent = state.recipes.length;
       document.getElementById("statLots").textContent = state.lots.length;
       document.getElementById("statScenes").textContent = state.scenes.length;
       document.getElementById("statChannels").textContent = currentLot()?.channels?.length || 0;
+    }
+
+    function recipeThumbHtml(recipe){
+      return recipe.image ? `
+        <div style="margin-top:10px;border-radius:14px;overflow:hidden;border:1px solid #334050;max-width:220px">
+          <img src="${recipe.image}" alt="Ricetta" style="width:100%;height:120px;object-fit:cover">
+        </div>
+      ` : "";
     }
 
     function renderHomeRecipes(){
@@ -1304,6 +1405,7 @@
         <div class="item">
           <div class="itemTitle">${escapeHtml(r.name)}</div>
           <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
+          ${recipeThumbHtml(r)}
           <div class="itemActions">
             <button class="btn" onclick="openRecipeView('${r.id}')">Apri</button>
             <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
@@ -1323,6 +1425,7 @@
             <span class="badge blue">${escapeHtml(r.base || "-")}</span>
             <span class="badge purple">${escapeHtml(r.culture || "-")}</span>
           </div>
+          ${recipeThumbHtml(r)}
           <div class="itemActions">
             <button class="btn" onclick="openRecipeView('${r.id}')">Vedi ricetta</button>
             <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
@@ -1460,6 +1563,10 @@
       document.getElementById("recipe_style").value = recipe?.style || "";
       document.getElementById("recipe_culture").value = recipe?.culture || "";
       document.getElementById("recipe_notes").value = recipe?.notes || "";
+      currentRecipeImageData = recipe?.image || "";
+
+      const fileInput = document.getElementById("recipe_image_file");
+      if(fileInput) fileInput.value = "";
 
       currentRecipeType = recipe?.type || "sidro";
       setRecipeType(currentRecipeType);
@@ -1502,6 +1609,7 @@
         style: document.getElementById("recipe_style").value.trim(),
         culture: document.getElementById("recipe_culture").value.trim(),
         notes: document.getElementById("recipe_notes").value.trim(),
+        image: currentRecipeImageData || "",
         ingredients,
         params: gatherParamsFromEditor()
       };
@@ -1536,6 +1644,12 @@
       document.getElementById("recipeViewLotBtn").onclick = () => openLotCreator(id);
 
       document.getElementById("recipeViewBody").innerHTML = `
+        ${recipe.image ? `
+          <div class="recipeHero">
+            <img src="${recipe.image}" alt="Ricetta">
+          </div>
+        ` : ""}
+
         <div class="layout2">
           <div class="item">
             <div class="itemTitle">Dati ricetta</div>
@@ -2096,6 +2210,20 @@
     function loadDemo(){
       state = getDefaultState();
 
+      const demoImage = "data:image/svg+xml;utf8," + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1">
+              <stop offset="0%" stop-color="#1a2430"/>
+              <stop offset="100%" stop-color="#0f141a"/>
+            </linearGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#g)"/>
+          <text x="50%" y="45%" fill="#d2ae6d" font-size="120" text-anchor="middle" font-family="Arial" font-weight="900">XA</text>
+          <text x="50%" y="58%" fill="#eef4fa" font-size="44" text-anchor="middle" font-family="Arial">Fermentation Recipe</text>
+        </svg>
+      `);
+
       const recipe1 = {
         id: uid("recipe"),
         type: "sidro",
@@ -2104,6 +2232,7 @@
         style: "Secco",
         culture: "Hornindal Kveik",
         notes: "Profilo secco, brillante, pulito.",
+        image: demoImage,
         ingredients: [
           {category:"frutta", name:"Mela Golden", qty:50, unit:"g/L", note:"base fruttata"},
           {category:"lieviti", name:"Hornindal Kveik", qty:0.25, unit:"g/L", note:"fermentazione"},
@@ -2128,6 +2257,7 @@
         style: "Tonic dry",
         culture: "Base aromatica",
         notes: "Tonica secca, amara, agrumata.",
+        image: "",
         ingredients: [
           {category:"botaniche", name:"China", qty:0.6, unit:"g/L", note:"fonte amaro"},
           {category:"botaniche", name:"Genziana", qty:0.25, unit:"g/L", note:"supporto amaro"},
@@ -2250,6 +2380,10 @@
       renderLiveRecipePreview();
     });
     document.getElementById("saveLotMetaBtn").addEventListener("click", saveLotMeta);
+    document.getElementById("recipe_image_file").addEventListener("change", e => {
+      const file = e.target.files && e.target.files[0];
+      if(file) handleRecipeImageFile(file);
+    });
 
     init();
   </script>
