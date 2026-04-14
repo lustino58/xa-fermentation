@@ -41,6 +41,11 @@
     .hidden{display:none!important}
 
     .app{max-width:1700px;margin:0 auto;padding:14px}
+    .section{display:none}
+    .section.active{display:block}
+    .page{display:grid;gap:14px}
+    .layout2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .statsGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 
     .topbar{
       position:sticky;top:0;z-index:50;
@@ -66,7 +71,7 @@
     .brand p{margin-top:4px;font-size:12px;color:var(--muted);letter-spacing:.12em}
 
     .actions,.toolbar{display:flex;gap:8px;flex-wrap:wrap}
-    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn,.chipBtn{
+    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn,.chipBtn,.miniBtn{
       border-radius:14px;padding:12px 14px;font-weight:900;
       border:1px solid var(--line);box-shadow:var(--shadow);
       transition:.15s ease;
@@ -77,16 +82,17 @@
     .btnMixer{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111;border-color:#62ddc4}
     .libBtn,.chipBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text)}
     .chipBtn{padding:10px 12px}
-    .btn.active,.typeBtn.active{
+    .miniBtn{
+      border-radius:10px;padding:8px 6px;font-size:11px;font-weight:900;
+      background:linear-gradient(180deg,#2a3441,#181f28);color:var(--text);border:1px solid #475566;
+    }
+    .miniBtn.gold{
+      background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c7a15a
+    }
+    .btn.active,.typeBtn.active,.chipBtn.active{
       box-shadow:0 0 0 2px rgba(255,255,255,.18), var(--shadow);
       transform:translateY(-1px);
     }
-
-    .section{display:none}
-    .section.active{display:block}
-    .page{display:grid;gap:14px}
-    .layout2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .statsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 
     .card{
       background:linear-gradient(180deg,#151c25,#10151c);
@@ -165,21 +171,23 @@
     .liveBarTitle{font-size:18px;font-weight:900;letter-spacing:.03em}
     .liveBarMeta{font-size:12px;color:var(--muted);line-height:1.45}
 
-    .mixerOnlyPage{min-height:100vh;background:linear-gradient(180deg,#090d12,#0e141b)}
-    .mixerTopBar{
+    .mixerOnlyPage,.controlOnlyPage{
+      min-height:100vh;background:linear-gradient(180deg,#090d12,#0e141b)
+    }
+    .mixerTopBar,.controlTopBar{
       position:sticky;top:0;z-index:60;
       display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
       padding:10px 12px;background:rgba(8,11,14,.96);
       backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.05);
     }
-    .mixerTopLeft,.mixerTopRight{display:flex;gap:8px;flex-wrap:wrap}
-    .mixerShell{display:grid;grid-template-columns:1fr;gap:8px;padding:8px;min-height:calc(100vh - 68px)}
-    .centerMixer{
+    .mixerTopLeft,.mixerTopRight,.controlTopLeft,.controlTopRight{display:flex;gap:8px;flex-wrap:wrap}
+    .mixerShell,.controlShell{display:grid;grid-template-columns:1fr;gap:8px;padding:8px;min-height:calc(100vh - 68px)}
+    .centerMixer,.centerControl{
       border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.06);
       box-shadow:var(--shadow);background:linear-gradient(180deg,#1b232d,#121820);
       display:flex;flex-direction:column;min-width:0;
     }
-    .mixerHeader{
+    .mixerHeader,.controlHeader{
       padding:10px;border-bottom:1px solid rgba(255,255,255,.05);
       background:linear-gradient(180deg,#232d39,#171f28);
       display:grid;grid-template-columns:1fr 1fr;gap:8px;
@@ -279,14 +287,6 @@
     }
 
     .channelButtons{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
-    .miniBtn{
-      border-radius:10px;padding:8px 6px;font-size:11px;font-weight:900;
-      background:linear-gradient(180deg,#2a3441,#181f28);color:var(--text);border:1px solid #475566;
-    }
-    .miniBtn.gold{
-      background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c7a15a
-    }
-
     .channelFooterName{
       width:100%;margin-top:8px;border-radius:12px;padding:8px 6px;background:rgba(0,0,0,.22);
       border:1px solid rgba(255,255,255,.12);font-size:11px;font-weight:900;line-height:1.2;text-align:center;
@@ -334,14 +334,19 @@
       border:1px solid #334050;font-size:12px;line-height:1.5;
     }
 
-    .chartWrap{
-      background:linear-gradient(180deg,#10161d,#0d1218);
-      border:1px solid #334050;
-      border-radius:18px;
+    .monitorWrap{
       padding:12px;
+      display:grid;
+      gap:12px;
+      background:linear-gradient(180deg,#0f141b,#0b0f14);
     }
+    .chartWrap{
+      border-radius:18px;padding:14px;background:linear-gradient(180deg,#0f141a,#141c25);
+      border:1px solid #334050;min-height:360px;
+    }
+    .chartTabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
     .chartLegend{
-      display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px
+      display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;color:var(--muted);font-size:12px
     }
     .dot{
       width:10px;height:10px;border-radius:999px;display:inline-block;margin-right:6px;vertical-align:middle
@@ -352,8 +357,8 @@
     body.mixer-compact .track input[type=range]{width:155px}
     body.mixer-compact .channelFooterName{font-size:10px;min-height:38px}
 
-    @media (max-width:900px){
-      .layout2,.statsGrid,.mixerHeader,.recipeTypeGrid,.libraryQuickGrid{grid-template-columns:1fr}
+    @media (max-width:980px){
+      .layout2,.statsGrid,.mixerHeader,.controlHeader,.recipeTypeGrid,.libraryQuickGrid{grid-template-columns:1fr}
     }
     @media (max-width:860px){
       .formGrid,.ingredientRow{grid-template-columns:1fr}
@@ -369,7 +374,7 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>LIBRERIE ESPANDIBILI · GRAFICO FERMENTAZIONE · MIXER</p>
+            <p>MIXER · CONTROLLO FERMENTAZIONE · LIBRERIE ESPANDIBILI</p>
           </div>
         </div>
         <div class="actions">
@@ -379,7 +384,8 @@
           <input type="file" id="importFile" class="hidden" accept=".json">
           <button class="btnGold" id="newRecipeBtnTop">+ Ricetta</button>
           <button class="btnGold" id="newLotBtnTop">+ Lotto</button>
-          <button class="btnMixer" id="openMixerBtnTop">ON</button>
+          <button class="btnMixer" id="openMixerBtnTop">Mixer ON</button>
+          <button class="btn" id="openControlBtnTop">Controllo fermentazione</button>
           <button class="btnDanger" id="resetBtn">Reset</button>
         </div>
       </div>
@@ -392,6 +398,7 @@
           <div class="stat"><div class="k">Lotti</div><div class="v" id="statLots">0</div><div class="s">totali</div></div>
           <div class="stat"><div class="k">Scene</div><div class="v" id="statScenes">0</div><div class="s">mixer</div></div>
           <div class="stat"><div class="k">Log</div><div class="v" id="statLogs">0</div><div class="s">fermentazione</div></div>
+          <div class="stat"><div class="k">Canali</div><div class="v" id="statChannels">0</div><div class="s">lotto attuale</div></div>
         </div>
 
         <div class="layout2">
@@ -411,7 +418,8 @@
               <div><h2>Lotti</h2><div class="sub">Produzione</div></div>
               <div class="toolbar">
                 <button class="btnGold" onclick="openLotCreator()">+ Crea lotto</button>
-                <button class="btnMixer" onclick="openMixerPage()">ON</button>
+                <button class="btnMixer" onclick="openMixerPage()">Mixer ON</button>
+                <button class="btn" onclick="openControlPage()">Controllo fermentazione</button>
               </div>
             </div>
             <div class="cardBody"><div class="list" id="homeLotsList"></div></div>
@@ -593,7 +601,10 @@
           <div class="card">
             <div class="cardHead">
               <div><h2>Scheda lotto</h2><div class="sub">Meta dati</div></div>
-              <div class="toolbar"><button class="btnGold" id="saveLotMetaBtn">Salva</button></div>
+              <div class="toolbar">
+                <button class="btnGold" id="saveLotMetaBtn">Salva</button>
+                <button class="btn" onclick="openControlPage()">Controllo fermentazione</button>
+              </div>
             </div>
             <div class="cardBody">
               <div class="formGrid">
@@ -627,27 +638,6 @@
         </div>
 
         <div class="card">
-          <div class="cardHead">
-            <div><h2>Registro fermentazione</h2><div class="sub">Ora / giorno / pH / densità / temperatura</div></div>
-            <div class="toolbar">
-              <button class="btnGold" onclick="openFermentationLogModal()">+ Nuova rilevazione</button>
-            </div>
-          </div>
-          <div class="cardBody">
-            <div class="toolbar" style="margin-bottom:12px">
-              <button class="chipBtn" onclick="setChartMetric('ph')">Grafico pH</button>
-              <button class="chipBtn" onclick="setChartMetric('gravity')">Grafico densità</button>
-              <button class="chipBtn" onclick="setChartMetric('temp')">Grafico temperatura</button>
-            </div>
-            <div class="chartWrap">
-              <div class="chartLegend" id="chartLegend"></div>
-              <canvas id="fermentationChart" width="1200" height="360"></canvas>
-            </div>
-            <div class="list" id="fermentationLogList" style="margin-top:12px"></div>
-          </div>
-        </div>
-
-        <div class="card">
           <div class="cardHead"><div><h2>Scene mixer</h2><div class="sub">Snapshot</div></div></div>
           <div class="cardBody"><div class="list" id="scenesList"></div></div>
         </div>
@@ -659,13 +649,14 @@
     <div class="mixerOnlyPage">
       <div class="mixerTopBar">
         <div class="mixerTopLeft">
-          <button class="btnDanger" onclick="goBackToMain()">OFF</button>
+          <button class="btnDanger" onclick="goBackToMain()">Mixer OFF</button>
           <button class="btnGold" onclick="saveLotMeta()">Salva lotto</button>
           <button class="btn" onclick="saveScene()">Salva scena</button>
           <button class="btn" onclick="openAddChannel()">+ Canale</button>
         </div>
         <div class="mixerTopRight">
           <button class="btn" id="compactMixerBtn" onclick="toggleCompactMixer()">RIDUCI</button>
+          <button class="btn" onclick="openControlPage()">Controllo fermentazione</button>
           <button class="btnMixer" onclick="alert('Gira il telefono in orizzontale per vedere più canali insieme.')">Orizzontale</button>
         </div>
       </div>
@@ -687,6 +678,55 @@
 
           <div class="mixerViewport">
             <div class="mixerBoard" id="mixerBoard"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div id="app-control-only" class="hidden">
+    <div class="controlOnlyPage">
+      <div class="controlTopBar">
+        <div class="controlTopLeft">
+          <button class="btnDanger" onclick="closeControlPage()">Controllo OFF</button>
+          <button class="btnGold" onclick="openFermentationLogModal()">+ Rilevazione</button>
+          <button class="btn" onclick="drawFermentationChart()">Aggiorna grafico</button>
+        </div>
+        <div class="controlTopRight">
+          <button class="btn" onclick="openMixerPage()">Mixer ON</button>
+        </div>
+      </div>
+
+      <div class="controlShell">
+        <main class="centerControl">
+          <div class="controlHeader">
+            <div class="lcdPanel">
+              <div class="lcdLabel">Controllo fermentazione</div>
+              <div class="lcdMain" id="control_title">FERMENTATION CONTROL</div>
+              <div class="lcdSub" id="control_sub">Pagina separata solo per grafici e andamento fermentazione.</div>
+            </div>
+            <div class="lcdPanel">
+              <div class="lcdLabel">Lotto</div>
+              <div class="lcdMain" id="control_lot_name">NESSUNO</div>
+              <div class="lcdSub" id="control_lot_meta">Seleziona un lotto.</div>
+            </div>
+          </div>
+
+          <div class="monitorWrap">
+            <div class="toolbar">
+              <button class="chipBtn active" id="metric_ph" onclick="setChartMetric('ph')">pH</button>
+              <button class="chipBtn" id="metric_gravity" onclick="setChartMetric('gravity')">Densità</button>
+              <button class="chipBtn" id="metric_temp" onclick="setChartMetric('temp')">Temperatura</button>
+              <button class="chipBtn" id="metric_co2" onclick="setChartMetric('co2')">CO₂</button>
+              <button class="chipBtn" id="metric_combo" onclick="setChartMetric('combo')">Combo pH + Densità</button>
+            </div>
+
+            <div class="chartWrap">
+              <div class="chartLegend" id="chartLegend"></div>
+              <canvas id="fermentationChart" width="1400" height="420"></canvas>
+            </div>
+
+            <div class="list" id="fermentationLogList"></div>
           </div>
         </main>
       </div>
@@ -821,7 +861,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_fermentation_complete_v10";
+    const STORAGE_KEY = "xa_fermentation_complete_v11";
     const MIXER_COMPACT_KEY = "xa_fermentation_mixer_compact";
 
     const INGREDIENT_BROWSER = {
@@ -965,7 +1005,9 @@
     function getLot(id){ return state.lots.find(l => l.id===id) || null; }
     function currentLot(){ return getLot(state.selectedLotId); }
     function mixerLot(){ return getLot(new URLSearchParams(window.location.search).get("lot")) || currentLot(); }
+    function controlLot(){ return getLot(new URLSearchParams(window.location.search).get("lot")) || currentLot(); }
     function isMixerMode(){ return new URLSearchParams(window.location.search).get("view") === "mixer"; }
+    function isControlMode(){ return new URLSearchParams(window.location.search).get("view") === "control"; }
 
     function ensureSelected(){
       if(!state.selectedRecipeId && state.recipes.length) state.selectedRecipeId = state.recipes[0].id;
@@ -1420,12 +1462,16 @@
       lot.notes = document.getElementById("lot_notes").value.trim();
       saveState();
       renderAll();
+      updateControlHeader();
     }
 
     function selectLot(id){
       state.selectedLotId = id;
       saveState();
       renderAll();
+      updateControlHeader();
+      drawFermentationChart();
+      renderFermentationLogs();
     }
 
     function deleteLot(id){
@@ -1434,6 +1480,9 @@
       if(state.selectedLotId === id) state.selectedLotId = state.lots[0]?.id || null;
       saveState();
       renderAll();
+      updateControlHeader();
+      drawFermentationChart();
+      renderFermentationLogs();
     }
 
     function renderStats(){
@@ -1442,6 +1491,7 @@
       document.getElementById("statScenes").textContent = state.scenes.length;
       const totalLogs = state.lots.reduce((a,l)=>a + (Array.isArray(l.logs)?l.logs.length:0), 0);
       document.getElementById("statLogs").textContent = totalLogs;
+      document.getElementById("statChannels").textContent = currentLot()?.channels?.length || 0;
     }
 
     function renderHomeRecipes(){
@@ -1486,7 +1536,8 @@
           <div class="meta">${escapeHtml(l.type || "-")} · ${escapeHtml(l.recipeName || "-")} · ${l.channels.length} canali · ${(l.logs||[]).length} log</div>
           <div class="itemActions">
             <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
-            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">ON</button>
+            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">Mixer ON</button>
+            <button class="btn" onclick="openControlPageForLot('${l.id}')">Controllo fermentazione</button>
           </div>
         </div>
       `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
@@ -1506,7 +1557,8 @@
           </div>
           <div class="itemActions">
             <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
-            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">ON</button>
+            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">Mixer ON</button>
+            <button class="btn" onclick="openControlPageForLot('${l.id}')">Controllo fermentazione</button>
             <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
           </div>
         </div>
@@ -1712,11 +1764,276 @@
       openMixerPageForLot(lot.id);
     }
 
+    function openControlPageForLot(lotId){
+      const url = new URL(window.location.href);
+      url.searchParams.set("view","control");
+      url.searchParams.set("lot", lotId);
+      window.location.href = url.toString();
+    }
+
+    function openControlPage(){
+      const lot = currentLot();
+      if(!lot){ alert("Seleziona prima un lotto."); return; }
+      openControlPageForLot(lot.id);
+    }
+
+    function closeControlPage(){
+      const url = new URL(window.location.href);
+      url.searchParams.delete("view");
+      url.searchParams.delete("lot");
+      window.location.href = url.toString();
+    }
+
     function goBackToMain(){
       const url = new URL(window.location.href);
       url.searchParams.delete("view");
       url.searchParams.delete("lot");
       window.location.href = url.toString();
+    }
+
+    function updateControlHeader(){
+      const lot = controlLot();
+      const titleEl = document.getElementById("control_lot_name");
+      const metaEl = document.getElementById("control_lot_meta");
+      if(!titleEl || !metaEl) return;
+      titleEl.textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
+      metaEl.textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${(lot.logs||[]).length} rilevazioni` : "Seleziona un lotto.";
+    }
+
+    function openFermentationLogModal(){
+      const lot = controlLot() || currentLot();
+      if(!lot){ alert("Seleziona prima un lotto."); return; }
+      document.getElementById("log_date").value = today();
+      document.getElementById("log_time").value = nowTime();
+      document.getElementById("log_ph").value = "";
+      document.getElementById("log_gravity").value = "";
+      document.getElementById("log_temp").value = "";
+      document.getElementById("log_co2").value = "";
+      document.getElementById("log_note").value = "";
+      document.getElementById("fermentationLogModal").classList.add("show");
+    }
+    function closeFermentationLogModal(){ document.getElementById("fermentationLogModal").classList.remove("show"); }
+
+    function saveFermentationLog(){
+      const lot = controlLot() || currentLot();
+      if(!lot){ alert("Seleziona prima un lotto."); return; }
+
+      lot.logs.push({
+        id: uid("log"),
+        date: document.getElementById("log_date").value || today(),
+        time: document.getElementById("log_time").value || nowTime(),
+        ph: document.getElementById("log_ph").value === "" ? null : Number(document.getElementById("log_ph").value),
+        gravity: document.getElementById("log_gravity").value === "" ? null : Number(document.getElementById("log_gravity").value),
+        temp: document.getElementById("log_temp").value === "" ? null : Number(document.getElementById("log_temp").value),
+        co2: document.getElementById("log_co2").value === "" ? null : Number(document.getElementById("log_co2").value),
+        note: document.getElementById("log_note").value.trim()
+      });
+
+      lot.logs.sort((a,b)=>(`${a.date} ${a.time}`).localeCompare(`${b.date} ${b.time}`));
+      state.selectedLotId = lot.id;
+      saveState();
+      closeFermentationLogModal();
+      renderFermentationLogs();
+      drawFermentationChart();
+      renderStats();
+      updateControlHeader();
+    }
+
+    function deleteFermentationLog(id){
+      const lot = controlLot() || currentLot();
+      if(!lot) return;
+      lot.logs = (lot.logs || []).filter(x => x.id !== id);
+      saveState();
+      renderFermentationLogs();
+      drawFermentationChart();
+      renderStats();
+      updateControlHeader();
+    }
+
+    function renderFermentationLogs(){
+      const wrap = document.getElementById("fermentationLogList");
+      const lot = controlLot() || currentLot();
+      if(!wrap) return;
+      if(!lot){
+        wrap.innerHTML = `<div class="item"><div class="meta">Seleziona un lotto.</div></div>`;
+        return;
+      }
+      const logs = lot.logs || [];
+      wrap.innerHTML = logs.length ? logs.map(l => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(l.date)} ${escapeHtml(l.time)}</div>
+          <div class="meta">
+            pH: ${l.ph ?? "-"}<br>
+            Densità: ${l.gravity ?? "-"}<br>
+            Temperatura: ${l.temp ?? "-"} °C<br>
+            CO₂ / pressione: ${l.co2 ?? "-"}<br>
+            Note: ${escapeHtml(l.note || "-")}
+          </div>
+          <div class="itemActions">
+            <button class="btnDanger" onclick="deleteFermentationLog('${l.id}')">Elimina</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessuna rilevazione fermentazione.</div></div>`;
+    }
+
+    function setChartMetric(metric){
+      currentChartMetric = metric;
+      ["ph","gravity","temp","co2","combo"].forEach(m => {
+        const el = document.getElementById("metric_" + m);
+        if(el) el.classList.toggle("active", m === metric);
+      });
+      drawFermentationChart();
+    }
+
+    function drawYAxis(ctx, left, top, height, minVal, maxVal, color="#9aacbd"){
+      ctx.fillStyle = color;
+      ctx.font = "13px Arial";
+      for(let i=0;i<=5;i++){
+        const val = maxVal - ((maxVal - minVal)/5)*i;
+        const y = top + (height/5)*i;
+        ctx.fillText(val.toFixed(2), 10, y + 4);
+      }
+    }
+
+    function drawFermentationChart(){
+      const canvas = document.getElementById("fermentationChart");
+      if(!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const lot = controlLot() || currentLot();
+      const logs = (lot?.logs || []).slice();
+
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = "#0d1218";
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      const left = 80, right = 40, top = 24, bottom = 56;
+      const w = canvas.width - left - right;
+      const h = canvas.height - top - bottom;
+
+      ctx.strokeStyle = "#2a3442";
+      ctx.lineWidth = 1;
+      for(let i=0;i<=5;i++){
+        const y = top + (h/5)*i;
+        ctx.beginPath();
+        ctx.moveTo(left,y);
+        ctx.lineTo(left+w,y);
+        ctx.stroke();
+      }
+
+      const legend = document.getElementById("chartLegend");
+      if(!lot || !logs.length){
+        if(legend) legend.innerHTML = "";
+        ctx.fillStyle = "#9aacbd";
+        ctx.font = "24px Arial";
+        ctx.fillText("Nessun dato fermentazione", left + 20, top + 80);
+        return;
+      }
+
+      const xFor = i => left + (w * (logs.length===1 ? 0.5 : i/(logs.length-1)));
+
+      ctx.fillStyle = "#8ea1b5";
+      ctx.font = "13px Arial";
+      logs.forEach((log,i) => {
+        const x = xFor(i);
+        const label = (log.time || "").slice(0,5) || log.date;
+        ctx.fillText(label, x - 16, top + h + 26);
+      });
+
+      function drawSeries(metric, color, label, scaleLeft=true, offsetX=0){
+        const series = logs.filter(x => x[metric] !== null && x[metric] !== undefined);
+        if(!series.length) return null;
+        const vals = series.map(x => Number(x[metric]));
+        const minVal = Math.min(...vals);
+        const maxVal = Math.max(...vals);
+        const span = (maxVal - minVal) || 1;
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        logs.forEach((l,i) => {
+          if(l[metric] === null || l[metric] === undefined) return;
+          const x = xFor(i);
+          const y = top + h - (((Number(l[metric]) - minVal) / span) * h);
+          if(ctx.__startedLine) ctx.lineTo(x,y);
+          else { ctx.moveTo(x,y); ctx.__startedLine = true; }
+        });
+        ctx.stroke();
+        ctx.__startedLine = false;
+
+        logs.forEach((l,i) => {
+          if(l[metric] === null || l[metric] === undefined) return;
+          const x = xFor(i);
+          const y = top + h - (((Number(l[metric]) - minVal) / span) * h);
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.arc(x,y,5,0,Math.PI*2);
+          ctx.fill();
+        });
+
+        return {label,color,minVal,maxVal};
+      }
+
+      let legends = [];
+      if(currentChartMetric === "ph"){
+        const s = drawSeries("ph","#67e6cf","pH");
+        legends = s ? [s] : [];
+        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
+      } else if(currentChartMetric === "gravity"){
+        const s = drawSeries("gravity","#7ebcff","Densità");
+        legends = s ? [s] : [];
+        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
+      } else if(currentChartMetric === "temp"){
+        const s = drawSeries("temp","#ffb55e","Temperatura");
+        legends = s ? [s] : [];
+        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
+      } else if(currentChartMetric === "co2"){
+        const s = drawSeries("co2","#ff8fbc","CO₂");
+        legends = s ? [s] : [];
+        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
+      } else if(currentChartMetric === "combo"){
+        const s1 = drawSeries("ph","#67e6cf","pH");
+        const s2 = drawSeries("gravity","#7ebcff","Densità");
+        legends = [s1,s2].filter(Boolean);
+        if(s1) drawYAxis(ctx,left,top,h,s1.minVal,s1.maxVal);
+      }
+
+      if(legend){
+        legend.innerHTML = legends.map(l => `<span><span class="dot" style="background:${l.color}"></span>${l.label}</span>`).join("");
+      }
+
+      ctx.fillStyle = "#eef4fa";
+      ctx.font = "22px Arial";
+      const titles = {
+        ph:"Grafico pH",
+        gravity:"Grafico densità",
+        temp:"Grafico temperatura",
+        co2:"Grafico CO₂",
+        combo:"Grafico pH + Densità"
+      };
+      ctx.fillText(titles[currentChartMetric] || "Grafico fermentazione", left, 18);
+    }
+
+    function updateControlHeader(){
+      const lot = controlLot();
+      const nameEl = document.getElementById("control_lot_name");
+      const metaEl = document.getElementById("control_lot_meta");
+      if(!nameEl || !metaEl) return;
+      nameEl.textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
+      metaEl.textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${(lot.logs||[]).length} rilevazioni` : "Seleziona un lotto.";
+    }
+
+    function applyCompactMixerState(){
+      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
+      document.body.classList.toggle("mixer-compact", compact);
+      const btn = document.getElementById("compactMixerBtn");
+      if(btn) btn.textContent = compact ? "NORMALE" : "RIDUCI";
+    }
+
+    function toggleCompactMixer(){
+      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
+      localStorage.setItem(MIXER_COMPACT_KEY, compact ? "0" : "1");
+      applyCompactMixerState();
+      renderMixer();
     }
 
     function exportBackup(){
@@ -1792,9 +2109,10 @@
         notes: recipe1.notes,
         channels: recipeToChannels(recipe1),
         logs: [
-          {id:uid("log"), date:today(), time:"08:00", ph:3.8, gravity:1.048, temp:22.0, co2:0, note:"inizio"},
-          {id:uid("log"), date:today(), time:"14:00", ph:3.55, gravity:1.040, temp:22.5, co2:0.5, note:"attiva"},
-          {id:uid("log"), date:today(), time:"20:00", ph:3.40, gravity:1.032, temp:23.0, co2:0.8, note:"bene"}
+          {id:uid("log"), date:today(), time:"08:00", ph:3.80, gravity:1.048, temp:22.0, co2:0.2, note:"inizio"},
+          {id:uid("log"), date:today(), time:"12:00", ph:3.62, gravity:1.041, temp:22.4, co2:0.5, note:"partenza"},
+          {id:uid("log"), date:today(), time:"16:00", ph:3.48, gravity:1.034, temp:22.7, co2:0.9, note:"attiva"},
+          {id:uid("log"), date:today(), time:"20:00", ph:3.36, gravity:1.026, temp:22.3, co2:1.2, note:"buona"}
         ]
       };
 
@@ -1804,191 +2122,11 @@
       init();
     }
 
-    function applyCompactMixerState(){
-      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
-      document.body.classList.toggle("mixer-compact", compact);
-      const btn = document.getElementById("compactMixerBtn");
-      if(btn) btn.textContent = compact ? "NORMALE" : "RIDUCI";
-    }
-
-    function toggleCompactMixer(){
-      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
-      localStorage.setItem(MIXER_COMPACT_KEY, compact ? "0" : "1");
-      applyCompactMixerState();
-      renderMixer();
-    }
-
-    function openFermentationLogModal(){
-      const lot = currentLot();
-      if(!lot){ alert("Seleziona prima un lotto."); return; }
-      document.getElementById("log_date").value = today();
-      document.getElementById("log_time").value = nowTime();
-      document.getElementById("log_ph").value = "";
-      document.getElementById("log_gravity").value = "";
-      document.getElementById("log_temp").value = "";
-      document.getElementById("log_co2").value = "";
-      document.getElementById("log_note").value = "";
-      document.getElementById("fermentationLogModal").classList.add("show");
-    }
-    function closeFermentationLogModal(){ document.getElementById("fermentationLogModal").classList.remove("show"); }
-
-    function saveFermentationLog(){
-      const lot = currentLot();
-      if(!lot){ alert("Seleziona prima un lotto."); return; }
-
-      lot.logs.push({
-        id: uid("log"),
-        date: document.getElementById("log_date").value || today(),
-        time: document.getElementById("log_time").value || nowTime(),
-        ph: Number(document.getElementById("log_ph").value) || null,
-        gravity: Number(document.getElementById("log_gravity").value) || null,
-        temp: Number(document.getElementById("log_temp").value) || null,
-        co2: Number(document.getElementById("log_co2").value) || null,
-        note: document.getElementById("log_note").value.trim()
-      });
-
-      lot.logs.sort((a,b)=>(`${a.date} ${a.time}`).localeCompare(`${b.date} ${b.time}`));
-      saveState();
-      closeFermentationLogModal();
-      renderFermentationLogs();
-      drawFermentationChart();
-      renderStats();
-    }
-
-    function deleteFermentationLog(id){
-      const lot = currentLot();
-      if(!lot) return;
-      lot.logs = (lot.logs || []).filter(x => x.id !== id);
-      saveState();
-      renderFermentationLogs();
-      drawFermentationChart();
-      renderStats();
-    }
-
-    function renderFermentationLogs(){
-      const wrap = document.getElementById("fermentationLogList");
-      const lot = currentLot();
-      if(!wrap) return;
-      if(!lot){
-        wrap.innerHTML = `<div class="item"><div class="meta">Seleziona un lotto.</div></div>`;
-        return;
-      }
-      const logs = lot.logs || [];
-      wrap.innerHTML = logs.length ? logs.map(l => `
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(l.date)} ${escapeHtml(l.time)}</div>
-          <div class="meta">
-            pH: ${l.ph ?? "-"}<br>
-            Densità: ${l.gravity ?? "-"}<br>
-            Temperatura: ${l.temp ?? "-"} °C<br>
-            CO₂ / pressione: ${l.co2 ?? "-"}<br>
-            Note: ${escapeHtml(l.note || "-")}
-          </div>
-          <div class="itemActions">
-            <button class="btnDanger" onclick="deleteFermentationLog('${l.id}')">Elimina</button>
-          </div>
-        </div>
-      `).join("") : `<div class="item"><div class="meta">Nessuna rilevazione fermentazione.</div></div>`;
-    }
-
-    function setChartMetric(metric){
-      currentChartMetric = metric;
-      drawFermentationChart();
-    }
-
-    function drawFermentationChart(){
-      const canvas = document.getElementById("fermentationChart");
-      if(!canvas) return;
-      const ctx = canvas.getContext("2d");
-      const lot = currentLot();
-      const logs = (lot?.logs || []).filter(x => x[currentChartMetric] !== null && x[currentChartMetric] !== undefined);
-      const legend = document.getElementById("chartLegend");
-
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.fillStyle = "#0d1218";
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-
-      const metricMap = {
-        ph:{label:"pH", color:"#67e6cf"},
-        gravity:{label:"Densità", color:"#7ebcff"},
-        temp:{label:"Temperatura", color:"#ffb55e"}
-      };
-      const conf = metricMap[currentChartMetric];
-      legend.innerHTML = `<span><span class="dot" style="background:${conf.color}"></span>${conf.label}</span>`;
-
-      const left = 70, right = 30, top = 20, bottom = 50;
-      const w = canvas.width - left - right;
-      const h = canvas.height - top - bottom;
-
-      ctx.strokeStyle = "#2a3442";
-      ctx.lineWidth = 1;
-
-      for(let i=0;i<=5;i++){
-        const y = top + (h/5)*i;
-        ctx.beginPath();
-        ctx.moveTo(left,y);
-        ctx.lineTo(left+w,y);
-        ctx.stroke();
-      }
-
-      if(!logs.length){
-        ctx.fillStyle = "#9aacbd";
-        ctx.font = "24px Arial";
-        ctx.fillText("Nessun dato fermentazione", left + 20, top + 80);
-        return;
-      }
-
-      const values = logs.map(l => Number(l[currentChartMetric]));
-      const minVal = Math.min(...values);
-      const maxVal = Math.max(...values);
-      const span = (maxVal - minVal) || 1;
-
-      ctx.fillStyle = "#9aacbd";
-      ctx.font = "18px Arial";
-      ctx.fillText(conf.label, left, 16);
-
-      ctx.fillStyle = "#8ea1b5";
-      ctx.font = "14px Arial";
-      for(let i=0;i<logs.length;i++){
-        const x = left + (w * (logs.length===1 ? 0.5 : i/(logs.length-1)));
-        const label = logs[i].time || logs[i].date;
-        ctx.fillText(label, x - 16, top + h + 24);
-      }
-
-      ctx.strokeStyle = conf.color;
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-
-      logs.forEach((l,i) => {
-        const x = left + (w * (logs.length===1 ? 0.5 : i/(logs.length-1)));
-        const y = top + h - (((Number(l[currentChartMetric]) - minVal) / span) * h);
-        if(i===0) ctx.moveTo(x,y);
-        else ctx.lineTo(x,y);
-      });
-      ctx.stroke();
-
-      logs.forEach((l,i) => {
-        const x = left + (w * (logs.length===1 ? 0.5 : i/(logs.length-1)));
-        const y = top + h - (((Number(l[currentChartMetric]) - minVal) / span) * h);
-        ctx.fillStyle = conf.color;
-        ctx.beginPath();
-        ctx.arc(x,y,5,0,Math.PI*2);
-        ctx.fill();
-        ctx.fillStyle = "#eef4fa";
-        ctx.font = "14px Arial";
-        ctx.fillText(String(l[currentChartMetric]), x - 10, y - 10);
-      });
-
-      ctx.fillStyle = "#9aacbd";
-      ctx.font = "14px Arial";
-      ctx.fillText(String(maxVal), 10, top + 8);
-      ctx.fillText(String(minVal), 10, top + h);
-    }
-
     function initNormal(){
       ensureSelected();
       document.getElementById("app-normal").classList.remove("hidden");
       document.getElementById("app-mixer-only").classList.add("hidden");
+      document.getElementById("app-control-only").classList.add("hidden");
       showSection("home");
       renderAll();
     }
@@ -1996,8 +2134,18 @@
     function initMixer(){
       document.getElementById("app-normal").classList.add("hidden");
       document.getElementById("app-mixer-only").classList.remove("hidden");
+      document.getElementById("app-control-only").classList.add("hidden");
       applyCompactMixerState();
       renderMixer();
+    }
+
+    function initControl(){
+      document.getElementById("app-normal").classList.add("hidden");
+      document.getElementById("app-mixer-only").classList.add("hidden");
+      document.getElementById("app-control-only").classList.remove("hidden");
+      updateControlHeader();
+      renderFermentationLogs();
+      setChartMetric(currentChartMetric);
     }
 
     function renderAll(){
@@ -2011,6 +2159,7 @@
 
     function init(){
       if(isMixerMode()) initMixer();
+      else if(isControlMode()) initControl();
       else initNormal();
     }
 
@@ -2024,6 +2173,7 @@
     document.getElementById("newRecipeBtnTop").addEventListener("click", ()=>openRecipeEditor());
     document.getElementById("newLotBtnTop").addEventListener("click", ()=>openLotCreator());
     document.getElementById("openMixerBtnTop").addEventListener("click", openMixerPage);
+    document.getElementById("openControlBtnTop").addEventListener("click", openControlPage);
     document.getElementById("resetBtn").addEventListener("click", resetAll);
     document.getElementById("saveRecipeBtn").addEventListener("click", saveRecipe);
     document.getElementById("saveRecipeBtnBottom").addEventListener("click", saveRecipe);
