@@ -20,23 +20,23 @@
       --blue:#7ebcff;
       --teal:#67e6cf;
       --purple:#b58cff;
-      --orange:#ffb55e;
       --shadow:0 16px 36px rgba(0,0,0,.35);
       --lcd:#99ff7e;
     }
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{
-      margin:0;padding:0;
+      margin:0;
+      padding:0;
       background:linear-gradient(180deg,#0a0e13,#10161d);
       color:var(--text);
       font-family:Inter,Arial,sans-serif;
     }
-    body{padding-bottom:92px}
+    body{padding-bottom:90px}
     h1,h2,h3,h4,p{margin:0}
-    img{max-width:100%;display:block}
     button,input,select,textarea{font:inherit}
     button{cursor:pointer;border:none}
+    img{display:block;max-width:100%}
     canvas{display:block;width:100%}
     .hidden{display:none!important}
 
@@ -48,7 +48,7 @@
     .statsGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 
     .topbar{
-      position:sticky;top:0;z-index:50;
+      position:sticky;top:0;z-index:60;
       margin:-14px -14px 14px;
       padding:14px;
       backdrop-filter:blur(12px);
@@ -59,6 +59,7 @@
       max-width:1700px;margin:0 auto;
       display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
     }
+
     .brand{display:flex;gap:14px;align-items:center}
     .logo{
       width:62px;height:62px;border-radius:18px;
@@ -71,28 +72,35 @@
     .brand p{margin-top:4px;font-size:12px;color:var(--muted);letter-spacing:.12em}
 
     .actions,.toolbar{display:flex;gap:8px;flex-wrap:wrap}
-    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn,.chipBtn,.miniBtn{
-      border-radius:14px;padding:12px 14px;font-weight:900;
-      border:1px solid var(--line);box-shadow:var(--shadow);
+
+    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn,.chipBtn,.miniBtn,.groupBtn{
+      border-radius:14px;
+      padding:12px 14px;
+      font-weight:900;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
       transition:.15s ease;
     }
+
     .btn{background:linear-gradient(180deg,#26313e,#171f28);color:var(--text)}
     .btnGold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c8a15a}
     .btnDanger{background:linear-gradient(180deg,#6a2a2a,#431717);color:#ffd3d3;border-color:#7a3131}
     .btnMixer{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111;border-color:#62ddc4}
-    .libBtn,.chipBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text)}
-    .chipBtn{padding:10px 12px}
+    .libBtn,.chipBtn,.groupBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text)}
     .miniBtn{
-      border-radius:10px;padding:8px 6px;font-size:11px;font-weight:900;
-      background:linear-gradient(180deg,#2a3441,#181f28);color:var(--text);border:1px solid #475566;
+      padding:8px 8px;
+      border-radius:10px;
+      font-size:11px;
+      background:linear-gradient(180deg,#2a3441,#181f28);
+      color:var(--text);
+      border:1px solid #475566;
     }
     .miniBtn.gold{
-      background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c7a15a
+      background:linear-gradient(180deg,var(--gold2),var(--gold));
+      color:#111;
+      border-color:#c7a15a;
     }
-    .btn.active,.typeBtn.active,.chipBtn.active{
-      box-shadow:0 0 0 2px rgba(255,255,255,.18), var(--shadow);
-      transform:translateY(-1px);
-    }
+    .btn.active,.typeBtn.active,.chipBtn.active{transform:translateY(-1px)}
 
     .card{
       background:linear-gradient(180deg,#151c25,#10151c);
@@ -144,9 +152,7 @@
     .meta{font-size:12px;color:var(--muted);line-height:1.5;margin-top:5px}
     .itemActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 
-    .recipeTypeGrid{
-      display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px;
-    }
+    .recipeTypeGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
     .typeBtn{background:linear-gradient(180deg,#26313e,#171f28);color:var(--text);text-align:center}
     .typeBtn.active.sidro{background:linear-gradient(180deg,#f0d49b,#d2ae6d);color:#111}
     .typeBtn.active.te{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111}
@@ -154,240 +160,382 @@
     .typeBtn.active.birra{background:linear-gradient(180deg,#ffd97f,#ffb347);color:#111}
     .typeBtn.active.tonica{background:linear-gradient(180deg,#c8fff5,#88e9d8);color:#111}
 
-    .ingredientRow{
-      display:grid;grid-template-columns:1fr 1.3fr .7fr .7fr 1fr auto;gap:8px;margin-top:8px;
-    }
-    .libraryQuickGrid{
-      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px;
-    }
+    .ingredientRow{display:grid;grid-template-columns:1fr 1.3fr .7fr .7fr 1fr auto;gap:8px;margin-top:8px}
+    .libraryQuickGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
 
     .liveBar{
       border-radius:18px;padding:12px 14px;
       background:linear-gradient(180deg,#1a2430,#10161d);
-      border:1px solid #334050;box-shadow:var(--shadow);
+      border:1px solid #334050;
+      box-shadow:var(--shadow);
       display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
     }
     .liveBarMain{display:grid;gap:5px}
-    .liveBarTitle{font-size:18px;font-weight:900;letter-spacing:.03em}
+    .liveBarTitle{font-size:18px;font-weight:900}
     .liveBarMeta{font-size:12px;color:var(--muted);line-height:1.45}
 
     .mixerOnlyPage,.controlOnlyPage{
-      min-height:100vh;background:linear-gradient(180deg,#090d12,#0e141b)
+      min-height:100vh;
+      background:linear-gradient(180deg,#090d12,#0e141b);
     }
     .mixerTopBar,.controlTopBar{
-      position:sticky;top:0;z-index:60;
+      position:sticky;top:0;z-index:70;
       display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
-      padding:10px 12px;background:rgba(8,11,14,.96);
-      backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.05);
+      padding:10px 12px;
+      background:rgba(8,11,14,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,.05);
     }
     .mixerTopLeft,.mixerTopRight,.controlTopLeft,.controlTopRight{display:flex;gap:8px;flex-wrap:wrap}
     .mixerShell,.controlShell{display:grid;grid-template-columns:1fr;gap:8px;padding:8px;min-height:calc(100vh - 68px)}
     .centerMixer,.centerControl{
-      border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.06);
-      box-shadow:var(--shadow);background:linear-gradient(180deg,#1b232d,#121820);
-      display:flex;flex-direction:column;min-width:0;
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+      background:linear-gradient(180deg,#1b232d,#121820);
+      display:flex;
+      flex-direction:column;
+      min-width:0;
     }
     .mixerHeader,.controlHeader{
-      padding:10px;border-bottom:1px solid rgba(255,255,255,.05);
+      padding:10px;
+      border-bottom:1px solid rgba(255,255,255,.05);
       background:linear-gradient(180deg,#232d39,#171f28);
-      display:grid;grid-template-columns:1fr 1fr;gap:8px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
     }
     .lcdPanel{
-      border-radius:16px;padding:10px;border:1px solid #355530;
+      border-radius:16px;
+      padding:10px;
+      border:1px solid #355530;
       background:linear-gradient(180deg,#11200f,#0a1608);
       box-shadow:inset 0 0 18px rgba(151,255,123,.08);
     }
     .lcdLabel{font-size:10px;color:#c0ffb0;letter-spacing:.14em;text-transform:uppercase}
     .lcdMain{font-size:24px;font-weight:900;line-height:1;margin-top:6px;color:var(--lcd)}
     .lcdSub{font-size:11px;line-height:1.35;margin-top:6px;color:#c0ffb0;opacity:.92}
+
     .mixerViewport{
-      flex:1;overflow-x:auto;overflow-y:hidden;padding:10px;
+      flex:1;
+      overflow-x:auto;
+      overflow-y:hidden;
+      padding:10px;
       background:linear-gradient(180deg,#0f141b,#0b0f14);
     }
-    .mixerBoard{display:flex;gap:10px;align-items:stretch;min-width:max-content}
+    .mixerViewport::-webkit-scrollbar{height:12px}
+    .mixerViewport::-webkit-scrollbar-track{background:#0d1116;border-radius:999px}
+    .mixerViewport::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#2a3442,#4a5a6c);border-radius:999px}
 
-    .channel{
-      width:128px;border-radius:18px;padding:8px;border:1px solid #455567;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -14px 22px rgba(0,0,0,.25), 0 10px 22px rgba(0,0,0,.22);
-      display:flex;flex-direction:column;align-items:center;overflow:hidden;color:#f2f7fc;
+    .mixerBoard{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      min-width:max-content;
+      padding-bottom:6px;
     }
 
-    /* BASE */
+    .mixerGroupBlock{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-width:max-content;
+    }
+
+    .mixerGroupHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      min-width:240px;
+      border-radius:14px;
+      padding:9px 10px;
+      background:linear-gradient(180deg,#273241,#1a212b);
+      border:1px solid #394758;
+      color:#dbe6f0;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .mixerGroupChannels{
+      display:flex;
+      gap:12px;
+      align-items:flex-end;
+      min-width:max-content;
+    }
+
+    .groupAction{
+      border-radius:10px;
+      padding:8px 10px;
+      font-size:11px;
+      font-weight:900;
+      color:#111;
+      background:linear-gradient(180deg,var(--gold2),var(--gold));
+      border:1px solid #c8a15a;
+      box-shadow:var(--shadow);
+    }
+
+    .channel{
+      width:168px;
+      min-width:168px;
+      border-radius:18px;
+      padding:10px;
+      border:1px solid #455567;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -14px 22px rgba(0,0,0,.25), 0 10px 22px rgba(0,0,0,.22);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      overflow:hidden;
+      color:#f2f7fc;
+    }
+
     .channel.base-1{background:linear-gradient(180deg,#ffe86a,#ffc928 28%,#6b4f0d)}
     .channel.base-2{background:linear-gradient(180deg,#ffdf52,#f2b400 28%,#6f4b00)}
 
-    /* FRUTTA */
     .channel.fruit-1{background:linear-gradient(180deg,#ff9fd5,#d657a5 28%,#5a1840)}
     .channel.fruit-2{background:linear-gradient(180deg,#ff8bc5,#c24092 28%,#4d1436)}
     .channel.fruit-3{background:linear-gradient(180deg,#ff74b9,#ad2f7f 28%,#431130)}
     .channel.fruit-4{background:linear-gradient(180deg,#f760b0,#92256d 28%,#380d29)}
 
-    /* TE */
     .channel.tea-1{background:linear-gradient(180deg,#83d8ff,#2f87bd 28%,#123954)}
     .channel.tea-2{background:linear-gradient(180deg,#5ec6ff,#1f6fa8 28%,#103246)}
     .channel.tea-3{background:linear-gradient(180deg,#4ab6ef,#165f92 28%,#0d293d)}
     .channel.tea-4{background:linear-gradient(180deg,#35a7dc,#104f7b 28%,#0a2233)}
 
-    /* BOTANICHE */
     .channel.botanical-1{background:linear-gradient(180deg,#ffc57a,#ea8c2d 28%,#6a3000)}
     .channel.botanical-2{background:linear-gradient(180deg,#ffb460,#d97818 28%,#5d2800)}
     .channel.botanical-3{background:linear-gradient(180deg,#ffa247,#c76508 28%,#4f2200)}
     .channel.botanical-4{background:linear-gradient(180deg,#ff922e,#b45500 28%,#451b00)}
 
-    /* SPEZIE */
     .channel.spice-1{background:linear-gradient(180deg,#b7ff9a,#58c533 28%,#1d4b0d)}
     .channel.spice-2{background:linear-gradient(180deg,#9df27e,#45af25 28%,#183f0a)}
     .channel.spice-3{background:linear-gradient(180deg,#87e667,#39931f 28%,#133609)}
     .channel.spice-4{background:linear-gradient(180deg,#74d554,#2f7b19 28%,#102e08)}
 
-    /* PEPI */
     .channel.pepper-1{background:linear-gradient(180deg,#ffb18e,#d2643a 28%,#5c2010)}
     .channel.pepper-2{background:linear-gradient(180deg,#ff9f77,#bc5328 28%,#4c190b)}
     .channel.pepper-3{background:linear-gradient(180deg,#f88b63,#a5441f 28%,#3f1307)}
     .channel.pepper-4{background:linear-gradient(180deg,#ea774f,#8d3716 28%,#331005)}
 
-    /* LUPPOLI */
     .channel.hop-1{background:linear-gradient(180deg,#d8ff73,#87cc21 28%,#2d4f0a)}
     .channel.hop-2{background:linear-gradient(180deg,#c6f85e,#74b815 28%,#264507)}
     .channel.hop-3{background:linear-gradient(180deg,#b1e648,#64a30d 28%,#213b06)}
     .channel.hop-4{background:linear-gradient(180deg,#9ad335,#538a08 28%,#1a3104)}
 
-    /* LIEVITI */
     .channel.yeast-1{background:linear-gradient(180deg,#9fe8ff,#47b6e6 28%,#124766)}
     .channel.yeast-2{background:linear-gradient(180deg,#88dcff,#35a4d2 28%,#103d58)}
     .channel.yeast-3{background:linear-gradient(180deg,#6fcfff,#2790bc 28%,#0d344b)}
     .channel.yeast-4{background:linear-gradient(180deg,#59c1f2,#1f7ba4 28%,#0b2b40)}
 
-    /* LATTICI */
     .channel.lactic-1{background:linear-gradient(180deg,#83ffe8,#27c4a5 28%,#0d4c40)}
     .channel.lactic-2{background:linear-gradient(180deg,#64f2da,#17af92 28%,#0b4136)}
     .channel.lactic-3{background:linear-gradient(180deg,#48e0c9,#0d967d 28%,#09362d)}
     .channel.lactic-4{background:linear-gradient(180deg,#34cdb7,#087f69 28%,#072d25)}
 
-    /* AGGIUNTE */
     .channel.add-1{background:linear-gradient(180deg,#dfe7f0,#8b9aab 28%,#33404b)}
     .channel.add-2{background:linear-gradient(180deg,#d0dbe7,#7a8b9d 28%,#2b3741)}
     .channel.add-3{background:linear-gradient(180deg,#c3cfdb,#6a7b8d 28%,#24303a)}
     .channel.add-4{background:linear-gradient(180deg,#b7c4d2,#5d6d7e 28%,#1f2831)}
 
-    /* PARAMETRI */
     .channel.param-1{background:linear-gradient(180deg,#c7a6ff,#7b4fd8 28%,#2d1657)}
     .channel.param-2{background:linear-gradient(180deg,#b78fff,#6a3dca 28%,#26124c)}
     .channel.param-3{background:linear-gradient(180deg,#a87aff,#5b2fc0 28%,#200f42)}
     .channel.param-4{background:linear-gradient(180deg,#9b68f2,#4d26aa 28%,#1b0d39)}
 
     .channelTop{
-      width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:6px;
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:6px;
+      margin-bottom:6px;
     }
     .channelType{
-      font-size:10px;color:rgba(255,255,255,.85);text-transform:uppercase;letter-spacing:.08em;line-height:1.2;min-height:24px;
+      font-size:10px;
+      color:rgba(255,255,255,.86);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      line-height:1.2;
+      min-height:24px;
     }
     .tinyIconBtn{
-      width:24px;height:24px;border-radius:8px;background:linear-gradient(180deg,#2b3642,#1a212b);
-      color:#d9e2ec;border:1px solid #4a5868;font-weight:900;font-size:12px;flex:0 0 auto;
+      width:24px;height:24px;border-radius:8px;
+      background:linear-gradient(180deg,#2b3642,#1a212b);
+      color:#d9e2ec;border:1px solid #4a5868;font-weight:900;font-size:12px;
+      flex:0 0 auto;
     }
 
     .miniLcd{
-      width:100%;border-radius:12px;background:linear-gradient(180deg,#12200f,#0b1508);
-      border:1px solid #355530;padding:8px 6px;text-align:center;
+      width:100%;
+      border-radius:12px;
+      background:linear-gradient(180deg,#12200f,#0b1508);
+      border:1px solid #355530;
+      padding:8px 6px;
+      text-align:center;
     }
     .miniLcd .lbl{font-size:9px;color:#baffab;letter-spacing:.08em;text-transform:uppercase}
-    .miniLcd .val{font-size:14px;font-weight:900;margin-top:2px;color:var(--lcd)}
+    .miniLcd .val{font-size:18px;font-weight:900;margin-top:2px;color:var(--lcd)}
 
     .knob{
-      width:54px;height:54px;border-radius:50%;margin:10px 0 8px;
+      width:64px;height:64px;border-radius:50%;margin:10px 0 8px;
       background:radial-gradient(circle at 30% 30%,#5a6673 0%,#39434e 32%,#232a33 58%,#151a20 100%);
       border:2px solid #536172;position:relative;
     }
     .knob::after{
       content:"";position:absolute;left:50%;top:6px;transform:translateX(-50%);
-      width:7px;height:16px;border-radius:999px;background:linear-gradient(180deg,var(--gold2),var(--gold));
+      width:7px;height:18px;border-radius:999px;background:linear-gradient(180deg,var(--gold2),var(--gold));
     }
 
     .tinyMeter{
-      width:88%;height:8px;border-radius:999px;background:#0c1014;border:1px solid #2f3a47;overflow:hidden;margin-bottom:8px;
+      width:88%;
+      height:8px;
+      border-radius:999px;
+      background:#0c1014;
+      border:1px solid #2f3a47;
+      overflow:hidden;
+      margin-bottom:8px;
     }
     .tinyFill{
-      height:100%;width:0%;background:linear-gradient(90deg,#2ee47f 0%, #a4ff64 45%, #ffd45d 75%, #ff6b6b 100%);
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,#2ee47f 0%, #a4ff64 45%, #ffd45d 75%, #ff6b6b 100%);
     }
 
-    .faderWrap{width:100%;flex:1;display:grid;grid-template-columns:14px 1fr;gap:8px;align-items:stretch}
+    .faderWrap{
+      width:100%;
+      flex:1;
+      display:grid;
+      grid-template-columns:18px 1fr;
+      gap:8px;
+      align-items:stretch;
+    }
     .vu{
       border-radius:12px;border:1px solid #344250;background:linear-gradient(180deg,#0d1116,#141a22);
       padding:4px 3px;display:flex;flex-direction:column-reverse;gap:2px;align-items:center;
     }
-    .vuSeg{width:6px;height:11px;border-radius:3px;background:#242c35;border:1px solid #313b46}
+    .vuSeg{width:8px;height:13px;border-radius:3px;background:#242c35;border:1px solid #313b46}
     .vuSeg.g{background:linear-gradient(180deg,#8dffba,#31d872)}
     .vuSeg.a{background:linear-gradient(180deg,#ffe5a0,#ffc74d)}
     .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
 
     .track{
-      border-radius:16px;border:1px solid #364352;background:linear-gradient(180deg,#0f1419,#181f27);
-      min-height:220px;display:flex;justify-content:center;align-items:center;position:relative;padding:10px 0;
+      border-radius:16px;
+      border:1px solid #364352;
+      background:linear-gradient(180deg,#0f1419,#181f27);
+      min-height:270px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+      padding:10px 0;
     }
     .track::before{
-      content:"";position:absolute;top:14px;bottom:14px;left:50%;transform:translateX(-50%);
-      width:6px;border-radius:999px;background:#11161c;border:1px solid #2f3944;
+      content:"";
+      position:absolute;
+      top:14px;bottom:14px;left:50%;
+      transform:translateX(-50%);
+      width:6px;border-radius:999px;
+      background:#11161c;border:1px solid #2f3944;
     }
     .track input[type=range]{
-      -webkit-appearance:none;appearance:none;width:210px;height:26px;transform:rotate(-90deg);
-      background:transparent;position:relative;z-index:2;
+      -webkit-appearance:none;
+      appearance:none;
+      width:255px;
+      height:28px;
+      transform:rotate(-90deg);
+      background:transparent;
+      position:relative;
+      z-index:2;
     }
     .track input[type=range]::-webkit-slider-runnable-track{
-      height:10px;border-radius:999px;background:linear-gradient(90deg,#1b2129,#10141a);border:1px solid #394655;
+      height:10px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#1b2129,#10141a);
+      border:1px solid #394655;
     }
     .track input[type=range]::-webkit-slider-thumb{
-      -webkit-appearance:none;appearance:none;width:38px;height:22px;border-radius:8px;margin-top:-7px;
-      border:1px solid #6a7888;background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
+      -webkit-appearance:none;
+      appearance:none;
+      width:44px;
+      height:24px;
+      border-radius:8px;
+      margin-top:-8px;
+      border:1px solid #6a7888;
+      background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
     }
 
-    .channelButtons{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+    .channelButtons{
+      width:100%;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:6px;
+      margin-top:8px;
+    }
     .channelFooterName{
-      width:100%;margin-top:8px;border-radius:12px;padding:8px 6px;background:rgba(0,0,0,.22);
-      border:1px solid rgba(255,255,255,.12);font-size:11px;font-weight:900;line-height:1.2;text-align:center;
-      min-height:42px;display:grid;place-items:center;word-break:break-word;
+      width:100%;
+      margin-top:8px;
+      border-radius:12px;
+      padding:8px 6px;
+      background:rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.12);
+      font-size:11px;
+      font-weight:900;
+      line-height:1.2;
+      text-align:center;
+      min-height:42px;
+      display:grid;
+      place-items:center;
+      word-break:break-word;
     }
     .channelEditWide{
-      width:100%;margin-top:6px;border-radius:10px;padding:8px 6px;font-size:11px;font-weight:900;
-      background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
-      color:#111;border:1px solid #7e8a95;
-    }
-
-    .mixerGroupTitle{
       width:100%;
-      font-size:13px;
+      margin-top:6px;
+      border-radius:10px;
+      padding:8px 6px;
+      font-size:11px;
       font-weight:900;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:#dbe6f0;
-      margin:4px 0 0 0;
-      padding:6px 10px;
-      border-radius:12px;
-      background:linear-gradient(180deg,#273241,#1a212b);
-      border:1px solid #394758;
-      text-align:center;
+      background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
+      color:#111;
+      border:1px solid #7e8a95;
     }
 
     .modal{
-      position:fixed;inset:0;background:rgba(0,0,0,.72);
-      display:none;align-items:flex-end;justify-content:center;z-index:120;padding:14px;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.72);
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      z-index:120;
+      padding:14px;
     }
     .modal.show{display:flex}
     .modalBox{
-      width:min(980px,100%);max-height:92vh;overflow:auto;border-radius:24px;
+      width:min(980px,100%);
+      max-height:92vh;
+      overflow:auto;
+      border-radius:24px;
       background:linear-gradient(180deg,#181f28,#0f141a);
-      border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 40px rgba(0,0,0,.38);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 18px 40px rgba(0,0,0,.38);
     }
     .modalHead{
-      position:sticky;top:0;background:rgba(24,31,40,.96);backdrop-filter:blur(10px);
-      padding:16px;border-bottom:1px solid rgba(255,255,255,.05);
+      position:sticky;top:0;
+      background:rgba(24,31,40,.96);
+      backdrop-filter:blur(10px);
+      padding:16px;
+      border-bottom:1px solid rgba(255,255,255,.05);
       display:flex;justify-content:space-between;align-items:center;gap:12px;
     }
     .modalBody{padding:16px}
     .libSearch{margin-top:10px;margin-bottom:12px}
     .libList{display:grid;gap:8px}
     .libItem{
-      display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px;border-radius:16px;
+      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      padding:12px;border-radius:16px;
       background:linear-gradient(180deg,#202836,#151c24);border:1px solid #334050;
     }
     .libItemTitle{font-weight:900}
@@ -411,8 +559,11 @@
       background:linear-gradient(180deg,#0f141b,#0b0f14);
     }
     .chartWrap{
-      border-radius:18px;padding:14px;background:linear-gradient(180deg,#0f141a,#141c25);
-      border:1px solid #334050;min-height:360px;
+      border-radius:18px;
+      padding:14px;
+      background:linear-gradient(180deg,#0f141a,#141c25);
+      border:1px solid #334050;
+      min-height:360px;
     }
     .chartLegend{
       display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;color:var(--muted);font-size:12px
@@ -421,10 +572,13 @@
       width:10px;height:10px;border-radius:999px;display:inline-block;margin-right:6px;vertical-align:middle
     }
 
-    body.mixer-compact .channel{width:104px}
-    body.mixer-compact .track{min-height:170px}
-    body.mixer-compact .track input[type=range]{width:155px}
-    body.mixer-compact .channelFooterName{font-size:10px;min-height:38px}
+    body.mixer-compact .channel{
+      width:138px;
+      min-width:138px;
+    }
+    body.mixer-compact .track{min-height:215px}
+    body.mixer-compact .track input[type=range]{width:198px}
+    body.mixer-compact .miniLcd .val{font-size:15px}
 
     @media (max-width:980px){
       .layout2,.statsGrid,.mixerHeader,.controlHeader,.recipeTypeGrid,.libraryQuickGrid{grid-template-columns:1fr}
@@ -443,7 +597,7 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>MIXER RAGGRUPPATO · CONTROLLO FERMENTAZIONE · COLORI PER FAMIGLIA</p>
+            <p>MIXER LEGGIBILE · GRUPPI APRI/CHIUDI · CONTROLLO FERMENTAZIONE</p>
           </div>
         </div>
         <div class="actions">
@@ -725,6 +879,8 @@
         </div>
         <div class="mixerTopRight">
           <button class="btn" id="compactMixerBtn" onclick="toggleCompactMixer()">RIDUCI</button>
+          <button class="btn" onclick="expandAllGroups()">Apri tutto</button>
+          <button class="btn" onclick="collapseAllGroups()">Chiudi tutto</button>
           <button class="btn" onclick="openControlPage()">Controllo fermentazione</button>
           <button class="btnMixer" onclick="alert('Gira il telefono in orizzontale per vedere più canali insieme.')">Orizzontale</button>
         </div>
@@ -930,8 +1086,9 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_fermentation_complete_v12";
+    const STORAGE_KEY = "xa_fermentation_complete_v14";
     const MIXER_COMPACT_KEY = "xa_fermentation_mixer_compact";
+    const MIXER_GROUPS_KEY = "xa_fermentation_group_state_v2";
 
     const INGREDIENT_BROWSER = {
       luppoli: [
@@ -1034,6 +1191,7 @@
     let currentLibraryKey = "luppoli";
     let currentRecipeImageData = "";
     let currentChartMetric = "ph";
+    let mixerGroupState = loadMixerGroupState();
 
     function getDefaultState(){
       return { recipes: [], lots: [], scenes: [], selectedLotId: null, selectedRecipeId: null };
@@ -1052,16 +1210,26 @@
           selectedLotId: parsed.selectedLotId || null,
           selectedRecipeId: parsed.selectedRecipeId || null
         };
-      } catch(e) {
+      }catch(e){
         return getDefaultState();
       }
     }
 
+    function loadMixerGroupState(){
+      try{
+        return JSON.parse(localStorage.getItem(MIXER_GROUPS_KEY) || "{}");
+      }catch(e){
+        return {};
+      }
+    }
+
+    function saveMixerGroupState(){ localStorage.setItem(MIXER_GROUPS_KEY, JSON.stringify(mixerGroupState)); }
     function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
     function uid(prefix="id"){ return prefix + "_" + Math.random().toString(36).slice(2,10); }
     function today(){ return new Date().toISOString().slice(0,10); }
     function nowTime(){ const d=new Date(); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
     function num(v,d=2){ const n=Number(v); return Number.isFinite(n) ? n.toFixed(d) : "0.00"; }
+
     function escapeHtml(str){
       return String(str ?? "")
         .replaceAll("&","&amp;")
@@ -1070,6 +1238,7 @@
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#39;");
     }
+
     function getRecipe(id){ return state.recipes.find(r => r.id===id) || null; }
     function getLot(id){ return state.lots.find(l => l.id===id) || null; }
     function currentLot(){ return getLot(state.selectedLotId); }
@@ -1168,25 +1337,32 @@
       const type = recipeTypeLabel(currentRecipeType);
       const ings = getCurrentEditorIngredients();
 
-      document.getElementById("liveBarTitle").textContent = name;
-      document.getElementById("liveBarMeta").textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture} · Ingredienti: ${ings.length}`;
+      const liveTitle = document.getElementById("liveBarTitle");
+      const liveMeta = document.getElementById("liveBarMeta");
+      const previewTitle = document.getElementById("previewRecipeTitle");
+      const previewMeta = document.getElementById("previewRecipeMeta");
+      const previewNotes = document.getElementById("previewRecipeNotes");
+      const wrap = document.getElementById("previewRecipeIngredients");
 
-      document.getElementById("previewRecipeTitle").textContent = name;
-      document.getElementById("previewRecipeMeta").textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture}`;
-      document.getElementById("previewRecipeNotes").textContent = notes;
+      if(liveTitle) liveTitle.textContent = name;
+      if(liveMeta) liveMeta.textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture} · Ingredienti: ${ings.length}`;
+      if(previewTitle) previewTitle.textContent = name;
+      if(previewMeta) previewMeta.textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture}`;
+      if(previewNotes) previewNotes.textContent = notes;
       renderImageBox("previewRecipeImage", currentRecipeImageData);
 
-      const wrap = document.getElementById("previewRecipeIngredients");
-      wrap.innerHTML = ings.length ? ings.map(i => `
-        <div class="item" style="margin-bottom:8px">
-          <div class="itemTitle">${escapeHtml(i.name)}</div>
-          <div class="meta">
-            Categoria: ${escapeHtml(i.category)}<br>
-            Quantità: ${escapeHtml(i.qty || "-")} ${escapeHtml(i.unit || "")}<br>
-            Note: ${escapeHtml(i.note || "-")}
+      if(wrap){
+        wrap.innerHTML = ings.length ? ings.map(i => `
+          <div class="item" style="margin-bottom:8px">
+            <div class="itemTitle">${escapeHtml(i.name)}</div>
+            <div class="meta">
+              Categoria: ${escapeHtml(i.category)}<br>
+              Quantità: ${escapeHtml(i.qty || "-")} ${escapeHtml(i.unit || "")}<br>
+              Note: ${escapeHtml(i.note || "-")}
+            </div>
           </div>
-        </div>
-      `).join("") : `<div class="item"><div class="meta">Nessun ingrediente aggiunto.</div></div>`;
+        `).join("") : `<div class="item"><div class="meta">Nessun ingrediente aggiunto.</div></div>`;
+      }
     }
 
     function openRecipePreviewModal(){ renderLiveRecipePreview(); document.getElementById("recipePreviewModal").classList.add("show"); }
@@ -1232,7 +1408,7 @@
             <div class="libItemTitle">${escapeHtml(item.name)}</div>
             <div class="libItemMeta">
               ${escapeHtml(item.note)}<br>
-              <span>Dose consigliata: ${escapeHtml(String(item.dose))} ${escapeHtml(item.unit)}</span>
+              Dose consigliata: ${escapeHtml(String(item.dose))} ${escapeHtml(item.unit)}
             </div>
           </div>
           <button class="btnGold" type="button" onclick="addIngredientFromLibrary('${currentLibraryKey}', ${idx})">Aggiungi</button>
@@ -1263,7 +1439,6 @@
       document.getElementById("custom_dose").value = "";
       document.getElementById("custom_unit").value = "g/L";
       document.getElementById("custom_note").value = "";
-      document.getElementById("customIngredientTitle").textContent = "Nuovo ingrediente personalizzato";
       document.getElementById("customIngredientModal").classList.add("show");
     }
     function closeCustomIngredientModal(){ document.getElementById("customIngredientModal").classList.remove("show"); }
@@ -1277,10 +1452,9 @@
 
       if(!name){ alert("Scrivi il nome dell'ingrediente."); return; }
 
-      const browserKey = cat;
-      if(!INGREDIENT_BROWSER[browserKey]) INGREDIENT_BROWSER[browserKey] = [];
       if(saveToLibrary){
-        INGREDIENT_BROWSER[browserKey].push({name, note, dose, unit});
+        if(!INGREDIENT_BROWSER[cat]) INGREDIENT_BROWSER[cat] = [];
+        INGREDIENT_BROWSER[cat].push({name, note, dose, unit});
       }
 
       const rowCategory = browserCategoryToRowCategory(cat);
@@ -1357,8 +1531,8 @@
       document.getElementById("recipe_culture").value = recipe?.culture || "";
       document.getElementById("recipe_notes").value = recipe?.notes || "";
       currentRecipeImageData = recipe?.image || "";
-
       document.getElementById("recipe_image_file").value = "";
+
       currentRecipeType = recipe?.type || "sidro";
       setRecipeType(currentRecipeType);
       fillParamsInEditor(recipe?.params || []);
@@ -1366,8 +1540,11 @@
       const ingWrap = document.getElementById("ingredientsWrap");
       ingWrap.innerHTML = "";
       const recipeIngredients = recipe ? recipe.ingredients : [];
-      if(recipeIngredients.length) recipeIngredients.forEach(i => ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml(i)));
-      else ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml({category:"frutta"}));
+      if(recipeIngredients.length){
+        recipeIngredients.forEach(i => ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml(i)));
+      } else {
+        ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml({category:"frutta"}));
+      }
 
       showSection("recipe-edit");
       bindLiveInputs();
@@ -1420,6 +1597,7 @@
     function openRecipeView(id){
       const recipe = getRecipe(id);
       if(!recipe) return;
+
       state.selectedRecipeId = id;
       saveState();
 
@@ -1450,8 +1628,14 @@
             </div>
           </div>
         </div>
+
         <div class="list" style="margin-top:14px">
-          ${recipe.ingredients.map(i => `<div class="item"><div class="itemTitle">${escapeHtml(i.name)}</div><div class="meta">${escapeHtml(i.category)} · ${num(i.qty,2)} ${escapeHtml(i.unit)} · ${escapeHtml(i.note || "-")}</div></div>`).join("")}
+          ${recipe.ingredients.map(i => `
+            <div class="item">
+              <div class="itemTitle">${escapeHtml(i.name)}</div>
+              <div class="meta">${escapeHtml(i.category)} · ${num(i.qty,2)} ${escapeHtml(i.unit)} · ${escapeHtml(i.note || "-")}</div>
+            </div>
+          `).join("")}
         </div>
       `;
       showSection("recipe-view");
@@ -1490,7 +1674,7 @@
         botaniche:{group:"04_botaniche", prefix:"botanical", label:"BOTANICHE"},
         spezie:{group:"05_spezie", prefix:"spice", label:"SPEZIE"},
         pepe:{group:"06_pepi", prefix:"pepper", label:"PEPI"},
-        luppoli:{group:"07_luppoli", prefix:"hop", label:"LUPPOLI"},
+        luppoli:{group:"07_luppoli", prefix:"hop", label:"LUPPOLI / DRY HOPPING"},
         lieviti:{group:"08_lieviti", prefix:"yeast", label:"LIEVITI"},
         fermenti_lattici:{group:"09_lattici", prefix:"lactic", label:"FERMENTI LATTICI"},
         aggiunte:{group:"10_aggiunte", prefix:"add", label:"AGGIUNTE"},
@@ -1512,17 +1696,16 @@
 
     function recipeToChannels(recipe){
       const channels = [buildBaseChannel(recipe)];
-
       const groupCounts = {
         frutta:0, te:0, botaniche:0, spezie:0, pepe:0, luppoli:0,
         lieviti:0, fermenti_lattici:0, aggiunte:0, base:0
       };
 
-      (recipe.ingredients || []).forEach((i) => {
+      (recipe.ingredients || []).forEach(i => {
         const cat = i.category || "aggiunte";
         if(groupCounts[cat] === undefined) groupCounts[cat] = 0;
-        const visualClass = visualForIngredient(cat, groupCounts[cat]);
         const info = ingredientGroupInfo(cat);
+        const visualClass = visualForIngredient(cat, groupCounts[cat]);
 
         channels.push({
           id: uid("ch"),
@@ -1530,9 +1713,9 @@
           name:i.name,
           type:cat,
           min:0,
-          max:Math.max(10, Number(i.qty)*3 || 10),
+          max:Math.max(10, Number(i.qty) * 3 || 10),
           step:0.1,
-          value:Number(i.qty)||0,
+          value:Number(i.qty) || 0,
           unit:" " + (i.unit || "g/L"),
           visualClass,
           group:info.group,
@@ -1646,6 +1829,10 @@
       const totalLogs = state.lots.reduce((a,l)=>a + (Array.isArray(l.logs)?l.logs.length:0), 0);
       document.getElementById("statLogs").textContent = totalLogs;
       document.getElementById("statChannels").textContent = currentLot()?.channels?.length || 0;
+    }
+
+    function recipeThumbHtml(recipe){
+      return recipe.image ? `<div style="margin-top:10px;border-radius:14px;overflow:hidden;border:1px solid #334050;max-width:220px"><img src="${recipe.image}" alt="Ricetta" style="width:100%;height:120px;object-fit:cover"></div>` : "";
     }
 
     function renderHomeRecipes(){
@@ -1780,59 +1967,105 @@
       return map[group] || group;
     }
 
+    function isGroupOpen(groupKey){
+      if(mixerGroupState[groupKey] === undefined) return true;
+      return !!mixerGroupState[groupKey];
+    }
+
+    function toggleGroup(groupKey){
+      mixerGroupState[groupKey] = !isGroupOpen(groupKey);
+      saveMixerGroupState();
+      renderMixer();
+    }
+
+    function expandAllGroups(){
+      const lot = mixerLot();
+      if(!lot) return;
+      [...new Set(lot.channels.map(c => c.group))].forEach(g => mixerGroupState[g] = true);
+      saveMixerGroupState();
+      renderMixer();
+    }
+
+    function collapseAllGroups(){
+      const lot = mixerLot();
+      if(!lot) return;
+      [...new Set(lot.channels.map(c => c.group))].forEach(g => mixerGroupState[g] = false);
+      saveMixerGroupState();
+      renderMixer();
+    }
+
+    function groupChannels(channels){
+      const groups = {};
+      channels.forEach(ch => {
+        if(!groups[ch.group]) groups[ch.group] = [];
+        groups[ch.group].push(ch);
+      });
+      return Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0]));
+    }
+
     function renderMixer(){
       const lot = mixerLot();
       document.getElementById("mixer_title").textContent = lot ? (lot.stage || "READY").toUpperCase() : "XA MIXER";
-      document.getElementById("mixer_sub").textContent = lot ? "Mixer raggruppato per famiglie ingredienti." : "Apri o crea un lotto.";
+      document.getElementById("mixer_sub").textContent = lot ? "Mixer corretto, gruppi apri/chiudi, fader leggibili." : "Apri o crea un lotto.";
       document.getElementById("mixer_lot_name").textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
       document.getElementById("mixer_lot_meta").textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${lot.recipeName || "-"} · ${lot.channels.length} canali` : "Apri o crea un lotto.";
 
       document.getElementById("compactMixerBtn").textContent = document.body.classList.contains("mixer-compact") ? "NORMALE" : "RIDUCI";
 
       const board = document.getElementById("mixerBoard");
-      if(!lot){ board.innerHTML = `<div class="item"><div class="meta">Nessun lotto.</div></div>`; return; }
+      if(!lot){
+        board.innerHTML = `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
+        return;
+      }
 
+      const grouped = groupChannels(lot.channels);
       let html = "";
-      let lastGroup = "";
 
-      lot.channels.forEach((ch) => {
-        if(ch.group !== lastGroup){
-          html += `<div class="mixerGroupTitle">${escapeHtml(groupLabelFromKey(ch.group))}</div>`;
-          lastGroup = ch.group;
-        }
-
-        const pct = Math.max(0, Math.min(100, ((Number(ch.value)-Number(ch.min)) / ((Number(ch.max)-Number(ch.min)) || 1)) * 100));
-        const visualClass = ch.visualClass || "param-1";
-
+      grouped.forEach(([groupKey, items]) => {
+        const open = isGroupOpen(groupKey);
         html += `
-          <div class="channel ${visualClass}">
-            <div class="channelTop">
-              <div class="channelType">${escapeHtml(ch.type)}</div>
-              <button class="tinyIconBtn" onclick="editChannel('${ch.id}')">✎</button>
+          <div class="mixerGroupBlock">
+            <div class="mixerGroupHeader">
+              <span>${escapeHtml(groupLabelFromKey(groupKey))}</span>
+              <button class="groupAction" onclick="toggleGroup('${groupKey}')">${open ? 'CHIUDI' : 'APRI'}</button>
             </div>
+            <div class="mixerGroupChannels" style="${open ? '' : 'display:none;'}">
+              ${items.map(ch => {
+                const pct = Math.max(0, Math.min(100, ((Number(ch.value)-Number(ch.min)) / ((Number(ch.max)-Number(ch.min)) || 1)) * 100));
+                const visualClass = ch.visualClass || "param-1";
+                return `
+                  <div class="channel ${visualClass}">
+                    <div class="channelTop">
+                      <div class="channelType">${escapeHtml(ch.type)}</div>
+                      <button class="tinyIconBtn" onclick="editChannel('${ch.id}')">✎</button>
+                    </div>
 
-            <div class="miniLcd">
-              <div class="lbl">Value</div>
-              <div class="val">${formatChannelValue(ch)}</div>
+                    <div class="miniLcd">
+                      <div class="lbl">Value</div>
+                      <div class="val">${formatChannelValue(ch)}</div>
+                    </div>
+
+                    <div class="knob"></div>
+                    <div class="tinyMeter"><div class="tinyFill" style="width:${pct}%"></div></div>
+
+                    <div class="faderWrap">
+                      <div class="vu">${buildVU(Math.round((pct/100)*16))}</div>
+                      <div class="track">
+                        <input type="range" min="${ch.min}" max="${ch.max}" step="${ch.step}" value="${ch.value}" oninput="updateChannel('${ch.id}', this.value)" />
+                      </div>
+                    </div>
+
+                    <div class="channelButtons">
+                      <button class="miniBtn" onclick="nudgeChannel('${ch.id}', -1)">-</button>
+                      <button class="miniBtn gold" onclick="nudgeChannel('${ch.id}', 1)">+</button>
+                    </div>
+
+                    <div class="channelFooterName">${escapeHtml(ch.name)}</div>
+                    <button class="channelEditWide" onclick="editChannel('${ch.id}')">Modifica</button>
+                  </div>
+                `;
+              }).join("")}
             </div>
-
-            <div class="knob"></div>
-            <div class="tinyMeter"><div class="tinyFill" style="width:${pct}%"></div></div>
-
-            <div class="faderWrap">
-              <div class="vu">${buildVU(Math.round((pct/100)*16))}</div>
-              <div class="track">
-                <input type="range" min="${ch.min}" max="${ch.max}" step="${ch.step}" value="${ch.value}" oninput="updateChannel('${ch.id}', this.value)" />
-              </div>
-            </div>
-
-            <div class="channelButtons">
-              <button class="miniBtn" onclick="nudgeChannel('${ch.id}', -1)">-</button>
-              <button class="miniBtn gold" onclick="nudgeChannel('${ch.id}', 1)">+</button>
-            </div>
-
-            <div class="channelFooterName">${escapeHtml(ch.name)}</div>
-            <button class="channelEditWide" onclick="editChannel('${ch.id}')">Modifica</button>
           </div>
         `;
       });
@@ -2066,342 +2299,4 @@
       const logs = lot.logs || [];
       wrap.innerHTML = logs.length ? logs.map(l => `
         <div class="item">
-          <div class="itemTitle">${escapeHtml(l.date)} ${escapeHtml(l.time)}</div>
-          <div class="meta">
-            pH: ${l.ph ?? "-"}<br>
-            Densità: ${l.gravity ?? "-"}<br>
-            Temperatura: ${l.temp ?? "-"} °C<br>
-            CO₂ / pressione: ${l.co2 ?? "-"}<br>
-            Note: ${escapeHtml(l.note || "-")}
-          </div>
-          <div class="itemActions">
-            <button class="btnDanger" onclick="deleteFermentationLog('${l.id}')">Elimina</button>
-          </div>
-        </div>
-      `).join("") : `<div class="item"><div class="meta">Nessuna rilevazione fermentazione.</div></div>`;
-    }
-
-    function setChartMetric(metric){
-      currentChartMetric = metric;
-      ["ph","gravity","temp","co2","combo"].forEach(m => {
-        const el = document.getElementById("metric_" + m);
-        if(el) el.classList.toggle("active", m === metric);
-      });
-      drawFermentationChart();
-    }
-
-    function drawYAxis(ctx, left, top, height, minVal, maxVal, color="#9aacbd"){
-      ctx.fillStyle = color;
-      ctx.font = "13px Arial";
-      for(let i=0;i<=5;i++){
-        const val = maxVal - ((maxVal - minVal)/5)*i;
-        const y = top + (height/5)*i;
-        ctx.fillText(val.toFixed(2), 10, y + 4);
-      }
-    }
-
-    function drawFermentationChart(){
-      const canvas = document.getElementById("fermentationChart");
-      if(!canvas) return;
-      const ctx = canvas.getContext("2d");
-      const lot = controlLot() || currentLot();
-      const logs = (lot?.logs || []).slice();
-
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.fillStyle = "#0d1218";
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-
-      const left = 80, right = 40, top = 24, bottom = 56;
-      const w = canvas.width - left - right;
-      const h = canvas.height - top - bottom;
-
-      ctx.strokeStyle = "#2a3442";
-      ctx.lineWidth = 1;
-      for(let i=0;i<=5;i++){
-        const y = top + (h/5)*i;
-        ctx.beginPath();
-        ctx.moveTo(left,y);
-        ctx.lineTo(left+w,y);
-        ctx.stroke();
-      }
-
-      const legend = document.getElementById("chartLegend");
-      if(!lot || !logs.length){
-        if(legend) legend.innerHTML = "";
-        ctx.fillStyle = "#9aacbd";
-        ctx.font = "24px Arial";
-        ctx.fillText("Nessun dato fermentazione", left + 20, top + 80);
-        return;
-      }
-
-      const xFor = i => left + (w * (logs.length===1 ? 0.5 : i/(logs.length-1)));
-
-      ctx.fillStyle = "#8ea1b5";
-      ctx.font = "13px Arial";
-      logs.forEach((log,i) => {
-        const x = xFor(i);
-        const label = (log.time || "").slice(0,5) || log.date;
-        ctx.fillText(label, x - 16, top + h + 26);
-      });
-
-      function drawSeries(metric, color, label){
-        const series = logs.filter(x => x[metric] !== null && x[metric] !== undefined);
-        if(!series.length) return null;
-        const vals = series.map(x => Number(x[metric]));
-        const minVal = Math.min(...vals);
-        const maxVal = Math.max(...vals);
-        const span = (maxVal - minVal) || 1;
-
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        let started = false;
-        logs.forEach((l,i) => {
-          if(l[metric] === null || l[metric] === undefined) return;
-          const x = xFor(i);
-          const y = top + h - (((Number(l[metric]) - minVal) / span) * h);
-          if(started) ctx.lineTo(x,y);
-          else { ctx.moveTo(x,y); started = true; }
-        });
-        ctx.stroke();
-
-        logs.forEach((l,i) => {
-          if(l[metric] === null || l[metric] === undefined) return;
-          const x = xFor(i);
-          const y = top + h - (((Number(l[metric]) - minVal) / span) * h);
-          ctx.fillStyle = color;
-          ctx.beginPath();
-          ctx.arc(x,y,5,0,Math.PI*2);
-          ctx.fill();
-        });
-
-        return {label,color,minVal,maxVal};
-      }
-
-      let legends = [];
-      if(currentChartMetric === "ph"){
-        const s = drawSeries("ph","#67e6cf","pH");
-        legends = s ? [s] : [];
-        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
-      } else if(currentChartMetric === "gravity"){
-        const s = drawSeries("gravity","#7ebcff","Densità");
-        legends = s ? [s] : [];
-        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
-      } else if(currentChartMetric === "temp"){
-        const s = drawSeries("temp","#ffb55e","Temperatura");
-        legends = s ? [s] : [];
-        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
-      } else if(currentChartMetric === "co2"){
-        const s = drawSeries("co2","#ff8fbc","CO₂");
-        legends = s ? [s] : [];
-        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
-      } else if(currentChartMetric === "combo"){
-        const s1 = drawSeries("ph","#67e6cf","pH");
-        const s2 = drawSeries("gravity","#7ebcff","Densità");
-        legends = [s1,s2].filter(Boolean);
-        if(s1) drawYAxis(ctx,left,top,h,s1.minVal,s1.maxVal);
-      }
-
-      if(legend){
-        legend.innerHTML = legends.map(l => `<span><span class="dot" style="background:${l.color}"></span>${l.label}</span>`).join("");
-      }
-
-      ctx.fillStyle = "#eef4fa";
-      ctx.font = "22px Arial";
-      const titles = {
-        ph:"Grafico pH",
-        gravity:"Grafico densità",
-        temp:"Grafico temperatura",
-        co2:"Grafico CO₂",
-        combo:"Grafico pH + Densità"
-      };
-      ctx.fillText(titles[currentChartMetric] || "Grafico fermentazione", left, 18);
-    }
-
-    function updateControlHeader(){
-      const lot = controlLot();
-      const nameEl = document.getElementById("control_lot_name");
-      const metaEl = document.getElementById("control_lot_meta");
-      if(!nameEl || !metaEl) return;
-      nameEl.textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
-      metaEl.textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${(lot.logs||[]).length} rilevazioni` : "Seleziona un lotto.";
-    }
-
-    function applyCompactMixerState(){
-      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
-      document.body.classList.toggle("mixer-compact", compact);
-      const btn = document.getElementById("compactMixerBtn");
-      if(btn) btn.textContent = compact ? "NORMALE" : "RIDUCI";
-    }
-
-    function toggleCompactMixer(){
-      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
-      localStorage.setItem(MIXER_COMPACT_KEY, compact ? "0" : "1");
-      applyCompactMixerState();
-      renderMixer();
-    }
-
-    function exportBackup(){
-      const blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "xa-fermentation-backup.json";
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-
-    function importBackup(file){
-      const reader = new FileReader();
-      reader.onload = e => {
-        try{
-          state = JSON.parse(e.target.result);
-          state.lots = (state.lots || []).map(l => ({...l, logs:Array.isArray(l.logs)?l.logs:[]}));
-          saveState();
-          init();
-        }catch(err){
-          alert("Backup non valido.");
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    function resetAll(){
-      if(!confirm("Cancellare tutti i dati?")) return;
-      state = getDefaultState();
-      saveState();
-      init();
-    }
-
-    function loadDemo(){
-      state = getDefaultState();
-
-      const recipe1 = {
-        id: uid("recipe"),
-        type: "sidro",
-        name: "SIDRO XA DEMO COLOR GROUP",
-        base: "Succo di mela",
-        style: "Secco speziato botanico",
-        culture: "Hornindal Kveik",
-        notes: "Demo con gruppi colore nel mixer.",
-        image: "",
-        ingredients: [
-          {category:"frutta", name:"Mela Golden", qty:50, unit:"g/L", note:"base fruttata"},
-          {category:"te", name:"Oolong", qty:3, unit:"g/L", note:"elegante"},
-          {category:"botaniche", name:"China", qty:0.6, unit:"g/L", note:"amaro tonic"},
-          {category:"botaniche", name:"Genziana", qty:0.25, unit:"g/L", note:"amaro profondo"},
-          {category:"spezie", name:"Coriandolo", qty:0.4, unit:"g/L", note:"agrumato"},
-          {category:"spezie", name:"Cardamomo", qty:0.15, unit:"g/L", note:"balsamico"},
-          {category:"pepe", name:"Pepe Timut", qty:0.15, unit:"g/L", note:"agrumato"},
-          {category:"luppoli", name:"Citra", qty:3, unit:"g/L", note:"tropicale"},
-          {category:"lieviti", name:"Hornindal Kveik", qty:0.25, unit:"g/L", note:"tropicale"},
-          {category:"fermenti_lattici", name:"L. plantarum", qty:0.1, unit:"g/L", note:"acidità pulita"},
-          {category:"aggiunte", name:"Gomma arabica", qty:1, unit:"g/L", note:"texture"}
-        ],
-        params: [
-          {key:"param_ph_start",name:"pH iniziale",type:"acidità",min:2.5,max:6,step:0.01,value:3.40,unit:""},
-          {key:"param_og",name:"OG",type:"densità iniziale",min:1,max:1.12,step:0.001,value:1.048,unit:""},
-          {key:"param_temp",name:"Temperatura",type:"temperatura",min:0,max:40,step:0.1,value:22,unit:"°C"}
-        ]
-      };
-
-      state.recipes = [recipe1];
-      state.selectedRecipeId = recipe1.id;
-
-      const lot1 = {
-        id: uid("lot"),
-        recipeId: recipe1.id,
-        recipeName: recipe1.name,
-        name: "SIDRO XA LOTTO COLOR 01",
-        code: "XA-COLOR-01",
-        type: recipeTypeLabel(recipe1.type),
-        stage: "primaria",
-        volume: 24,
-        date: today(),
-        culture: recipe1.culture,
-        recipeText: `Base: ${recipe1.base} · ` + recipe1.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
-        notes: recipe1.notes,
-        channels: recipeToChannels(recipe1),
-        logs: [
-          {id:uid("log"), date:today(), time:"08:00", ph:3.80, gravity:1.048, temp:22.0, co2:0.2, note:"inizio"},
-          {id:uid("log"), date:today(), time:"12:00", ph:3.62, gravity:1.041, temp:22.4, co2:0.5, note:"partenza"},
-          {id:uid("log"), date:today(), time:"16:00", ph:3.48, gravity:1.034, temp:22.7, co2:0.9, note:"attiva"},
-          {id:uid("log"), date:today(), time:"20:00", ph:3.36, gravity:1.026, temp:22.3, co2:1.2, note:"buona"}
-        ]
-      };
-
-      state.lots = [lot1];
-      state.selectedLotId = lot1.id;
-      saveState();
-      init();
-    }
-
-    function initNormal(){
-      ensureSelected();
-      document.getElementById("app-normal").classList.remove("hidden");
-      document.getElementById("app-mixer-only").classList.add("hidden");
-      document.getElementById("app-control-only").classList.add("hidden");
-      showSection("home");
-      renderAll();
-    }
-
-    function initMixer(){
-      document.getElementById("app-normal").classList.add("hidden");
-      document.getElementById("app-mixer-only").classList.remove("hidden");
-      document.getElementById("app-control-only").classList.add("hidden");
-      applyCompactMixerState();
-      renderMixer();
-    }
-
-    function initControl(){
-      document.getElementById("app-normal").classList.add("hidden");
-      document.getElementById("app-mixer-only").classList.add("hidden");
-      document.getElementById("app-control-only").classList.remove("hidden");
-      updateControlHeader();
-      renderFermentationLogs();
-      setChartMetric(currentChartMetric);
-    }
-
-    function renderAll(){
-      renderStats();
-      renderHomeRecipes();
-      renderRecipes();
-      renderHomeLots();
-      renderLots();
-      renderScenes();
-    }
-
-    function init(){
-      if(isMixerMode()) initMixer();
-      else if(isControlMode()) initControl();
-      else initNormal();
-    }
-
-    document.getElementById("demoBtn").addEventListener("click", loadDemo);
-    document.getElementById("exportBtn").addEventListener("click", exportBackup);
-    document.getElementById("importBtn").addEventListener("click", ()=>document.getElementById("importFile").click());
-    document.getElementById("importFile").addEventListener("change", e => {
-      const file = e.target.files[0];
-      if(file) importBackup(file);
-    });
-    document.getElementById("newRecipeBtnTop").addEventListener("click", ()=>openRecipeEditor());
-    document.getElementById("newLotBtnTop").addEventListener("click", ()=>openLotCreator());
-    document.getElementById("openMixerBtnTop").addEventListener("click", openMixerPage);
-    document.getElementById("openControlBtnTop").addEventListener("click", openControlPage);
-    document.getElementById("resetBtn").addEventListener("click", resetAll);
-    document.getElementById("saveRecipeBtn").addEventListener("click", saveRecipe);
-    document.getElementById("saveRecipeBtnBottom").addEventListener("click", saveRecipe);
-    document.getElementById("addIngredientBtn").addEventListener("click", ()=>{
-      document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({}));
-      renderLiveRecipePreview();
-      openRecipePreviewModal();
-    });
-    document.getElementById("saveLotMetaBtn").addEventListener("click", saveLotMeta);
-    document.getElementById("recipe_image_file").addEventListener("change", e => {
-      const file = e.target.files && e.target.files[0];
-      if(file) handleRecipeImageFile(file);
-    });
-
-    init();
-  </script>
-</body>
-</html>
+          <div class="itemTitle">${escape 
