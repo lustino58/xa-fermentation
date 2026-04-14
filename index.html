@@ -73,7 +73,7 @@
 
     .actions,.toolbar{display:flex;gap:8px;flex-wrap:wrap}
 
-    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn,.chipBtn,.miniBtn,.groupBtn{
+    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn,.chipBtn,.miniBtn{
       border-radius:14px;
       padding:12px 14px;
       font-weight:900;
@@ -86,7 +86,7 @@
     .btnGold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c8a15a}
     .btnDanger{background:linear-gradient(180deg,#6a2a2a,#431717);color:#ffd3d3;border-color:#7a3131}
     .btnMixer{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111;border-color:#62ddc4}
-    .libBtn,.chipBtn,.groupBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text)}
+    .libBtn,.chipBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text)}
     .miniBtn{
       padding:8px 8px;
       border-radius:10px;
@@ -94,13 +94,13 @@
       background:linear-gradient(180deg,#2a3441,#181f28);
       color:var(--text);
       border:1px solid #475566;
+      box-shadow:none;
     }
     .miniBtn.gold{
       background:linear-gradient(180deg,var(--gold2),var(--gold));
       color:#111;
       border-color:#c7a15a;
     }
-    .btn.active,.typeBtn.active,.chipBtn.active{transform:translateY(-1px)}
 
     .card{
       background:linear-gradient(180deg,#151c25,#10151c);
@@ -276,6 +276,7 @@
       background:linear-gradient(180deg,var(--gold2),var(--gold));
       border:1px solid #c8a15a;
       box-shadow:var(--shadow);
+      cursor:pointer;
     }
 
     .channel{
@@ -1391,7 +1392,10 @@
       document.getElementById("ingredientModal").classList.add("show");
       renderIngredientLibraryList();
     }
-    function closeIngredientLibrary(){ document.getElementById("ingredientModal").classList.remove("show"); }
+
+    function closeIngredientLibrary(){
+      document.getElementById("ingredientModal").classList.remove("show");
+    }
 
     function renderIngredientLibraryList(){
       const list = INGREDIENT_BROWSER[currentLibraryKey] || [];
@@ -1441,7 +1445,10 @@
       document.getElementById("custom_note").value = "";
       document.getElementById("customIngredientModal").classList.add("show");
     }
-    function closeCustomIngredientModal(){ document.getElementById("customIngredientModal").classList.remove("show"); }
+
+    function closeCustomIngredientModal(){
+      document.getElementById("customIngredientModal").classList.remove("show");
+    }
 
     function saveCustomIngredient(saveToLibrary){
       const cat = document.getElementById("custom_cat").value;
@@ -1486,12 +1493,14 @@
     function gatherParamsFromEditor(){
       const params = [];
       const p = id => document.getElementById(id)?.value;
+
       const pushParam = (key,name,type,min,max,step,value,unit) => {
         if(value !== "" && value !== null && value !== undefined){
           const n = Number(value);
           if(!Number.isNaN(n)) params.push({key,name,type,min,max,step,value:n,unit});
         }
       };
+
       pushParam("param_ph_start","pH iniziale","acidità",2.5,6,0.01,p("param_ph_start"),"");
       pushParam("param_ph_end","pH finale","acidità",2.5,6,0.01,p("param_ph_end"),"");
       pushParam("param_og","OG","densità iniziale",1,1.12,0.001,p("param_og"),"");
@@ -1551,7 +1560,9 @@
       renderLiveRecipePreview();
     }
 
-    function bindLiveInputs(){ document.querySelectorAll(".live-watch").forEach(el => { el.oninput = renderLiveRecipePreview; }); }
+    function bindLiveInputs(){
+      document.querySelectorAll(".live-watch").forEach(el => { el.oninput = renderLiveRecipePreview; });
+    }
 
     function gatherRecipeFromEditor(){
       const ingredients = [...document.querySelectorAll("#ingredientsWrap .ingredientRow")].map(row => ({
@@ -1831,10 +1842,6 @@
       document.getElementById("statChannels").textContent = currentLot()?.channels?.length || 0;
     }
 
-    function recipeThumbHtml(recipe){
-      return recipe.image ? `<div style="margin-top:10px;border-radius:14px;overflow:hidden;border:1px solid #334050;max-width:220px"><img src="${recipe.image}" alt="Ricetta" style="width:100%;height:120px;object-fit:cover"></div>` : "";
-    }
-
     function renderHomeRecipes(){
       const wrap = document.getElementById("homeRecipesList");
       const items = state.recipes.slice(0,4);
@@ -1904,6 +1911,7 @@
           </div>
         </div>
       `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
+
       renderLotMeta();
       renderFermentationLogs();
       drawFermentationChart();
@@ -2250,7 +2258,10 @@
       document.getElementById("log_note").value = "";
       document.getElementById("fermentationLogModal").classList.add("show");
     }
-    function closeFermentationLogModal(){ document.getElementById("fermentationLogModal").classList.remove("show"); }
+
+    function closeFermentationLogModal(){
+      document.getElementById("fermentationLogModal").classList.remove("show");
+    }
 
     function saveFermentationLog(){
       const lot = controlLot() || currentLot();
@@ -2292,11 +2303,347 @@
       const wrap = document.getElementById("fermentationLogList");
       const lot = controlLot() || currentLot();
       if(!wrap) return;
+
       if(!lot){
         wrap.innerHTML = `<div class="item"><div class="meta">Seleziona un lotto.</div></div>`;
         return;
       }
+
       const logs = lot.logs || [];
       wrap.innerHTML = logs.length ? logs.map(l => `
         <div class="item">
-          <div class="itemTitle">${escape 
+          <div class="itemTitle">${escapeHtml(l.date)} ${escapeHtml(l.time)}</div>
+          <div class="meta">
+            pH: ${l.ph ?? "-"}<br>
+            Densità: ${l.gravity ?? "-"}<br>
+            Temperatura: ${l.temp ?? "-"} °C<br>
+            CO₂ / pressione: ${l.co2 ?? "-"}<br>
+            Note: ${escapeHtml(l.note || "-")}
+          </div>
+          <div class="itemActions">
+            <button class="btnDanger" onclick="deleteFermentationLog('${l.id}')">Elimina</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessuna rilevazione fermentazione.</div></div>`;
+    }
+
+    function setChartMetric(metric){
+      currentChartMetric = metric;
+      ["ph","gravity","temp","co2","combo"].forEach(m => {
+        const el = document.getElementById("metric_" + m);
+        if(el) el.classList.toggle("active", m === metric);
+      });
+      drawFermentationChart();
+    }
+
+    function drawYAxis(ctx, left, top, height, minVal, maxVal, color="#9aacbd"){
+      ctx.fillStyle = color;
+      ctx.font = "13px Arial";
+      for(let i=0;i<=5;i++){
+        const val = maxVal - ((maxVal - minVal)/5)*i;
+        const y = top + (height/5)*i;
+        ctx.fillText(val.toFixed(2), 10, y + 4);
+      }
+    }
+
+    function drawFermentationChart(){
+      const canvas = document.getElementById("fermentationChart");
+      if(!canvas) return;
+
+      const ctx = canvas.getContext("2d");
+      const lot = controlLot() || currentLot();
+      const logs = (lot?.logs || []).slice();
+
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = "#0d1218";
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      const left = 80, right = 40, top = 24, bottom = 56;
+      const w = canvas.width - left - right;
+      const h = canvas.height - top - bottom;
+
+      ctx.strokeStyle = "#2a3442";
+      ctx.lineWidth = 1;
+      for(let i=0;i<=5;i++){
+        const y = top + (h/5)*i;
+        ctx.beginPath();
+        ctx.moveTo(left,y);
+        ctx.lineTo(left+w,y);
+        ctx.stroke();
+      }
+
+      const legend = document.getElementById("chartLegend");
+      if(!lot || !logs.length){
+        if(legend) legend.innerHTML = "";
+        ctx.fillStyle = "#9aacbd";
+        ctx.font = "24px Arial";
+        ctx.fillText("Nessun dato fermentazione", left + 20, top + 80);
+        return;
+      }
+
+      const xFor = i => left + (w * (logs.length===1 ? 0.5 : i/(logs.length-1)));
+
+      ctx.fillStyle = "#8ea1b5";
+      ctx.font = "13px Arial";
+      logs.forEach((log,i) => {
+        const x = xFor(i);
+        const label = (log.time || "").slice(0,5) || log.date;
+        ctx.fillText(label, x - 16, top + h + 26);
+      });
+
+      function drawSeries(metric, color, label){
+        const series = logs.filter(x => x[metric] !== null && x[metric] !== undefined);
+        if(!series.length) return null;
+        const vals = series.map(x => Number(x[metric]));
+        const minVal = Math.min(...vals);
+        const maxVal = Math.max(...vals);
+        const span = (maxVal - minVal) || 1;
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        let started = false;
+
+        logs.forEach((l,i) => {
+          if(l[metric] === null || l[metric] === undefined) return;
+          const x = xFor(i);
+          const y = top + h - (((Number(l[metric]) - minVal) / span) * h);
+          if(started) ctx.lineTo(x,y);
+          else { ctx.moveTo(x,y); started = true; }
+        });
+
+        ctx.stroke();
+
+        logs.forEach((l,i) => {
+          if(l[metric] === null || l[metric] === undefined) return;
+          const x = xFor(i);
+          const y = top + h - (((Number(l[metric]) - minVal) / span) * h);
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.arc(x,y,5,0,Math.PI*2);
+          ctx.fill();
+        });
+
+        return {label,color,minVal,maxVal};
+      }
+
+      let legends = [];
+
+      if(currentChartMetric === "ph"){
+        const s = drawSeries("ph","#67e6cf","pH");
+        legends = s ? [s] : [];
+        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
+      } else if(currentChartMetric === "gravity"){
+        const s = drawSeries("gravity","#7ebcff","Densità");
+        legends = s ? [s] : [];
+        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
+      } else if(currentChartMetric === "temp"){
+        const s = drawSeries("temp","#ffb55e","Temperatura");
+        legends = s ? [s] : [];
+        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
+      } else if(currentChartMetric === "co2"){
+        const s = drawSeries("co2","#ff8fbc","CO₂");
+        legends = s ? [s] : [];
+        if(s) drawYAxis(ctx,left,top,h,s.minVal,s.maxVal);
+      } else if(currentChartMetric === "combo"){
+        const s1 = drawSeries("ph","#67e6cf","pH");
+        const s2 = drawSeries("gravity","#7ebcff","Densità");
+        legends = [s1,s2].filter(Boolean);
+        if(s1) drawYAxis(ctx,left,top,h,s1.minVal,s1.maxVal);
+      }
+
+      if(legend){
+        legend.innerHTML = legends.map(l => `<span><span class="dot" style="background:${l.color}"></span>${l.label}</span>`).join("");
+      }
+
+      ctx.fillStyle = "#eef4fa";
+      ctx.font = "22px Arial";
+      const titles = {
+        ph:"Grafico pH",
+        gravity:"Grafico densità",
+        temp:"Grafico temperatura",
+        co2:"Grafico CO₂",
+        combo:"Grafico pH + Densità"
+      };
+      ctx.fillText(titles[currentChartMetric] || "Grafico fermentazione", left, 18);
+    }
+
+    function applyCompactMixerState(){
+      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
+      document.body.classList.toggle("mixer-compact", compact);
+      const btn = document.getElementById("compactMixerBtn");
+      if(btn) btn.textContent = compact ? "NORMALE" : "RIDUCI";
+    }
+
+    function toggleCompactMixer(){
+      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
+      localStorage.setItem(MIXER_COMPACT_KEY, compact ? "0" : "1");
+      applyCompactMixerState();
+      renderMixer();
+    }
+
+    function exportBackup(){
+      const blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "xa-fermentation-backup.json";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function importBackup(file){
+      const reader = new FileReader();
+      reader.onload = e => {
+        try{
+          state = JSON.parse(e.target.result);
+          state.lots = (state.lots || []).map(l => ({...l, logs:Array.isArray(l.logs)?l.logs:[]}));
+          saveState();
+          init();
+        }catch(err){
+          alert("Backup non valido.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetAll(){
+      if(!confirm("Cancellare tutti i dati?")) return;
+      state = getDefaultState();
+      saveState();
+      init();
+    }
+
+    function loadDemo(){
+      state = getDefaultState();
+
+      const recipe1 = {
+        id: uid("recipe"),
+        type: "sidro",
+        name: "SIDRO XA DEMO MIXER PRO",
+        base: "Succo di mela",
+        style: "Secco speziato botanico",
+        culture: "Hornindal Kveik",
+        notes: "Demo con gruppi apri/chiudi e fader larghi.",
+        image: "",
+        ingredients: [
+          {category:"frutta", name:"Mela Golden", qty:50, unit:"g/L", note:"base fruttata"},
+          {category:"frutta", name:"Pera", qty:20, unit:"g/L", note:"morbidezza"},
+          {category:"te", name:"Oolong", qty:3, unit:"g/L", note:"elegante"},
+          {category:"botaniche", name:"China", qty:0.6, unit:"g/L", note:"amaro tonic"},
+          {category:"botaniche", name:"Genziana", qty:0.25, unit:"g/L", note:"amaro profondo"},
+          {category:"spezie", name:"Coriandolo", qty:0.4, unit:"g/L", note:"agrumato"},
+          {category:"spezie", name:"Cardamomo", qty:0.15, unit:"g/L", note:"balsamico"},
+          {category:"pepe", name:"Pepe Timut", qty:0.15, unit:"g/L", note:"agrumato"},
+          {category:"luppoli", name:"Citra", qty:3, unit:"g/L", note:"tropicale"},
+          {category:"lieviti", name:"Hornindal Kveik", qty:0.25, unit:"g/L", note:"tropicale"},
+          {category:"fermenti_lattici", name:"L. plantarum", qty:0.1, unit:"g/L", note:"acidità pulita"},
+          {category:"aggiunte", name:"Gomma arabica", qty:1, unit:"g/L", note:"texture"}
+        ],
+        params: [
+          {key:"param_ph_start",name:"pH iniziale",type:"acidità",min:2.5,max:6,step:0.01,value:3.40,unit:""},
+          {key:"param_og",name:"OG",type:"densità iniziale",min:1,max:1.12,step:0.001,value:1.048,unit:""},
+          {key:"param_temp",name:"Temperatura",type:"temperatura",min:0,max:40,step:0.1,value:22,unit:"°C"}
+        ]
+      };
+
+      state.recipes = [recipe1];
+      state.selectedRecipeId = recipe1.id;
+
+      const lot1 = {
+        id: uid("lot"),
+        recipeId: recipe1.id,
+        recipeName: recipe1.name,
+        name: "SIDRO XA LOTTO MIX 01",
+        code: "XA-MIX-01",
+        type: recipeTypeLabel(recipe1.type),
+        stage: "primaria",
+        volume: 24,
+        date: today(),
+        culture: recipe1.culture,
+        recipeText: `Base: ${recipe1.base} · ` + recipe1.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        notes: recipe1.notes,
+        channels: recipeToChannels(recipe1),
+        logs: [
+          {id:uid("log"), date:today(), time:"08:00", ph:3.80, gravity:1.048, temp:22.0, co2:0.2, note:"inizio"},
+          {id:uid("log"), date:today(), time:"12:00", ph:3.62, gravity:1.041, temp:22.4, co2:0.5, note:"partenza"},
+          {id:uid("log"), date:today(), time:"16:00", ph:3.48, gravity:1.034, temp:22.7, co2:0.9, note:"attiva"},
+          {id:uid("log"), date:today(), time:"20:00", ph:3.36, gravity:1.026, temp:22.3, co2:1.2, note:"buona"}
+        ]
+      };
+
+      state.lots = [lot1];
+      state.selectedLotId = lot1.id;
+      saveState();
+      init();
+    }
+
+    function initNormal(){
+      ensureSelected();
+      document.getElementById("app-normal").classList.remove("hidden");
+      document.getElementById("app-mixer-only").classList.add("hidden");
+      document.getElementById("app-control-only").classList.add("hidden");
+      showSection("home");
+      renderAll();
+    }
+
+    function initMixer(){
+      document.getElementById("app-normal").classList.add("hidden");
+      document.getElementById("app-mixer-only").classList.remove("hidden");
+      document.getElementById("app-control-only").classList.add("hidden");
+      applyCompactMixerState();
+      renderMixer();
+    }
+
+    function initControl(){
+      document.getElementById("app-normal").classList.add("hidden");
+      document.getElementById("app-mixer-only").classList.add("hidden");
+      document.getElementById("app-control-only").classList.remove("hidden");
+      updateControlHeader();
+      renderFermentationLogs();
+      setChartMetric(currentChartMetric);
+    }
+
+    function renderAll(){
+      renderStats();
+      renderHomeRecipes();
+      renderRecipes();
+      renderHomeLots();
+      renderLots();
+      renderScenes();
+    }
+
+    function init(){
+      if(isMixerMode()) initMixer();
+      else if(isControlMode()) initControl();
+      else initNormal();
+    }
+
+    document.getElementById("demoBtn").addEventListener("click", loadDemo);
+    document.getElementById("exportBtn").addEventListener("click", exportBackup);
+    document.getElementById("importBtn").addEventListener("click", ()=>document.getElementById("importFile").click());
+    document.getElementById("importFile").addEventListener("change", e => {
+      const file = e.target.files[0];
+      if(file) importBackup(file);
+    });
+    document.getElementById("newRecipeBtnTop").addEventListener("click", ()=>openRecipeEditor());
+    document.getElementById("newLotBtnTop").addEventListener("click", ()=>openLotCreator());
+    document.getElementById("openMixerBtnTop").addEventListener("click", openMixerPage);
+    document.getElementById("openControlBtnTop").addEventListener("click", openControlPage);
+    document.getElementById("resetBtn").addEventListener("click", resetAll);
+    document.getElementById("saveRecipeBtn").addEventListener("click", saveRecipe);
+    document.getElementById("saveRecipeBtnBottom").addEventListener("click", saveRecipe);
+    document.getElementById("addIngredientBtn").addEventListener("click", ()=>{
+      document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({}));
+      renderLiveRecipePreview();
+      openRecipePreviewModal();
+    });
+    document.getElementById("saveLotMetaBtn").addEventListener("click", saveLotMeta);
+    document.getElementById("recipe_image_file").addEventListener("change", e => {
+      const file = e.target.files && e.target.files[0];
+      if(file) handleRecipeImageFile(file);
+    });
+
+    init();
+  </script>
+</body>
+</html>
