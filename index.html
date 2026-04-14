@@ -79,7 +79,6 @@
 
     .page{display:grid;gap:14px}
     .layout2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .layout3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 
     .card{
       background:linear-gradient(180deg,#151c25,#10151c);
@@ -165,7 +164,6 @@
       margin-top:8px;
     }
 
-    /* mixer */
     #sec-mixer{padding:0}
     .mixerPage{min-height:100vh;background:linear-gradient(180deg,#090d12,#0e141b)}
     .mixerTopBar{
@@ -395,7 +393,7 @@
     .addSlot p{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
 
     @media (orientation:portrait){
-      .mixerShell,.layout2,.layout3,.statsGrid,.mixerHeader{grid-template-columns:1fr}
+      .mixerShell,.layout2,.statsGrid,.mixerHeader{grid-template-columns:1fr}
     }
     @media (max-width:860px){
       .formGrid,.ingredientRow,.paramRow{grid-template-columns:1fr}
@@ -411,7 +409,7 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>VERSIONE STABILE · RICETTE · LOTTI · MIXER FULLSCREEN</p>
+            <p>VERSIONE CORRETTA · RICETTE · LOTTI · MIXER FULLSCREEN</p>
           </div>
         </div>
         <div class="actions">
@@ -786,7 +784,8 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_stable_app_v2";
+    const STORAGE_KEY = "xa_stable_app_v2_fixed";
+
     const defaultLibraries = {
       luppoli:[{name:"Saaz",note:"Nobile, delicato"},{name:"Hallertau Mittelfrüh",note:"Fine, erbaceo"},{name:"Cascade",note:"Agrumato"}],
       botaniche:[{name:"Genziana",note:"Amaro profondo"},{name:"China",note:"Quinina / tonic"},{name:"Lavanda",note:"Floreale"},{name:"Osmanto",note:"Floreale-fruttato"}],
@@ -819,40 +818,53 @@
       try{
         const raw = localStorage.getItem(STORAGE_KEY);
         if(!raw){
-          return {
-            recipes: [],
-            lots: [],
-            libraries: structuredClone(defaultLibraries),
-            scenes: [],
-            selectedLotId: null,
-            selectedRecipeId: null,
-            bankA: null,
-            bankB: null,
-            activeBank: "A",
-            mixerOpen: false
-          };
+          return getDefaultState();
         }
-        return JSON.parse(raw);
-      }catch(e){
+        const parsed = JSON.parse(raw);
         return {
-          recipes: [],
-          lots: [],
-          libraries: structuredClone(defaultLibraries),
-          scenes: [],
-          selectedLotId: null,
-          selectedRecipeId: null,
-          bankA: null,
-          bankB: null,
-          activeBank: "A",
-          mixerOpen: false
+          recipes: Array.isArray(parsed.recipes) ? parsed.recipes : [],
+          lots: Array.isArray(parsed.lots) ? parsed.lots : [],
+          libraries: parsed.libraries || structuredClone(defaultLibraries),
+          scenes: Array.isArray(parsed.scenes) ? parsed.scenes : [],
+          selectedLotId: parsed.selectedLotId || null,
+          selectedRecipeId: parsed.selectedRecipeId || null,
+          bankA: parsed.bankA || null,
+          bankB: parsed.bankB || null,
+          activeBank: parsed.activeBank || "A",
+          mixerOpen: !!parsed.mixerOpen
         };
+      }catch(e){
+        return getDefaultState();
       }
+    }
+
+    function getDefaultState(){
+      return {
+        recipes: [],
+        lots: [],
+        libraries: structuredClone(defaultLibraries),
+        scenes: [],
+        selectedLotId: null,
+        selectedRecipeId: null,
+        bankA: null,
+        bankB: null,
+        activeBank: "A",
+        mixerOpen: false
+      };
     }
 
     function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
     function uid(prefix="id"){ return prefix + "_" + Math.random().toString(36).slice(2,10); }
     function today(){ return new Date().toISOString().slice(0,10); }
     function num(v,d=2){ const n=Number(v); return Number.isFinite(n) ? n.toFixed(d) : "0.00"; }
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#39;");
+    }
     function getRecipe(id){ return state.recipes.find(r => r.id===id) || null; }
     function getLot(id){ return state.lots.find(l => l.id===id) || null; }
     function currentLot(){ return getLot(state.selectedLotId); }
@@ -864,13 +876,13 @@
 
     function showSection(name){
       document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-      document.getElementById("sec-" + name).classList.add("active");
+      const target = document.getElementById("sec-" + name);
+      if(target) target.classList.add("active");
       document.getElementById("normalTopbar").classList.remove("hidden");
       document.getElementById("normalDock").classList.remove("hidden");
       document.body.style.paddingBottom = "88px";
       state.mixerOpen = false;
       saveState();
-      renderAll();
     }
 
     function openMixerPage(){
@@ -887,6 +899,7 @@
 
     function closeMixerPage(){
       showSection("home");
+      renderAll();
     }
 
     function renderStats(){
@@ -908,7 +921,7 @@
             <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
           </div>
         </div>
-      `).join("") : `<div class="empty">Nessuna ricetta.</div>`;
+      `).join("") : `<div class="item"><div class="meta">Nessuna ricetta.</div></div>`;
     }
 
     function renderRecipes(){
@@ -928,7 +941,7 @@
             <button class="btnDanger" onclick="deleteRecipe('${r.id}')">Elimina</button>
           </div>
         </div>
-      `).join("") : `<div class="empty">Nessuna ricetta salvata.</div>`;
+      `).join("") : `<div class="item"><div class="meta">Nessuna ricetta salvata.</div></div>`;
     }
 
     function ingredientRowHtml(i={}){
@@ -941,7 +954,7 @@
           <input class="input ing_qty" type="number" step="0.01" value="${i.qty ?? ""}" placeholder="0">
           <input class="input ing_unit" value="${escapeHtml(i.unit || "g")}" placeholder="g">
           <input class="input ing_note" value="${escapeHtml(i.note || "")}" placeholder="Note">
-          <button class="btnDanger" onclick="this.parentNode.remove()">✕</button>
+          <button class="btnDanger" type="button" onclick="this.parentNode.remove()">✕</button>
         </div>
       `;
     }
@@ -956,7 +969,7 @@
           <input class="input par_step" type="number" step="0.001" value="${p.step ?? ""}" placeholder="0.1">
           <input class="input par_value" type="number" step="0.001" value="${p.value ?? ""}" placeholder="1">
           <input class="input par_unit" value="${escapeHtml(p.unit || "")}" placeholder="% / g/L">
-          <button class="btnDanger" onclick="this.parentNode.remove()">✕</button>
+          <button class="btnDanger" type="button" onclick="this.parentNode.remove()">✕</button>
         </div>
       `;
     }
@@ -1102,7 +1115,7 @@
                     Note: ${escapeHtml(i.note || "-")}
                   </div>
                 </div>
-              `).join("") : `<div class="empty">Nessun ingrediente.</div>`}
+              `).join("") : `<div class="item"><div class="meta">Nessun ingrediente.</div></div>`}
             </div>
           </div>
 
@@ -1118,7 +1131,7 @@
                     Range: ${escapeHtml(String(p.min))} → ${escapeHtml(String(p.max))}
                   </div>
                 </div>
-              `).join("") : `<div class="empty">Nessun parametro.</div>`}
+              `).join("") : `<div class="item"><div class="meta">Nessun parametro.</div></div>`}
             </div>
           </div>
         </div>
@@ -1186,13 +1199,16 @@
         return;
       }
 
-      const options = state.recipes.map(r => `<option value="${r.id}" ${r.id===rid?'selected':''}>${escapeHtml(r.name)}</option>`).join("");
-      const name = prompt("Nome lotto");
+      const recipe = getRecipe(rid);
+      if(!recipe){
+        alert("Ricetta non trovata.");
+        return;
+      }
+
+      const name = prompt("Nome lotto", recipe.name + " LOTTO");
       if(name === null) return;
-      const code = prompt("Codice lotto") || "";
+      const code = prompt("Codice lotto", "") || "";
       const volume = Number(prompt("Volume litri", "20")) || 0;
-      const recipe = getRecipe(rid || state.recipes[0].id);
-      if(!recipe) return;
 
       const lot = {
         id: uid("lot"),
@@ -1238,7 +1254,7 @@
             <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
           </div>
         </div>
-      `).join("") : `<div class="empty">Nessun lotto.</div>`;
+      `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
     }
 
     function renderLotMeta(){
@@ -1322,7 +1338,7 @@
             <button class="btnDanger" onclick="deleteLibraryItem('${key}',${idx})">Elimina</button>
           </div>
         </div>
-      `).join("") || `<div class="empty">Nessun elemento.</div>`;
+      `).join("") || `<div class="item"><div class="meta">Nessun elemento.</div></div>`;
       openSimpleModal(prettyKey(key), html + `
         <div class="toolbar" style="margin-top:14px">
           <button class="btnGold" onclick="addLibraryItemPrompt('${key}')">+ Aggiungi</button>
@@ -1369,7 +1385,7 @@
       div.innerHTML = `
         <div style="width:min(900px,100%);max-height:92vh;overflow:auto;border-radius:24px;background:linear-gradient(180deg,#181f28,#0f141a);border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 40px rgba(0,0,0,.38);">
           <div style="position:sticky;top:0;background:rgba(24,31,40,.96);backdrop-filter:blur(10px);padding:16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;gap:12px;">
-            <div><h3 style="margin:0">${title}</h3></div>
+            <div><h3 style="margin:0">${escapeHtml(title)}</h3></div>
             <button onclick="document.getElementById('simpleModal').remove()" style="width:42px;height:42px;border-radius:14px;background:#222a34;color:#fff;border:1px solid #334050;font-weight:900">✕</button>
           </div>
           <div style="padding:16px">${inner}</div>
@@ -1667,7 +1683,7 @@
             <button class="btnGold" onclick="applyScene('${s.id}')">Carica scena</button>
           </div>
         </div>
-      `).join("") : `<div class="empty">Nessuna scena salvata.</div>`;
+      `).join("") : `<div class="item"><div class="meta">Nessuna scena salvata.</div></div>`;
     }
 
     function applyScene(id){
@@ -1705,35 +1721,13 @@
 
     function resetAll(){
       if(!confirm("Cancellare tutti i dati?")) return;
-      state = {
-        recipes: [],
-        lots: [],
-        libraries: structuredClone(defaultLibraries),
-        scenes: [],
-        selectedLotId: null,
-        selectedRecipeId: null,
-        bankA: null,
-        bankB: null,
-        activeBank: "A",
-        mixerOpen: false
-      };
+      state = getDefaultState();
       saveState();
       renderAll();
     }
 
     function loadDemo(){
-      state = {
-        recipes: [],
-        lots: [],
-        libraries: structuredClone(defaultLibraries),
-        scenes: [],
-        selectedLotId: null,
-        selectedRecipeId: null,
-        bankA: null,
-        bankB: null,
-        activeBank: "A",
-        mixerOpen: false
-      };
+      state = getDefaultState();
 
       const recipe1 = {
         id: uid("recipe"),
@@ -1811,6 +1805,22 @@
       renderAll();
     }
 
+    function renderAll(){
+      ensureSelected();
+      renderStats();
+      renderHomeRecipes();
+      renderRecipes();
+      renderLots();
+      renderLotMeta();
+      renderLibraries();
+      renderScenes();
+      if(state.mixerOpen){
+        openMixerPage();
+      } else {
+        renderMixer();
+      }
+    }
+
     document.getElementById("demoBtn").addEventListener("click", loadDemo);
     document.getElementById("exportBtn").addEventListener("click", exportBackup);
     document.getElementById("importBtn").addEventListener("click", ()=>document.getElementById("importFile").click());
@@ -1827,7 +1837,6 @@
     document.getElementById("addParamBtn").addEventListener("click", ()=>document.getElementById("paramsWrap").insertAdjacentHTML("beforeend", paramRowHtml({})));
     document.getElementById("saveLotMetaBtn").addEventListener("click", saveLotMeta);
 
-    ensureSelected();
     renderAll();
   </script>
 </body>
