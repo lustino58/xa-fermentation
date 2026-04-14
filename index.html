@@ -14,11 +14,11 @@
       --muted:#9aacbd;
       --gold:#d2ae6d;
       --gold2:#f0d49b;
-      --green:#56df8d;
       --red:#ff6e6e;
       --blue:#7ebcff;
       --teal:#67e6cf;
       --purple:#b58cff;
+      --green:#56df8d;
       --shadow:0 16px 36px rgba(0,0,0,.35);
       --lcd:#99ff7e;
     }
@@ -63,7 +63,7 @@
     .brand p{margin-top:4px;font-size:12px;color:var(--muted);letter-spacing:.12em}
 
     .actions,.toolbar{display:flex;gap:8px;flex-wrap:wrap}
-    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn{
+    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn{
       border-radius:14px;padding:12px 14px;font-weight:900;
       border:1px solid var(--line);
       box-shadow:var(--shadow);
@@ -73,6 +73,11 @@
     .btnGold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c8a15a}
     .btnDanger{background:linear-gradient(180deg,#6a2a2a,#431717);color:#ffd3d3;border-color:#7a3131}
     .btnMixer{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111;border-color:#62ddc4}
+    .libBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text);padding:10px 12px}
+    .btn.active,.typeBtn.active{
+      box-shadow:0 0 0 2px rgba(255,255,255,.18), var(--shadow);
+      transform:translateY(-1px);
+    }
 
     .section{display:none}
     .section.active{display:block}
@@ -158,9 +163,16 @@
 
     .ingredientRow{
       display:grid;
-      grid-template-columns:1fr 1.2fr .7fr .7fr 1fr auto;
+      grid-template-columns:1fr 1.25fr .7fr .7fr 1fr auto;
       gap:8px;
       margin-top:8px;
+    }
+
+    .libraryQuickGrid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-top:12px;
     }
 
     .mixerOnlyPage{
@@ -298,7 +310,6 @@
       border:1px solid #355530;
       padding:8px 6px;
       text-align:center;
-      box-shadow:inset 0 0 10px rgba(151,255,123,.08);
     }
     .miniLcd .lbl{font-size:9px;color:#baffab;letter-spacing:.08em;text-transform:uppercase}
     .miniLcd .val{font-size:14px;font-weight:900;margin-top:2px;color:var(--lcd)}
@@ -382,8 +393,49 @@
     .addSlot h3{font-size:16px;font-weight:900;margin-top:10px}
     .addSlot p{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4}
 
+    .modal{
+      position:fixed;inset:0;background:rgba(0,0,0,.72);
+      display:none;align-items:flex-end;justify-content:center;
+      z-index:120;padding:14px;
+    }
+    .modal.show{display:flex}
+    .modalBox{
+      width:min(980px,100%);
+      max-height:92vh;
+      overflow:auto;
+      border-radius:24px;
+      background:linear-gradient(180deg,#181f28,#0f141a);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 18px 40px rgba(0,0,0,.38);
+    }
+    .modalHead{
+      position:sticky;top:0;
+      background:rgba(24,31,40,.96);
+      backdrop-filter:blur(10px);
+      padding:16px;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+    }
+    .modalBody{padding:16px}
+    .libSearch{
+      margin-top:10px;
+      margin-bottom:12px;
+    }
+    .libList{
+      display:grid;
+      gap:8px;
+    }
+    .libItem{
+      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      padding:12px;border-radius:16px;
+      background:linear-gradient(180deg,#202836,#151c24);
+      border:1px solid #334050;
+    }
+    .libItemTitle{font-weight:900}
+    .libItemMeta{font-size:12px;color:var(--muted);margin-top:4px}
+
     @media (max-width:900px){
-      .layout2,.statsGrid,.mixerHeader,.recipeTypeGrid{grid-template-columns:1fr}
+      .layout2,.statsGrid,.mixerHeader,.recipeTypeGrid,.libraryQuickGrid{grid-template-columns:1fr}
       .mixerShell{grid-template-columns:1fr}
       .sideRack{display:none}
     }
@@ -401,7 +453,7 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>RICETTE GUIDATE · LOTTI · MIXER SOLO-MIXER</p>
+            <p>RICETTE GUIDATE · LOTTI · LIBRERIE COMPLETE · MIXER SOLO-MIXER</p>
           </div>
         </div>
         <div class="actions">
@@ -488,7 +540,7 @@
           <div class="cardHead">
             <div>
               <h2 id="recipeEditTitle">Nuova ricetta</h2>
-              <div class="sub">Editor semplificato</div>
+              <div class="sub">Editor semplificato + librerie rapide</div>
             </div>
             <div class="toolbar">
               <button class="btn" onclick="showSection('recipes')">← Torna</button>
@@ -508,30 +560,35 @@
             </div>
 
             <div class="formGrid" style="margin-top:12px">
-              <div class="field">
-                <label>Nome ricetta</label>
-                <input class="input" id="recipe_name" placeholder="Es. Sidro XA Dry Apple">
-              </div>
-              <div class="field">
-                <label>Base</label>
-                <input class="input" id="recipe_base" placeholder="Es. Succo mela / tè / mosto / acqua">
-              </div>
+              <div class="field"><label>Nome ricetta</label><input class="input" id="recipe_name"></div>
+              <div class="field"><label>Base</label><input class="input" id="recipe_base"></div>
             </div>
 
             <div class="formGrid" style="margin-top:12px">
-              <div class="field">
-                <label>Stile / descrizione</label>
-                <input class="input" id="recipe_style" placeholder="Es. Secco, lattico, speziato, tonic dry">
-              </div>
-              <div class="field">
-                <label>Cultura / fermento principale</label>
-                <input class="input" id="recipe_culture" placeholder="Es. Hornindal / Plantarum / lievito">
-              </div>
+              <div class="field"><label>Stile / descrizione</label><input class="input" id="recipe_style"></div>
+              <div class="field"><label>Cultura / fermento principale</label><input class="input" id="recipe_culture"></div>
             </div>
 
             <div class="field" style="margin-top:12px">
               <label>Note ricetta</label>
-              <textarea class="textarea" id="recipe_notes" placeholder="Descrizione tecnica ricetta"></textarea>
+              <textarea class="textarea" id="recipe_notes"></textarea>
+            </div>
+
+            <div style="margin-top:20px">
+              <div class="itemTitle">Librerie ingredienti rapide</div>
+              <div class="meta">Premi un bottone, si apre la cartella, scegli e aggiungi l’ingrediente direttamente alla ricetta</div>
+              <div class="libraryQuickGrid">
+                <button class="libBtn" type="button" onclick="openIngredientLibrary('luppoli')">Luppoli ON</button>
+                <button class="libBtn" type="button" onclick="openIngredientLibrary('frutta')">Frutta ON</button>
+                <button class="libBtn" type="button" onclick="openIngredientLibrary('te')">Tè ON</button>
+                <button class="libBtn" type="button" onclick="openIngredientLibrary('pepi')">Pepi ON</button>
+                <button class="libBtn" type="button" onclick="openIngredientLibrary('spezie')">Spezie ON</button>
+                <button class="libBtn" type="button" onclick="openIngredientLibrary('lieviti')">Lieviti ON</button>
+                <button class="libBtn" type="button" onclick="openIngredientLibrary('fermenti_lattici')">Fermenti lattici ON</button>
+                <button class="libBtn" type="button" onclick="openIngredientLibrary('botaniche')">Botaniche ON</button>
+                <button class="libBtn" type="button" onclick="openIngredientLibrary('aggiunte')">Aggiunte ON</button>
+                <button class="libBtn" type="button" onclick="openIngredientLibrary('dry_hopping')">Dry hopping ON</button>
+              </div>
             </div>
 
             <div style="margin-top:20px">
@@ -554,22 +611,18 @@
                 <div class="field"><label>pH iniziale</label><input class="input" id="param_ph_start" type="number" step="0.01"></div>
                 <div class="field"><label>pH finale</label><input class="input" id="param_ph_end" type="number" step="0.01"></div>
               </div>
-
               <div class="formGrid" style="margin-top:12px">
                 <div class="field"><label>OG</label><input class="input" id="param_og" type="number" step="0.001"></div>
                 <div class="field"><label>FG</label><input class="input" id="param_fg" type="number" step="0.001"></div>
               </div>
-
               <div class="formGrid" style="margin-top:12px">
                 <div class="field"><label>ABV %</label><input class="input" id="param_abv" type="number" step="0.1"></div>
                 <div class="field"><label>Temperatura °C</label><input class="input" id="param_temp" type="number" step="0.1"></div>
               </div>
-
               <div class="formGrid" style="margin-top:12px">
                 <div class="field"><label>CO₂ vol</label><input class="input" id="param_co2" type="number" step="0.1"></div>
                 <div class="field"><label>SRM / Colore</label><input class="input" id="param_srm" type="number" step="1"></div>
               </div>
-
               <div class="formGrid" style="margin-top:12px">
                 <div class="field"><label>Acqua tonica</label><input class="input" id="param_tonica" type="number" step="0.1"></div>
                 <div class="field"><label>Tonic bitter</label><input class="input" id="param_tonic_bitter" type="number" step="0.1"></div>
@@ -739,7 +792,7 @@
             <div class="lcdPanel">
               <div class="lcdLabel">Mixer</div>
               <div class="lcdMain" id="mixer_title">XA MIXER</div>
-              <div class="lcdSub" id="mixer_sub">Solo mixer. Nessun altro pannello.</div>
+              <div class="lcdSub" id="mixer_sub">Solo mixer.</div>
             </div>
             <div class="lcdPanel">
               <div class="lcdLabel">Lotto</div>
@@ -774,8 +827,24 @@
     </div>
   </div>
 
+  <div class="modal" id="ingredientModal">
+    <div class="modalBox">
+      <div class="modalHead">
+        <div>
+          <h3 id="ingredientModalTitle">Libreria ingredienti</h3>
+          <div class="sub">Seleziona e aggiungi alla ricetta</div>
+        </div>
+        <button class="btnDanger" type="button" onclick="closeIngredientLibrary()">OFF</button>
+      </div>
+      <div class="modalBody">
+        <input id="ingredientSearch" class="input libSearch" placeholder="Cerca ingrediente..." oninput="renderIngredientLibraryList()">
+        <div class="libList" id="ingredientLibraryList"></div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    const STORAGE_KEY = "xa_fermentation_complete_v3";
+    const STORAGE_KEY = "xa_fermentation_complete_v4";
 
     const defaultLibraries = {
       luppoli:[{name:"Saaz",note:"Nobile, delicato"},{name:"Hallertau Mittelfrüh",note:"Fine, erbaceo"},{name:"Cascade",note:"Agrumato"}],
@@ -790,9 +859,80 @@
       acidi:[{name:"Acido malico",note:"Profilo mela"},{name:"Acido citrico",note:"Brillante"},{name:"Acido lattico",note:"Morbido"}]
     };
 
+    const INGREDIENT_BROWSER = {
+      luppoli: [
+        ["Amarillo","agrumato, arancia"],["Cascade","agrumato, floreale"],["Centennial","amaro e agrumi"],
+        ["Challenger","speziato, erbaceo"],["Citra","citrico, tropicale"],["Columbus","resinoso, amaro"],
+        ["Comet","pompelmo, resina"],["Crystal","speziato, floreale"],["Ekuanot","lime, tropicale"],
+        ["El Dorado","pera, tropicale"],["Fuggle","terroso, inglese"],["Galaxy","passion fruit"],
+        ["Goldings","miele, floreale"],["Hallertau","erbaceo, fine"],["Hersbrucker","delicato, nobile"],
+        ["Idaho 7","tropicale, resina"],["Magnum","amaro pulito"],["Mandarina Bavaria","mandarino"],
+        ["Mosaic","frutta mista"],["Motueka","lime, fresco"],["Nelson Sauvin","uva, vino bianco"],
+        ["Perle","erbaceo, speziato"],["Saaz","nobile, delicato"],["Simcoe","pino, tropicale"],
+        ["Sorachi Ace","limone, aneto"],["Styrian Golding","speziato"],["Tettnang","nobile, erbaceo"],
+        ["Warrior","amaro deciso"],["Willamette","terroso, floreale"]
+      ],
+      frutta: [
+        ["Albicocca","dolce, aromatica"],["Ananas","tropicale, acido"],["Arancia","agrumata, dolce"],
+        ["Cedro","agrumato intenso"],["Ciliegia","fruttata, rossa"],["Fico","dolce, maturo"],
+        ["Fragola","dolce, fresca"],["Lampone","acidulo, rosso"],["Limone","acido, brillante"],
+        ["Lime","agrumato, fresco"],["Mango","tropicale, morbido"],["Mela Golden","morbida, dolce"],
+        ["Mela Granny","acida, verde"],["Mirtillo","frutto scuro"],["Pera","morbida, elegante"],
+        ["Pesca","succosa, dolce"],["Pompelmo","amaro, agrumato"],["Prugna","matura, scura"],
+        ["Ribes nero","frutto intenso"],["Yuzu","agrumato fine"]
+      ],
+      te: [
+        ["Assam","nero, maltato"],["Bancha","verde, morbido"],["Bianco","delicato, fine"],
+        ["Darjeeling","floreale, elegante"],["Earl Grey","bergamotto"],["Genmaicha","tostato, riso"],
+        ["Gunpowder","verde deciso"],["Gyokuro","umami, ricco"],["Hojicha","tostato, morbido"],
+        ["Jasmine","floreale"],["Keemun","nero, raffinato"],["Lapsang Souchong","affumicato"],
+        ["Long Jing","verde, castagna"],["Matcha","vegetale, intenso"],["Oolong","elegante, complesso"],
+        ["Pu-erh","terroso, profondo"],["Sencha","verde, fresco"],["Tie Guan Yin","orchidea, floreale"],
+        ["Yunnan","nero, cacao"]
+      ],
+      pepi: [
+        ["Pepe bianco","pulito, caldo"],["Pepe cubebe","balsamico"],["Pepe lungo","speziato, caldo"],
+        ["Pepe nero","piccante, classico"],["Pepe rosa","delicato, aromatico"],["Pepe Sichuan","elettrico, agrumato"],
+        ["Pepe Timut","pompelmo"],["Pepe verde","fresco, erbaceo"]
+      ],
+      spezie: [
+        ["Anice stellato","liquirizia"],["Cannella","dolce, calda"],["Cardamomo","balsamico, fresco"],
+        ["Chiodi di garofano","caldo, intenso"],["Coriandolo","agrumato, speziato"],["Cumino","terroso"],
+        ["Finocchio","anisato"],["Ginepro","resinoso"],["Noce moscata","calda, dolce"],
+        ["Vaniglia","dolce, rotonda"],["Zenzero","piccante, fresco"]
+      ],
+      lieviti: [
+        ["BE-134","pepato, saison"],["Belle Saison","secco, speziato"],["EC-1118","pulito, secco"],
+        ["Hornindal Kveik","tropicale"],["LalBrew Verdant","fruttato"],["Nottingham","neutro, rapido"],
+        ["SafAle S-04","inglese, fruttato"],["SafAle US-05","pulito"],["SafCider","sidro pulito"],
+        ["W-34/70","lager pulito"],["WB-06","fenolico, wheat"]
+      ],
+      fermenti_lattici: [
+        ["L. brevis","acidità morbida"],["L. casei","acidulo delicato"],["L. helveticus","rotondo"],
+        ["L. plantarum","acidificazione pulita"],["Pediococcus","acidità lenta"]
+      ],
+      botaniche: [
+        ["Camomilla","floreale, morbida"],["China","amaro chinino"],["Eucalipto","balsamico"],
+        ["Fiori d’arancio","floreale"],["Gelsomino","floreale"],["Genziana","amaro profondo"],
+        ["Ibisco","floreale, acidulo"],["Lavanda","floreale"],["Melissa","erbacea"],["Osmanto","floreale-fruttato"],
+        ["Rosmarino","resinoso"],["Salvia","erbacea"],["Timo","erbaceo intenso"]
+      ],
+      aggiunte: [
+        ["Acido citrico","acidità brillante"],["Acido lattico","acidità morbida"],["Acido malico","profilo mela"],
+        ["DAP","azoto assimilabile"],["Destrosio","priming pulito"],["Glicerina alimentare","morbidezza"],
+        ["Gomma arabica","texture"],["Miele","dolce aromatico"],["Nutriente complesso","supporto fermentazione"],
+        ["Pectolasi","aiuta chiarifica"],["Saccarosio","zucchero semplice"]
+      ],
+      dry_hopping: [
+        ["Dry hopping 24h","aroma leggero"],["Dry hopping 48h","aroma medio"],
+        ["Dry hopping 72h","aroma intenso"],["Hop stand","aroma caldo"],["Whirlpool hop","aroma e gusto"]
+      ]
+    };
+
     let state = loadState();
     let editingRecipeId = null;
     let currentRecipeType = "sidro";
+    let currentLibraryKey = "luppoli";
 
     function getDefaultState(){
       return {
@@ -846,6 +986,22 @@
     function currentLot(){ return getLot(state.selectedLotId); }
     function prettyKey(k){ return k.replaceAll("_"," ").replace(/\b\w/g, c => c.toUpperCase()); }
 
+    function browserCategoryToRowCategory(key){
+      const map = {
+        luppoli:"luppoli",
+        frutta:"frutta",
+        te:"te",
+        pepi:"pepe",
+        spezie:"botaniche",
+        lieviti:"lieviti",
+        fermenti_lattici:"fermenti_lattici",
+        botaniche:"botaniche",
+        aggiunte:"nutrienti",
+        dry_hopping:"luppoli"
+      };
+      return map[key] || "botaniche";
+    }
+
     function ensureSelected(){
       if(!state.selectedRecipeId && state.recipes.length) state.selectedRecipeId = state.recipes[0].id;
       if(!state.selectedLotId && state.lots.length) state.selectedLotId = state.lots[0].id;
@@ -883,9 +1039,7 @@
       currentRecipeType = type;
       resetTypeButtons();
       const el = document.getElementById("type_" + type);
-      if(el){
-        el.classList.add("active", type);
-      }
+      if(el) el.classList.add("active", type);
 
       const base = document.getElementById("recipe_base");
       if(!base) return;
@@ -915,6 +1069,48 @@
           <button class="btnDanger" type="button" onclick="this.parentNode.remove()">✕</button>
         </div>
       `;
+    }
+
+    function addIngredientToRecipe(category, name, note, unit="g"){
+      const wrap = document.getElementById("ingredientsWrap");
+      if(!wrap) return;
+      wrap.insertAdjacentHTML("beforeend", ingredientRowHtml({
+        category, name, qty:"", unit, note
+      }));
+      closeIngredientLibrary();
+    }
+
+    function openIngredientLibrary(key){
+      currentLibraryKey = key;
+      document.getElementById("ingredientModalTitle").textContent = "Libreria " + prettyKey(key);
+      document.getElementById("ingredientSearch").value = "";
+      document.getElementById("ingredientModal").classList.add("show");
+      renderIngredientLibraryList();
+    }
+
+    function closeIngredientLibrary(){
+      document.getElementById("ingredientModal").classList.remove("show");
+    }
+
+    function renderIngredientLibraryList(){
+      const list = INGREDIENT_BROWSER[currentLibraryKey] || [];
+      const q = document.getElementById("ingredientSearch").value.trim().toLowerCase();
+      const filtered = list
+        .slice()
+        .sort((a,b)=>a[0].localeCompare(b[0], "it"))
+        .filter(x => (x[0] + " " + x[1]).toLowerCase().includes(q));
+
+      const category = browserCategoryToRowCategory(currentLibraryKey);
+      const wrap = document.getElementById("ingredientLibraryList");
+      wrap.innerHTML = filtered.length ? filtered.map(([name, note]) => `
+        <div class="libItem">
+          <div>
+            <div class="libItemTitle">${escapeHtml(name)}</div>
+            <div class="libItemMeta">${escapeHtml(note)}</div>
+          </div>
+          <button class="btnGold" type="button" onclick="addIngredientToRecipe('${escapeHtml(category)}','${escapeHtml(name)}','${escapeHtml(note)}')">Aggiungi</button>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessun ingrediente trovato.</div></div>`;
     }
 
     function renderStats(){
@@ -1724,7 +1920,7 @@
           {category:"botaniche", name:"Genziana", qty:3, unit:"g", note:"Supporto amaro"},
           {category:"frutta", name:"Limone", qty:8, unit:"g", note:"Agrumato"},
           {category:"frutta", name:"Pompelmo", qty:8, unit:"g", note:"Agrumato amaro"},
-          {category:"fermenti_lattici", name:"Plantarum", qty:1, unit:"g", note:"Test"}
+          {category:"fermenti_lattici", name:"L. plantarum", qty:1, unit:"g", note:"Test"}
         ],
         params: [
           {key:"ph_start",name:"pH iniziale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.20,unit:"",cat:"acid"},
