@@ -7,24 +7,15 @@
   <style>
     :root{
       --bg:#0b0f14;
-      --bg2:#10161d;
-      --panel:#151d26;
-      --line:#324050;
       --text:#eef4fa;
       --muted:#9aacbd;
       --gold:#d2ae6d;
       --gold2:#f0d49b;
       --red:#ff6e6e;
       --blue:#7ebcff;
-      --teal:#67e6cf;
-      --purple:#b58cff;
-      --green:#56df8d;
-      --orange:#ffb55e;
-      --pink:#ff8ecb;
       --shadow:0 16px 36px rgba(0,0,0,.35);
       --lcd:#99ff7e;
     }
-
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{
       margin:0;padding:0;
@@ -38,7 +29,6 @@
     button,input,select,textarea{font:inherit}
     button{cursor:pointer;border:none}
     .hidden{display:none!important}
-
     .app{max-width:1600px;margin:0 auto;padding:14px}
 
     .topbar{
@@ -53,11 +43,9 @@
       max-width:1600px;margin:0 auto;
       display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
     }
-
     .brand{display:flex;gap:14px;align-items:center}
     .logo{
-      width:62px;height:62px;border-radius:18px;
-      display:grid;place-items:center;
+      width:62px;height:62px;border-radius:18px;display:grid;place-items:center;
       font-size:24px;font-weight:900;color:#111;
       background:radial-gradient(circle at 30% 30%,#f7e3ba 0%,#d9b774 38%,#8f6b36 70%,#3f2d17 100%);
       box-shadow:inset 0 2px 8px rgba(255,255,255,.25),0 8px 20px rgba(0,0,0,.35);
@@ -68,19 +56,14 @@
     .actions,.toolbar{display:flex;gap:8px;flex-wrap:wrap}
     .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn{
       border-radius:14px;padding:12px 14px;font-weight:900;
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-      transition:.15s ease;
+      border:1px solid #324050;box-shadow:var(--shadow);transition:.15s ease;
     }
     .btn{background:linear-gradient(180deg,#26313e,#171f28);color:var(--text)}
     .btnGold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c8a15a}
     .btnDanger{background:linear-gradient(180deg,#6a2a2a,#431717);color:#ffd3d3;border-color:#7a3131}
     .btnMixer{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111;border-color:#62ddc4}
     .libBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text);padding:10px 12px}
-    .btn.active,.typeBtn.active{
-      box-shadow:0 0 0 2px rgba(255,255,255,.18), var(--shadow);
-      transform:translateY(-1px);
-    }
+    .btn.active,.typeBtn.active{box-shadow:0 0 0 2px rgba(255,255,255,.18), var(--shadow);transform:translateY(-1px)}
 
     .section{display:none}
     .section.active{display:block}
@@ -108,7 +91,7 @@
     .stat{
       border-radius:20px;padding:16px;
       background:linear-gradient(180deg,#1b2330,#121821);
-      border:1px solid var(--line);
+      border:1px solid #324050;
     }
     .stat .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
     .stat .v{font-size:30px;font-weight:900;margin-top:6px}
@@ -118,13 +101,8 @@
     .field{display:flex;flex-direction:column;gap:7px}
     .field label{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.05em}
     .input,.select,.textarea{
-      width:100%;
-      padding:13px 14px;
-      border-radius:14px;
-      background:#0f141a;
-      color:var(--text);
-      border:1px solid #313c49;
-      outline:none;
+      width:100%;padding:13px 14px;border-radius:14px;
+      background:#0f141a;color:var(--text);border:1px solid #313c49;outline:none;
     }
     .textarea{min-height:110px;resize:vertical}
 
@@ -143,22 +121,11 @@
       padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;
       border:1px solid #384554;background:#11161d;color:var(--text);
     }
-    .badge.gold{background:rgba(211,175,109,.12);color:#f0d49b;border-color:rgba(211,175,109,.28)}
-    .badge.blue{background:rgba(126,188,255,.12);color:#d8ebff;border-color:rgba(126,188,255,.28)}
-    .badge.purple{background:rgba(181,140,255,.12);color:#eadbff;border-color:rgba(181,140,255,.28)}
-    .badge.green{background:rgba(86,223,141,.12);color:#b8ffd3;border-color:rgba(86,223,141,.28)}
 
     .recipeTypeGrid{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:10px;
-      margin-top:12px;
+      display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px;
     }
-    .typeBtn{
-      background:linear-gradient(180deg,#26313e,#171f28);
-      color:var(--text);
-      text-align:center;
-    }
+    .typeBtn{background:linear-gradient(180deg,#26313e,#171f28);color:var(--text);text-align:center}
     .typeBtn.active.sidro{background:linear-gradient(180deg,#f0d49b,#d2ae6d);color:#111}
     .typeBtn.active.te{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111}
     .typeBtn.active.misto{background:linear-gradient(180deg,#d7c1ff,#9b7cff);color:#111}
@@ -166,134 +133,64 @@
     .typeBtn.active.tonica{background:linear-gradient(180deg,#c8fff5,#88e9d8);color:#111}
 
     .ingredientRow{
-      display:grid;
-      grid-template-columns:1fr 1.25fr .7fr .7fr 1fr auto;
-      gap:8px;
-      margin-top:8px;
+      display:grid;grid-template-columns:1fr 1.25fr .7fr .7fr 1fr auto;gap:8px;margin-top:8px;
     }
-
     .libraryQuickGrid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-      margin-top:12px;
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px;
     }
 
     .liveBar{
-      border-radius:18px;
-      padding:12px 14px;
+      border-radius:18px;padding:12px 14px;
       background:linear-gradient(180deg,#1a2430,#10161d);
-      border:1px solid #334050;
-      box-shadow:var(--shadow);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
+      border:1px solid #334050;box-shadow:var(--shadow);
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
     }
-    .liveBarMain{
-      display:grid;
-      gap:5px;
-    }
-    .liveBarTitle{
-      font-size:18px;
-      font-weight:900;
-      letter-spacing:.03em;
-    }
-    .liveBarMeta{
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.45;
-    }
+    .liveBarMain{display:grid;gap:5px}
+    .liveBarTitle{font-size:18px;font-weight:900;letter-spacing:.03em}
+    .liveBarMeta{font-size:12px;color:var(--muted);line-height:1.45}
 
     .recipeHero{
-      border-radius:18px;
-      overflow:hidden;
-      border:1px solid #334050;
-      background:#0f141a;
-      margin-bottom:14px;
+      border-radius:18px;overflow:hidden;border:1px solid #334050;background:#0f141a;margin-bottom:14px;
     }
-    .recipeHero img{
-      width:100%;
-      max-height:420px;
-      object-fit:cover;
-    }
+    .recipeHero img{width:100%;max-height:420px;object-fit:cover}
 
-    .mixerOnlyPage{
-      min-height:100vh;
-      background:linear-gradient(180deg,#090d12,#0e141b);
-    }
+    .mixerOnlyPage{min-height:100vh;background:linear-gradient(180deg,#090d12,#0e141b)}
     .mixerTopBar{
       position:sticky;top:0;z-index:60;
       display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
-      padding:10px 12px;
-      background:rgba(8,11,14,.96);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(255,255,255,.05);
+      padding:10px 12px;background:rgba(8,11,14,.96);
+      backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.05);
     }
     .mixerTopLeft,.mixerTopRight{display:flex;gap:8px;flex-wrap:wrap}
-
-    .mixerShell{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:8px;
-      padding:8px;
-      min-height:calc(100vh - 68px);
-    }
-
+    .mixerShell{display:grid;grid-template-columns:1fr;gap:8px;padding:8px;min-height:calc(100vh - 68px)}
     .centerMixer{
-      border-radius:20px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:var(--shadow);
-      background:linear-gradient(180deg,#1b232d,#121820);
+      border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);background:linear-gradient(180deg,#1b232d,#121820);
       display:flex;flex-direction:column;min-width:0;
     }
-
     .mixerHeader{
-      padding:10px;
-      border-bottom:1px solid rgba(255,255,255,.05);
+      padding:10px;border-bottom:1px solid rgba(255,255,255,.05);
       background:linear-gradient(180deg,#232d39,#171f28);
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
+      display:grid;grid-template-columns:1fr 1fr;gap:8px;
     }
     .lcdPanel{
-      border-radius:16px;
-      padding:10px;
-      border:1px solid #355530;
+      border-radius:16px;padding:10px;border:1px solid #355530;
       background:linear-gradient(180deg,#11200f,#0a1608);
       box-shadow:inset 0 0 18px rgba(151,255,123,.08);
     }
     .lcdLabel{font-size:10px;color:#c0ffb0;letter-spacing:.14em;text-transform:uppercase}
     .lcdMain{font-size:24px;font-weight:900;line-height:1;margin-top:6px;color:var(--lcd)}
     .lcdSub{font-size:11px;line-height:1.35;margin-top:6px;color:#c0ffb0;opacity:.92}
-
     .mixerViewport{
-      flex:1;
-      overflow-x:auto;
-      overflow-y:hidden;
-      padding:10px;
+      flex:1;overflow-x:auto;overflow-y:hidden;padding:10px;
       background:linear-gradient(180deg,#0f141b,#0b0f14);
     }
-    .mixerBoard{
-      display:flex;
-      gap:10px;
-      align-items:stretch;
-      min-width:max-content;
-    }
+    .mixerBoard{display:flex;gap:10px;align-items:stretch;min-width:max-content}
 
     .channel{
-      width:128px;
-      border-radius:18px;
-      padding:8px;
-      border:1px solid #455567;
+      width:128px;border-radius:18px;padding:8px;border:1px solid #455567;
       box-shadow:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -14px 22px rgba(0,0,0,.25), 0 10px 22px rgba(0,0,0,.22);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      overflow:hidden;
-      color:#f2f7fc;
+      display:flex;flex-direction:column;align-items:center;overflow:hidden;color:#f2f7fc;
     }
     .channel.base{background:linear-gradient(180deg,#ffd86f,#b68621 28%,#4a3612)}
     .channel.p1{background:linear-gradient(180deg,#5e87ff,#304d91 28%,#18213c)}
@@ -309,24 +206,16 @@
       width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:6px;
     }
     .channelType{
-      font-size:10px;color:rgba(255,255,255,.85);text-transform:uppercase;letter-spacing:.08em;
-      line-height:1.2;
-      min-height:24px;
+      font-size:10px;color:rgba(255,255,255,.85);text-transform:uppercase;letter-spacing:.08em;line-height:1.2;min-height:24px;
     }
     .tinyIconBtn{
-      width:24px;height:24px;border-radius:8px;
-      background:linear-gradient(180deg,#2b3642,#1a212b);
-      color:#d9e2ec;border:1px solid #4a5868;font-weight:900;font-size:12px;
-      flex:0 0 auto;
+      width:24px;height:24px;border-radius:8px;background:linear-gradient(180deg,#2b3642,#1a212b);
+      color:#d9e2ec;border:1px solid #4a5868;font-weight:900;font-size:12px;flex:0 0 auto;
     }
 
     .miniLcd{
-      width:100%;
-      border-radius:12px;
-      background:linear-gradient(180deg,#12200f,#0b1508);
-      border:1px solid #355530;
-      padding:8px 6px;
-      text-align:center;
+      width:100%;border-radius:12px;background:linear-gradient(180deg,#12200f,#0b1508);
+      border:1px solid #355530;padding:8px 6px;text-align:center;
     }
     .miniLcd .lbl{font-size:9px;color:#baffab;letter-spacing:.08em;text-transform:uppercase}
     .miniLcd .val{font-size:14px;font-weight:900;margin-top:2px;color:var(--lcd)}
@@ -345,20 +234,15 @@
       width:88%;height:8px;border-radius:999px;background:#0c1014;border:1px solid #2f3a47;overflow:hidden;margin-bottom:8px;
     }
     .tinyFill{
-      height:100%;width:0%;
-      background:linear-gradient(90deg,#2ee47f 0%, #a4ff64 45%, #ffd45d 75%, #ff6b6b 100%);
+      height:100%;width:0%;background:linear-gradient(90deg,#2ee47f 0%, #a4ff64 45%, #ffd45d 75%, #ff6b6b 100%);
     }
 
-    .faderWrap{
-      width:100%;flex:1;display:grid;grid-template-columns:14px 1fr;gap:8px;align-items:stretch;
-    }
+    .faderWrap{width:100%;flex:1;display:grid;grid-template-columns:14px 1fr;gap:8px;align-items:stretch}
     .vu{
       border-radius:12px;border:1px solid #344250;background:linear-gradient(180deg,#0d1116,#141a22);
       padding:4px 3px;display:flex;flex-direction:column-reverse;gap:2px;align-items:center;
     }
-    .vuSeg{
-      width:6px;height:11px;border-radius:3px;background:#242c35;border:1px solid #313b46;
-    }
+    .vuSeg{width:6px;height:11px;border-radius:3px;background:#242c35;border:1px solid #313b46}
     .vuSeg.g{background:linear-gradient(180deg,#8dffba,#31d872)}
     .vuSeg.a{background:linear-gradient(180deg,#ffe5a0,#ffc74d)}
     .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
@@ -372,138 +256,77 @@
       width:6px;border-radius:999px;background:#11161c;border:1px solid #2f3944;
     }
     .track input[type=range]{
-      -webkit-appearance:none;appearance:none;
-      width:210px;height:26px;transform:rotate(-90deg);background:transparent;position:relative;z-index:2;
+      -webkit-appearance:none;appearance:none;width:210px;height:26px;transform:rotate(-90deg);
+      background:transparent;position:relative;z-index:2;
     }
     .track input[type=range]::-webkit-slider-runnable-track{
       height:10px;border-radius:999px;background:linear-gradient(90deg,#1b2129,#10141a);border:1px solid #394655;
     }
     .track input[type=range]::-webkit-slider-thumb{
-      -webkit-appearance:none;appearance:none;
-      width:38px;height:22px;border-radius:8px;margin-top:-7px;
+      -webkit-appearance:none;appearance:none;width:38px;height:22px;border-radius:8px;margin-top:-7px;
       border:1px solid #6a7888;background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
     }
 
-    .channelButtons{
-      width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;
-    }
+    .channelButtons{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
     .miniBtn{
       border-radius:10px;padding:8px 6px;font-size:11px;font-weight:900;
-      background:linear-gradient(180deg,#2a3441,#181f28);
-      color:var(--text);border:1px solid #475566;
+      background:linear-gradient(180deg,#2a3441,#181f28);color:var(--text);border:1px solid #475566;
     }
     .miniBtn.gold{
       background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c7a15a
     }
 
     .channelFooterName{
-      width:100%;
-      margin-top:8px;
-      border-radius:12px;
-      padding:8px 6px;
-      background:rgba(0,0,0,.22);
-      border:1px solid rgba(255,255,255,.12);
-      font-size:11px;
-      font-weight:900;
-      line-height:1.2;
-      text-align:center;
-      min-height:42px;
-      display:grid;
-      place-items:center;
-      word-break:break-word;
+      width:100%;margin-top:8px;border-radius:12px;padding:8px 6px;background:rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.12);font-size:11px;font-weight:900;line-height:1.2;text-align:center;
+      min-height:42px;display:grid;place-items:center;word-break:break-word;
     }
-
     .channelEditWide{
-      width:100%;
-      margin-top:6px;
-      border-radius:10px;
-      padding:8px 6px;
-      font-size:11px;
-      font-weight:900;
+      width:100%;margin-top:6px;border-radius:10px;padding:8px 6px;font-size:11px;font-weight:900;
       background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
-      color:#111;
-      border:1px solid #7e8a95;
+      color:#111;border:1px solid #7e8a95;
     }
 
     .modal{
       position:fixed;inset:0;background:rgba(0,0,0,.72);
-      display:none;align-items:flex-end;justify-content:center;
-      z-index:120;padding:14px;
+      display:none;align-items:flex-end;justify-content:center;z-index:120;padding:14px;
     }
     .modal.show{display:flex}
     .modalBox{
-      width:min(980px,100%);
-      max-height:92vh;
-      overflow:auto;
-      border-radius:24px;
+      width:min(980px,100%);max-height:92vh;overflow:auto;border-radius:24px;
       background:linear-gradient(180deg,#181f28,#0f141a);
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:0 18px 40px rgba(0,0,0,.38);
+      border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 40px rgba(0,0,0,.38);
     }
     .modalHead{
-      position:sticky;top:0;
-      background:rgba(24,31,40,.96);
-      backdrop-filter:blur(10px);
-      padding:16px;
-      border-bottom:1px solid rgba(255,255,255,.05);
+      position:sticky;top:0;background:rgba(24,31,40,.96);backdrop-filter:blur(10px);
+      padding:16px;border-bottom:1px solid rgba(255,255,255,.05);
       display:flex;justify-content:space-between;align-items:center;gap:12px;
     }
     .modalBody{padding:16px}
-    .libSearch{
-      margin-top:10px;
-      margin-bottom:12px;
-    }
-    .libList{
-      display:grid;
-      gap:8px;
-    }
+    .libSearch{margin-top:10px;margin-bottom:12px}
+    .libList{display:grid;gap:8px}
     .libItem{
-      display:flex;justify-content:space-between;gap:10px;align-items:center;
-      padding:12px;border-radius:16px;
-      background:linear-gradient(180deg,#202836,#151c24);
-      border:1px solid #334050;
+      display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px;border-radius:16px;
+      background:linear-gradient(180deg,#202836,#151c24);border:1px solid #334050;
     }
     .libItemTitle{font-weight:900}
     .libItemMeta{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
 
-    .previewCard{
-      display:grid;
-      gap:10px;
-    }
+    .previewCard{display:grid;gap:10px}
     .previewImage{
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid #334050;
-      background:#0f141a;
-      min-height:140px;
-      display:grid;
-      place-items:center;
-      color:var(--muted);
-      font-size:12px;
+      border-radius:16px;overflow:hidden;border:1px solid #334050;background:#0f141a;
+      min-height:140px;display:grid;place-items:center;color:var(--muted);font-size:12px;
     }
     .previewImage img{width:100%;max-height:260px;object-fit:cover}
     .previewNotes{
-      border-radius:14px;
-      padding:12px;
-      background:linear-gradient(180deg,#202836,#151c24);
-      border:1px solid #334050;
-      font-size:12px;
-      line-height:1.5;
+      border-radius:14px;padding:12px;background:linear-gradient(180deg,#202836,#151c24);
+      border:1px solid #334050;font-size:12px;line-height:1.5;
     }
 
-    body.mixer-compact .channel{
-      width:104px;
-    }
-    body.mixer-compact .track{
-      min-height:170px;
-    }
-    body.mixer-compact .track input[type=range]{
-      width:155px;
-    }
-    body.mixer-compact .channelFooterName{
-      font-size:10px;
-      min-height:38px;
-    }
+    body.mixer-compact .channel{width:104px}
+    body.mixer-compact .track{min-height:170px}
+    body.mixer-compact .track input[type=range]{width:155px}
+    body.mixer-compact .channelFooterName{font-size:10px;min-height:38px}
 
     @media (max-width:900px){
       .layout2,.statsGrid,.mixerHeader,.recipeTypeGrid,.libraryQuickGrid{grid-template-columns:1fr}
@@ -522,7 +345,7 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>MIXER PIÙ LEGGIBILE · MODIFICA CANALI · ANTEPRIMA LIVE</p>
+            <p>ANTEPRIMA AUTO · MIXER LEGGIBILE · MODIFICA CANALI</p>
           </div>
         </div>
         <div class="actions">
@@ -550,34 +373,24 @@
         <div class="layout2">
           <div class="card">
             <div class="cardHead">
-              <div>
-                <h2>Ricette</h2>
-                <div class="sub">Creazione guidata</div>
-              </div>
+              <div><h2>Ricette</h2><div class="sub">Creazione guidata</div></div>
               <div class="toolbar">
                 <button class="btnGold" onclick="openRecipeEditor()">+ Crea ricetta</button>
                 <button class="btn" onclick="showSection('recipes')">Apri</button>
               </div>
             </div>
-            <div class="cardBody">
-              <div class="list" id="homeRecipesList"></div>
-            </div>
+            <div class="cardBody"><div class="list" id="homeRecipesList"></div></div>
           </div>
 
           <div class="card">
             <div class="cardHead">
-              <div>
-                <h2>Lotti</h2>
-                <div class="sub">Produzione</div>
-              </div>
+              <div><h2>Lotti</h2><div class="sub">Produzione</div></div>
               <div class="toolbar">
                 <button class="btnGold" onclick="openLotCreator()">+ Crea lotto</button>
                 <button class="btnMixer" onclick="openMixerPage()">ON</button>
               </div>
             </div>
-            <div class="cardBody">
-              <div class="list" id="homeLotsList"></div>
-            </div>
+            <div class="cardBody"><div class="list" id="homeLotsList"></div></div>
           </div>
         </div>
       </div>
@@ -587,18 +400,13 @@
       <div class="page">
         <div class="card">
           <div class="cardHead">
-            <div>
-              <h2>Ricette</h2>
-              <div class="sub">Archivio</div>
-            </div>
+            <div><h2>Ricette</h2><div class="sub">Archivio</div></div>
             <div class="toolbar">
               <button class="btnGold" onclick="openRecipeEditor()">+ Nuova ricetta</button>
               <button class="btn" onclick="showSection('home')">Home</button>
             </div>
           </div>
-          <div class="cardBody">
-            <div class="list" id="recipesList"></div>
-          </div>
+          <div class="cardBody"><div class="list" id="recipesList"></div></div>
         </div>
       </div>
     </section>
@@ -617,10 +425,7 @@
 
         <div class="card">
           <div class="cardHead">
-            <div>
-              <h2 id="recipeEditTitle">Nuova ricetta</h2>
-              <div class="sub">Editor semplificato</div>
-            </div>
+            <div><h2 id="recipeEditTitle">Nuova ricetta</h2><div class="sub">Editor semplificato</div></div>
             <div class="toolbar">
               <button class="btn" onclick="showSection('recipes')">← Torna</button>
               <button class="btnGold" id="saveRecipeBtn">Salva ricetta</button>
@@ -729,10 +534,7 @@
       <div class="page">
         <div class="card">
           <div class="cardHead">
-            <div>
-              <h2 id="recipeViewTitle">Ricetta</h2>
-              <div class="sub">Pagina ricetta completa</div>
-            </div>
+            <div><h2 id="recipeViewTitle">Ricetta</h2><div class="sub">Pagina ricetta completa</div></div>
             <div class="toolbar">
               <button class="btn" onclick="showSection('recipes')">← Torna</button>
               <button class="btnGold" id="recipeViewEditBtn">Modifica</button>
@@ -749,29 +551,19 @@
         <div class="layout2">
           <div class="card">
             <div class="cardHead">
-              <div>
-                <h2>Lotti</h2>
-                <div class="sub">Archivio lotti</div>
-              </div>
+              <div><h2>Lotti</h2><div class="sub">Archivio lotti</div></div>
               <div class="toolbar">
                 <button class="btnGold" onclick="openLotCreator()">+ Nuovo lotto</button>
                 <button class="btn" onclick="showSection('home')">Home</button>
               </div>
             </div>
-            <div class="cardBody">
-              <div class="list" id="lotsList"></div>
-            </div>
+            <div class="cardBody"><div class="list" id="lotsList"></div></div>
           </div>
 
           <div class="card">
             <div class="cardHead">
-              <div>
-                <h2>Scheda lotto</h2>
-                <div class="sub">Meta dati</div>
-              </div>
-              <div class="toolbar">
-                <button class="btnGold" id="saveLotMetaBtn">Salva</button>
-              </div>
+              <div><h2>Scheda lotto</h2><div class="sub">Meta dati</div></div>
+              <div class="toolbar"><button class="btnGold" id="saveLotMetaBtn">Salva</button></div>
             </div>
             <div class="cardBody">
               <div class="formGrid">
@@ -805,15 +597,8 @@
         </div>
 
         <div class="card">
-          <div class="cardHead">
-            <div>
-              <h2>Scene mixer</h2>
-              <div class="sub">Snapshot</div>
-            </div>
-          </div>
-          <div class="cardBody">
-            <div class="list" id="scenesList"></div>
-          </div>
+          <div class="cardHead"><div><h2>Scene mixer</h2><div class="sub">Snapshot</div></div></div>
+          <div class="cardBody"><div class="list" id="scenesList"></div></div>
         </div>
       </div>
     </section>
@@ -848,11 +633,6 @@
               <div class="lcdLabel">Lotto</div>
               <div class="lcdMain" id="mixer_lot_name">NESSUNO</div>
               <div class="lcdSub" id="mixer_lot_meta">Apri o crea un lotto.</div>
-              <div class="badgeRow" style="margin-top:10px">
-                <span class="badge gold" id="mixer_badge_type">Tipo -</span>
-                <span class="badge blue" id="mixer_badge_stage">Stato -</span>
-                <span class="badge purple" id="mixer_badge_channels">Canali 0</span>
-              </div>
             </div>
           </div>
 
@@ -867,10 +647,7 @@
   <div class="modal" id="ingredientModal">
     <div class="modalBox">
       <div class="modalHead">
-        <div>
-          <h3 id="ingredientModalTitle">Libreria ingredienti</h3>
-          <div class="sub">Seleziona e aggiungi alla ricetta</div>
-        </div>
+        <div><h3 id="ingredientModalTitle">Libreria ingredienti</h3><div class="sub">Seleziona e aggiungi alla ricetta</div></div>
         <button class="btnDanger" type="button" onclick="closeIngredientLibrary()">OFF</button>
       </div>
       <div class="modalBody">
@@ -883,10 +660,7 @@
   <div class="modal" id="recipePreviewModal">
     <div class="modalBox">
       <div class="modalHead">
-        <div>
-          <h3>Anteprima ricetta live</h3>
-          <div class="sub">Lettura chiara mentre scrivi</div>
-        </div>
+        <div><h3>Anteprima ricetta live</h3><div class="sub">Si apre anche automaticamente quando aggiungi ingredienti</div></div>
         <button class="btnDanger" type="button" onclick="closeRecipePreviewModal()">OFF</button>
       </div>
       <div class="modalBody">
@@ -904,7 +678,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_fermentation_complete_v8";
+    const STORAGE_KEY = "xa_fermentation_complete_v9";
     const MIXER_COMPACT_KEY = "xa_fermentation_mixer_compact";
 
     const INGREDIENT_BROWSER = {
@@ -1009,16 +783,7 @@
     let currentRecipeImageData = "";
 
     function getDefaultState(){
-      return {
-        recipes: [],
-        lots: [],
-        scenes: [],
-        selectedLotId: null,
-        selectedRecipeId: null,
-        bankA: null,
-        bankB: null,
-        activeBank: "A"
-      };
+      return { recipes: [], lots: [], scenes: [], selectedLotId: null, selectedRecipeId: null, bankA: null, bankB: null, activeBank: "A" };
     }
 
     function loadState(){
@@ -1059,16 +824,9 @@
 
     function browserCategoryToRowCategory(key){
       const map = {
-        luppoli:"luppoli",
-        frutta:"frutta",
-        te:"te",
-        pepi:"pepe",
-        spezie:"botaniche",
-        lieviti:"lieviti",
-        fermenti_lattici:"fermenti_lattici",
-        botaniche:"botaniche",
-        aggiunte:"aggiunte",
-        dry_hopping:"luppoli"
+        luppoli:"luppoli", frutta:"frutta", te:"te", pepi:"pepe", spezie:"botaniche",
+        lieviti:"lieviti", fermenti_lattici:"fermenti_lattici", botaniche:"botaniche",
+        aggiunte:"aggiunte", dry_hopping:"luppoli"
       };
       return map[key] || "botaniche";
     }
@@ -1078,17 +836,9 @@
       if(!state.selectedLotId && state.lots.length) state.selectedLotId = state.lots[0].id;
     }
 
-    function currentUrlLotId(){
-      return new URLSearchParams(window.location.search).get("lot");
-    }
-
-    function isMixerMode(){
-      return new URLSearchParams(window.location.search).get("view") === "mixer";
-    }
-
-    function mixerLot(){
-      return getLot(currentUrlLotId()) || currentLot();
-    }
+    function currentUrlLotId(){ return new URLSearchParams(window.location.search).get("lot"); }
+    function isMixerMode(){ return new URLSearchParams(window.location.search).get("view") === "mixer"; }
+    function mixerLot(){ return getLot(currentUrlLotId()) || currentLot(); }
 
     function recipeTypeLabel(type){
       if(type === "sidro") return "Sidro";
@@ -1163,11 +913,8 @@
     function renderImageBox(id, data){
       const box = document.getElementById(id);
       if(!box) return;
-      if(data){
-        box.innerHTML = `<img src="${data}" alt="Ricetta">`;
-      } else {
-        box.textContent = "Nessuna immagine caricata";
-      }
+      if(data) box.innerHTML = `<img src="${data}" alt="Ricetta">`;
+      else box.textContent = "Nessuna immagine caricata";
     }
 
     function renderLiveRecipePreview(){
@@ -1223,6 +970,7 @@
       }));
       renderLiveRecipePreview();
       closeIngredientLibrary();
+      openRecipePreviewModal();
     }
 
     function openIngredientLibrary(key){
@@ -1252,7 +1000,7 @@
             <div class="libItemTitle">${escapeHtml(item.name)}</div>
             <div class="libItemMeta">
               ${escapeHtml(item.note)}<br>
-              <span class="badge green">Dose consigliata: ${escapeHtml(String(item.dose))} ${escapeHtml(item.unit)}</span>
+              <span class="badge">Dose consigliata: ${escapeHtml(String(item.dose))} ${escapeHtml(item.unit)}</span>
             </div>
           </div>
           <button class="btnGold" type="button" onclick="addIngredientFromLibrary('${currentLibraryKey}', ${idx})">Aggiungi</button>
@@ -1263,15 +1011,9 @@
     function handleRecipeImageFile(file){
       if(!file) return;
       const ok = ["image/jpeg","image/png"].includes(file.type) || /\.(jpg|jpeg|png)$/i.test(file.name);
-      if(!ok){
-        alert("Carica solo JPG, JPEG o PNG.");
-        return;
-      }
+      if(!ok){ alert("Carica solo JPG, JPEG o PNG."); return; }
       const reader = new FileReader();
-      reader.onload = e => {
-        currentRecipeImageData = e.target.result || "";
-        renderLiveRecipePreview();
-      };
+      reader.onload = e => { currentRecipeImageData = e.target.result || ""; renderLiveRecipePreview(); };
       reader.readAsDataURL(file);
     }
 
@@ -1290,11 +1032,7 @@
     }
 
     function recipeThumbHtml(recipe){
-      return recipe.image ? `
-        <div style="margin-top:10px;border-radius:14px;overflow:hidden;border:1px solid #334050;max-width:220px">
-          <img src="${recipe.image}" alt="Ricetta" style="width:100%;height:120px;object-fit:cover">
-        </div>
-      ` : "";
+      return recipe.image ? `<div style="margin-top:10px;border-radius:14px;overflow:hidden;border:1px solid #334050;max-width:220px"><img src="${recipe.image}" alt="Ricetta" style="width:100%;height:120px;object-fit:cover"></div>` : "";
     }
 
     function renderHomeRecipes(){
@@ -1319,11 +1057,6 @@
         <div class="item">
           <div class="itemTitle">${escapeHtml(r.name)}</div>
           <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
-          <div class="badgeRow" style="margin-top:10px">
-            <span class="badge gold">${escapeHtml(recipeTypeLabel(r.type))}</span>
-            <span class="badge blue">${escapeHtml(r.base || "-")}</span>
-            <span class="badge purple">${escapeHtml(r.culture || "-")}</span>
-          </div>
           ${recipeThumbHtml(r)}
           <div class="itemActions">
             <button class="btn" onclick="openRecipeView('${r.id}')">Vedi ricetta</button>
@@ -1355,16 +1088,7 @@
       wrap.innerHTML = state.lots.length ? state.lots.map(l => `
         <div class="item">
           <div class="itemTitle">${escapeHtml(l.name)}</div>
-          <div class="meta">
-            Codice: ${escapeHtml(l.code || "-")}<br>
-            Tipo: ${escapeHtml(l.type || "-")}<br>
-            Ricetta: ${escapeHtml(l.recipeName || "-")}<br>
-            Canali: ${l.channels.length}
-          </div>
-          <div class="badgeRow" style="margin-top:10px">
-            <span class="badge gold">${escapeHtml(l.stage || "-")}</span>
-            <span class="badge blue">${escapeHtml(l.date || "-")}</span>
-          </div>
+          <div class="meta">Codice: ${escapeHtml(l.code || "-")}<br>Tipo: ${escapeHtml(l.type || "-")}<br>Ricetta: ${escapeHtml(l.recipeName || "-")}<br>Canali: ${l.channels.length}</div>
           <div class="itemActions">
             <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
             <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">ON</button>
@@ -1399,17 +1123,13 @@
 
     function gatherParamsFromEditor(){
       const params = [];
-      const p = (id) => document.getElementById(id)?.value;
-
+      const p = id => document.getElementById(id)?.value;
       const pushParam = (key,name,type,min,max,step,value,unit) => {
         if(value !== "" && value !== null && value !== undefined){
           const n = Number(value);
-          if(!Number.isNaN(n)){
-            params.push({key,name,type,min,max,step,value:n,unit});
-          }
+          if(!Number.isNaN(n)) params.push({key,name,type,min,max,step,value:n,unit});
         }
       };
-
       pushParam("param_ph_start","pH iniziale","acidità",2.5,6,0.01,p("param_ph_start"),"");
       pushParam("param_ph_end","pH finale","acidità",2.5,6,0.01,p("param_ph_end"),"");
       pushParam("param_og","OG","densità iniziale",1,1.12,0.001,p("param_og"),"");
@@ -1420,7 +1140,6 @@
       pushParam("param_srm","SRM","colore",1,40,1,p("param_srm"),"");
       pushParam("param_tonica","Acqua tonica","tonica",0,10,0.1,p("param_tonica"),"");
       pushParam("param_tonic_bitter","Tonic bitter","amaro tonica",0,20,0.1,p("param_tonic_bitter"),"");
-
       return params;
     }
 
@@ -1461,11 +1180,8 @@
       const ingWrap = document.getElementById("ingredientsWrap");
       ingWrap.innerHTML = "";
       const recipeIngredients = recipe ? recipe.ingredients : [];
-      if(recipeIngredients.length){
-        recipeIngredients.forEach(i => ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml(i)));
-      } else {
-        ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml({category:"frutta"}));
-      }
+      if(recipeIngredients.length) recipeIngredients.forEach(i => ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml(i)));
+      else ingWrap.insertAdjacentHTML("beforeend", ingredientRowHtml({category:"frutta"}));
 
       showSection("recipe-edit");
       bindLiveInputs();
@@ -1473,9 +1189,7 @@
     }
 
     function bindLiveInputs(){
-      document.querySelectorAll(".live-watch").forEach(el=>{
-        el.oninput = renderLiveRecipePreview;
-      });
+      document.querySelectorAll(".live-watch").forEach(el => { el.oninput = renderLiveRecipePreview; });
     }
 
     function gatherRecipeFromEditor(){
@@ -1503,10 +1217,7 @@
 
     function saveRecipe(){
       const recipe = gatherRecipeFromEditor();
-      if(!recipe.name){
-        alert("Inserisci il nome della ricetta.");
-        return;
-      }
+      if(!recipe.name){ alert("Inserisci il nome della ricetta."); return; }
 
       const idx = state.recipes.findIndex(r => r.id === recipe.id);
       if(idx >= 0) state.recipes[idx] = recipe;
@@ -1530,12 +1241,7 @@
       document.getElementById("recipeViewLotBtn").onclick = () => openLotCreator(id);
 
       document.getElementById("recipeViewBody").innerHTML = `
-        ${recipe.image ? `
-          <div class="recipeHero">
-            <img src="${recipe.image}" alt="Ricetta">
-          </div>
-        ` : ""}
-
+        ${recipe.image ? `<div class="recipeHero"><img src="${recipe.image}" alt="Ricetta"></div>` : ""}
         <div class="layout2">
           <div class="item">
             <div class="itemTitle">Dati ricetta</div>
@@ -1554,40 +1260,6 @@
               Ingredienti: ${recipe.ingredients.length}<br>
               Parametri: ${recipe.params.length}<br>
               Canali mixer generati: ${recipe.ingredients.length + recipe.params.length + 1}
-            </div>
-          </div>
-        </div>
-
-        <div class="layout2" style="margin-top:14px">
-          <div class="card">
-            <div class="cardHead"><div><h2>Ingredienti</h2><div class="sub">Ricetta completa</div></div></div>
-            <div class="cardBody">
-              ${recipe.ingredients.length ? recipe.ingredients.map(i => `
-                <div class="item" style="margin-bottom:10px">
-                  <div class="itemTitle">${escapeHtml(i.name)}</div>
-                  <div class="meta">
-                    Categoria: ${escapeHtml(i.category)}<br>
-                    Quantità: ${num(i.qty,2)} ${escapeHtml(i.unit)}<br>
-                    Note: ${escapeHtml(i.note || "-")}
-                  </div>
-                </div>
-              `).join("") : `<div class="item"><div class="meta">Nessun ingrediente.</div></div>`}
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="cardHead"><div><h2>Parametri</h2><div class="sub">Principali</div></div></div>
-            <div class="cardBody">
-              ${recipe.params.length ? recipe.params.map(p => `
-                <div class="item" style="margin-bottom:10px">
-                  <div class="itemTitle">${escapeHtml(p.name)}</div>
-                  <div class="meta">
-                    Tipo: ${escapeHtml(p.type)}<br>
-                    Valore: ${escapeHtml(String(p.value))} ${escapeHtml(p.unit || "")}<br>
-                    Range: ${escapeHtml(String(p.min))} → ${escapeHtml(String(p.max))}
-                  </div>
-                </div>
-              `).join("") : `<div class="item"><div class="meta">Nessun parametro.</div></div>`}
             </div>
           </div>
         </div>
@@ -1663,16 +1335,10 @@
 
     function openLotCreator(recipeId=null){
       const rid = recipeId || state.selectedRecipeId || state.recipes[0]?.id || "";
-      if(!state.recipes.length){
-        alert("Prima crea una ricetta.");
-        return;
-      }
+      if(!state.recipes.length){ alert("Prima crea una ricetta."); return; }
 
       const recipe = getRecipe(rid);
-      if(!recipe){
-        alert("Ricetta non trovata.");
-        return;
-      }
+      if(!recipe){ alert("Ricetta non trovata."); return; }
 
       const name = prompt("Nome lotto", recipe.name + " LOTTO");
       if(name === null) return;
@@ -1731,8 +1397,6 @@
       if(!confirm("Eliminare questo lotto?")) return;
       state.lots = state.lots.filter(l => l.id !== id);
       if(state.selectedLotId === id) state.selectedLotId = state.lots[0]?.id || null;
-      if(state.bankA === id) state.bankA = null;
-      if(state.bankB === id) state.bankB = null;
       saveState();
       renderAll();
     }
@@ -1749,9 +1413,7 @@
       let html = "";
       for(let i=1;i<=16;i++){
         let cls = "vuSeg";
-        if(i <= count){
-          cls += i <= 10 ? " g" : i <= 13 ? " a" : " r";
-        }
+        if(i <= count) cls += i <= 10 ? " g" : i <= 13 ? " a" : " r";
         html += `<div class="${cls}"></div>`;
       }
       return html;
@@ -1763,18 +1425,12 @@
       document.getElementById("mixer_sub").textContent = lot ? "Solo mixer." : "Apri o crea un lotto.";
       document.getElementById("mixer_lot_name").textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
       document.getElementById("mixer_lot_meta").textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${lot.recipeName || "-"} · ${lot.channels.length} canali` : "Apri o crea un lotto.";
-      document.getElementById("mixer_badge_type").textContent = "Tipo " + (lot?.type || "-");
-      document.getElementById("mixer_badge_stage").textContent = "Stato " + (lot?.stage || "-");
-      document.getElementById("mixer_badge_channels").textContent = "Canali " + (lot?.channels?.length || 0);
 
       const compactBtn = document.getElementById("compactMixerBtn");
       compactBtn.textContent = document.body.classList.contains("mixer-compact") ? "NORMALE" : "RIDUCI";
 
       const board = document.getElementById("mixerBoard");
-      if(!lot){
-        board.innerHTML = `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
-        return;
-      }
+      if(!lot){ board.innerHTML = `<div class="item"><div class="meta">Nessun lotto.</div></div>`; return; }
 
       board.innerHTML = lot.channels.map((ch, index) => {
         const pct = Math.max(0, Math.min(100, ((Number(ch.value)-Number(ch.min)) / ((Number(ch.max)-Number(ch.min)) || 1)) * 100));
@@ -1882,12 +1538,7 @@
       lot.channels.push({
         id: uid("ch"),
         key: name.toLowerCase().replace(/\s+/g,"_"),
-        name,
-        type,
-        min,
-        max,
-        step,
-        value,
+        name, type, min, max, step, value,
         unit:" " + unit,
         palette: paletteForIndex(lot.channels.length + 1)
       });
@@ -1896,18 +1547,7 @@
       renderAll();
     }
 
-    function assignBank(bank){
-      const lot = mixerLot();
-      if(!lot) return;
-      if(bank === "A") state.bankA = lot.id;
-      if(bank === "B") state.bankB = lot.id;
-      saveState();
-    }
-
-    function setBank(bank){
-      state.activeBank = bank;
-      saveState();
-    }
+    function setBank(bank){ state.activeBank = bank; saveState(); }
 
     function saveScene(){
       const lot = mixerLot();
@@ -1933,10 +1573,7 @@
 
     function openMixerPage(){
       const lot = currentLot();
-      if(!lot){
-        alert("Seleziona prima un lotto.");
-        return;
-      }
+      if(!lot){ alert("Seleziona prima un lotto."); return; }
       openMixerPageForLot(lot.id);
     }
 
@@ -2086,6 +1723,7 @@
     document.getElementById("addIngredientBtn").addEventListener("click", ()=>{
       document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({}));
       renderLiveRecipePreview();
+      openRecipePreviewModal();
     });
     document.getElementById("saveLotMetaBtn").addEventListener("click", saveLotMeta);
     document.getElementById("recipe_image_file").addEventListener("change", e => {
