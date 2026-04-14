@@ -9,7 +9,6 @@
       --bg:#0b0f14;
       --bg2:#10161d;
       --panel:#151d26;
-      --panel2:#1b2430;
       --line:#324050;
       --text:#eef4fa;
       --muted:#9aacbd;
@@ -18,7 +17,6 @@
       --green:#56df8d;
       --red:#ff6e6e;
       --blue:#7ebcff;
-      --amber:#ffd368;
       --teal:#67e6cf;
       --purple:#b58cff;
       --shadow:0 16px 36px rgba(0,0,0,.35);
@@ -32,7 +30,7 @@
       color:var(--text);
       font-family:Inter,Arial,sans-serif;
     }
-    body{padding-bottom:90px}
+    body{padding-bottom:92px}
     h1,h2,h3,h4,p{margin:0}
     button,input,select,textarea{font:inherit}
     button{cursor:pointer;border:none}
@@ -64,24 +62,20 @@
     .brand h1{font-size:24px;font-weight:900;letter-spacing:.14em}
     .brand p{margin-top:4px;font-size:12px;color:var(--muted);letter-spacing:.12em}
 
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .actions,.toolbar{display:flex;gap:8px;flex-wrap:wrap}
     .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn{
       border-radius:14px;padding:12px 14px;font-weight:900;
-      border:1px solid var(--line);box-shadow:var(--shadow);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
       transition:.15s ease;
     }
     .btn{background:linear-gradient(180deg,#26313e,#171f28);color:var(--text)}
     .btnGold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c8a15a}
     .btnDanger{background:linear-gradient(180deg,#6a2a2a,#431717);color:#ffd3d3;border-color:#7a3131}
     .btnMixer{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111;border-color:#62ddc4}
-    .btn.active,.typeBtn.active{
-      box-shadow:0 0 0 2px rgba(255,255,255,.18), var(--shadow);
-      transform:translateY(-1px);
-    }
 
     .section{display:none}
     .section.active{display:block}
-
     .page{display:grid;gap:14px}
     .layout2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     .statsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
@@ -135,7 +129,6 @@
     .itemTitle{font-size:16px;font-weight:900}
     .meta{font-size:12px;color:var(--muted);line-height:1.5;margin-top:5px}
     .itemActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap}
 
     .badgeRow{display:flex;gap:8px;flex-wrap:wrap}
     .badge{
@@ -143,9 +136,7 @@
       border:1px solid #384554;background:#11161d;color:var(--text);
     }
     .badge.gold{background:rgba(211,175,109,.12);color:#f0d49b;border-color:rgba(211,175,109,.28)}
-    .badge.green{background:rgba(86,223,141,.12);color:#b8ffd3;border-color:rgba(86,223,141,.28)}
     .badge.blue{background:rgba(126,188,255,.12);color:#d8ebff;border-color:rgba(126,188,255,.28)}
-    .badge.red{background:rgba(255,110,110,.12);color:#ffc9c9;border-color:rgba(255,110,110,.28)}
     .badge.purple{background:rgba(181,140,255,.12);color:#eadbff;border-color:rgba(181,140,255,.28)}
 
     .recipeTypeGrid{
@@ -188,14 +179,14 @@
 
     .mixerShell{
       display:grid;
-      grid-template-columns:230px 1fr 230px;
-      gap:10px;
-      padding:10px;
+      grid-template-columns:150px 1fr 150px;
+      gap:8px;
+      padding:8px;
       min-height:calc(100vh - 68px);
     }
 
     .sideRack{
-      border-radius:22px;
+      border-radius:18px;
       background:linear-gradient(180deg,#1a222c,#11171e);
       border:1px solid rgba(255,255,255,.06);
       box-shadow:var(--shadow);
@@ -205,77 +196,70 @@
       min-height:0;
     }
     .sideHead{
-      padding:12px 14px;
+      padding:10px 12px;
       border-bottom:1px solid rgba(255,255,255,.05);
       background:linear-gradient(180deg,#222c38,#171e27);
     }
-    .sideHead h3{font-size:15px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
-    .sideBody{padding:10px;display:grid;gap:8px;overflow:auto}
+    .sideHead h3{font-size:13px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+    .sideBody{padding:8px;display:grid;gap:8px;overflow:auto}
     .rackBtn{
-      border-radius:16px;padding:12px;text-align:left;color:var(--text);
+      border-radius:12px;padding:10px;text-align:left;color:var(--text);
       border:1px solid #425061;background:linear-gradient(180deg,#2b3643,#18202a);
-      font-weight:900;
+      font-weight:900;font-size:12px;
     }
-    .rackBtn small{display:block;color:var(--muted);font-size:11px;font-weight:700;margin-top:4px}
+    .rackBtn small{display:block;color:var(--muted);font-size:10px;font-weight:700;margin-top:4px}
 
     .centerMixer{
-      border-radius:26px;
+      border-radius:20px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.06);
       box-shadow:var(--shadow);
       background:linear-gradient(180deg,#1b232d,#121820);
-      display:flex;
-      flex-direction:column;
-      min-width:0;
+      display:flex;flex-direction:column;min-width:0;
     }
 
     .mixerHeader{
-      padding:14px;
+      padding:10px;
       border-bottom:1px solid rgba(255,255,255,.05);
       background:linear-gradient(180deg,#232d39,#171f28);
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:10px;
+      gap:8px;
     }
     .lcdPanel{
-      border-radius:20px;
-      padding:14px;
+      border-radius:16px;
+      padding:10px;
       border:1px solid #355530;
       background:linear-gradient(180deg,#11200f,#0a1608);
       box-shadow:inset 0 0 18px rgba(151,255,123,.08);
     }
-    .lcdLabel{font-size:11px;color:#c0ffb0;letter-spacing:.14em;text-transform:uppercase}
-    .lcdMain{font-size:34px;font-weight:900;line-height:1;margin-top:8px;color:var(--lcd)}
-    .lcdSub{font-size:12px;line-height:1.45;margin-top:8px;color:#c0ffb0;opacity:.92}
+    .lcdLabel{font-size:10px;color:#c0ffb0;letter-spacing:.14em;text-transform:uppercase}
+    .lcdMain{font-size:24px;font-weight:900;line-height:1;margin-top:6px;color:var(--lcd)}
+    .lcdSub{font-size:11px;line-height:1.35;margin-top:6px;color:#c0ffb0;opacity:.92}
 
     .mixerViewport{
       flex:1;
       overflow-x:auto;
       overflow-y:hidden;
-      padding:14px;
+      padding:10px;
       background:linear-gradient(180deg,#0f141b,#0b0f14);
     }
-    .mixerViewport::-webkit-scrollbar{height:12px}
-    .mixerViewport::-webkit-scrollbar-track{background:#0d1116;border-radius:999px}
-    .mixerViewport::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#2a3442,#4a5a6c);border-radius:999px}
-
     .mixerBoard{
       display:flex;
-      gap:12px;
+      gap:8px;
       align-items:stretch;
       min-width:max-content;
     }
 
     .channel{
-      width:168px;
-      border-radius:22px;
-      padding:12px;
+      width:116px;
+      border-radius:18px;
+      padding:8px;
       border:1px solid #455567;
       box-shadow:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -14px 22px rgba(0,0,0,.25), 0 10px 22px rgba(0,0,0,.22);
       display:flex;
       flex-direction:column;
       align-items:center;
-      position:relative;
       overflow:hidden;
       color:#f2f7fc;
     }
@@ -290,48 +274,47 @@
     .channel.gas{background:linear-gradient(180deg,#48577f,#2e3958 20%,#182031)}
 
     .channelTop{
-      width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;
+      width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:6px;
     }
     .channelNameWrap{flex:1;min-width:0}
     .channelName{
-      font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+      font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
     .channelType{
-      font-size:10px;color:rgba(255,255,255,.78);margin-top:4px;text-transform:uppercase;letter-spacing:.1em
+      font-size:9px;color:rgba(255,255,255,.78);margin-top:3px;text-transform:uppercase;letter-spacing:.08em;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
     .tinyIconBtn{
-      width:30px;height:30px;border-radius:10px;
+      width:24px;height:24px;border-radius:8px;
       background:linear-gradient(180deg,#2b3642,#1a212b);
-      color:#d9e2ec;border:1px solid #4a5868;font-weight:900;
+      color:#d9e2ec;border:1px solid #4a5868;font-weight:900;font-size:12px;
     }
 
     .miniLcd{
       width:100%;
-      border-radius:14px;
+      border-radius:12px;
       background:linear-gradient(180deg,#12200f,#0b1508);
       border:1px solid #355530;
-      padding:10px 8px;
+      padding:8px 6px;
       text-align:center;
       box-shadow:inset 0 0 10px rgba(151,255,123,.08);
     }
-    .miniLcd .lbl{font-size:10px;color:#baffab;letter-spacing:.1em;text-transform:uppercase}
-    .miniLcd .val{font-size:20px;font-weight:900;margin-top:3px;color:var(--lcd)}
+    .miniLcd .lbl{font-size:9px;color:#baffab;letter-spacing:.08em;text-transform:uppercase}
+    .miniLcd .val{font-size:14px;font-weight:900;margin-top:2px;color:var(--lcd)}
 
     .knob{
-      width:72px;height:72px;border-radius:50%;
-      margin:12px 0 10px;
+      width:54px;height:54px;border-radius:50%;margin:10px 0 8px;
       background:radial-gradient(circle at 30% 30%,#5a6673 0%,#39434e 32%,#232a33 58%,#151a20 100%);
       border:2px solid #536172;position:relative;
-      box-shadow:inset 0 2px 10px rgba(255,255,255,.08),inset 0 -8px 14px rgba(0,0,0,.42),0 8px 18px rgba(0,0,0,.28);
     }
     .knob::after{
-      content:"";position:absolute;left:50%;top:8px;transform:translateX(-50%);
-      width:8px;height:20px;border-radius:999px;background:linear-gradient(180deg,var(--gold2),var(--gold));
+      content:"";position:absolute;left:50%;top:6px;transform:translateX(-50%);
+      width:7px;height:16px;border-radius:999px;background:linear-gradient(180deg,var(--gold2),var(--gold));
     }
 
     .tinyMeter{
-      width:84%;height:10px;border-radius:999px;background:#0c1014;border:1px solid #2f3a47;overflow:hidden;margin-bottom:10px;
+      width:88%;height:8px;border-radius:999px;background:#0c1014;border:1px solid #2f3a47;overflow:hidden;margin-bottom:8px;
     }
     .tinyFill{
       height:100%;width:0%;
@@ -339,70 +322,70 @@
     }
 
     .faderWrap{
-      width:100%;flex:1;display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:stretch;
+      width:100%;flex:1;display:grid;grid-template-columns:14px 1fr;gap:8px;align-items:stretch;
     }
     .vu{
-      border-radius:14px;border:1px solid #344250;background:linear-gradient(180deg,#0d1116,#141a22);
-      padding:6px 4px;display:flex;flex-direction:column-reverse;gap:3px;align-items:center;
+      border-radius:12px;border:1px solid #344250;background:linear-gradient(180deg,#0d1116,#141a22);
+      padding:4px 3px;display:flex;flex-direction:column-reverse;gap:2px;align-items:center;
     }
     .vuSeg{
-      width:8px;height:14px;border-radius:4px;background:#242c35;border:1px solid #313b46;
+      width:6px;height:11px;border-radius:3px;background:#242c35;border:1px solid #313b46;
     }
     .vuSeg.g{background:linear-gradient(180deg,#8dffba,#31d872)}
     .vuSeg.a{background:linear-gradient(180deg,#ffe5a0,#ffc74d)}
     .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
 
     .track{
-      border-radius:22px;border:1px solid #364352;background:linear-gradient(180deg,#0f1419,#181f27);
-      min-height:300px;display:flex;justify-content:center;align-items:center;position:relative;padding:14px 0;
+      border-radius:16px;border:1px solid #364352;background:linear-gradient(180deg,#0f1419,#181f27);
+      min-height:220px;display:flex;justify-content:center;align-items:center;position:relative;padding:10px 0;
     }
     .track::before{
-      content:"";position:absolute;top:16px;bottom:16px;left:50%;transform:translateX(-50%);
-      width:8px;border-radius:999px;background:#11161c;border:1px solid #2f3944;
+      content:"";position:absolute;top:14px;bottom:14px;left:50%;transform:translateX(-50%);
+      width:6px;border-radius:999px;background:#11161c;border:1px solid #2f3944;
     }
     .track input[type=range]{
       -webkit-appearance:none;appearance:none;
-      width:280px;height:32px;transform:rotate(-90deg);background:transparent;position:relative;z-index:2;
+      width:210px;height:26px;transform:rotate(-90deg);background:transparent;position:relative;z-index:2;
     }
     .track input[type=range]::-webkit-slider-runnable-track{
-      height:12px;border-radius:999px;background:linear-gradient(90deg,#1b2129,#10141a);border:1px solid #394655;
+      height:10px;border-radius:999px;background:linear-gradient(90deg,#1b2129,#10141a);border:1px solid #394655;
     }
     .track input[type=range]::-webkit-slider-thumb{
       -webkit-appearance:none;appearance:none;
-      width:52px;height:28px;border-radius:10px;margin-top:-8px;
+      width:38px;height:22px;border-radius:8px;margin-top:-7px;
       border:1px solid #6a7888;background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
-      box-shadow:0 6px 14px rgba(0,0,0,.35), inset 0 1px 2px rgba(255,255,255,.78);
     }
 
     .channelButtons{
-      width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;
+      width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;
     }
     .miniBtn{
-      border-radius:12px;padding:10px 8px;font-size:12px;font-weight:900;
+      border-radius:10px;padding:8px 6px;font-size:11px;font-weight:900;
       background:linear-gradient(180deg,#2a3441,#181f28);
       color:var(--text);border:1px solid #475566;
     }
     .miniBtn.gold{
-      background:linear-gradient(180deg,var(--gold2),var(--gold));
-      color:#111;border-color:#c7a15a
+      background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c7a15a
     }
 
     .addSlot{
-      width:188px;border-radius:22px;padding:16px;
+      width:126px;border-radius:18px;padding:12px;
       background:linear-gradient(180deg,#2a3440,#171f28);
       border:1px dashed #526172;
       display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-      min-height:585px;
+      min-height:430px;
     }
     .addSlot .plus{
-      width:86px;height:86px;border-radius:24px;display:grid;place-items:center;
-      font-size:44px;font-weight:900;color:#111;background:linear-gradient(180deg,var(--gold2),var(--gold));
+      width:62px;height:62px;border-radius:18px;display:grid;place-items:center;
+      font-size:36px;font-weight:900;color:#111;background:linear-gradient(180deg,var(--gold2),var(--gold));
     }
-    .addSlot h3{font-size:20px;font-weight:900;margin-top:14px}
-    .addSlot p{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+    .addSlot h3{font-size:16px;font-weight:900;margin-top:10px}
+    .addSlot p{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4}
 
-    @media (orientation:portrait){
-      .mixerShell,.layout2,.statsGrid,.mixerHeader,.recipeTypeGrid{grid-template-columns:1fr}
+    @media (max-width:900px){
+      .layout2,.statsGrid,.mixerHeader,.recipeTypeGrid{grid-template-columns:1fr}
+      .mixerShell{grid-template-columns:1fr}
+      .sideRack{display:none}
     }
     @media (max-width:860px){
       .formGrid,.ingredientRow{grid-template-columns:1fr}
@@ -412,13 +395,13 @@
 </head>
 <body>
   <div id="app-normal" class="app">
-    <div class="topbar" id="normalTopbar">
+    <div class="topbar">
       <div class="topbarInner">
         <div class="brand">
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>RICETTE GUIDATE · LOTTI · MIXER IN PAGINA SEPARATA</p>
+            <p>RICETTE GUIDATE · LOTTI · MIXER SOLO-MIXER</p>
           </div>
         </div>
         <div class="actions">
@@ -428,7 +411,7 @@
           <input type="file" id="importFile" class="hidden" accept=".json">
           <button class="btnGold" id="newRecipeBtnTop">+ Ricetta</button>
           <button class="btnGold" id="newLotBtnTop">+ Lotto</button>
-          <button class="btnMixer" id="openMixerBtnTop">Mixer</button>
+          <button class="btnMixer" id="openMixerBtnTop">ON</button>
           <button class="btnDanger" id="resetBtn">Reset</button>
         </div>
       </div>
@@ -468,7 +451,7 @@
               </div>
               <div class="toolbar">
                 <button class="btnGold" onclick="openLotCreator()">+ Crea lotto</button>
-                <button class="btnMixer" onclick="openMixerPage()">Mixer</button>
+                <button class="btnMixer" onclick="openMixerPage()">ON</button>
               </div>
             </div>
             <div class="cardBody">
@@ -531,7 +514,7 @@
               </div>
               <div class="field">
                 <label>Base</label>
-                <input class="input" id="recipe_base" placeholder="Es. Succo mela / tè oolong / mosto / acqua">
+                <input class="input" id="recipe_base" placeholder="Es. Succo mela / tè / mosto / acqua">
               </div>
             </div>
 
@@ -568,58 +551,28 @@
               <div class="meta">Pochi parametri, chiari</div>
 
               <div class="formGrid" style="margin-top:12px">
-                <div class="field">
-                  <label>pH iniziale</label>
-                  <input class="input" id="param_ph_start" type="number" step="0.01" placeholder="Es. 3.40">
-                </div>
-                <div class="field">
-                  <label>pH finale</label>
-                  <input class="input" id="param_ph_end" type="number" step="0.01" placeholder="Es. 3.10">
-                </div>
+                <div class="field"><label>pH iniziale</label><input class="input" id="param_ph_start" type="number" step="0.01"></div>
+                <div class="field"><label>pH finale</label><input class="input" id="param_ph_end" type="number" step="0.01"></div>
               </div>
 
               <div class="formGrid" style="margin-top:12px">
-                <div class="field">
-                  <label>OG</label>
-                  <input class="input" id="param_og" type="number" step="0.001" placeholder="Es. 1.048">
-                </div>
-                <div class="field">
-                  <label>FG</label>
-                  <input class="input" id="param_fg" type="number" step="0.001" placeholder="Es. 1.006">
-                </div>
+                <div class="field"><label>OG</label><input class="input" id="param_og" type="number" step="0.001"></div>
+                <div class="field"><label>FG</label><input class="input" id="param_fg" type="number" step="0.001"></div>
               </div>
 
               <div class="formGrid" style="margin-top:12px">
-                <div class="field">
-                  <label>ABV %</label>
-                  <input class="input" id="param_abv" type="number" step="0.1" placeholder="Es. 5.2">
-                </div>
-                <div class="field">
-                  <label>Temperatura °C</label>
-                  <input class="input" id="param_temp" type="number" step="0.1" placeholder="Es. 22">
-                </div>
+                <div class="field"><label>ABV %</label><input class="input" id="param_abv" type="number" step="0.1"></div>
+                <div class="field"><label>Temperatura °C</label><input class="input" id="param_temp" type="number" step="0.1"></div>
               </div>
 
               <div class="formGrid" style="margin-top:12px">
-                <div class="field">
-                  <label>CO₂ vol</label>
-                  <input class="input" id="param_co2" type="number" step="0.1" placeholder="Es. 2.5">
-                </div>
-                <div class="field">
-                  <label>SRM / Colore</label>
-                  <input class="input" id="param_srm" type="number" step="1" placeholder="Es. 4">
-                </div>
+                <div class="field"><label>CO₂ vol</label><input class="input" id="param_co2" type="number" step="0.1"></div>
+                <div class="field"><label>SRM / Colore</label><input class="input" id="param_srm" type="number" step="1"></div>
               </div>
 
               <div class="formGrid" style="margin-top:12px">
-                <div class="field">
-                  <label>Acqua tonica</label>
-                  <input class="input" id="param_tonica" type="number" step="0.1" placeholder="Es. 1.0">
-                </div>
-                <div class="field">
-                  <label>Tonic bitter</label>
-                  <input class="input" id="param_tonic_bitter" type="number" step="0.1" placeholder="Es. 6.0">
-                </div>
+                <div class="field"><label>Acqua tonica</label><input class="input" id="param_tonica" type="number" step="0.1"></div>
+                <div class="field"><label>Tonic bitter</label><input class="input" id="param_tonic_bitter" type="number" step="0.1"></div>
               </div>
             </div>
 
@@ -681,20 +634,11 @@
             </div>
             <div class="cardBody">
               <div class="formGrid">
-                <div class="field">
-                  <label>Nome lotto</label>
-                  <input class="input" id="lot_name" placeholder="Nome lotto">
-                </div>
-                <div class="field">
-                  <label>Codice</label>
-                  <input class="input" id="lot_code" placeholder="Codice">
-                </div>
+                <div class="field"><label>Nome lotto</label><input class="input" id="lot_name"></div>
+                <div class="field"><label>Codice</label><input class="input" id="lot_code"></div>
               </div>
               <div class="formGrid" style="margin-top:12px">
-                <div class="field">
-                  <label>Tipo</label>
-                  <input class="input" id="lot_type" placeholder="Tipo">
-                </div>
+                <div class="field"><label>Tipo</label><input class="input" id="lot_type"></div>
                 <div class="field">
                   <label>Stato</label>
                   <select class="select" id="lot_stage">
@@ -709,27 +653,12 @@
                 </div>
               </div>
               <div class="formGrid" style="margin-top:12px">
-                <div class="field">
-                  <label>Volume litri</label>
-                  <input class="input" id="lot_volume" type="number" step="0.1" placeholder="20">
-                </div>
-                <div class="field">
-                  <label>Data</label>
-                  <input class="input" id="lot_date" type="date">
-                </div>
+                <div class="field"><label>Volume litri</label><input class="input" id="lot_volume" type="number" step="0.1"></div>
+                <div class="field"><label>Data</label><input class="input" id="lot_date" type="date"></div>
               </div>
-              <div class="field" style="margin-top:12px">
-                <label>Cultura</label>
-                <input class="input" id="lot_culture" placeholder="Cultura">
-              </div>
-              <div class="field" style="margin-top:12px">
-                <label>Ricetta testo</label>
-                <textarea class="textarea" id="lot_recipe_text" placeholder="Ingredienti sintetici"></textarea>
-              </div>
-              <div class="field" style="margin-top:12px">
-                <label>Note lotto</label>
-                <textarea class="textarea" id="lot_notes" placeholder="Note"></textarea>
-              </div>
+              <div class="field" style="margin-top:12px"><label>Cultura</label><input class="input" id="lot_culture"></div>
+              <div class="field" style="margin-top:12px"><label>Ricetta testo</label><textarea class="textarea" id="lot_recipe_text"></textarea></div>
+              <div class="field" style="margin-top:12px"><label>Note lotto</label><textarea class="textarea" id="lot_notes"></textarea></div>
             </div>
           </div>
         </div>
@@ -773,7 +702,7 @@
     <div class="mixerOnlyPage">
       <div class="mixerTopBar">
         <div class="mixerTopLeft">
-          <button class="btn" onclick="goBackToMain()">← Torna</button>
+          <button class="btnDanger" onclick="goBackToMain()">OFF</button>
           <button class="btnGold" onclick="saveLotMeta()">Salva lotto</button>
           <button class="btn" onclick="saveScene()">Salva scena</button>
           <button class="btn" onclick="openAddChannel()">+ Canale</button>
@@ -781,7 +710,7 @@
         <div class="mixerTopRight">
           <button class="btn" onclick="setBank('A')">Banco A</button>
           <button class="btn" onclick="setBank('B')">Banco B</button>
-          <button class="btnMixer" onclick="alert('Per vedere il mixer al massimo, gira il telefono in orizzontale.')">Ruota schermo</button>
+          <button class="btnMixer" onclick="alert('Gira il telefono in orizzontale per vedere più canali insieme.')">Orizzontale</button>
         </div>
       </div>
 
@@ -808,9 +737,9 @@
         <main class="centerMixer">
           <div class="mixerHeader">
             <div class="lcdPanel">
-              <div class="lcdLabel">Master LCD</div>
+              <div class="lcdLabel">Mixer</div>
               <div class="lcdMain" id="mixer_title">XA MIXER</div>
-              <div class="lcdSub" id="mixer_sub">Pagina separata solo mixer.</div>
+              <div class="lcdSub" id="mixer_sub">Solo mixer. Nessun altro pannello.</div>
             </div>
             <div class="lcdPanel">
               <div class="lcdLabel">Lotto</div>
@@ -819,7 +748,7 @@
               <div class="badgeRow" style="margin-top:10px">
                 <span class="badge gold" id="mixer_badge_type">Tipo -</span>
                 <span class="badge blue" id="mixer_badge_stage">Stato -</span>
-                <span class="badge green" id="mixer_badge_channels">Canali 0</span>
+                <span class="badge purple" id="mixer_badge_channels">Canali 0</span>
               </div>
             </div>
           </div>
@@ -846,7 +775,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_fermentation_complete_v2";
+    const STORAGE_KEY = "xa_fermentation_complete_v3";
 
     const defaultLibraries = {
       luppoli:[{name:"Saaz",note:"Nobile, delicato"},{name:"Hallertau Mittelfrüh",note:"Fine, erbaceo"},{name:"Cascade",note:"Agrumato"}],
@@ -946,9 +875,7 @@
     function resetTypeButtons(){
       ["sidro","te","misto","birra","tonica"].forEach(t => {
         const el = document.getElementById("type_" + t);
-        if(el){
-          el.classList.remove("active","sidro","te","misto","birra","tonica");
-        }
+        if(el) el.classList.remove("active","sidro","te","misto","birra","tonica");
       });
     }
 
@@ -957,17 +884,11 @@
       resetTypeButtons();
       const el = document.getElementById("type_" + type);
       if(el){
-        el.classList.add("active");
-        if(type === "sidro") el.classList.add("sidro");
-        if(type === "te") el.classList.add("te");
-        if(type === "misto") el.classList.add("misto");
-        if(type === "birra") el.classList.add("birra");
-        if(type === "tonica") el.classList.add("tonica");
+        el.classList.add("active", type);
       }
 
       const base = document.getElementById("recipe_base");
       if(!base) return;
-
       if(type === "sidro" && !base.value) base.value = "Succo di mela";
       if(type === "te" && !base.value) base.value = "Tè";
       if(type === "misto" && !base.value) base.value = "Succo + tè";
@@ -1027,7 +948,7 @@
           <div class="badgeRow" style="margin-top:10px">
             <span class="badge gold">${escapeHtml(recipeTypeLabel(r.type))}</span>
             <span class="badge blue">${escapeHtml(r.base || "-")}</span>
-            <span class="badge.purple"></span>
+            <span class="badge purple">${escapeHtml(r.culture || "-")}</span>
           </div>
           <div class="itemActions">
             <button class="btn" onclick="openRecipeView('${r.id}')">Vedi ricetta</button>
@@ -1036,27 +957,7 @@
             <button class="btnDanger" onclick="deleteRecipe('${r.id}')">Elimina</button>
           </div>
         </div>
-      `).replace('<span class="badge.purple"></span>', r => '') : `<div class="item"><div class="meta">Nessuna ricetta salvata.</div></div>`;
-      
-      if(state.recipes.length){
-        wrap.innerHTML = state.recipes.map(r => `
-          <div class="item">
-            <div class="itemTitle">${escapeHtml(r.name)}</div>
-            <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
-            <div class="badgeRow" style="margin-top:10px">
-              <span class="badge gold">${escapeHtml(recipeTypeLabel(r.type))}</span>
-              <span class="badge blue">${escapeHtml(r.base || "-")}</span>
-              <span class="badge purple">${escapeHtml(r.culture || "-")}</span>
-            </div>
-            <div class="itemActions">
-              <button class="btn" onclick="openRecipeView('${r.id}')">Vedi ricetta</button>
-              <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
-              <button class="btnMixer" onclick="openLotCreator('${r.id}')">Crea lotto</button>
-              <button class="btnDanger" onclick="deleteRecipe('${r.id}')">Elimina</button>
-            </div>
-          </div>
-        `).join("");
-      }
+      `).join("") : `<div class="item"><div class="meta">Nessuna ricetta salvata.</div></div>`;
     }
 
     function renderHomeLots(){
@@ -1068,7 +969,7 @@
           <div class="meta">${escapeHtml(l.type || "-")} · ${escapeHtml(l.recipeName || "-")} · ${l.channels.length} canali</div>
           <div class="itemActions">
             <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
-            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">Apri mixer</button>
+            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">ON</button>
           </div>
         </div>
       `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
@@ -1091,7 +992,7 @@
           </div>
           <div class="itemActions">
             <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
-            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">Apri mixer</button>
+            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">ON</button>
             <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
           </div>
         </div>
@@ -1164,17 +1065,16 @@
     function fillParamsInEditor(params){
       const map = {};
       (params || []).forEach(p => { map[p.key] = p.value; });
-
-      document.getElementById("param_ph_start").value = map.ph_start ?? map.ph_iniziale ?? "";
-      document.getElementById("param_ph_end").value = map.ph_end ?? map.ph_finale ?? "";
-      document.getElementById("param_og").value = map.og ?? "";
-      document.getElementById("param_fg").value = map.fg ?? "";
-      document.getElementById("param_abv").value = map.abv ?? "";
-      document.getElementById("param_temp").value = map.temp ?? "";
-      document.getElementById("param_co2").value = map.co2 ?? "";
-      document.getElementById("param_srm").value = map.srm ?? "";
-      document.getElementById("param_tonica").value = map.tonica ?? "";
-      document.getElementById("param_tonic_bitter").value = map.tonic_bitter ?? "";
+      document.getElementById("param_ph_start").value = map.param_ph_start ?? map.ph_start ?? "";
+      document.getElementById("param_ph_end").value = map.param_ph_end ?? map.ph_end ?? "";
+      document.getElementById("param_og").value = map.param_og ?? map.og ?? "";
+      document.getElementById("param_fg").value = map.param_fg ?? map.fg ?? "";
+      document.getElementById("param_abv").value = map.param_abv ?? map.abv ?? "";
+      document.getElementById("param_temp").value = map.param_temp ?? map.temp ?? "";
+      document.getElementById("param_co2").value = map.param_co2 ?? map.co2 ?? "";
+      document.getElementById("param_srm").value = map.param_srm ?? map.srm ?? "";
+      document.getElementById("param_tonica").value = map.param_tonica ?? map.tonica ?? "";
+      document.getElementById("param_tonic_bitter").value = map.param_tonic_bitter ?? map.tonic_bitter ?? "";
     }
 
     function openRecipeEditor(id=null){
@@ -1466,7 +1366,7 @@
     function renderMixer(){
       const lot = mixerLot();
       document.getElementById("mixer_title").textContent = lot ? (lot.stage || "READY").toUpperCase() : "XA MIXER";
-      document.getElementById("mixer_sub").textContent = lot ? "Pagina separata solo mixer." : "Apri o crea un lotto.";
+      document.getElementById("mixer_sub").textContent = lot ? "Solo mixer." : "Apri o crea un lotto.";
       document.getElementById("mixer_lot_name").textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
       document.getElementById("mixer_lot_meta").textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${lot.recipeName || "-"} · ${lot.channels.length} canali` : "Apri o crea un lotto.";
       document.getElementById("mixer_badge_type").textContent = "Tipo " + (lot?.type || "-");
@@ -1479,14 +1379,14 @@
           <div class="addSlot">
             <div class="plus">+</div>
             <h3>Nessun lotto</h3>
-            <p>Crea una ricetta, poi un lotto, poi apri il mixer.</p>
+            <p>Crea una ricetta, poi un lotto, poi ON.</p>
           </div>
         `;
         return;
       }
 
       const channels = [...lot.channels];
-      while(channels.length < 18){
+      while(channels.length < 16){
         channels.push({empty:true});
       }
 
@@ -1496,9 +1396,9 @@
             <div class="addSlot">
               <div class="plus">+</div>
               <h3>Slot libero</h3>
-              <p>Aggiungi un canale nuovo.</p>
-              <div class="toolbar" style="margin-top:14px">
-                <button class="btnGold" onclick="openAddChannel()">Nuovo canale</button>
+              <p>Aggiungi un canale.</p>
+              <div class="toolbar" style="margin-top:12px">
+                <button class="btnGold" onclick="openAddChannel()">Nuovo</button>
               </div>
             </div>
           `;
@@ -1537,9 +1437,9 @@
               <button class="miniBtn gold" onclick="nudgeChannel('${ch.id}', 1)">+</button>
             </div>
 
-            <div class="channelButtons" style="margin-top:8px">
-              <button class="miniBtn" onclick="duplicateChannel('${ch.id}')">Duplica</button>
-              <button class="miniBtn" onclick="removeChannel('${ch.id}')">Togli</button>
+            <div class="channelButtons" style="margin-top:6px">
+              <button class="miniBtn" onclick="duplicateChannel('${ch.id}')">Dup</button>
+              <button class="miniBtn" onclick="removeChannel('${ch.id}')">Off</button>
             </div>
           </div>
         `;
@@ -1817,13 +1717,14 @@
         name: "XA TONIC WATER DRY",
         base: "Acqua",
         style: "Tonic dry",
-        culture: "Nessuna / base aromatica",
+        culture: "Base aromatica",
         notes: "Tonica secca, amara, agrumata.",
         ingredients: [
           {category:"botaniche", name:"China", qty:12, unit:"g", note:"Fonte amaro"},
           {category:"botaniche", name:"Genziana", qty:3, unit:"g", note:"Supporto amaro"},
           {category:"frutta", name:"Limone", qty:8, unit:"g", note:"Agrumato"},
-          {category:"frutta", name:"Pompelmo", qty:8, unit:"g", note:"Agrumato amaro"}
+          {category:"frutta", name:"Pompelmo", qty:8, unit:"g", note:"Agrumato amaro"},
+          {category:"fermenti_lattici", name:"Plantarum", qty:1, unit:"g", note:"Test"}
         ],
         params: [
           {key:"ph_start",name:"pH iniziale",type:"Acidità",min:2.5,max:6,step:0.01,value:3.20,unit:"",cat:"acid"},
