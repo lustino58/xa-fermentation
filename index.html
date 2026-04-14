@@ -3,151 +3,154 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>XA Fermentation Pro - Audio Console</title>
+  <title>XA Fermentation Pro Mixer</title>
   <style>
     :root{
-      --bg:#060708;
-      --bg2:#0b0d10;
-      --panel:#12161b;
-      --panel2:#171c22;
-      --panel3:#1d242c;
-      --line:#2b3440;
-      --soft:#8b98a8;
+      --bg:#050608;
+      --bg2:#0b0e12;
+      --panel:#121821;
+      --panel2:#1a222c;
+      --line:#2b3643;
       --text:#eef3f8;
-      --gold:#d1ae67;
-      --gold2:#f0d49b;
-      --red:#ff6666;
-      --green:#4fe08b;
-      --blue:#78b9ff;
-      --amber:#ffcf63;
+      --muted:#93a1b1;
+      --gold:#d4b06a;
+      --gold2:#efd49a;
+      --green:#43db84;
+      --red:#ff6a6a;
+      --amber:#ffc85b;
+      --blue:#72b5ff;
       --shadow:0 18px 40px rgba(0,0,0,.35);
-      --radius:22px;
+      --radius:24px;
     }
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{
-      margin:0;padding:0;color:var(--text);
+      margin:0;padding:0;
       background:
-        radial-gradient(circle at top left, rgba(240,212,155,.08), transparent 25%),
-        radial-gradient(circle at top right, rgba(120,185,255,.06), transparent 20%),
-        linear-gradient(180deg, #050607 0%, #090b0e 100%);
-      font-family: Inter, Arial, sans-serif;
+        radial-gradient(circle at top left, rgba(239,212,154,.08), transparent 25%),
+        radial-gradient(circle at top right, rgba(114,181,255,.06), transparent 22%),
+        linear-gradient(180deg,#050608 0%, #0a0d11 100%);
+      color:var(--text);
+      font-family:Inter,Arial,sans-serif;
     }
-    body{padding-bottom:120px}
+    body{padding-bottom:110px}
     h1,h2,h3,h4,p{margin:0}
     button,input,select,textarea{font:inherit}
     button{cursor:pointer;border:none}
     .app{max-width:1600px;margin:0 auto;padding:14px}
 
     .topbar{
-      position:sticky;top:0;z-index:50;
-      backdrop-filter:blur(14px);
-      background:rgba(7,9,11,.92);
+      position:sticky;top:0;z-index:60;
+      background:rgba(8,10,12,.94);
+      backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(255,255,255,.05);
       margin:-14px -14px 14px;
       padding:14px;
     }
     .topbarInner{
       max-width:1600px;margin:0 auto;
-      display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
     }
-    .brand{display:flex;gap:12px;align-items:center}
+    .brand{display:flex;align-items:center;gap:12px}
     .logo{
-      width:60px;height:60px;border-radius:20px;
+      width:62px;height:62px;border-radius:22px;
       display:grid;place-items:center;
-      font-weight:900;font-size:24px;color:#141414;
-      background:
-        radial-gradient(circle at 30% 30%, #f7e2b4 0%, #d9b877 35%, #8d6a35 68%, #3a2815 100%);
-      box-shadow:inset 0 1px 8px rgba(255,255,255,.2), 0 12px 24px rgba(0,0,0,.35);
+      font-size:24px;font-weight:900;color:#151515;
+      background:radial-gradient(circle at 30% 30%, #f7e5b9 0%, #dab975 35%, #8f6c37 68%, #3b2917 100%);
+      box-shadow:inset 0 1px 8px rgba(255,255,255,.2),0 10px 24px rgba(0,0,0,.35);
     }
-    .brand h1{font-size:26px;letter-spacing:.14em;font-weight:900}
-    .brand p{font-size:12px;color:var(--soft);letter-spacing:.12em;margin-top:4px}
+    .brand h1{font-size:24px;font-weight:900;letter-spacing:.12em}
+    .brand p{margin-top:4px;font-size:12px;color:var(--muted);letter-spacing:.1em}
 
     .topActions{display:flex;gap:8px;flex-wrap:wrap}
-    .btn,.btnGold,.btnDanger,.btnGhost{
-      border-radius:14px;padding:12px 14px;font-weight:800;
-      transition:.15s transform ease,.15s opacity ease;
+    .btn,.btnGold,.btnDanger{
+      border-radius:16px;padding:12px 14px;font-weight:900;
+      transition:.15s transform ease;
       box-shadow:var(--shadow);
     }
-    .btn:active,.btnGold:active,.btnDanger:active,.btnGhost:active{transform:scale(.98)}
-    .btn{background:linear-gradient(180deg,#1f2730,#141920);color:var(--text);border:1px solid var(--line)}
-    .btnGhost{background:rgba(255,255,255,.03);color:var(--text);border:1px solid var(--line)}
+    .btn:active,.btnGold:active,.btnDanger:active{transform:scale(.98)}
+    .btn{
+      background:linear-gradient(180deg,#1f2832,#141a22);
+      color:var(--text);border:1px solid var(--line);
+    }
     .btnGold{
       background:linear-gradient(180deg,var(--gold2),var(--gold));
-      color:#141414;border:1px solid rgba(0,0,0,.08)
+      color:#111;border:1px solid rgba(0,0,0,.1);
     }
     .btnDanger{
-      background:linear-gradient(180deg,#5f2525,#401717);
-      color:#ffd0d0;border:1px solid #703030
+      background:linear-gradient(180deg,#672626,#441919);
+      color:#ffd2d2;border:1px solid #7a3333;
     }
 
-    .consoleShell{
+    .screen{
+      display:none;
+      animation:fadeIn .15s ease;
+    }
+    .screen.active{display:block}
+    @keyframes fadeIn{
+      from{opacity:.4;transform:translateY(4px)}
+      to{opacity:1;transform:none}
+    }
+
+    .card{
+      background:linear-gradient(180deg,#151b23,#10151b);
       border:1px solid rgba(255,255,255,.06);
-      border-radius:28px;
-      overflow:hidden;
+      border-radius:var(--radius);
       box-shadow:var(--shadow);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
-        linear-gradient(180deg, #12171d 0%, #0d1116 100%);
+      overflow:hidden;
     }
-
-    .transportBar{
-      padding:14px;
+    .cardHead{
+      padding:14px 16px;
       border-bottom:1px solid rgba(255,255,255,.05);
-      display:grid;
-      grid-template-columns:1.3fr .9fr .9fr;
-      gap:12px;
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+      background:linear-gradient(180deg,#1b232c,#141a22);
+    }
+    .cardHead h2{font-size:18px;font-weight:900;letter-spacing:.04em}
+    .cardHead p{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+    .cardBody{padding:14px}
+
+    .hero{
+      display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-bottom:14px;
+    }
+    .displayCard{
+      min-height:220px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.01)),
-        linear-gradient(180deg, #171c22 0%, #12171d 100%);
+        radial-gradient(circle at 80% 20%, rgba(114,181,255,.08), transparent 22%),
+        radial-gradient(circle at 10% 10%, rgba(239,212,154,.08), transparent 24%),
+        linear-gradient(180deg,#171f29,#11161d);
     }
+    .masterLabel{
+      color:var(--muted);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    }
+    .masterValue{
+      margin-top:10px;font-size:54px;line-height:.95;font-weight:900;letter-spacing:.06em;
+    }
+    .meta{font-size:12px;color:var(--muted);line-height:1.45}
+    .mt8{margin-top:8px}.mt10{margin-top:10px}.mt12{margin-top:12px}.mt14{margin-top:14px}.mt16{margin-top:16px}
 
-    .transportCard,.meterCard{
-      background:linear-gradient(180deg,#1b2129,#13181e);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
-      min-height:110px;
+    .statusGrid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
     }
+    .statusMini{
+      padding:14px;border-radius:18px;border:1px solid var(--line);
+      background:linear-gradient(180deg,#1d2630,#131922);
+    }
+    .statusMini .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+    .statusMini .v{margin-top:6px;font-size:24px;font-weight:900}
+    .statusMini .s{margin-top:3px;font-size:11px;color:var(--muted)}
 
-    .displayMain{
-      font-size:34px;font-weight:900;letter-spacing:.06em;
-      color:#f7f9fb;
-    }
-    .muted{color:var(--soft)}
-    .tiny{font-size:11px;letter-spacing:.12em;text-transform:uppercase}
-    .transportRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .transportRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 
-    .ledRow{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-    .led{
-      width:14px;height:14px;border-radius:999px;
-      background:#20252b;border:1px solid #2f3741;
-      box-shadow:inset 0 -2px 4px rgba(0,0,0,.4);
-    }
-    .led.on.green{background:radial-gradient(circle,#a2ffd0 0%, #3ed47f 55%, #1a7a42 100%);border-color:#55db8e}
-    .led.on.red{background:radial-gradient(circle,#ffc0c0 0%, #ff6363 55%, #8a2525 100%);border-color:#ff7d7d}
-    .led.on.amber{background:radial-gradient(circle,#ffefb8 0%, #ffcb55 55%, #8d6515 100%);border-color:#ffd56f}
-    .led.on.blue{background:radial-gradient(circle,#cce4ff 0%, #79b8ff 55%, #245a91 100%);border-color:#93c7ff}
-
-    .categoryDock{
-      padding:12px;
-      border-bottom:1px solid rgba(255,255,255,.05);
-      background:linear-gradient(180deg,#13181e,#101419);
-    }
-    .categoryGrid{
-      display:grid;
-      grid-template-columns:repeat(10, minmax(100px, 1fr));
-      gap:10px;
+    .catGrid{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:10px;
     }
     .catBtn{
-      min-height:72px;
+      min-height:76px;
       border-radius:18px;
-      background:
-        linear-gradient(180deg,#202831,#141a20);
-      color:var(--text);
-      border:1px solid var(--line);
-      text-align:left;
       padding:12px;
+      text-align:left;
+      background:linear-gradient(180deg,#222c36,#151c23);
+      color:var(--text);border:1px solid var(--line);
       position:relative;
       overflow:hidden;
     }
@@ -155,347 +158,236 @@
       content:"";
       position:absolute;left:0;right:0;bottom:0;height:4px;
       background:linear-gradient(90deg,var(--gold),var(--gold2));
-      opacity:.9;
     }
     .catBtn b{display:block;font-size:14px}
-    .catBtn span{display:block;color:var(--soft);font-size:11px;margin-top:4px}
+    .catBtn span{display:block;margin-top:4px;color:var(--muted);font-size:11px}
 
-    .workspace{
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      gap:14px;
-      padding:14px;
-      background:linear-gradient(180deg,#0f1318,#0b0f13);
+    .consoleWrap{
+      overflow-x:auto;
+      padding-bottom:8px;
     }
-
-    .leftSide,.rightSide{display:grid;gap:14px}
-
-    .rack{
-      border:1px solid rgba(255,255,255,.06);
+    .mixer{
+      display:flex;gap:12px;align-items:stretch;min-width:1200px;
+    }
+    .channel{
+      width:220px;flex:0 0 220px;
       border-radius:24px;
-      overflow:hidden;
-      background:linear-gradient(180deg,#141920,#0f1318);
-      box-shadow:var(--shadow);
-    }
-    .rackHead{
-      padding:14px 16px;
-      border-bottom:1px solid rgba(255,255,255,.05);
-      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-      background:linear-gradient(180deg,#1a2027,#141920);
-    }
-    .rackHead h2{font-size:18px;font-weight:900;letter-spacing:.04em}
-    .rackBody{padding:14px}
-
-    .stripGrid{
-      display:grid;
-      grid-template-columns:repeat(5, minmax(130px,1fr));
-      gap:12px;
-      align-items:stretch;
-    }
-
-    .strip{
-      border-radius:22px;
       background:
-        linear-gradient(180deg,#252d37 0%, #1a2128 18%, #131920 100%);
-      border:1px solid #2f3945;
-      box-shadow:inset 0 2px 10px rgba(255,255,255,.03), inset 0 -8px 18px rgba(0,0,0,.25);
-      min-height:520px;
+        linear-gradient(180deg,#2a333e 0%, #1d252e 18%, #131921 100%);
+      border:1px solid #33404d;
+      box-shadow:inset 0 2px 10px rgba(255,255,255,.03), inset 0 -10px 18px rgba(0,0,0,.22);
       padding:12px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
       position:relative;
       overflow:hidden;
     }
-    .strip::before{
+    .channel::before{
       content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 25%, transparent 75%, rgba(0,0,0,.15));
+      position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(255,255,255,.03),transparent 28%,transparent 75%,rgba(0,0,0,.12));
       pointer-events:none;
     }
-    .channelName{
-      text-align:center;font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase
+    .chName{
+      text-align:center;font-size:14px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
     }
-    .channelSub{font-size:10px;color:var(--soft);margin-top:4px;text-align:center}
+    .chSub{
+      text-align:center;font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.1em;
+    }
 
     .knob{
-      width:78px;height:78px;border-radius:50%;
-      margin:14px 0 10px;
-      position:relative;
+      width:86px;height:86px;border-radius:50%;
+      margin:14px auto 12px;
       background:
-        radial-gradient(circle at 30% 30%, #4b5662 0%, #303943 32%, #20272f 56%, #151a20 100%);
-      border:2px solid #424d5a;
-      box-shadow:
-        inset 0 2px 10px rgba(255,255,255,.08),
-        inset 0 -8px 14px rgba(0,0,0,.4),
-        0 10px 18px rgba(0,0,0,.28);
+        radial-gradient(circle at 30% 30%, #52606d 0%, #313a45 30%, #1f2630 58%, #141920 100%);
+      border:2px solid #44515f;
+      box-shadow:inset 0 2px 8px rgba(255,255,255,.07), inset 0 -8px 14px rgba(0,0,0,.4), 0 10px 18px rgba(0,0,0,.28);
+      position:relative;
     }
     .knob::after{
       content:"";
-      position:absolute;
-      left:50%;top:10px;transform:translateX(-50%);
+      position:absolute;left:50%;top:10px;transform:translateX(-50%);
       width:8px;height:22px;border-radius:999px;
       background:linear-gradient(180deg,var(--gold2),var(--gold));
-      box-shadow:0 0 8px rgba(240,212,155,.3);
+      box-shadow:0 0 10px rgba(239,212,154,.28);
     }
 
-    .tinyMeter{
-      width:82%;
-      height:10px;
-      border-radius:999px;
-      background:#0c0f12;
-      border:1px solid #2d3640;
-      overflow:hidden;
-      margin-top:8px;
+    .meterTop{
+      width:100%;height:10px;border-radius:999px;
+      background:#0f1318;border:1px solid #36414d;overflow:hidden;
     }
-    .tinyMeterFill{
+    .meterFill{
       height:100%;
-      background:linear-gradient(90deg,#2fd877,#8cffb4);
-      width:45%;
+      background:linear-gradient(90deg,#36d87d,#9cffc3);
+      width:50%;
     }
 
-    .faderZone{
+    .channelMid{
       margin-top:14px;
-      width:100%;
-      display:grid;
-      grid-template-columns:18px 1fr;
-      gap:12px;
-      align-items:stretch;
-      flex:1;
+      display:grid;grid-template-columns:22px 1fr;gap:10px;min-height:320px;
     }
     .vu{
       border-radius:14px;
-      border:1px solid #313a44;
-      background:linear-gradient(180deg,#0d1013,#14181d);
-      padding:6px 4px;
-      display:flex;
-      flex-direction:column-reverse;
-      gap:3px;
-      justify-content:flex-start;
-      align-items:center;
+      border:1px solid #323d49;
+      background:linear-gradient(180deg,#0e1115,#151a20);
+      padding:6px 5px;
+      display:flex;flex-direction:column-reverse;gap:3px;justify-content:flex-start;
     }
-    .vuBar{
-      width:8px;height:14px;border-radius:4px;background:#232932;border:1px solid #303843;
+    .seg{
+      width:10px;height:14px;border-radius:4px;background:#232932;border:1px solid #313843;
     }
-    .vuBar.on.g{background:linear-gradient(180deg,#7effb3,#2dd76f);border-color:#76f6aa}
-    .vuBar.on.a{background:linear-gradient(180deg,#ffe59e,#ffc54a);border-color:#ffd371}
-    .vuBar.on.r{background:linear-gradient(180deg,#ffb0b0,#ff5c5c);border-color:#ff7a7a}
+    .seg.on.g{background:linear-gradient(180deg,#84ffb8,#2cd773);border-color:#7df7b2}
+    .seg.on.a{background:linear-gradient(180deg,#ffe7a8,#ffc74e);border-color:#ffd56f}
+    .seg.on.r{background:linear-gradient(180deg,#ffb9b9,#ff6363);border-color:#ff7c7c}
 
-    .faderTrack{
-      position:relative;
-      border-radius:20px;
-      border:1px solid #313a45;
-      background:
-        linear-gradient(90deg,rgba(255,255,255,.02),rgba(255,255,255,.02)),
-        linear-gradient(180deg,#0e1216,#171c22);
-      padding:14px 0;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      min-height:290px;
+    .faderBox{
+      border-radius:20px;border:1px solid #323d49;
+      background:linear-gradient(180deg,#101419,#181e26);
+      position:relative;padding:14px 0;
+      display:flex;align-items:center;justify-content:center;
     }
-
-    .faderTrack input[type=range]{
-      -webkit-appearance:none;
-      appearance:none;
-      width:260px;
-      height:32px;
-      transform:rotate(-90deg);
+    .faderBox input[type=range]{
+      -webkit-appearance:none;appearance:none;
+      width:300px;height:34px;transform:rotate(-90deg);
       background:transparent;
     }
-    .faderTrack input[type=range]::-webkit-slider-runnable-track{
-      height:12px;border-radius:999px;border:1px solid #36404b;
-      background:linear-gradient(90deg,#1d232a,#0f1317);
+    .faderBox input[type=range]::-webkit-slider-runnable-track{
+      height:12px;border-radius:999px;border:1px solid #394552;
+      background:linear-gradient(90deg,#1c232b,#0f1317);
     }
-    .faderTrack input[type=range]::-webkit-slider-thumb{
-      -webkit-appearance:none;
-      appearance:none;
-      width:44px;height:26px;border-radius:10px;
-      margin-top:-8px;
-      border:1px solid #687789;
-      background:
-        linear-gradient(180deg,#dce3ea,#98a5b3 48%, #6c7986 49%, #b8c4d0 100%);
-      box-shadow:0 6px 14px rgba(0,0,0,.35), inset 0 1px 2px rgba(255,255,255,.7);
+    .faderBox input[type=range]::-webkit-slider-thumb{
+      -webkit-appearance:none;appearance:none;
+      width:46px;height:28px;margin-top:-9px;border-radius:11px;
+      background:linear-gradient(180deg,#dce5ee,#9fabb8 48%, #6f7b88 49%, #c7d1db 100%);
+      border:1px solid #6b7887;
+      box-shadow:0 7px 14px rgba(0,0,0,.35), inset 0 1px 3px rgba(255,255,255,.7);
     }
-
-    .scaleLabels{
+    .scale{
       position:absolute;right:8px;top:12px;bottom:12px;
       display:flex;flex-direction:column;justify-content:space-between;
-      font-size:10px;color:#98a6b5;font-weight:700;
+      color:#97a4b2;font-size:10px;font-weight:700;
     }
 
-    .stripFoot{
-      width:100%;margin-top:10px;
-      display:grid;gap:8px;
-    }
     .valueBox{
-      width:100%;
-      text-align:center;
-      background:#0f1317;
-      border:1px solid #2f3842;
-      border-radius:12px;
-      padding:10px 8px;
-      font-weight:900;
-      font-size:18px;
-      color:#f7fbff;
+      margin-top:12px;
+      border-radius:14px;border:1px solid #2f3a45;
+      background:#0f1318;
+      padding:12px 10px;text-align:center;
+      font-size:20px;font-weight:900;
     }
-    .miniBtnRow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .miniRow{
+      margin-top:8px;
+      display:grid;grid-template-columns:1fr 1fr;gap:8px;
+    }
     .miniBtn{
-      border-radius:12px;
-      padding:10px 8px;
-      background:linear-gradient(180deg,#1e2630,#141920);
-      color:var(--text);
-      border:1px solid #313b47;
-      font-size:12px;
-      font-weight:800;
+      border-radius:12px;padding:10px 8px;
+      background:linear-gradient(180deg,#1f2832,#141a22);
+      color:var(--text);border:1px solid #34404c;font-weight:900;
     }
     .miniBtn.gold{
       background:linear-gradient(180deg,var(--gold2),var(--gold));
-      color:#141414;border-color:#c8a25a
+      color:#111;
     }
 
-    .formGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
     .field{display:flex;flex-direction:column;gap:7px}
-    .field label{font-size:12px;color:var(--soft);font-weight:800;letter-spacing:.05em}
+    .field label{
+      font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.04em;
+    }
     .input,.select,.textarea{
-      width:100%;border-radius:14px;padding:13px 14px;
-      background:#101419;color:var(--text);border:1px solid #313a45;outline:none;
+      width:100%;border-radius:15px;padding:13px 14px;
+      background:#10151b;color:var(--text);
+      border:1px solid #313c48;outline:none;
     }
-    .textarea{min-height:100px;resize:vertical}
+    .textarea{min-height:110px;resize:vertical}
     .input:focus,.select:focus,.textarea:focus{
-      border-color:rgba(240,212,155,.6);
-      box-shadow:0 0 0 3px rgba(240,212,155,.1);
+      border-color:rgba(239,212,154,.65);
+      box-shadow:0 0 0 3px rgba(239,212,154,.1);
     }
 
-    .statusCards{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-    }
-    .statusCard{
+    .list{display:grid;gap:10px}
+    .item{
       border-radius:18px;
       padding:14px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg,#1a2128,#11161b);
+      background:linear-gradient(180deg,#1a222b,#12171d);
+      border:1px solid #2f3944;
     }
-    .statusCard .k{font-size:11px;color:var(--soft);text-transform:uppercase;letter-spacing:.12em}
-    .statusCard .v{font-size:28px;font-weight:900;margin-top:6px}
-    .statusCard .s{font-size:11px;color:var(--soft);margin-top:4px}
-
-    .lotList,.libraryList,.sceneList{display:grid;gap:10px}
-    .lotCard,.libCard,.sceneCard{
-      border-radius:18px;
-      padding:14px;
-      background:linear-gradient(180deg,#1b2129,#12171d);
-      border:1px solid #2d3640;
+    .row{
+      display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;
     }
-    .row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
-    .lotTitle{font-size:16px;font-weight:900}
-    .meta{font-size:12px;color:var(--soft);line-height:1.45;margin-top:5px}
-    .badgeRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .itemTitle{font-size:16px;font-weight:900}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     .badge{
-      border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900;
-      border:1px solid #36404a;
-      background:#101419;color:#dfe7ee;
+      padding:7px 10px;border-radius:999px;border:1px solid #36414c;
+      background:#10151a;font-size:11px;font-weight:900;
     }
-    .badge.gold{background:rgba(209,174,103,.12);color:#f0d49b;border-color:rgba(209,174,103,.28)}
-    .badge.green{background:rgba(79,224,139,.12);color:#adffd0;border-color:rgba(79,224,139,.28)}
-    .badge.red{background:rgba(255,102,102,.12);color:#ffc0c0;border-color:rgba(255,102,102,.28)}
-    .badge.blue{background:rgba(120,185,255,.12);color:#d4e9ff;border-color:rgba(120,185,255,.28)}
-    .badge.amber{background:rgba(255,207,99,.12);color:#ffe8af;border-color:rgba(255,207,99,.28)}
+    .badge.gold{background:rgba(212,176,106,.12);border-color:rgba(212,176,106,.28);color:#f0d49a}
+    .badge.green{background:rgba(67,219,132,.12);border-color:rgba(67,219,132,.28);color:#b4ffd1}
+    .badge.red{background:rgba(255,106,106,.12);border-color:rgba(255,106,106,.28);color:#ffc6c6}
+    .badge.blue{background:rgba(114,181,255,.12);border-color:rgba(114,181,255,.28);color:#d6eaff}
+    .badge.amber{background:rgba(255,200,91,.12);border-color:rgba(255,200,91,.28);color:#ffe9b0}
 
-    .scenePad{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:10px;
-    }
-    .sceneBtn{
-      padding:16px 12px;border-radius:18px;
-      border:1px solid #37414d;
-      background:linear-gradient(180deg,#232b34,#141920);
-      color:var(--text);font-weight:900;
-      text-align:center;
+    .empty{
+      padding:18px;border-radius:18px;border:1px dashed #384452;color:var(--muted);text-align:center;
     }
 
-    .bottomDock{
-      position:fixed;left:0;right:0;bottom:0;z-index:60;
-      padding:10px 12px;
-      background:rgba(8,10,12,.94);
+    .bottomTabs{
+      position:fixed;left:0;right:0;bottom:0;z-index:80;
+      background:rgba(8,10,12,.95);
       backdrop-filter:blur(14px);
       border-top:1px solid rgba(255,255,255,.05);
+      padding:10px 12px;
     }
-    .bottomInner{
+    .bottomTabsInner{
       max-width:1600px;margin:0 auto;
       display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
     }
-    .dockBtn{
-      border-radius:16px;padding:12px 10px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg,#1b222a,#12171d);
-      color:var(--soft);font-weight:900;
+    .tabBtn{
+      border-radius:16px;padding:13px 10px;
+      background:linear-gradient(180deg,#1d2630,#131922);
+      color:var(--muted);border:1px solid var(--line);
+      font-weight:900;
     }
-    .dockBtn.active{
+    .tabBtn.active{
       background:linear-gradient(180deg,var(--gold2),var(--gold));
-      color:#121212;border-color:#c6a25c;
+      color:#111;border-color:#c9a45c;
     }
-
-    .panel{display:none}
-    .panel.active{display:block}
 
     .modal{
-      position:fixed;inset:0;z-index:100;
+      position:fixed;inset:0;z-index:120;
       display:none;align-items:flex-end;justify-content:center;
-      padding:14px;background:rgba(0,0,0,.64);
+      background:rgba(0,0,0,.68);padding:14px;
     }
     .modal.show{display:flex}
     .modalBox{
-      width:min(980px,100%);
-      max-height:92vh;overflow:auto;
-      border-radius:26px;
-      border:1px solid rgba(255,255,255,.08);
-      background:linear-gradient(180deg,#171d24,#0f1318);
-      box-shadow:var(--shadow);
+      width:min(940px,100%);max-height:92vh;overflow:auto;
+      border-radius:26px;background:linear-gradient(180deg,#171e25,#0f1419);
+      border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);
     }
     .modalHead{
-      position:sticky;top:0;z-index:3;
-      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      position:sticky;top:0;z-index:2;
+      background:rgba(23,30,37,.96);backdrop-filter:blur(12px);
       padding:16px;border-bottom:1px solid rgba(255,255,255,.05);
-      background:rgba(23,29,36,.95);backdrop-filter:blur(12px);
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
     }
-    .close{
+    .closeBtn{
       width:42px;height:42px;border-radius:14px;
-      border:1px solid var(--line);
-      background:#20262f;color:var(--text);font-weight:900;
+      border:1px solid var(--line);background:#202833;color:var(--text);font-weight:900;
     }
     .modalBody{padding:16px}
 
-    .empty{
-      padding:18px;border-radius:18px;
-      border:1px dashed #394451;color:var(--soft);text-align:center
+    @media (max-width:1200px){
+      .hero,.grid2{grid-template-columns:1fr}
+      .catGrid{grid-template-columns:repeat(3,1fr)}
     }
-
-    @media (max-width:1300px){
-      .workspace{grid-template-columns:1fr}
-      .stripGrid{grid-template-columns:repeat(3, minmax(130px,1fr))}
-      .categoryGrid{grid-template-columns:repeat(5, minmax(100px,1fr))}
-      .transportBar{grid-template-columns:1fr}
-      .scenePad{grid-template-columns:repeat(3,1fr)}
-    }
-    @media (max-width:860px){
-      .stripGrid{grid-template-columns:repeat(2, minmax(130px,1fr))}
-      .statusCards{grid-template-columns:repeat(2,1fr)}
-      .formGrid{grid-template-columns:1fr}
-      .categoryGrid{grid-template-columns:repeat(2, minmax(120px,1fr))}
-      .scenePad{grid-template-columns:repeat(2,1fr)}
-      .bottomInner{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width:560px){
+    @media (max-width:760px){
       .brand h1{font-size:20px}
-      .displayMain{font-size:26px}
-      .stripGrid{grid-template-columns:1fr}
-      .statusCards{grid-template-columns:1fr}
-      .bottomInner{grid-template-columns:1fr}
+      .masterValue{font-size:42px}
+      .statusGrid,.grid3,.bottomTabsInner{grid-template-columns:1fr 1fr}
+      .catGrid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:520px){
+      .statusGrid,.grid3,.bottomTabsInner{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -511,348 +403,351 @@
           </div>
         </div>
         <div class="topActions">
-          <button class="btnGhost" id="demoBtn">Carica demo</button>
+          <button class="btn" id="demoBtn">Carica demo</button>
           <button class="btn" id="exportBtn">Esporta backup</button>
           <button class="btn" id="importBtn">Importa backup</button>
-          <input type="file" id="importFile" accept=".json" style="display:none" />
+          <input type="file" id="importFile" accept=".json" style="display:none">
           <button class="btnGold" id="newLotBtn">+ Nuovo lotto</button>
           <button class="btnDanger" id="resetBtn">Reset</button>
         </div>
       </div>
     </div>
 
-    <div class="consoleShell">
-      <div class="transportBar">
-        <div class="transportCard">
-          <div class="tiny muted">Master display</div>
-          <div class="displayMain" id="masterDisplay">XA CONSOLE READY</div>
+    <section class="screen active" id="screen-console">
+      <div class="hero">
+        <div class="card displayCard">
+          <div class="cardBody">
+            <div class="masterLabel">Master display</div>
+            <div class="masterValue" id="masterDisplay">XA CONSOLE READY</div>
+            <div class="meta mt10" id="masterMeta">Nessun lotto selezionato. Crea un lotto o carica la demo.</div>
+            <div class="transportRow">
+              <button class="btnGold" id="saveSceneBtn">Salva scena</button>
+              <button class="btn" id="stableBtn">Segna stabile</button>
+              <button class="btn" id="bottleBtn">Segna imbottigliato</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardBody">
+            <div class="statusGrid">
+              <div class="statusMini">
+                <div class="k">Lotti</div>
+                <div class="v" id="statLots">0</div>
+                <div class="s">totali</div>
+              </div>
+              <div class="statusMini">
+                <div class="k">Attivi</div>
+                <div class="v" id="statActive">0</div>
+                <div class="s">in lavorazione</div>
+              </div>
+              <div class="statusMini">
+                <div class="k">Tipo</div>
+                <div class="v" id="statType">-</div>
+                <div class="s">lotto attuale</div>
+              </div>
+            </div>
+            <div class="meta mt14" id="currentLotMeta">Seleziona un lotto per pilotare la console.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt14">
+        <div class="cardHead">
+          <div>
+            <p>Librerie rapide</p>
+            <h2>Bottoni ingredienti</h2>
+          </div>
+        </div>
+        <div class="cardBody">
+          <div class="catGrid">
+            <button class="catBtn" data-lib="luppoli"><b>Luppoli</b><span>aromi e amaro</span></button>
+            <button class="catBtn" data-lib="botaniche"><b>Botaniche</b><span>erbe e fiori</span></button>
+            <button class="catBtn" data-lib="lieviti"><b>Lieviti</b><span>ceppi e inoculo</span></button>
+            <button class="catBtn" data-lib="fermenti_lattici"><b>Fermenti lattici</b><span>plantarum e altri</span></button>
+            <button class="catBtn" data-lib="te"><b>Tè</b><span>oolong, bianco, verde</span></button>
+            <button class="catBtn" data-lib="pepe"><b>Pepe</b><span>timut, sichuan, cubebe</span></button>
+            <button class="catBtn" data-lib="frutta"><b>Frutta</b><span>mela, agrumi, altro</span></button>
+            <button class="catBtn" data-lib="zuccheri"><b>Zuccheri</b><span>priming e struttura</span></button>
+            <button class="catBtn" data-lib="nutrienti"><b>Nutrienti</b><span>supporto fermentazione</span></button>
+            <button class="catBtn" data-lib="acidi"><b>Acidi</b><span>pH ed equilibrio</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt14">
+        <div class="cardHead">
+          <div>
+            <p>Vista separata</p>
+            <h2>Console mixer</h2>
+          </div>
+          <div class="meta">Scorri lateralmente per vedere tutti i canali</div>
+        </div>
+        <div class="cardBody">
+          <div class="consoleWrap">
+            <div class="mixer">
+              <div class="channel">
+                <div class="chName">PH</div>
+                <div class="chSub">acidità</div>
+                <div class="knob"></div>
+                <div class="meterTop"><div class="meterFill" id="meterPh"></div></div>
+                <div class="channelMid">
+                  <div class="vu" id="vuPh"></div>
+                  <div class="faderBox">
+                    <input id="faderPh" type="range" min="2.5" max="4.5" step="0.01" value="3.20">
+                    <div class="scale"><span>4.5</span><span>4.0</span><span>3.5</span><span>3.0</span><span>2.5</span></div>
+                  </div>
+                </div>
+                <div class="valueBox" id="valuePh">3.20</div>
+                <div class="miniRow">
+                  <button class="miniBtn" onclick="nudge('ph',-0.05)">-</button>
+                  <button class="miniBtn gold" onclick="nudge('ph',0.05)">+</button>
+                </div>
+              </div>
+
+              <div class="channel">
+                <div class="chName">TEMP</div>
+                <div class="chSub">°c</div>
+                <div class="knob"></div>
+                <div class="meterTop"><div class="meterFill" id="meterTemp"></div></div>
+                <div class="channelMid">
+                  <div class="vu" id="vuTemp"></div>
+                  <div class="faderBox">
+                    <input id="faderTemp" type="range" min="0" max="40" step="0.1" value="22.0">
+                    <div class="scale"><span>40</span><span>30</span><span>20</span><span>10</span><span>0</span></div>
+                  </div>
+                </div>
+                <div class="valueBox" id="valueTemp">22.0°</div>
+                <div class="miniRow">
+                  <button class="miniBtn" onclick="nudge('temp',-0.5)">-</button>
+                  <button class="miniBtn gold" onclick="nudge('temp',0.5)">+</button>
+                </div>
+              </div>
+
+              <div class="channel">
+                <div class="chName">SG</div>
+                <div class="chSub">densità</div>
+                <div class="knob"></div>
+                <div class="meterTop"><div class="meterFill" id="meterSg"></div></div>
+                <div class="channelMid">
+                  <div class="vu" id="vuSg"></div>
+                  <div class="faderBox">
+                    <input id="faderSg" type="range" min="0.995" max="1.080" step="0.001" value="1.010">
+                    <div class="scale"><span>1.080</span><span>1.060</span><span>1.040</span><span>1.020</span><span>0.995</span></div>
+                  </div>
+                </div>
+                <div class="valueBox" id="valueSg">1.010</div>
+                <div class="miniRow">
+                  <button class="miniBtn" onclick="nudge('sg',-0.001)">-</button>
+                  <button class="miniBtn gold" onclick="nudge('sg',0.001)">+</button>
+                </div>
+              </div>
+
+              <div class="channel">
+                <div class="chName">ABV</div>
+                <div class="chSub">stima</div>
+                <div class="knob"></div>
+                <div class="meterTop"><div class="meterFill" id="meterAbv"></div></div>
+                <div class="channelMid">
+                  <div class="vu" id="vuAbv"></div>
+                  <div class="faderBox">
+                    <input id="faderAbv" type="range" min="0" max="12" step="0.1" value="5.0">
+                    <div class="scale"><span>12</span><span>9</span><span>6</span><span>3</span><span>0</span></div>
+                  </div>
+                </div>
+                <div class="valueBox" id="valueAbv">5.0%</div>
+                <div class="miniRow">
+                  <button class="miniBtn" onclick="nudge('abv',-0.1)">-</button>
+                  <button class="miniBtn gold" onclick="nudge('abv',0.1)">+</button>
+                </div>
+              </div>
+
+              <div class="channel">
+                <div class="chName">CO₂</div>
+                <div class="chSub">gasatura</div>
+                <div class="knob"></div>
+                <div class="meterTop"><div class="meterFill" id="meterCo2"></div></div>
+                <div class="channelMid">
+                  <div class="vu" id="vuCo2"></div>
+                  <div class="faderBox">
+                    <input id="faderCo2" type="range" min="0" max="4.5" step="0.1" value="2.5">
+                    <div class="scale"><span>4.5</span><span>3.5</span><span>2.5</span><span>1.5</span><span>0</span></div>
+                  </div>
+                </div>
+                <div class="valueBox" id="valueCo2">2.5 vol</div>
+                <div class="miniRow">
+                  <button class="miniBtn" onclick="nudge('co2',-0.1)">-</button>
+                  <button class="miniBtn gold" onclick="nudge('co2',0.1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-lotti">
+      <div class="card">
+        <div class="cardHead">
+          <div>
+            <p>Archivio</p>
+            <h2>Lotti</h2>
+          </div>
+          <button class="btnGold" onclick="openLotModal()">+ Nuovo lotto</button>
+        </div>
+        <div class="cardBody">
+          <div class="list" id="lotList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-scene">
+      <div class="grid2">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <p>Preset veloci</p>
+              <h2>Scene console</h2>
+            </div>
+          </div>
+          <div class="cardBody">
+            <div class="grid3">
+              <button class="btn" onclick="loadPreset('sidro_secco')">SIDRO SECCO</button>
+              <button class="btn" onclick="loadPreset('sidro_petnat')">SIDRO PÉT-NAT</button>
+              <button class="btn" onclick="loadPreset('lattico_fine')">LATTICO FINE</button>
+              <button class="btn" onclick="loadPreset('sour_mela_te')">MELA + TÈ</button>
+              <button class="btn" onclick="loadPreset('frizzante_soft')">FRIZZANTE SOFT</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <p>Salvate</p>
+              <h2>Scene utente</h2>
+            </div>
+          </div>
+          <div class="cardBody">
+            <div class="list" id="sceneList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-scheda">
+      <div class="card">
+        <div class="cardHead">
+          <div>
+            <p>Canale selezionato</p>
+            <h2>Scheda lotto</h2>
+          </div>
+        </div>
+        <div class="cardBody">
+          <div class="grid2">
+            <div class="field">
+              <label>Nome lotto</label>
+              <input id="lotName" class="input" placeholder="Es. Sidro XA Golden 01">
+            </div>
+            <div class="field">
+              <label>Codice lotto</label>
+              <input id="lotCode" class="input" placeholder="XA-SID-01">
+            </div>
+          </div>
+
+          <div class="grid2 mt12">
+            <div class="field">
+              <label>Tipo</label>
+              <select id="lotType" class="select">
+                <option value="sidro">Sidro</option>
+                <option value="lattico">Fermentato lattico</option>
+                <option value="ibrido">Ibrido</option>
+                <option value="soda">Soda fermentata</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Stato</label>
+              <select id="lotStage" class="select">
+                <option value="programmato">Programmato</option>
+                <option value="primaria">Primaria</option>
+                <option value="secondaria">Secondaria</option>
+                <option value="maturazione">Maturazione</option>
+                <option value="stabile">Stabile</option>
+                <option value="imbottigliato">Imbottigliato</option>
+                <option value="chiuso">Chiuso</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid2 mt12">
+            <div class="field">
+              <label>Volume litri</label>
+              <input id="lotVolume" class="input" type="number" step="0.1" placeholder="20">
+            </div>
+            <div class="field">
+              <label>Data</label>
+              <input id="lotDate" class="input" type="date">
+            </div>
+          </div>
+
+          <div class="grid2 mt12">
+            <div class="field">
+              <label>OG</label>
+              <input id="lotOg" class="input" type="number" step="0.001" placeholder="1.048">
+            </div>
+            <div class="field">
+              <label>FG</label>
+              <input id="lotFg" class="input" type="number" step="0.001" placeholder="1.004">
+            </div>
+          </div>
+
+          <div class="field mt12">
+            <label>Cultura / lievito / fermenti</label>
+            <input id="lotCulture" class="input" placeholder="Hornindal / plantarum / blend">
+          </div>
+
+          <div class="field mt12">
+            <label>Ricetta rapida</label>
+            <textarea id="lotRecipe" class="textarea" placeholder="Mela, tè, botaniche, pepe, zuccheri, nutrienti..."></textarea>
+          </div>
+
+          <div class="field mt12">
+            <label>Note tecniche</label>
+            <textarea id="lotNotes" class="textarea" placeholder="Travaso, acidità, assaggio, osservazioni..."></textarea>
+          </div>
+
           <div class="transportRow">
-            <button class="btnGold" id="saveSceneBtn">Salva scena</button>
-            <button class="btn" id="bottleBtn">Segna imbottigliato</button>
-            <button class="btn" id="stableBtn">Segna stabile</button>
-          </div>
-        </div>
-
-        <div class="meterCard">
-          <div class="tiny muted">Status led</div>
-          <div class="ledRow">
-            <div class="led on green"></div>
-            <div class="led on green"></div>
-            <div class="led on amber"></div>
-            <div class="led on blue"></div>
-            <div class="led on red" id="alertLed"></div>
-          </div>
-          <div class="meta" id="consoleStatusText">Sistema pronto. Nessun lotto selezionato.</div>
-        </div>
-
-        <div class="meterCard">
-          <div class="tiny muted">Lotto selezionato</div>
-          <div class="displayMain" style="font-size:24px" id="selectedLotName">NESSUNO</div>
-          <div class="meta" id="selectedLotMeta">Seleziona o crea un lotto.</div>
-        </div>
-      </div>
-
-      <div class="categoryDock">
-        <div class="categoryGrid">
-          <button class="catBtn" data-lib="luppoli"><b>Luppoli</b><span>aromi / amaro</span></button>
-          <button class="catBtn" data-lib="botaniche"><b>Botaniche</b><span>erbe / fiori</span></button>
-          <button class="catBtn" data-lib="lieviti"><b>Lieviti</b><span>selezioni e ceppi</span></button>
-          <button class="catBtn" data-lib="fermenti_lattici"><b>Fermenti lattici</b><span>plantarum e altri</span></button>
-          <button class="catBtn" data-lib="te"><b>Tè</b><span>oolong / bianco / verde</span></button>
-          <button class="catBtn" data-lib="pepe"><b>Pepe</b><span>timut / sichuan / cubebe</span></button>
-          <button class="catBtn" data-lib="frutta"><b>Frutta</b><span>mela / agrumi / altro</span></button>
-          <button class="catBtn" data-lib="zuccheri"><b>Zuccheri</b><span>priming / struttura</span></button>
-          <button class="catBtn" data-lib="nutrienti"><b>Nutrienti</b><span>fermentazione</span></button>
-          <button class="catBtn" data-lib="acidi"><b>Acidi</b><span>equilibrio / pH</span></button>
-        </div>
-      </div>
-
-      <div class="workspace">
-        <div class="leftSide">
-          <div class="rack panel active" id="panel-console">
-            <div class="rackHead">
-              <div>
-                <h2>Canali mixer fermentazione</h2>
-                <div class="muted tiny">Fader verticali stile banco audio</div>
-              </div>
-              <div class="badgeRow">
-                <span class="badge gold" id="badgeType">Tipo -</span>
-                <span class="badge blue" id="badgeStage">Stato -</span>
-                <span class="badge green" id="badgeABV">ABV -</span>
-              </div>
-            </div>
-            <div class="rackBody">
-              <div class="stripGrid">
-                <div class="strip">
-                  <div class="channelName">PH</div>
-                  <div class="channelSub">Acidità attiva</div>
-                  <div class="knob"></div>
-                  <div class="tinyMeter"><div class="tinyMeterFill" id="meterPh"></div></div>
-                  <div class="faderZone">
-                    <div class="vu" id="vuPh"></div>
-                    <div class="faderTrack">
-                      <input id="faderPh" type="range" min="2.5" max="4.5" step="0.01" value="3.20" />
-                      <div class="scaleLabels">
-                        <span>4.5</span><span>4.0</span><span>3.5</span><span>3.0</span><span>2.5</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="stripFoot">
-                    <div class="valueBox" id="valuePh">3.20</div>
-                    <div class="miniBtnRow">
-                      <button class="miniBtn" onclick="nudgeValue('ph',-0.05)">-</button>
-                      <button class="miniBtn gold" onclick="nudgeValue('ph',0.05)">+</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="strip">
-                  <div class="channelName">TEMP</div>
-                  <div class="channelSub">Temperatura °C</div>
-                  <div class="knob"></div>
-                  <div class="tinyMeter"><div class="tinyMeterFill" id="meterTemp"></div></div>
-                  <div class="faderZone">
-                    <div class="vu" id="vuTemp"></div>
-                    <div class="faderTrack">
-                      <input id="faderTemp" type="range" min="0" max="40" step="0.1" value="22.0" />
-                      <div class="scaleLabels">
-                        <span>40</span><span>30</span><span>20</span><span>10</span><span>0</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="stripFoot">
-                    <div class="valueBox" id="valueTemp">22.0°</div>
-                    <div class="miniBtnRow">
-                      <button class="miniBtn" onclick="nudgeValue('temp',-0.5)">-</button>
-                      <button class="miniBtn gold" onclick="nudgeValue('temp',0.5)">+</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="strip">
-                  <div class="channelName">SG</div>
-                  <div class="channelSub">Densità finale</div>
-                  <div class="knob"></div>
-                  <div class="tinyMeter"><div class="tinyMeterFill" id="meterSg"></div></div>
-                  <div class="faderZone">
-                    <div class="vu" id="vuSg"></div>
-                    <div class="faderTrack">
-                      <input id="faderSg" type="range" min="0.995" max="1.080" step="0.001" value="1.010" />
-                      <div class="scaleLabels">
-                        <span>1.080</span><span>1.060</span><span>1.040</span><span>1.020</span><span>0.995</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="stripFoot">
-                    <div class="valueBox" id="valueSg">1.010</div>
-                    <div class="miniBtnRow">
-                      <button class="miniBtn" onclick="nudgeValue('sg',-0.001)">-</button>
-                      <button class="miniBtn gold" onclick="nudgeValue('sg',0.001)">+</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="strip">
-                  <div class="channelName">ABV</div>
-                  <div class="channelSub">Stima alcolica</div>
-                  <div class="knob"></div>
-                  <div class="tinyMeter"><div class="tinyMeterFill" id="meterAbv"></div></div>
-                  <div class="faderZone">
-                    <div class="vu" id="vuAbv"></div>
-                    <div class="faderTrack">
-                      <input id="faderAbv" type="range" min="0" max="12" step="0.1" value="5.0" />
-                      <div class="scaleLabels">
-                        <span>12</span><span>9</span><span>6</span><span>3</span><span>0</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="stripFoot">
-                    <div class="valueBox" id="valueAbv">5.0%</div>
-                    <div class="miniBtnRow">
-                      <button class="miniBtn" onclick="nudgeValue('abv',-0.1)">-</button>
-                      <button class="miniBtn gold" onclick="nudgeValue('abv',0.1)">+</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="strip">
-                  <div class="channelName">CO₂</div>
-                  <div class="channelSub">Target gasatura</div>
-                  <div class="knob"></div>
-                  <div class="tinyMeter"><div class="tinyMeterFill" id="meterCo2"></div></div>
-                  <div class="faderZone">
-                    <div class="vu" id="vuCo2"></div>
-                    <div class="faderTrack">
-                      <input id="faderCo2" type="range" min="0" max="4.5" step="0.1" value="2.5" />
-                      <div class="scaleLabels">
-                        <span>4.5</span><span>3.5</span><span>2.5</span><span>1.5</span><span>0</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="stripFoot">
-                    <div class="valueBox" id="valueCo2">2.5 vol</div>
-                    <div class="miniBtnRow">
-                      <button class="miniBtn" onclick="nudgeValue('co2',-0.1)">-</button>
-                      <button class="miniBtn gold" onclick="nudgeValue('co2',0.1)">+</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="rack panel" id="panel-lotti">
-            <div class="rackHead">
-              <div>
-                <h2>Lotti</h2>
-                <div class="muted tiny">Archivio produzione</div>
-              </div>
-              <button class="btnGold" onclick="openLotModal()">+ Nuovo lotto</button>
-            </div>
-            <div class="rackBody">
-              <div class="statusCards" style="margin-bottom:14px">
-                <div class="statusCard"><div class="k">Lotti</div><div class="v" id="statLots">0</div><div class="s">totali</div></div>
-                <div class="statusCard"><div class="k">Attivi</div><div class="v" id="statActive">0</div><div class="s">in lavoro</div></div>
-                <div class="statusCard"><div class="k">Sidro</div><div class="v" id="statCider">0</div><div class="s">lotti</div></div>
-                <div class="statusCard"><div class="k">Lattici</div><div class="v" id="statLactic">0</div><div class="s">lotti</div></div>
-              </div>
-              <div class="lotList" id="lotList"></div>
-            </div>
-          </div>
-
-          <div class="rack panel" id="panel-scene">
-            <div class="rackHead">
-              <div>
-                <h2>Scene banco audio</h2>
-                <div class="muted tiny">Preset di controllo</div>
-              </div>
-            </div>
-            <div class="rackBody">
-              <div class="scenePad">
-                <button class="sceneBtn" onclick="loadScenePreset('sidro_secco')">SIDRO SECCO</button>
-                <button class="sceneBtn" onclick="loadScenePreset('sidro_petnat')">SIDRO PÉT-NAT</button>
-                <button class="sceneBtn" onclick="loadScenePreset('lattico_fine')">LATTICO FINE DINING</button>
-                <button class="sceneBtn" onclick="loadScenePreset('sour_mela_te')">MELA + TÈ</button>
-                <button class="sceneBtn" onclick="loadScenePreset('frizzante_soft')">FRIZZANTE SOFT</button>
-              </div>
-              <div class="sceneList" id="sceneList" style="margin-top:14px"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="rightSide">
-          <div class="rack panel active" id="panel-rack">
-            <div class="rackHead">
-              <div>
-                <h2>Canale lotto</h2>
-                <div class="muted tiny">Dati del lotto selezionato</div>
-              </div>
-            </div>
-            <div class="rackBody">
-              <div class="formGrid">
-                <div class="field">
-                  <label>Nome lotto</label>
-                  <input id="lotName" class="input" placeholder="Es. Sidro XA Golden 01" />
-                </div>
-                <div class="field">
-                  <label>Codice lotto</label>
-                  <input id="lotCode" class="input" placeholder="XA-SID-01" />
-                </div>
-              </div>
-
-              <div class="formGrid" style="margin-top:12px">
-                <div class="field">
-                  <label>Tipo</label>
-                  <select id="lotType" class="select">
-                    <option value="sidro">Sidro</option>
-                    <option value="lattico">Fermentato lattico</option>
-                    <option value="ibrido">Ibrido</option>
-                    <option value="soda">Soda fermentata</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label>Stato</label>
-                  <select id="lotStage" class="select">
-                    <option value="programmato">Programmato</option>
-                    <option value="primaria">Primaria</option>
-                    <option value="secondaria">Secondaria</option>
-                    <option value="maturazione">Maturazione</option>
-                    <option value="stabile">Stabile</option>
-                    <option value="imbottigliato">Imbottigliato</option>
-                    <option value="chiuso">Chiuso</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="formGrid" style="margin-top:12px">
-                <div class="field">
-                  <label>Volume litri</label>
-                  <input id="lotVolume" class="input" type="number" step="0.1" placeholder="20" />
-                </div>
-                <div class="field">
-                  <label>Data</label>
-                  <input id="lotDate" class="input" type="date" />
-                </div>
-              </div>
-
-              <div class="formGrid" style="margin-top:12px">
-                <div class="field">
-                  <label>OG</label>
-                  <input id="lotOg" class="input" type="number" step="0.001" placeholder="1.048" />
-                </div>
-                <div class="field">
-                  <label>FG</label>
-                  <input id="lotFg" class="input" type="number" step="0.001" placeholder="1.004" />
-                </div>
-              </div>
-
-              <div class="field" style="margin-top:12px">
-                <label>Cultura / lievito / fermenti</label>
-                <input id="lotCulture" class="input" placeholder="Hornindal / plantarum / blend..." />
-              </div>
-
-              <div class="field" style="margin-top:12px">
-                <label>Ingredienti / ricetta rapida</label>
-                <textarea id="lotRecipe" class="textarea" placeholder="Mela, botaniche, tè, nutrienti, pepe, frutta..."></textarea>
-              </div>
-
-              <div class="field" style="margin-top:12px">
-                <label>Note tecniche</label>
-                <textarea id="lotNotes" class="textarea" placeholder="Osservazioni, travaso, acidità, gasatura, struttura..."></textarea>
-              </div>
-
-              <div class="transportRow" style="margin-top:14px">
-                <button class="btnGold" id="saveLotBtn">Salva lotto</button>
-                <button class="btn" id="newBlankBtn">Nuovo bianco</button>
-                <button class="btnDanger" id="deleteLotBtn">Elimina lotto</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="rack panel active" id="panel-library">
-            <div class="rackHead">
-              <div>
-                <h2>Libreria ingredienti</h2>
-                <div class="muted tiny">Bottone rapido per categorie</div>
-              </div>
-              <button class="btnGold" id="addLibraryBtn">+ Aggiungi elemento</button>
-            </div>
-            <div class="rackBody">
-              <div class="libraryList" id="libraryPreview"></div>
-            </div>
+            <button class="btnGold" id="saveLotBtn">Salva lotto</button>
+            <button class="btn" id="blankBtn">Nuovo bianco</button>
+            <button class="btnDanger" id="deleteLotBtn">Elimina lotto</button>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="bottomDock">
-      <div class="bottomInner">
-        <button class="dockBtn active" data-panel="console">Console</button>
-        <button class="dockBtn" data-panel="lotti">Lotti</button>
-        <button class="dockBtn" data-panel="scene">Scene</button>
-        <button class="dockBtn" data-panel="rack">Scheda lotto</button>
-        <button class="dockBtn" data-panel="library">Libreria</button>
+    <section class="screen" id="screen-libreria">
+      <div class="card">
+        <div class="cardHead">
+          <div>
+            <p>Database rapido</p>
+            <h2>Librerie ingredienti</h2>
+          </div>
+          <button class="btnGold" id="addLibraryBtn">+ Aggiungi elemento</button>
+        </div>
+        <div class="cardBody">
+          <div class="list" id="libraryPreview"></div>
+        </div>
       </div>
+    </section>
+  </div>
+
+  <div class="bottomTabs">
+    <div class="bottomTabsInner">
+      <button class="tabBtn active" data-screen="console">Console</button>
+      <button class="tabBtn" data-screen="lotti">Lotti</button>
+      <button class="tabBtn" data-screen="scene">Scene</button>
+      <button class="tabBtn" data-screen="scheda">Scheda lotto</button>
+      <button class="tabBtn" data-screen="libreria">Libreria</button>
     </div>
   </div>
 
@@ -861,77 +756,69 @@
       <div class="modalHead">
         <div>
           <h3 id="modalTitle">Titolo</h3>
-          <div class="muted tiny" id="modalSub">Sottotitolo</div>
+          <div class="meta" id="modalSub">Sottotitolo</div>
         </div>
-        <button class="close" onclick="closeModal()">✕</button>
+        <button class="closeBtn" onclick="closeModal()">✕</button>
       </div>
       <div class="modalBody" id="modalBody"></div>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_audio_console_v1";
+    const STORAGE_KEY = "xa_fermentation_mixer_v2";
 
     const libraryDefaults = {
       luppoli: [
-        {name:"Saaz", note:"Nobile, delicato, speziato"},
-        {name:"Hallertau Mittelfrüh", note:"Fine, erbaceo, elegante"},
-        {name:"Styrian Goldings", note:"Speziato, morbido"},
-        {name:"Cascade", note:"Agrumato, floreale"}
+        {name:"Saaz", note:"Nobile, speziato"},
+        {name:"Hallertau Mittelfrüh", note:"Fine, erbaceo"},
+        {name:"Cascade", note:"Agrumato"}
       ],
       botaniche: [
         {name:"Genziana", note:"Amaro profondo"},
-        {name:"China", note:"Quinina / tonic style"},
-        {name:"Lavanda", note:"Floreale intenso"},
+        {name:"China", note:"Profilo tonic"},
+        {name:"Lavanda", note:"Floreale"},
         {name:"Osmanto", note:"Floreale-fruttato"},
-        {name:"Timo", note:"Mediterraneo"},
-        {name:"Coriandolo", note:"Agrumato-speziato"}
+        {name:"Timo", note:"Mediterraneo"}
       ],
       lieviti: [
-        {name:"Hornindal Kveik", note:"Esters tropicali, caldo"},
+        {name:"Hornindal Kveik", note:"Tropicale, caldo"},
         {name:"EC-1118", note:"Pulito, secco"},
-        {name:"SafCider AB-1", note:"Sidro equilibrato"},
-        {name:"US-05", note:"Neutro"}
+        {name:"SafCider", note:"Profilo sidro"}
       ],
       fermenti_lattici: [
-        {name:"Lactobacillus plantarum", note:"Acidificazione pulita"},
-        {name:"L. helveticus", note:"Più rotondo"},
-        {name:"Blend lattico", note:"Profilo complesso"}
+        {name:"L. plantarum", note:"Acidificazione pulita"},
+        {name:"L. helveticus", note:"Più rotondo"}
       ],
       te: [
-        {name:"Oolong", note:"Elegante, ossidato leggero"},
-        {name:"Bianco", note:"Fine, delicato"},
-        {name:"Verde", note:"Fresco, vegetale"},
+        {name:"Oolong", note:"Elegante"},
+        {name:"Bianco", note:"Fine"},
+        {name:"Verde", note:"Fresco"},
         {name:"Jasmine", note:"Floreale"}
       ],
       pepe: [
-        {name:"Timut", note:"Agrumato vibrante"},
-        {name:"Sichuan", note:"Elettrico, aromatico"},
+        {name:"Timut", note:"Agrumato"},
+        {name:"Sichuan", note:"Elettrico"},
         {name:"Cubebe", note:"Balsamico"}
       ],
       frutta: [
-        {name:"Mela Golden", note:"Morbida, dolce"},
-        {name:"Mela Granny", note:"Acida e tesa"},
-        {name:"Pompelmo", note:"Amaro agrumato"},
-        {name:"Limone", note:"Acidità brillante"},
-        {name:"Arancia", note:"Dolce-amara"}
+        {name:"Mela Golden", note:"Morbida"},
+        {name:"Mela Granny", note:"Acida"},
+        {name:"Limone", note:"Brillante"},
+        {name:"Pompelmo", note:"Amaro agrumato"}
       ],
       zuccheri: [
-        {name:"Saccarosio", note:"Priming standard"},
+        {name:"Saccarosio", note:"Priming"},
         {name:"Destrosio", note:"Pulito"},
-        {name:"Miele", note:"Aromatico"},
-        {name:"Sciroppo di mela", note:"Coerente con base"}
+        {name:"Miele", note:"Aromatico"}
       ],
       nutrienti: [
-        {name:"DAP", note:"Azoto assimilabile"},
-        {name:"Nutriente complesso", note:"Supporto fermentazione"},
-        {name:"Nutrient Energy", note:"Fase attiva"}
+        {name:"DAP", note:"Azoto"},
+        {name:"Nutriente complesso", note:"Supporto fermentazione"}
       ],
       acidi: [
         {name:"Acido malico", note:"Profilo mela"},
         {name:"Acido citrico", note:"Brillante"},
-        {name:"Acido lattico", note:"Morbido"},
-        {name:"Acido tartarico", note:"Strutturale"}
+        {name:"Acido lattico", note:"Morbido"}
       ]
     };
 
@@ -939,24 +826,26 @@
       lots: [],
       selectedLotId: null,
       scenes: [],
-      library: libraryDefaults
+      library: JSON.parse(JSON.stringify(libraryDefaults))
     };
 
     let db = loadDB();
 
+    function clone(obj){ return JSON.parse(JSON.stringify(obj)); }
+
     function loadDB(){
       try{
         const raw = localStorage.getItem(STORAGE_KEY);
-        if(!raw) return structuredClone(defaultDB);
+        if(!raw) return clone(defaultDB);
         const parsed = JSON.parse(raw);
         return {
           lots: Array.isArray(parsed.lots) ? parsed.lots : [],
           selectedLotId: parsed.selectedLotId || null,
           scenes: Array.isArray(parsed.scenes) ? parsed.scenes : [],
-          library: parsed.library || structuredClone(libraryDefaults)
+          library: parsed.library || clone(libraryDefaults)
         };
       }catch(e){
-        return structuredClone(defaultDB);
+        return clone(defaultDB);
       }
     }
 
@@ -964,7 +853,7 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
     }
 
-    function uid(prefix="id"){
+    function uid(prefix){
       return prefix + "_" + Math.random().toString(36).slice(2,9);
     }
 
@@ -972,40 +861,49 @@
       return new Date().toISOString().slice(0,10);
     }
 
-    function num(v,d=2){
+    function num(v, d){
       const n = Number(v);
-      return Number.isFinite(n) ? n.toFixed(d) : "0.00";
+      return Number.isFinite(n) ? n.toFixed(d) : Number(0).toFixed(d);
     }
 
     function abvCalc(og, fg){
-      og = Number(og); fg = Number(fg);
-      if(!og || !fg) return 0;
-      return Math.max(0, (og - fg) * 131.25);
+      const a = Number(og), b = Number(fg);
+      if(!a || !b) return 0;
+      return Math.max(0, (a - b) * 131.25);
     }
 
     function currentLot(){
       return db.lots.find(l => l.id === db.selectedLotId) || null;
     }
 
-    function ensureVU(id, activeCount){
+    function switchScreen(name){
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll(".tabBtn").forEach(b => b.classList.remove("active"));
+      document.getElementById("screen-" + name).classList.add("active");
+      document.querySelector('.tabBtn[data-screen="' + name + '"]').classList.add("active");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    function buildVU(id, count){
       const wrap = document.getElementById(id);
       wrap.innerHTML = "";
       for(let i=1;i<=16;i++){
-        const d = document.createElement("div");
-        let cls = "vuBar";
-        if(i <= activeCount){
-          cls += i <= 10 ? " on g" : i <= 13 ? " on a" : " on r";
+        const div = document.createElement("div");
+        div.className = "seg";
+        if(i <= count){
+          if(i <= 10) div.className += " on g";
+          else if(i <= 13) div.className += " on a";
+          else div.className += " on r";
         }
-        d.className = cls;
-        wrap.appendChild(d);
+        wrap.appendChild(div);
       }
     }
 
-    function setMeterFill(id, percent){
+    function setFill(id, percent){
       document.getElementById(id).style.width = Math.max(0, Math.min(100, percent)) + "%";
     }
 
-    function updateFaderDisplays(){
+    function updateMixer(){
       const ph = Number(document.getElementById("faderPh").value);
       const temp = Number(document.getElementById("faderTemp").value);
       const sg = Number(document.getElementById("faderSg").value);
@@ -1018,20 +916,20 @@
       document.getElementById("valueAbv").textContent = num(abv,1) + "%";
       document.getElementById("valueCo2").textContent = num(co2,1) + " vol";
 
-      setMeterFill("meterPh", ((ph-2.5)/(4.5-2.5))*100);
-      setMeterFill("meterTemp", (temp/40)*100);
-      setMeterFill("meterSg", ((sg-0.995)/(1.080-0.995))*100);
-      setMeterFill("meterAbv", (abv/12)*100);
-      setMeterFill("meterCo2", (co2/4.5)*100);
+      setFill("meterPh", ((ph-2.5)/(4.5-2.5))*100);
+      setFill("meterTemp", (temp/40)*100);
+      setFill("meterSg", ((sg-0.995)/(1.080-0.995))*100);
+      setFill("meterAbv", (abv/12)*100);
+      setFill("meterCo2", (co2/4.5)*100);
 
-      ensureVU("vuPh", Math.round(((ph-2.5)/(4.5-2.5))*16));
-      ensureVU("vuTemp", Math.round((temp/40)*16));
-      ensureVU("vuSg", Math.round(((sg-0.995)/(1.080-0.995))*16));
-      ensureVU("vuAbv", Math.round((abv/12)*16));
-      ensureVU("vuCo2", Math.round((co2/4.5)*16));
+      buildVU("vuPh", Math.round(((ph-2.5)/(4.5-2.5))*16));
+      buildVU("vuTemp", Math.round((temp/40)*16));
+      buildVU("vuSg", Math.round(((sg-0.995)/(1.080-0.995))*16));
+      buildVU("vuAbv", Math.round((abv/12)*16));
+      buildVU("vuCo2", Math.round((co2/4.5)*16));
     }
 
-    function nudgeValue(type, delta){
+    function nudge(type, delta){
       const map = {
         ph:"faderPh",
         temp:"faderTemp",
@@ -1040,157 +938,11 @@
         co2:"faderCo2"
       };
       const el = document.getElementById(map[type]);
-      el.value = (Number(el.value) + delta).toFixed(type==="sg"||type==="ph" ? 3 : 1);
-      if(type==="ph") el.value = Number(el.value).toFixed(2);
-      if(type==="sg") el.value = Number(el.value).toFixed(3);
-      updateFaderDisplays();
-    }
-
-    function bindFaders(){
-      ["faderPh","faderTemp","faderSg","faderAbv","faderCo2"].forEach(id=>{
-        document.getElementById(id).addEventListener("input", updateFaderDisplays);
-      });
-      updateFaderDisplays();
-    }
-
-    function renderLots(){
-      const list = document.getElementById("lotList");
-      const active = db.lots.filter(l => !["chiuso"].includes(l.stage));
-      document.getElementById("statLots").textContent = db.lots.length;
-      document.getElementById("statActive").textContent = active.length;
-      document.getElementById("statCider").textContent = db.lots.filter(l=>l.type==="sidro").length;
-      document.getElementById("statLactic").textContent = db.lots.filter(l=>l.type==="lattico").length;
-
-      if(!db.lots.length){
-        list.innerHTML = `<div class="empty">Nessun lotto inserito.</div>`;
-        return;
-      }
-
-      list.innerHTML = db.lots.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).map(l=>{
-        const abv = abvCalc(l.og,l.fg);
-        return `
-          <div class="lotCard">
-            <div class="row">
-              <div>
-                <div class="lotTitle">${l.name || "Lotto senza nome"}</div>
-                <div class="meta">
-                  ${l.code || "-"} · ${l.type || "-"} · ${num(l.volume || 0,1)} L · ${l.date || "-"}<br>
-                  Cultura: ${l.culture || "-"}
-                </div>
-              </div>
-              <div class="badgeRow">
-                <span class="badge gold">${l.stage || "-"}</span>
-                <span class="badge blue">ABV ${abv ? num(abv,1)+"%" : "-"}</span>
-              </div>
-            </div>
-            <div class="badgeRow">
-              <span class="badge green">pH ${num(l.ph || 0,2)}</span>
-              <span class="badge amber">Temp ${num(l.temp || 0,1)}°</span>
-              <span class="badge blue">SG ${num(l.sg || 0,3)}</span>
-              <span class="badge gold">CO₂ ${num(l.co2 || 0,1)}</span>
-            </div>
-            <div class="transportRow">
-              <button class="btnGold" onclick="selectLot('${l.id}')">Apri canale</button>
-              <button class="btn" onclick="duplicateLot('${l.id}')">Duplica</button>
-              <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function renderLibraryPreview(){
-      const wrap = document.getElementById("libraryPreview");
-      const keys = Object.keys(db.library);
-      wrap.innerHTML = keys.map(k=>{
-        const items = db.library[k] || [];
-        return `
-          <div class="libCard">
-            <div class="row">
-              <div>
-                <div class="lotTitle">${prettyKey(k)}</div>
-                <div class="meta">${items.length} elementi in libreria</div>
-              </div>
-              <button class="btn" onclick="openLibraryModal('${k}')">Apri</button>
-            </div>
-            <div class="badgeRow">
-              ${items.slice(0,4).map(i=>`<span class="badge">${i.name}</span>`).join("")}
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function renderScenes(){
-      const wrap = document.getElementById("sceneList");
-      if(!db.scenes.length){
-        wrap.innerHTML = `<div class="empty">Nessuna scena salvata.</div>`;
-        return;
-      }
-      wrap.innerHTML = db.scenes.slice().reverse().map(s=>`
-        <div class="sceneCard">
-          <div class="row">
-            <div>
-              <div class="lotTitle">${s.name}</div>
-              <div class="meta">${s.date}</div>
-            </div>
-            <button class="btnGold" onclick="loadScene('${s.id}')">Carica</button>
-          </div>
-          <div class="badgeRow">
-            <span class="badge green">pH ${num(s.ph,2)}</span>
-            <span class="badge amber">Temp ${num(s.temp,1)}°</span>
-            <span class="badge blue">SG ${num(s.sg,3)}</span>
-            <span class="badge gold">ABV ${num(s.abv,1)}%</span>
-            <span class="badge red">CO₂ ${num(s.co2,1)}</span>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function renderSelectedLot(){
-      const lot = currentLot();
-
-      if(!lot){
-        document.getElementById("selectedLotName").textContent = "NESSUNO";
-        document.getElementById("selectedLotMeta").textContent = "Seleziona o crea un lotto.";
-        document.getElementById("masterDisplay").textContent = "XA CONSOLE READY";
-        document.getElementById("consoleStatusText").textContent = "Sistema pronto. Nessun lotto selezionato.";
-        document.getElementById("badgeType").textContent = "Tipo -";
-        document.getElementById("badgeStage").textContent = "Stato -";
-        document.getElementById("badgeABV").textContent = "ABV -";
-        document.getElementById("alertLed").className = "led on red";
-        clearForm();
-        return;
-      }
-
-      document.getElementById("selectedLotName").textContent = (lot.name || "LOTTO").toUpperCase();
-      document.getElementById("selectedLotMeta").textContent = `${lot.code || "-"} · ${lot.type || "-"} · ${num(lot.volume || 0,1)} L`;
-      document.getElementById("masterDisplay").textContent = (lot.stage || "READY").toUpperCase();
-      document.getElementById("consoleStatusText").textContent = `Lotto selezionato: ${lot.name || "-"} · Cultura: ${lot.culture || "-"}`;
-      document.getElementById("badgeType").textContent = "Tipo " + (lot.type || "-");
-      document.getElementById("badgeStage").textContent = "Stato " + (lot.stage || "-");
-      document.getElementById("badgeABV").textContent = "ABV " + (abvCalc(lot.og, lot.fg) ? num(abvCalc(lot.og, lot.fg),1) + "%" : "-");
-
-      document.getElementById("lotName").value = lot.name || "";
-      document.getElementById("lotCode").value = lot.code || "";
-      document.getElementById("lotType").value = lot.type || "sidro";
-      document.getElementById("lotStage").value = lot.stage || "programmato";
-      document.getElementById("lotVolume").value = lot.volume || "";
-      document.getElementById("lotDate").value = lot.date || today();
-      document.getElementById("lotOg").value = lot.og || "";
-      document.getElementById("lotFg").value = lot.fg || "";
-      document.getElementById("lotCulture").value = lot.culture || "";
-      document.getElementById("lotRecipe").value = lot.recipe || "";
-      document.getElementById("lotNotes").value = lot.notes || "";
-
-      document.getElementById("faderPh").value = lot.ph ?? 3.2;
-      document.getElementById("faderTemp").value = lot.temp ?? 22;
-      document.getElementById("faderSg").value = lot.sg ?? 1.010;
-      document.getElementById("faderAbv").value = lot.abv ?? abvCalc(lot.og, lot.fg) || 0;
-      document.getElementById("faderCo2").value = lot.co2 ?? 2.5;
-      updateFaderDisplays();
-
-      document.getElementById("alertLed").className = lot.ph && Number(lot.ph) < 3 ? "led on red" : "led on blue";
+      let v = Number(el.value) + delta;
+      if(type === "ph") el.value = v.toFixed(2);
+      else if(type === "sg") el.value = v.toFixed(3);
+      else el.value = v.toFixed(1);
+      updateMixer();
     }
 
     function clearForm(){
@@ -1206,465 +958,81 @@
       document.getElementById("lotRecipe").value = "";
       document.getElementById("lotNotes").value = "";
 
-      document.getElementById("faderPh").value = 3.20;
-      document.getElementById("faderTemp").value = 22.0;
-      document.getElementById("faderSg").value = 1.010;
-      document.getElementById("faderAbv").value = 5.0;
-      document.getElementById("faderCo2").value = 2.5;
-      updateFaderDisplays();
+      document.getElementById("faderPh").value = "3.20";
+      document.getElementById("faderTemp").value = "22.0";
+      document.getElementById("faderSg").value = "1.010";
+      document.getElementById("faderAbv").value = "5.0";
+      document.getElementById("faderCo2").value = "2.5";
+      updateMixer();
     }
 
-    function saveCurrentLot(){
-      const data = {
-        id: db.selectedLotId || uid("lot"),
-        name: document.getElementById("lotName").value.trim(),
-        code: document.getElementById("lotCode").value.trim(),
-        type: document.getElementById("lotType").value,
-        stage: document.getElementById("lotStage").value,
-        volume: Number(document.getElementById("lotVolume").value) || 0,
-        date: document.getElementById("lotDate").value || today(),
-        og: document.getElementById("lotOg").value.trim(),
-        fg: document.getElementById("lotFg").value.trim(),
-        culture: document.getElementById("lotCulture").value.trim(),
-        recipe: document.getElementById("lotRecipe").value.trim(),
-        notes: document.getElementById("lotNotes").value.trim(),
-        ph: Number(document.getElementById("faderPh").value),
-        temp: Number(document.getElementById("faderTemp").value),
-        sg: Number(document.getElementById("faderSg").value),
-        abv: Number(document.getElementById("faderAbv").value),
-        co2: Number(document.getElementById("faderCo2").value)
-      };
+    function renderTop(){
+      const lot = currentLot();
+      const active = db.lots.filter(l => l.stage !== "chiuso");
+      document.getElementById("statLots").textContent = db.lots.length;
+      document.getElementById("statActive").textContent = active.length;
+      document.getElementById("statType").textContent = lot ? lot.type : "-";
 
-      if(!data.name){
-        alert("Inserisci il nome del lotto.");
+      if(!lot){
+        document.getElementById("masterDisplay").textContent = "XA CONSOLE READY";
+        document.getElementById("masterMeta").textContent = "Nessun lotto selezionato. Crea un lotto o carica la demo.";
+        document.getElementById("currentLotMeta").textContent = "Seleziona un lotto per pilotare la console.";
         return;
       }
 
-      const idx = db.lots.findIndex(l => l.id === data.id);
-      if(idx >= 0){
-        db.lots[idx] = data;
-      }else{
-        db.lots.unshift(data);
-      }
-
-      db.selectedLotId = data.id;
-      saveDB();
-      renderAll();
-      activatePanel("console");
+      document.getElementById("masterDisplay").textContent = (lot.stage || "READY").toUpperCase();
+      document.getElementById("masterMeta").textContent = (lot.name || "-") + " · " + (lot.code || "-") + " · " + num(lot.volume || 0,1) + " L";
+      document.getElementById("currentLotMeta").textContent = "Cultura: " + (lot.culture || "-") + " · ABV stimato: " + (abvCalc(lot.og, lot.fg) ? num(abvCalc(lot.og, lot.fg),1) + "%" : "-");
     }
 
-    function selectLot(id){
-      db.selectedLotId = id;
-      saveDB();
-      renderAll();
-      activatePanel("console");
-    }
-
-    function duplicateLot(id){
-      const lot = db.lots.find(l => l.id === id);
-      if(!lot) return;
-      const copy = {...lot, id: uid("lot"), name: (lot.name || "Lotto") + " COPY", code: (lot.code || "") + "-COPY"};
-      db.lots.unshift(copy);
-      db.selectedLotId = copy.id;
-      saveDB();
-      renderAll();
-    }
-
-    function deleteLot(id){
-      if(!confirm("Eliminare questo lotto?")) return;
-      db.lots = db.lots.filter(l => l.id !== id);
-      if(db.selectedLotId === id) db.selectedLotId = null;
-      saveDB();
-      renderAll();
-    }
-
-    function loadScenePreset(name){
-      const presets = {
-        sidro_secco:{ph:3.35,temp:18.0,sg:1.004,abv:6.2,co2:2.7},
-        sidro_petnat:{ph:3.25,temp:19.0,sg:1.008,abv:5.8,co2:3.2},
-        lattico_fine:{ph:3.15,temp:23.0,sg:1.006,abv:1.5,co2:2.3},
-        sour_mela_te:{ph:3.05,temp:22.0,sg:1.010,abv:1.2,co2:2.6},
-        frizzante_soft:{ph:3.30,temp:20.0,sg:1.012,abv:4.2,co2:2.2}
-      };
-      const p = presets[name];
-      if(!p) return;
-      document.getElementById("faderPh").value = p.ph;
-      document.getElementById("faderTemp").value = p.temp;
-      document.getElementById("faderSg").value = p.sg;
-      document.getElementById("faderAbv").value = p.abv;
-      document.getElementById("faderCo2").value = p.co2;
-      updateFaderDisplays();
-      document.getElementById("masterDisplay").textContent = "SCENA " + name.replaceAll("_"," ").toUpperCase();
-    }
-
-    function saveScene(){
-      db.scenes.push({
-        id: uid("scene"),
-        name: currentLot()?.name ? "SCENA " + currentLot().name : "SCENA RAPIDA",
-        date: today(),
-        ph: Number(document.getElementById("faderPh").value),
-        temp: Number(document.getElementById("faderTemp").value),
-        sg: Number(document.getElementById("faderSg").value),
-        abv: Number(document.getElementById("faderAbv").value),
-        co2: Number(document.getElementById("faderCo2").value)
-      });
-      saveDB();
-      renderScenes();
-      alert("Scena salvata.");
-    }
-
-    function loadScene(id){
-      const s = db.scenes.find(x => x.id === id);
-      if(!s) return;
-      document.getElementById("faderPh").value = s.ph;
-      document.getElementById("faderTemp").value = s.temp;
-      document.getElementById("faderSg").value = s.sg;
-      document.getElementById("faderAbv").value = s.abv;
-      document.getElementById("faderCo2").value = s.co2;
-      updateFaderDisplays();
-      document.getElementById("masterDisplay").textContent = s.name.toUpperCase();
-      activatePanel("console");
-    }
-
-    function prettyKey(k){
-      return k.replaceAll("_"," ").replace(/\b\w/g, c => c.toUpperCase());
-    }
-
-    function openModal(title, sub, html){
-      document.getElementById("modalTitle").textContent = title;
-      document.getElementById("modalSub").textContent = sub || "";
-      document.getElementById("modalBody").innerHTML = html;
-      document.getElementById("modal").classList.add("show");
-    }
-
-    function closeModal(){
-      document.getElementById("modal").classList.remove("show");
-    }
-
-    function openLibraryModal(key){
-      const items = db.library[key] || [];
-      openModal(
-        prettyKey(key),
-        "Libreria categoria",
-        `
-          <div class="libraryList">
-            ${items.length ? items.map((item, idx)=>`
-              <div class="libCard">
-                <div class="row">
-                  <div>
-                    <div class="lotTitle">${item.name}</div>
-                    <div class="meta">${item.note || "-"}</div>
-                  </div>
-                  <button class="btnDanger" onclick="deleteLibraryItem('${key}', ${idx})">Elimina</button>
-                </div>
-              </div>
-            `).join("") : `<div class="empty">Nessun elemento.</div>`}
-          </div>
-          <div class="formGrid" style="margin-top:14px">
-            <div class="field">
-              <label>Nome nuovo elemento</label>
-              <input id="libName" class="input" placeholder="Es. Timut" />
-            </div>
-            <div class="field">
-              <label>Nota</label>
-              <input id="libNote" class="input" placeholder="Es. agrumato elegante" />
-            </div>
-          </div>
-          <div class="transportRow" style="margin-top:14px">
-            <button class="btnGold" onclick="addLibraryItem('${key}')">Aggiungi</button>
-          </div>
-        `
-      );
-    }
-
-    function addLibraryItem(key){
-      const name = document.getElementById("libName").value.trim();
-      const note = document.getElementById("libNote").value.trim();
-      if(!name) return;
-      db.library[key] = db.library[key] || [];
-      db.library[key].push({name, note});
-      saveDB();
-      openLibraryModal(key);
-      renderLibraryPreview();
-    }
-
-    function deleteLibraryItem(key, idx){
-      db.library[key].splice(idx,1);
-      saveDB();
-      openLibraryModal(key);
-      renderLibraryPreview();
-    }
-
-    function openAddLibraryModal(){
-      openModal(
-        "Aggiungi elemento libreria",
-        "Scegli categoria e inserisci voce",
-        `
-          <div class="formGrid">
-            <div class="field">
-              <label>Categoria</label>
-              <select id="newLibCat" class="select">
-                ${Object.keys(db.library).map(k=>`<option value="${k}">${prettyKey(k)}</option>`).join("")}
-              </select>
-            </div>
-            <div class="field">
-              <label>Nome elemento</label>
-              <input id="newLibName" class="input" placeholder="Es. Lavanda" />
-            </div>
-          </div>
-          <div class="field" style="margin-top:12px">
-            <label>Nota</label>
-            <input id="newLibNote" class="input" placeholder="Es. floreale intenso" />
-          </div>
-          <div class="transportRow" style="margin-top:14px">
-            <button class="btnGold" onclick="confirmAddLibraryGlobal()">Salva elemento</button>
-          </div>
-        `
-      );
-    }
-
-    function confirmAddLibraryGlobal(){
-      const cat = document.getElementById("newLibCat").value;
-      const name = document.getElementById("newLibName").value.trim();
-      const note = document.getElementById("newLibNote").value.trim();
-      if(!name) return;
-      db.library[cat].push({name, note});
-      saveDB();
-      closeModal();
-      renderLibraryPreview();
-    }
-
-    function openLotModal(){
-      openModal(
-        "Nuovo lotto rapido",
-        "Creazione veloce",
-        `
-          <div class="formGrid">
-            <div class="field">
-              <label>Nome lotto</label>
-              <input id="quickLotName" class="input" placeholder="Es. Sidro XA Dry" />
-            </div>
-            <div class="field">
-              <label>Codice lotto</label>
-              <input id="quickLotCode" class="input" placeholder="XA-SID-01" />
-            </div>
-          </div>
-          <div class="formGrid" style="margin-top:12px">
-            <div class="field">
-              <label>Tipo</label>
-              <select id="quickLotType" class="select">
-                <option value="sidro">Sidro</option>
-                <option value="lattico">Fermentato lattico</option>
-                <option value="ibrido">Ibrido</option>
-                <option value="soda">Soda fermentata</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Volume litri</label>
-              <input id="quickLotVolume" class="input" type="number" step="0.1" placeholder="20" />
-            </div>
-          </div>
-          <div class="field" style="margin-top:12px">
-            <label>Cultura</label>
-            <input id="quickLotCulture" class="input" placeholder="Hornindal / plantarum..." />
-          </div>
-          <div class="transportRow" style="margin-top:14px">
-            <button class="btnGold" onclick="createQuickLot()">Crea lotto</button>
-          </div>
-        `
-      );
-    }
-
-    function createQuickLot(){
-      const lot = {
-        id: uid("lot"),
-        name: document.getElementById("quickLotName").value.trim(),
-        code: document.getElementById("quickLotCode").value.trim(),
-        type: document.getElementById("quickLotType").value,
-        stage: "programmato",
-        volume: Number(document.getElementById("quickLotVolume").value) || 0,
-        date: today(),
-        og: "",
-        fg: "",
-        culture: document.getElementById("quickLotCulture").value.trim(),
-        recipe: "",
-        notes: "",
-        ph: 3.2,
-        temp: 22,
-        sg: 1.010,
-        abv: 5.0,
-        co2: 2.5
-      };
-      if(!lot.name) return;
-      db.lots.unshift(lot);
-      db.selectedLotId = lot.id;
-      saveDB();
-      closeModal();
-      renderAll();
-      activatePanel("console");
-    }
-
-    function createBlank(){
-      db.selectedLotId = null;
-      clearForm();
-      document.getElementById("masterDisplay").textContent = "NEW CHANNEL";
-      activatePanel("rack");
-    }
-
-    function setStage(value){
+    function renderForm(){
       const lot = currentLot();
-      if(!lot) return;
-      lot.stage = value;
-      saveDB();
-      renderAll();
-    }
-
-    function exportBackup(){
-      const blob = new Blob([JSON.stringify(db, null, 2)], {type:"application/json"});
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "xa-fermentation-audio-console-backup.json";
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-
-    function importBackup(file){
-      const reader = new FileReader();
-      reader.onload = e => {
-        try{
-          const parsed = JSON.parse(e.target.result);
-          db = {
-            lots: Array.isArray(parsed.lots) ? parsed.lots : [],
-            selectedLotId: parsed.selectedLotId || null,
-            scenes: Array.isArray(parsed.scenes) ? parsed.scenes : [],
-            library: parsed.library || structuredClone(libraryDefaults)
-          };
-          saveDB();
-          renderAll();
-          alert("Backup importato.");
-        }catch(err){
-          alert("File non valido.");
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    function resetAll(){
-      if(!confirm("Cancellare tutti i dati dell'app?")) return;
-      db = structuredClone(defaultDB);
-      saveDB();
-      renderAll();
-    }
-
-    function loadDemo(){
-      db = structuredClone(defaultDB);
-      db.lots = [
-        {
-          id: uid("lot"),
-          name:"SIDRO XA DRY GOLDEN",
-          code:"XA-SID-2604-01",
-          type:"sidro",
-          stage:"primaria",
-          volume:24,
-          date:today(),
-          og:"1.048",
-          fg:"1.006",
-          culture:"Hornindal Kveik",
-          recipe:"Succo mela Golden, nutriente, lieve tannino",
-          notes:"Profilo secco e brillante",
-          ph:3.28,
-          temp:27.5,
-          sg:1.010,
-          abv:5.5,
-          co2:2.7
-        },
-        {
-          id: uid("lot"),
-          name:"LATTICO MELA OOLONG OSMANTO",
-          code:"XA-LAT-2604-01",
-          type:"lattico",
-          stage:"maturazione",
-          volume:18,
-          date:today(),
-          og:"1.022",
-          fg:"1.008",
-          culture:"L. plantarum",
-          recipe:"Succo mela, tè oolong, osmanthus",
-          notes:"Fine dining, acidità pulita",
-          ph:3.14,
-          temp:21.0,
-          sg:1.008,
-          abv:1.8,
-          co2:2.3
-        }
-      ];
-      db.selectedLotId = db.lots[0].id;
-      saveDB();
-      renderAll();
-    }
-
-    function activatePanel(name){
-      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-      document.querySelectorAll(".dockBtn").forEach(b => b.classList.remove("active"));
-
-      if(name === "console"){
-        document.getElementById("panel-console").classList.add("active");
-        document.getElementById("panel-rack").classList.add("active");
-        document.getElementById("panel-library").classList.add("active");
-      } else if(name === "lotti"){
-        document.getElementById("panel-lotti").classList.add("active");
-      } else if(name === "scene"){
-        document.getElementById("panel-scene").classList.add("active");
-      } else if(name === "rack"){
-        document.getElementById("panel-rack").classList.add("active");
-      } else if(name === "library"){
-        document.getElementById("panel-library").classList.add("active");
+      if(!lot){
+        clearForm();
+        return;
       }
 
-      document.querySelector(`.dockBtn[data-panel="${name}"]`)?.classList.add("active");
-      window.scrollTo({top:0, behavior:"smooth"});
+      document.getElementById("lotName").value = lot.name || "";
+      document.getElementById("lotCode").value = lot.code || "";
+      document.getElementById("lotType").value = lot.type || "sidro";
+      document.getElementById("lotStage").value = lot.stage || "programmato";
+      document.getElementById("lotVolume").value = lot.volume || "";
+      document.getElementById("lotDate").value = lot.date || today();
+      document.getElementById("lotOg").value = lot.og || "";
+      document.getElementById("lotFg").value = lot.fg || "";
+      document.getElementById("lotCulture").value = lot.culture || "";
+      document.getElementById("lotRecipe").value = lot.recipe || "";
+      document.getElementById("lotNotes").value = lot.notes || "";
+
+      document.getElementById("faderPh").value = lot.ph != null ? lot.ph : 3.20;
+      document.getElementById("faderTemp").value = lot.temp != null ? lot.temp : 22.0;
+      document.getElementById("faderSg").value = lot.sg != null ? lot.sg : 1.010;
+      document.getElementById("faderAbv").value = lot.abv != null ? lot.abv : (abvCalc(lot.og, lot.fg) || 5.0);
+      document.getElementById("faderCo2").value = lot.co2 != null ? lot.co2 : 2.5;
+      updateMixer();
     }
 
-    function renderAll(){
-      saveDB();
-      renderLots();
-      renderLibraryPreview();
-      renderScenes();
-      renderSelectedLot();
-    }
+    function renderLots(){
+      const wrap = document.getElementById("lotList");
+      if(!db.lots.length){
+        wrap.innerHTML = '<div class="empty">Nessun lotto inserito.</div>';
+        return;
+      }
 
-    document.querySelectorAll(".dockBtn").forEach(btn=>{
-      btn.addEventListener("click", ()=>activatePanel(btn.dataset.panel));
-    });
-
-    document.querySelectorAll(".catBtn").forEach(btn=>{
-      btn.addEventListener("click", ()=>openLibraryModal(btn.dataset.lib));
-    });
-
-    document.getElementById("saveLotBtn").addEventListener("click", saveCurrentLot);
-    document.getElementById("newBlankBtn").addEventListener("click", createBlank);
-    document.getElementById("deleteLotBtn").addEventListener("click", ()=>{
-      if(!db.selectedLotId) return;
-      deleteLot(db.selectedLotId);
-    });
-
-    document.getElementById("saveSceneBtn").addEventListener("click", saveScene);
-    document.getElementById("bottleBtn").addEventListener("click", ()=>setStage("imbottigliato"));
-    document.getElementById("stableBtn").addEventListener("click", ()=>setStage("stabile"));
-
-    document.getElementById("demoBtn").addEventListener("click", loadDemo);
-    document.getElementById("exportBtn").addEventListener("click", exportBackup);
-    document.getElementById("importBtn").addEventListener("click", ()=>document.getElementById("importFile").click());
-    document.getElementById("importFile").addEventListener("change", e=>{
-      const file = e.target.files[0];
-      if(file) importBackup(file);
-    });
-    document.getElementById("resetBtn").addEventListener("click", resetAll);
-    document.getElementById("newLotBtn").addEventListener("click", openLotModal);
-    document.getElementById("addLibraryBtn").addEventListener("click", openAddLibraryModal);
-
-    bindFaders();
-    renderAll();
-  </script>
-</body>
-</html>
+      wrap.innerHTML = db.lots.slice().sort((a,b)=>new Date(b.date) - new Date(a.date)).map(l => {
+        const abv = abvCalc(l.og, l.fg);
+        return `
+          <div class="item">
+            <div class="row">
+              <div>
+                <div class="itemTitle">${l.name || "Lotto senza nome"}</div>
+                <div class="meta">${l.code || "-"} · ${l.type || "-"} · ${num(l.volume || 0,1)} L · ${l.date || "-"}</div>
+              </div>
+              <div class="badges">
+                <span class="badge gold">${l.stage || "-"}</span>
+                <span class="badge blue">ABV ${abv ? num(abv,1)+"%" : "-"}</span>
+              </div>
+            </div>
+            <div class="badges">
+              <span class="badge green">pH ${num(l.ph || 0,2)}</span>
+              <span class="badge amber">Temp ${num(l.temp || 0,1)}°</span>
