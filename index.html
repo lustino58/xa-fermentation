@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1016" />
+  <title>XA Fermentation</title>
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    :root {
+      --bg: #071018;
+      --bg2: #0a1621;
+      --panel: rgba(170, 190, 210, 0.08);
+      --panel-strong: rgba(220, 235, 255, 0.12);
+      --line: rgba(180, 210, 235, 0.16);
+      --text: #eaf6ff;
+      --muted: #9eb5c9;
+      --ice: #b6e9ff;
+      --blue: #5ebdff;
+      --amber: #f0a54a;
+      --green: #79f0bd;
+      --red: #ff7a88;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:
+      radial-gradient(circle at top, rgba(94,189,255,0.12), transparent 26%),
+      radial-gradient(circle at 80% 15%, rgba(240,165,74,0.10), transparent 20%),
+      linear-gradient(180deg, var(--bg), var(--bg2)); color: var(--text); min-height: 100%; }
+    body { padding: 18px 14px 90px; }
+    .app { max-width: 1180px; margin: 0 auto; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(6,12,18,0.88), rgba(6,12,18,0.52));
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: var(--shadow);
+      border-radius: 24px; padding: 16px 18px; margin-bottom: 18px;
+      display: flex; justify-content: space-between; gap: 10px; align-items: center;
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .xa-badge {
+      width: 54px; height: 54px; border-radius: 18px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(94,189,255,0.12));
+      border: 1px solid rgba(182,233,255,0.25);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 0 25px rgba(94,189,255,0.15);
+      font-size: 1.2rem; font-weight: 800; letter-spacing: .06em;
+    }
+    .brand h1 { margin: 0; font-size: 1.3rem; letter-spacing: .04em; }
+    .brand p { margin: 2px 0 0; color: var(--muted); font-size: .82rem; }
+
+    .top-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn, .chip {
+      border: 1px solid rgba(182,233,255,0.14);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      color: var(--text); border-radius: 16px; padding: 12px 14px;
+      font-weight: 700; letter-spacing: .03em; cursor: pointer;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .btn.primary {
+      background: linear-gradient(180deg, rgba(94,189,255,0.22), rgba(94,189,255,0.12));
+      border-color: rgba(94,189,255,0.34);
+      box-shadow: 0 0 20px rgba(94,189,255,0.14), inset 0 1px 0 rgba(255,255,255,0.14);
+    }
+
+    .hero {
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; margin-bottom: 18px;
+    }
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .hero-left { padding: 24px; position: relative; }
+    .hero-left::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(120deg, rgba(255,255,255,0.08), transparent 24%, transparent 76%, rgba(255,255,255,0.03));
+      opacity: .7;
+    }
+    .eyebrow { color: var(--ice); font-size: .78rem; letter-spacing: .28em; text-transform: uppercase; }
+    .hero-title { margin: 10px 0 6px; font-size: clamp(2rem, 5vw, 3.7rem); line-height: .95; letter-spacing: .04em; }
+    .hero-sub { margin: 0; color: var(--muted); max-width: 54ch; font-size: .98rem; }
+    .hero-metrics { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .metric-pill {
+      padding: 10px 12px; border-radius: 16px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08); color: var(--muted); font-size: .86rem;
+    }
+    .metric-pill b { color: var(--text); }
+
+    .hero-right { padding: 22px; }
+    .section-title { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .section-title h2, .section-title h3 { margin: 0; font-size: 1rem; letter-spacing: .06em; text-transform: uppercase; }
+    .section-title small { color: var(--muted); }
+
+    .gauge-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .gauge {
+      background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.09), rgba(255,255,255,0.03) 58%, rgba(0,0,0,0.18) 64%, rgba(0,0,0,0.32) 100%);
+      border: 1px solid rgba(182,233,255,0.12);
+      border-radius: 22px; padding: 14px;
+    }
+    .dial {
+      position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 50%;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.08) 0 30%, transparent 31%),
+        conic-gradient(from 220deg, rgba(255,122,136,.16), rgba(240,165,74,.20), rgba(121,240,189,.20), rgba(94,189,255,.20), rgba(255,122,136,.16));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 0 35px rgba(0,0,0,0.32), 0 0 18px rgba(94,189,255,0.06);
+      overflow: hidden;
+    }
+    .dial::before {
+      content: ""; position: absolute; inset: 14%; border-radius: 50%;
+      background: radial-gradient(circle at center, #101b25, #060b11 70%);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .needle {
+      position: absolute; left: 50%; top: 50%; width: 42%; height: 4px; transform-origin: 0% 50%;
+      border-radius: 999px; background: linear-gradient(90deg, rgba(255,255,255,0.0), var(--ice));
+      box-shadow: 0 0 12px rgba(182,233,255,0.75);
+    }
+    .dial-cap {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      width: 14px; height: 14px; border-radius: 50%; background: var(--ice); box-shadow: 0 0 18px rgba(182,233,255,.8);
+    }
+    .dial-label {
+      position: absolute; left: 50%; top: 68%; transform: translateX(-50%); text-align: center; z-index: 2;
+    }
+    .dial-label strong { display: block; font-size: 1.2rem; }
+    .dial-label span { color: var(--muted); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; }
+    .gauge-title { margin-top: 10px; display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .82rem; }
+    .gauge-title b { color: var(--text); }
+
+    .status-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0; }
+    .status-card { padding: 18px; min-height: 110px; position: relative; }
+    .status-card h3 { margin: 4px 0 8px; font-size: 1.9rem; }
+    .status-card p { margin: 0; color: var(--muted); }
+    .status-dot {
+      width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px;
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    .content-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; }
+    .calendar-panel, .lots-panel, .recipe-panel, .archive-panel { padding: 20px; }
+
+    .timeline { display: grid; gap: 10px; }
+    .event {
+      display: grid; grid-template-columns: 78px 1fr auto; gap: 12px; align-items: center;
+      padding: 12px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    }
+    .event-time { font-weight: 800; color: var(--ice); }
+    .event small, .muted { color: var(--muted); }
+    .event-tag {
+      padding: 8px 10px; border-radius: 999px; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase;
+      background: rgba(94,189,255,0.1); border: 1px solid rgba(94,189,255,0.18);
+    }
+
+    .lot-list { display: grid; gap: 12px; }
+    .lot-card {
+      padding: 16px; border-radius: 22px; background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.07);
+    }
+    .lot-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+    .lot-top h4 { margin: 0 0 4px; font-size: 1rem; }
+    .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      padding: 7px 10px; border-radius: 999px; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04);
+    }
+    .lot-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+    .stat {
+      padding: 10px; border-radius: 16px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.05);
+    }
+    .stat span { display: block; color: var(--muted); font-size: .72rem; margin-bottom: 4px; }
+    .stat b { font-size: .96rem; }
+
+    .recipe-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .recipe-card {
+      padding: 15px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+      min-height: 110px;
+    }
+    .recipe-card h4 { margin: 0 0 8px; }
+    .recipe-card p { margin: 0; color: var(--muted); font-size: .9rem; }
+
+    .archive-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .archive-table th, .archive-table td { text-align: left; padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .archive-table th { color: var(--muted); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; font-size: .72rem; }
+
+    .fabbar {
+      position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 25;
+      max-width: 1180px; margin: 0 auto;
+    }
+    .fabwrap {
+      display: grid; grid-template-columns: 1.2fr repeat(3, .8fr); gap: 10px;
+      padding: 10px; border-radius: 22px; border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(7,12,18,0.88); backdrop-filter: blur(18px); box-shadow: var(--shadow);
+    }
+
+    .install-note {
+      margin-top: 14px; padding: 14px; border-radius: 18px; color: var(--muted);
+      border: 1px dashed rgba(182,233,255,0.18); background: rgba(255,255,255,0.03);
+    }
+
+    .hidden { display: none; }
+
+    @media (max-width: 980px) {
+      .hero, .content-grid { grid-template-columns: 1fr; }
+      .status-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      body { padding: 12px 12px 100px; }
+      .topbar { flex-direction: column; align-items: stretch; }
+      .gauge-grid, .recipe-grid, .lot-stats { grid-template-columns: 1fr 1fr; }
+      .fabwrap { grid-template-columns: 1fr 1fr; }
+      .event { grid-template-columns: 66px 1fr; }
+      .event-tag { grid-column: 2; justify-self: start; }
+      .status-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar panel">
+      <div class="brand">
+        <div class="xa-badge">XA</div>
+        <div>
+          <h1>XA Fermentation</h1>
+          <p>Control panel for cider, tea ferments, lactic cultures and experimental batches</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="btn" id="exportBtn">Export JSON</button>
+        <button class="btn" id="importBtn">Import JSON</button>
+        <button class="btn primary" id="installBtn">Install App</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-left panel">
+        <div class="eyebrow">XA Instrument Cluster</div>
+        <h2 class="hero-title">FERMENTATION<br>CONTROL</h2>
+        <p class="hero-sub">Track cider, kombucha, lactic ferments and mixed experiments through a premium dashboard with gauges, live metrics, production steps, calendar events and batch history.</p>
+        <div class="hero-metrics">
+          <div class="metric-pill"><b>5</b> active batches</div>
+          <div class="metric-pill"><b>3</b> tasks today</div>
+          <div class="metric-pill"><b>18</b> archived runs</div>
+          <div class="metric-pill"><b>4</b> culture profiles</div>
+        </div>
+        <div class="install-note" id="installNote">Use <b>Install App</b> to add XA Fermentation to your phone home screen. On hosted PWA pages it behaves like a real installable app.</div>
+      </div>
+
+      <div class="hero-right panel">
+        <div class="section-title">
+          <h2>Live Instruments</h2>
+          <small>Demo values</small>
+        </div>
+        <div class="gauge-grid">
+          <div class="gauge">
+            <div class="dial">
+              <div class="needle" style="transform: rotate(-22deg);"></div>
+              <div class="dial-cap"></div>
+              <div class="dial-label"><strong>3.28</strong><span>pH</span></div>
+            </div>
+            <div class="gauge-title"><b>Acidity</b><span>Stable</span></div>
+          </div>
+          <div class="gauge">
+            <div class="dial">
+              <div class="needle" style="transform: rotate(18deg);"></div>
+              <div class="dial-cap"></div>
+              <div class="dial-label"><strong>1.012</strong><span>Gravity</span></div>
+            </div>
+            <div class="gauge-title"><b>Density</b><span>Dropping</span></div>
+          </div>
+          <div class="gauge">
+            <div class="dial">
+              <div class="needle" style="transform: rotate(44deg);"></div>
+              <div class="dial-cap"></div>
+              <div class="dial-label"><strong>23.6°</strong><span>Temp</span></div>
+            </div>
+            <div class="gauge-title"><b>Temperature</b><span>Warm phase</span></div>
+          </div>
+          <div class="gauge">
+            <div class="dial">
+              <div class="needle" style="transform: rotate(-6deg);"></div>
+              <div class="dial-cap"></div>
+              <div class="dial-label"><strong>0.8</strong><span>Bar</span></div>
+            </div>
+            <div class="gauge-title"><b>Pressure</b><span>Normal</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="status-grid">
+      <div class="panel status-card">
+        <div><span class="status-dot" style="color: var(--green);"></span><small class="muted">Active</small></div>
+        <h3>05</h3>
+        <p>Cider, tea and mixed ferments in progress</p>
+      </div>
+      <div class="panel status-card">
+        <div><span class="status-dot" style="color: var(--blue);"></span><small class="muted">Monitoring</small></div>
+        <h3>03</h3>
+        <p>Batches requiring pH, gravity or temperature checks</p>
+      </div>
+      <div class="panel status-card">
+        <div><span class="status-dot" style="color: var(--amber);"></span><small class="muted">Ready</small></div>
+        <h3>02</h3>
+        <p>Batches near packaging, priming or cold crash</p>
+      </div>
+      <div class="panel status-card">
+        <div><span class="status-dot" style="color: var(--red);"></span><small class="muted">Attention</small></div>
+        <h3>01</h3>
+        <p>One batch outside target window</p>
+      </div>
+    </section>
+
+    <section class="content-grid">
+      <div>
+        <div class="panel calendar-panel" style="margin-bottom: 16px;">
+          <div class="section-title">
+            <h3>Fermentation Calendar</h3>
+            <small>Today</small>
+          </div>
+          <div class="timeline" id="calendarList">
+            <div class="event">
+              <div class="event-time">09:30</div>
+              <div>
+                <div><b>Batch XA-CIDER-021</b> · Check gravity and temperature</div>
+                <small>Apple juice · yeast fermentation day 4</small>
+              </div>
+              <div class="event-tag">Gravity Check</div>
+            </div>
+            <div class="event">
+              <div class="event-time">13:00</div>
+              <div>
+                <div><b>Batch XA-LACTIC-006</b> · Measure pH and sensory note</div>
+                <small>L. plantarum · acidification window</small>
+              </div>
+              <div class="event-tag">pH Control</div>
+            </div>
+            <div class="event">
+              <div class="event-time">18:30</div>
+              <div>
+                <div><b>Batch XA-TEA-004</b> · Add second culture and log notes</div>
+                <small>Tea ferment · mixed cycle</small>
+              </div>
+              <div class="event-tag">Culture Add</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel lots-panel">
+          <div class="section-title">
+            <h3>Recent Batches</h3>
+            <small>Operational view</small>
+          </div>
+          <div class="lot-list" id="lotList"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel recipe-panel" style="margin-bottom: 16px;">
+          <div class="section-title">
+            <h3>Categories</h3>
+            <small>Core modules</small>
+          </div>
+          <div class="recipe-grid">
+            <div class="recipe-card"><h4>Cider</h4><p>Apple juice fermentation, gravity, pH, temperature, packaging and ABV tracking.</p></div>
+            <div class="recipe-card"><h4>Tea Ferments</h4><p>Kombucha and tea-based fermentations with acidification and timing control.</p></div>
+            <div class="recipe-card"><h4>Lactic</h4><p>Plantarum, helveticus and related cultures with pH-centered process logging.</p></div>
+            <div class="recipe-card"><h4>Experimental</h4><p>Mixed cultures, unusual substrates, hybrid cycles and sensory observations.</p></div>
+          </div>
+        </div>
+
+        <div class="panel archive-panel">
+          <div class="section-title">
+            <h3>Archive Snapshot</h3>
+            <small>Latest runs</small>
+          </div>
+          <table class="archive-table">
+            <thead>
+              <tr>
+                <th>Batch</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>XA-CIDER-018</td><td>Cider</td><td>Finished</td></tr>
+              <tr><td>XA-LACTIC-004</td><td>Lactic</td><td>Archived</td></tr>
+              <tr><td>XA-TEA-002</td><td>Tea Ferment</td><td>Finished</td></tr>
+              <tr><td>XA-MIXED-003</td><td>Experimental</td><td>Conditioning</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="fabbar">
+    <div class="fabwrap panel">
+      <button class="btn primary" id="newBatchBtn">+ New Batch</button>
+      <button class="btn">Calendar</button>
+      <button class="btn">Measures</button>
+      <button class="btn">Archive</button>
+    </div>
+  </div>
+
+  <input type="file" id="importFile" accept="application/json" class="hidden" />
+
+  <script>
+    const demoBatches = [
+      {
+        name: 'XA-CIDER-021',
+        type: 'Cider',
+        status: 'Primary Ferment',
+        day: 4,
+        ph: '3.42',
+        gravity: '1.018',
+        temp: '21.8°',
+        culture: 'Yeast'
+      },
+      {
+        name: 'XA-LACTIC-006',
+        type: 'Lactic',
+        status: 'Acidification',
+        day: 2,
+        ph: '3.28',
+        gravity: '1.030',
+        temp: '31.2°',
+        culture: 'L. plantarum'
+      },
+      {
+        name: 'XA-TEA-004',
+        type: 'Tea Ferment',
+        status: 'Mixed Culture',
+        day: 6,
+        ph: '3.10',
+        gravity: '1.012',
+        temp: '24.6°',
+        culture: 'Yeast + SCOBY'
+      }
+    ];
+
+    const lotList = document.getElementById('lotList');
+    const storageKey = 'xaFermentationDataV1';
+
+    function renderBatches(data) {
+      lotList.innerHTML = data.map(batch => `
+        <div class="lot-card">
+          <div class="lot-top">
+            <div>
+              <h4>${batch.name}</h4>
+              <div class="badges">
+                <span class="badge">${batch.type}</span>
+                <span class="badge">${batch.status}</span>
+                <span class="badge">Day ${batch.day}</span>
+              </div>
+            </div>
+            <div class="badge">${batch.culture}</div>
+          </div>
+          <div class="lot-stats">
+            <div class="stat"><span>pH</span><b>${batch.ph}</b></div>
+            <div class="stat"><span>Gravity</span><b>${batch.gravity}</b></div>
+            <div class="stat"><span>Temp</span><b>${batch.temp}</b></div>
+            <div class="stat"><span>Culture</span><b>${batch.culture}</b></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function loadData() {
+      const saved = localStorage.getItem(storageKey);
+      if (!saved) return demoBatches;
+      try {
+        const parsed = JSON.parse(saved);
+        return Array.isArray(parsed.batches) ? parsed.batches : demoBatches;
+      } catch {
+        return demoBatches;
+      }
+    }
+
+    function saveData(batches) {
+      localStorage.setItem(storageKey, JSON.stringify({ batches }, null, 2));
+    }
+
+    const batches = loadData();
+    if (!localStorage.getItem(storageKey)) saveData(demoBatches);
+    renderBatches(batches);
+
+    document.getElementById('newBatchBtn').addEventListener('click', () => {
+      const name = prompt('Batch name:', `XA-${new Date().getFullYear()}-NEW`);
+      if (!name) return;
+      const type = prompt('Type: Cider / Tea Ferment / Lactic / Experimental', 'Cider') || 'Cider';
+      const culture = prompt('Main culture:', 'Yeast') || 'Yeast';
+      const newBatch = {
+        name,
+        type,
+        status: 'New',
+        day: 0,
+        ph: '-',
+        gravity: '-',
+        temp: '-',
+        culture
+      };
+      const current = loadData();
+      current.unshift(newBatch);
+      saveData(current);
+      renderBatches(current);
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const blob = new Blob([localStorage.getItem(storageKey) || JSON.stringify({batches: demoBatches}, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'xa-fermentation-backup.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    const importFile = document.getElementById('importFile');
+    document.getElementById('importBtn').addEventListener('click', () => importFile.click());
+    importFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          if (!Array.isArray(parsed.batches)) throw new Error('Invalid format');
+          saveData(parsed.batches);
+          renderBatches(parsed.batches);
+          alert('Backup imported successfully.');
+        } catch {
+          alert('Invalid JSON backup file.');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    let deferredPrompt = null;
+    const installBtn = document.getElementById('installBtn');
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.classList.add('primary');
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) {
+        alert('To install the app, open this project from a hosted HTTPS page such as GitHub Pages.');
+        return;
+      }
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
