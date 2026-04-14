@@ -2,49 +2,66 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XA Fermentation Ultra Pro Mixer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>XA Fermentation Maximum Mixer</title>
   <style>
     :root{
-      --bg:#06080b;
-      --bg2:#0b1016;
-      --steel:#18202a;
-      --steel2:#232d39;
-      --steel3:#2c3744;
+      --bg:#07090c;
+      --bg2:#0c1117;
+      --steel:#1a222c;
+      --steel2:#25303d;
+      --steel3:#334150;
       --panel:#11171e;
       --panel2:#151c24;
       --line:#3a4756;
-      --line2:#566578;
+      --line2:#556476;
       --text:#eef4fa;
-      --muted:#95a3b4;
-      --gold:#d2ae6d;
-      --gold2:#f0d49b;
-      --green:#59e18f;
-      --red:#ff6d6d;
-      --blue:#7ebcff;
-      --amber:#ffcf69;
+      --muted:#97a4b4;
+      --gold:#d4af6d;
+      --gold2:#f1d59d;
+      --green:#58e08e;
+      --red:#ff6e6e;
+      --blue:#80bcff;
+      --amber:#ffd068;
+      --purple:#b58cff;
+      --teal:#59e0d3;
       --lcd:#97ff7b;
-      --lcd-bg:#0a1608;
+      --lcdbg:#0a1708;
       --shadow:0 18px 40px rgba(0,0,0,.38);
-      --radius:26px;
+      --radius:24px;
+      --cat-tech:#6dc3ff;
+      --cat-acid:#7dfb8e;
+      --cat-sugar:#ffd56f;
+      --cat-bitter:#ff9d6f;
+      --cat-botanical:#d4a4ff;
+      --cat-yeast:#ff7ec7;
+      --cat-lactic:#7effdd;
+      --cat-color:#ffb347;
+      --cat-gas:#c2d1ff;
     }
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{
       margin:0;padding:0;
       background:
-        radial-gradient(circle at 15% 0%, rgba(240,212,155,.06), transparent 22%),
-        radial-gradient(circle at 85% 0%, rgba(126,188,255,.06), transparent 22%),
-        linear-gradient(180deg,#06080b 0%, #0b1016 55%, #090d12 100%);
+        radial-gradient(circle at 10% 0%, rgba(241,213,157,.06), transparent 20%),
+        radial-gradient(circle at 90% 0%, rgba(128,188,255,.06), transparent 20%),
+        linear-gradient(180deg,#06080b 0%, #0b1016 60%, #090d12 100%);
       color:var(--text);
       font-family:Inter,Arial,sans-serif;
     }
-    body{padding-bottom:96px}
+    body{padding-bottom:90px}
     h1,h2,h3,h4,p{margin:0}
     button,input,select,textarea{font:inherit}
     button{cursor:pointer;border:none}
 
-    .app{max-width:1850px;margin:0 auto;padding:14px}
+    .hidden{display:none !important}
+
+    .app{
+      max-width:1900px;
+      margin:0 auto;
+      padding:14px;
+    }
 
     .topbar{
       position:sticky;top:0;z-index:90;
@@ -55,396 +72,51 @@
       border-bottom:1px solid rgba(255,255,255,.05);
     }
     .topbarInner{
-      max-width:1850px;margin:0 auto;
+      max-width:1900px;margin:0 auto;
       display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
     }
+
     .brand{display:flex;gap:14px;align-items:center}
     .logo{
       width:64px;height:64px;border-radius:20px;
       display:grid;place-items:center;
       font-size:25px;font-weight:900;color:#111;
       background:radial-gradient(circle at 30% 30%,#f8e4bc 0%,#d9b774 38%,#8d6a36 70%,#3e2b16 100%);
-      box-shadow:
-        inset 0 2px 8px rgba(255,255,255,.25),
-        inset 0 -8px 16px rgba(0,0,0,.18),
-        0 8px 22px rgba(0,0,0,.35);
+      box-shadow:inset 0 2px 8px rgba(255,255,255,.25),0 8px 22px rgba(0,0,0,.35);
     }
     .brand h1{font-size:24px;font-weight:900;letter-spacing:.14em}
     .brand p{margin-top:4px;font-size:12px;color:var(--muted);letter-spacing:.12em}
 
     .actions{display:flex;gap:8px;flex-wrap:wrap}
-    .btn,.btnGold,.btnDanger{
+    .btn,.btnGold,.btnDanger,.btnMixer{
       border-radius:14px;padding:12px 14px;font-weight:900;
       border:1px solid var(--line);
       box-shadow:var(--shadow);
       transition:.14s transform ease;
     }
-    .btn:active,.btnGold:active,.btnDanger:active{transform:scale(.98)}
+    .btn:active,.btnGold:active,.btnDanger:active,.btnMixer:active{transform:scale(.98)}
     .btn{
       color:var(--text);
-      background:
-        linear-gradient(180deg,#26313e 0%, #1a212b 48%, #141a22 100%);
+      background:linear-gradient(180deg,#26313e 0%, #1a212b 48%, #141a22 100%);
     }
     .btnGold{
       color:#111;
       border-color:#c7a15a;
-      background:
-        linear-gradient(180deg,var(--gold2) 0%, var(--gold) 100%);
+      background:linear-gradient(180deg,var(--gold2) 0%, var(--gold) 100%);
     }
     .btnDanger{
       color:#ffd4d4;
       border-color:#7c3131;
-      background:
-        linear-gradient(180deg,#6d2a2a 0%, #451818 100%);
+      background:linear-gradient(180deg,#6d2a2a 0%, #451818 100%);
+    }
+    .btnMixer{
+      color:#111;
+      border-color:#6de4c7;
+      background:linear-gradient(180deg,#b6fff0 0%, #63e7cd 100%);
     }
 
     .section{display:none}
     .section.active{display:block}
-
-    .consoleShell{
-      position:relative;
-      border-radius:34px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-      border:1px solid rgba(255,255,255,.06);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
-        linear-gradient(180deg,#1b232d 0%, #121820 100%);
-    }
-
-    .consoleScrews .screw{
-      position:absolute;
-      width:18px;height:18px;border-radius:50%;
-      background:
-        radial-gradient(circle at 30% 30%, #d9dee4 0%, #8d99a4 38%, #4e5966 70%, #2a3139 100%);
-      border:1px solid #74808c;
-      box-shadow:inset 0 1px 2px rgba(255,255,255,.4),0 2px 4px rgba(0,0,0,.35);
-      z-index:3;
-    }
-    .consoleScrews .s1{top:12px;left:12px}
-    .consoleScrews .s2{top:12px;right:12px}
-    .consoleScrews .s3{bottom:12px;left:12px}
-    .consoleScrews .s4{bottom:12px;right:12px}
-
-    .consoleTop{
-      padding:18px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      background:
-        linear-gradient(180deg,#222c38 0%, #171e27 55%, #121820 100%);
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      gap:14px;
-    }
-
-    .masterPanel,.infoPanel{
-      border-radius:24px;
-      padding:18px;
-      background:
-        linear-gradient(180deg,#1d2530 0%, #131921 100%);
-      border:1px solid var(--line);
-      position:relative;
-      overflow:hidden;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -10px 20px rgba(0,0,0,.18);
-    }
-
-    .masterPanel::before,.infoPanel::before{
-      content:"";
-      position:absolute;left:0;right:0;top:0;height:1px;
-      background:rgba(255,255,255,.08);
-    }
-
-    .masterLabel{
-      font-size:12px;color:var(--muted);
-      letter-spacing:.14em;text-transform:uppercase;
-    }
-
-    .lcdScreen{
-      margin-top:10px;
-      border-radius:18px;
-      padding:16px 18px;
-      border:1px solid #355530;
-      background:
-        linear-gradient(180deg,#11200f 0%, #0a1608 100%);
-      box-shadow:
-        inset 0 0 24px rgba(151,255,123,.08),
-        inset 0 0 8px rgba(151,255,123,.10),
-        0 0 20px rgba(0,0,0,.18);
-    }
-    .lcdMain{
-      font-size:52px;line-height:.92;font-weight:900;
-      color:var(--lcd);
-      letter-spacing:.04em;
-      text-shadow:0 0 10px rgba(151,255,123,.15);
-    }
-    .lcdSub{
-      color:#b7ff9f;
-      font-size:13px;line-height:1.5;margin-top:8px;
-      opacity:.9;
-    }
-
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-
-    .badgeRow{display:flex;gap:8px;flex-wrap:wrap}
-    .badge{
-      padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;
-      border:1px solid #384554;background:#11161d;color:var(--text);
-    }
-    .badge.gold{background:rgba(211,175,109,.12);color:#f0d49b;border-color:rgba(211,175,109,.28)}
-    .badge.green{background:rgba(89,225,143,.12);color:#b7ffd3;border-color:rgba(89,225,143,.28)}
-    .badge.blue{background:rgba(126,188,255,.12);color:#d8ebff;border-color:rgba(126,188,255,.28)}
-    .badge.red{background:rgba(255,109,109,.12);color:#ffc7c7;border-color:rgba(255,109,109,.28)}
-
-    .smallText{font-size:13px;color:var(--muted);line-height:1.5;margin-top:10px}
-
-    .ledRow{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
-    .led{
-      width:14px;height:14px;border-radius:999px;
-      background:#202733;border:1px solid #374250;
-      box-shadow:inset 0 -2px 4px rgba(0,0,0,.4);
-    }
-    .led.green{background:radial-gradient(circle,#b8ffd5 0%,#45d97d 55%,#1b7a45 100%)}
-    .led.red{background:radial-gradient(circle,#ffc2c2 0%,#ff6565 55%,#8b2929 100%)}
-    .led.amber{background:radial-gradient(circle,#fff0bf 0%,#ffca4d 55%,#8b6518 100%)}
-    .led.blue{background:radial-gradient(circle,#d7e9ff 0%,#7dbbff 55%,#285d92 100%)}
-
-    .mixerHeader{
-      padding:12px 16px;
-      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-      border-bottom:1px solid rgba(255,255,255,.05);
-      background:
-        linear-gradient(180deg,#1a222c 0%, #121820 100%);
-    }
-
-    .mixerViewport{
-      overflow-x:auto;
-      overflow-y:hidden;
-      padding:16px;
-      background:
-        linear-gradient(180deg,#10151b 0%, #0b0f14 100%);
-    }
-    .mixerViewport::-webkit-scrollbar{height:12px}
-    .mixerViewport::-webkit-scrollbar-track{background:#0d1116;border-radius:999px}
-    .mixerViewport::-webkit-scrollbar-thumb{
-      background:linear-gradient(90deg,#2a3442,#4a5a6c);
-      border-radius:999px;
-    }
-
-    .mixerBoard{
-      display:flex;
-      gap:14px;
-      align-items:stretch;
-      min-width:max-content;
-    }
-
-    .channel{
-      width:180px;
-      border-radius:26px;
-      padding:12px;
-      background:
-        linear-gradient(180deg,#334150 0%, #242f3b 18%, #171f28 60%, #121820 100%);
-      border:1px solid #455567;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        inset 0 -14px 22px rgba(0,0,0,.25),
-        0 10px 22px rgba(0,0,0,.22);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .channel::before{
-      content:"";
-      position:absolute;left:0;right:0;top:0;height:44px;
-      background:linear-gradient(180deg,rgba(255,255,255,.06),transparent);
-      pointer-events:none;
-    }
-
-    .stripScrew{
-      position:absolute;
-      width:12px;height:12px;border-radius:50%;
-      background:
-        radial-gradient(circle at 30% 30%, #d9dee4 0%, #8d99a4 38%, #4e5966 70%, #2a3139 100%);
-      border:1px solid #74808c;
-      box-shadow:inset 0 1px 2px rgba(255,255,255,.35),0 2px 4px rgba(0,0,0,.35);
-    }
-    .stripScrew.a{top:8px;left:8px}
-    .stripScrew.b{top:8px;right:8px}
-
-    .channelTop{
-      width:100%;
-      display:flex;justify-content:space-between;align-items:flex-start;gap:8px;
-      margin-bottom:8px;
-      position:relative;z-index:2;
-    }
-
-    .channelNameWrap{flex:1;min-width:0}
-    .channelName{
-      font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    }
-    .channelType{
-      font-size:10px;color:var(--muted);margin-top:4px;
-      text-transform:uppercase;letter-spacing:.1em
-    }
-
-    .tinyIconBtn{
-      width:30px;height:30px;border-radius:10px;
-      background:
-        linear-gradient(180deg,#2b3642 0%, #1a212b 100%);
-      color:#d9e2ec;border:1px solid #4a5868;font-weight:900;
-      box-shadow:0 4px 10px rgba(0,0,0,.2);
-      flex:0 0 auto;
-    }
-
-    .miniLcd{
-      width:100%;
-      border-radius:14px;
-      background:
-        linear-gradient(180deg,#12200f 0%, #0b1508 100%);
-      border:1px solid #355530;
-      padding:10px 8px;
-      text-align:center;
-      box-shadow:inset 0 0 10px rgba(151,255,123,.08);
-      position:relative;z-index:2;
-    }
-    .miniLcd .lbl{
-      font-size:10px;color:#baffab;letter-spacing:.1em;text-transform:uppercase
-    }
-    .miniLcd .val{
-      font-size:20px;font-weight:900;margin-top:3px;color:var(--lcd)
-    }
-
-    .knob{
-      width:76px;height:76px;border-radius:50%;
-      margin:12px 0 10px;
-      background:
-        radial-gradient(circle at 30% 30%,#5a6673 0%,#39434e 32%,#232a33 58%,#151a20 100%);
-      border:2px solid #536172;
-      position:relative;
-      box-shadow:
-        inset 0 2px 10px rgba(255,255,255,.08),
-        inset 0 -8px 14px rgba(0,0,0,.42),
-        0 8px 18px rgba(0,0,0,.28);
-      z-index:2;
-    }
-    .knob::after{
-      content:"";
-      position:absolute;left:50%;top:8px;transform:translateX(-50%);
-      width:8px;height:22px;border-radius:999px;
-      background:linear-gradient(180deg,var(--gold2),var(--gold));
-      box-shadow:0 0 8px rgba(240,212,155,.2);
-    }
-
-    .tinyMeter{
-      width:84%;height:10px;border-radius:999px;
-      background:#0c1014;border:1px solid #2f3a47;overflow:hidden;
-      margin-bottom:10px;z-index:2;
-    }
-    .tinyFill{
-      height:100%;width:0%;
-      background:linear-gradient(90deg,#32d777,#9dffbf);
-    }
-
-    .faderWrap{
-      width:100%;flex:1;
-      display:grid;grid-template-columns:20px 1fr;gap:10px;
-      align-items:stretch;
-      z-index:2;
-    }
-
-    .vu{
-      border-radius:14px;border:1px solid #344250;
-      background:
-        linear-gradient(180deg,#0d1116 0%, #141a22 100%);
-      padding:6px 4px;
-      display:flex;flex-direction:column-reverse;gap:3px;align-items:center;
-    }
-    .vuSeg{
-      width:8px;height:14px;border-radius:4px;
-      background:#242c35;border:1px solid #313b46;
-    }
-    .vuSeg.g{background:linear-gradient(180deg,#8dffba,#31d872)}
-    .vuSeg.a{background:linear-gradient(180deg,#ffe5a0,#ffc74d)}
-    .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
-
-    .track{
-      border-radius:22px;border:1px solid #364352;
-      background:
-        linear-gradient(180deg,#0f1419 0%, #181f27 100%);
-      min-height:306px;
-      display:flex;justify-content:center;align-items:center;
-      position:relative;padding:14px 0;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -10px 20px rgba(0,0,0,.18);
-    }
-    .track::before{
-      content:"";
-      position:absolute;top:16px;bottom:16px;left:50%;transform:translateX(-50%);
-      width:8px;border-radius:999px;background:#11161c;border:1px solid #2f3944;
-    }
-
-    .track input[type=range]{
-      -webkit-appearance:none;appearance:none;
-      width:284px;height:32px;transform:rotate(-90deg);background:transparent;
-      position:relative;z-index:2;
-    }
-    .track input[type=range]::-webkit-slider-runnable-track{
-      height:12px;border-radius:999px;
-      background:linear-gradient(90deg,#1b2129,#10141a);
-      border:1px solid #394655;
-    }
-    .track input[type=range]::-webkit-slider-thumb{
-      -webkit-appearance:none;appearance:none;
-      width:52px;height:28px;border-radius:10px;margin-top:-8px;
-      border:1px solid #6a7888;
-      background:
-        linear-gradient(180deg,#ecf2f8 0%, #a8b4bf 46%, #717d89 47%, #d2dce5 100%);
-      box-shadow:
-        0 6px 14px rgba(0,0,0,.35),
-        inset 0 1px 2px rgba(255,255,255,.78);
-    }
-
-    .channelButtons{
-      width:100%;
-      display:grid;grid-template-columns:1fr 1fr;gap:8px;
-      margin-top:10px;
-      z-index:2;
-    }
-
-    .miniBtn{
-      border-radius:12px;padding:10px 8px;font-size:12px;font-weight:900;
-      background:
-        linear-gradient(180deg,#2a3441 0%, #181f28 100%);
-      color:var(--text);border:1px solid #475566;
-      box-shadow:0 4px 10px rgba(0,0,0,.18);
-    }
-    .miniBtn.gold{
-      background:linear-gradient(180deg,var(--gold2),var(--gold));
-      color:#111;border-color:#c7a15a
-    }
-
-    .addChannelCard{
-      width:188px;
-      border-radius:26px;
-      padding:16px;
-      background:
-        linear-gradient(180deg,#2a3440 0%, #171f28 100%);
-      border:1px dashed #526172;
-      display:flex;flex-direction:column;justify-content:center;align-items:center;
-      text-align:center;
-      min-height:590px;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -10px 18px rgba(0,0,0,.18);
-    }
-    .addChannelCard .plus{
-      width:88px;height:88px;border-radius:26px;
-      display:grid;place-items:center;
-      font-size:44px;font-weight:900;color:#111;
-      background:linear-gradient(180deg,var(--gold2),var(--gold));
-      box-shadow:var(--shadow);
-    }
-    .addChannelCard h3{font-size:20px;font-weight:900;margin-top:14px}
-    .addChannelCard p{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
 
     .page{display:grid;gap:14px}
     .layout2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -463,6 +135,7 @@
       background:linear-gradient(180deg,#1c2430,#141b24);
     }
     .cardHead h2{font-size:18px;font-weight:900;letter-spacing:.04em}
+    .sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
     .cardBody{padding:14px}
 
     .formGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
@@ -484,9 +157,41 @@
     .meta{font-size:12px;color:var(--muted);line-height:1.5;margin-top:5px}
     .itemActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 
+    .badgeRow{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{
+      padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;
+      border:1px solid #384554;background:#11161d;color:var(--text);
+    }
+    .badge.gold{background:rgba(211,175,109,.12);color:#f0d49b;border-color:rgba(211,175,109,.28)}
+    .badge.green{background:rgba(89,225,143,.12);color:#b7ffd3;border-color:rgba(89,225,143,.28)}
+    .badge.blue{background:rgba(126,188,255,.12);color:#d8ebff;border-color:rgba(126,188,255,.28)}
+    .badge.red{background:rgba(255,109,109,.12);color:#ffc7c7;border-color:rgba(255,109,109,.28)}
+
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+    .dock{
+      position:fixed;left:0;right:0;bottom:0;z-index:100;
+      padding:10px 12px;background:rgba(8,10,13,.95);
+      backdrop-filter:blur(14px);
+      border-top:1px solid rgba(255,255,255,.05);
+    }
+    .dockInner{
+      max-width:1900px;margin:0 auto;
+      display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
+    }
+    .dockBtn{
+      border-radius:16px;padding:12px 10px;font-weight:900;
+      background:linear-gradient(180deg,#1b2330,#121821);
+      color:var(--muted);border:1px solid var(--line);
+    }
+    .dockBtn.active{
+      background:linear-gradient(180deg,var(--gold2),var(--gold));
+      color:#111;border-color:#c7a15a
+    }
+
     .modal{
-      position:fixed;inset:0;z-index:110;
-      background:rgba(0,0,0,.70);
+      position:fixed;inset:0;z-index:120;
+      background:rgba(0,0,0,.72);
       display:none;align-items:flex-end;justify-content:center;padding:14px;
     }
     .modal.show{display:flex}
@@ -506,51 +211,419 @@
       border:1px solid var(--line);font-weight:900;
     }
 
-    .dock{
-      position:fixed;left:0;right:0;bottom:0;z-index:100;
-      padding:10px 12px;
-      background:rgba(8,10,13,.95);
-      backdrop-filter:blur(14px);
-      border-top:1px solid rgba(255,255,255,.05);
-    }
-    .dockInner{
-      max-width:1850px;margin:0 auto;
-      display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
-    }
-    .dockBtn{
-      border-radius:16px;padding:12px 10px;font-weight:900;
-      background:linear-gradient(180deg,#1b2330,#121821);
-      color:var(--muted);border:1px solid var(--line);
-    }
-    .dockBtn.active{
-      background:linear-gradient(180deg,var(--gold2),var(--gold));
-      color:#111;border-color:#c7a15a
-    }
-
     .empty{
       padding:18px;border-radius:18px;border:1px dashed #3a4552;color:var(--muted);text-align:center
     }
 
+    /* MIXER FULLSCREEN PAGE */
+    #sec-mixer{
+      padding:0;
+      margin:0;
+    }
+
+    .mixerPage{
+      min-height:100vh;
+      background:
+        linear-gradient(180deg,#0a0f14 0%, #070a0f 100%);
+    }
+
+    .mixerTopBar{
+      position:sticky;top:0;z-index:110;
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+      padding:10px 12px;
+      background:rgba(8,11,14,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+
+    .mixerTopLeft,.mixerTopRight{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+    .mixerShell{
+      display:grid;
+      grid-template-columns:260px 1fr 260px;
+      gap:10px;
+      padding:10px;
+      min-height:calc(100vh - 66px);
+    }
+
+    .sideRack{
+      border-radius:22px;
+      background:
+        linear-gradient(180deg,#1a222c 0%, #11171e 100%);
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .sideHead{
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      background:linear-gradient(180deg,#222c38 0%, #171e27 100%);
+    }
+    .sideHead h3{
+      font-size:15px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;
+    }
+    .sideBody{
+      padding:10px;
+      display:grid;
+      gap:8px;
+      overflow:auto;
+    }
+
+    .rackBtn{
+      border-radius:16px;
+      padding:12px;
+      text-align:left;
+      color:var(--text);
+      border:1px solid #425061;
+      background:linear-gradient(180deg,#2b3643 0%, #18202a 100%);
+      font-weight:900;
+    }
+    .rackBtn small{
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
+      margin-top:4px;
+    }
+
+    .rackGroup{
+      border-radius:18px;
+      border:1px solid #334050;
+      overflow:hidden;
+      background:linear-gradient(180deg,#1a212b,#121820);
+    }
+    .rackGroupHead{
+      padding:10px 12px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dce6ef;
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+    .rackGroupBody{
+      padding:8px;
+      display:grid;
+      gap:8px;
+    }
+
+    .centerMixer{
+      border-radius:26px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+        linear-gradient(180deg,#1b232d 0%, #121820 100%);
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+    }
+
+    .consoleHeader{
+      padding:14px;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      background:linear-gradient(180deg,#232d39 0%, #171f28 100%);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .lcdPanel{
+      border-radius:20px;
+      padding:14px;
+      border:1px solid #355530;
+      background:linear-gradient(180deg,#11200f 0%, #0a1608 100%);
+      box-shadow:inset 0 0 18px rgba(151,255,123,.08);
+    }
+    .lcdLabel{
+      font-size:11px;color:#c0ffb0;letter-spacing:.14em;text-transform:uppercase
+    }
+    .lcdMain{
+      font-size:34px;font-weight:900;line-height:1;margin-top:8px;color:var(--lcd);
+      text-shadow:0 0 10px rgba(151,255,123,.15);
+    }
+    .lcdSub{
+      font-size:12px;line-height:1.45;margin-top:8px;color:#c0ffb0;
+      opacity:.92;
+    }
+
+    .abWrap{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      padding:10px 14px 0;
+    }
+    .bankPanel{
+      border-radius:18px;
+      border:1px solid #394756;
+      background:linear-gradient(180deg,#1c2430,#11171e);
+      padding:12px;
+    }
+    .bankPanel.activeA{box-shadow:inset 0 0 0 2px rgba(128,188,255,.25)}
+    .bankPanel.activeB{box-shadow:inset 0 0 0 2px rgba(255,208,104,.25)}
+    .bankTitle{
+      font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase
+    }
+
+    .mixerViewport{
+      flex:1;
+      overflow-x:auto;
+      overflow-y:hidden;
+      padding:14px;
+      background:linear-gradient(180deg,#0f141b,#0b0f14);
+    }
+    .mixerViewport::-webkit-scrollbar{height:12px}
+    .mixerViewport::-webkit-scrollbar-track{background:#0d1116;border-radius:999px}
+    .mixerViewport::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#2a3442,#4a5a6c);border-radius:999px}
+
+    .mixerBoard{
+      display:flex;
+      gap:12px;
+      align-items:stretch;
+      min-width:max-content;
+    }
+
+    .channel{
+      width:170px;
+      border-radius:24px;
+      padding:12px;
+      border:1px solid #455567;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.06),
+        inset 0 -14px 22px rgba(0,0,0,.25),
+        0 10px 22px rgba(0,0,0,.22);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+      color:#f2f7fc;
+    }
+    .channel.tech{background:linear-gradient(180deg,#32516a 0%, #243848 20%, #14202a 100%)}
+    .channel.acid{background:linear-gradient(180deg,#2d5c43 0%, #1d402f 20%, #10261d 100%)}
+    .channel.sugar{background:linear-gradient(180deg,#695732 0%, #4a3d22 20%, #2a2212 100%)}
+    .channel.bitter{background:linear-gradient(180deg,#6f4330 0%, #4b2c1f 20%, #2a1710 100%)}
+    .channel.botanical{background:linear-gradient(180deg,#5b3d70 0%, #3f284f 20%, #24162d 100%)}
+    .channel.yeast{background:linear-gradient(180deg,#713a5e 0%, #4d2640 20%, #2b1523 100%)}
+    .channel.lactic{background:linear-gradient(180deg,#2d6a67 0%, #1d4846 20%, #112827 100%)}
+    .channel.color{background:linear-gradient(180deg,#7a582c 0%, #583f1e 20%, #31230f 100%)}
+    .channel.gas{background:linear-gradient(180deg,#45547d 0%, #2e3958 20%, #182031 100%)}
+
+    .channel::before{
+      content:"";
+      position:absolute;left:0;right:0;top:0;height:42px;
+      background:linear-gradient(180deg,rgba(255,255,255,.08),transparent);
+      pointer-events:none;
+    }
+
+    .stripScrew{
+      position:absolute;width:12px;height:12px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #d9dee4 0%, #8d99a4 38%, #4e5966 70%, #2a3139 100%);
+      border:1px solid #74808c;box-shadow:inset 0 1px 2px rgba(255,255,255,.35),0 2px 4px rgba(0,0,0,.35);
+    }
+    .stripScrew.a{top:8px;left:8px}
+    .stripScrew.b{top:8px;right:8px}
+
+    .channelTop{
+      width:100%;
+      display:flex;justify-content:space-between;align-items:flex-start;gap:8px;
+      margin-bottom:8px;
+      position:relative;z-index:2;
+    }
+    .channelNameWrap{flex:1;min-width:0}
+    .channelName{
+      font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .channelType{
+      font-size:10px;color:rgba(255,255,255,.72);margin-top:4px;
+      text-transform:uppercase;letter-spacing:.1em
+    }
+
+    .tinyIconBtn{
+      width:30px;height:30px;border-radius:10px;
+      background:linear-gradient(180deg,#2b3642 0%, #1a212b 100%);
+      color:#d9e2ec;border:1px solid #4a5868;font-weight:900;
+      box-shadow:0 4px 10px rgba(0,0,0,.2);
+      flex:0 0 auto;
+    }
+
+    .miniLcd{
+      width:100%;
+      border-radius:14px;
+      background:linear-gradient(180deg,#12200f 0%, #0b1508 100%);
+      border:1px solid #355530;
+      padding:10px 8px;
+      text-align:center;
+      box-shadow:inset 0 0 10px rgba(151,255,123,.08);
+      position:relative;z-index:2;
+    }
+    .miniLcd .lbl{
+      font-size:10px;color:#baffab;letter-spacing:.1em;text-transform:uppercase
+    }
+    .miniLcd .val{
+      font-size:20px;font-weight:900;margin-top:3px;color:var(--lcd)
+    }
+
+    .knob{
+      width:74px;height:74px;border-radius:50%;
+      margin:12px 0 10px;
+      background:radial-gradient(circle at 30% 30%,#5a6673 0%,#39434e 32%,#232a33 58%,#151a20 100%);
+      border:2px solid #536172;position:relative;
+      box-shadow:inset 0 2px 10px rgba(255,255,255,.08),inset 0 -8px 14px rgba(0,0,0,.42),0 8px 18px rgba(0,0,0,.28);
+      z-index:2;
+    }
+    .knob::after{
+      content:"";
+      position:absolute;left:50%;top:8px;transform:translateX(-50%);
+      width:8px;height:22px;border-radius:999px;
+      background:linear-gradient(180deg,var(--gold2),var(--gold));
+    }
+
+    .tinyMeter{
+      width:84%;height:10px;border-radius:999px;
+      background:#0c1014;border:1px solid #2f3a47;overflow:hidden;
+      margin-bottom:10px;z-index:2;
+    }
+    .tinyFill{
+      height:100%;width:0%;
+      background:linear-gradient(90deg,#2ee47f 0%, #a4ff64 45%, #ffd45d 75%, #ff6b6b 100%);
+    }
+
+    .faderWrap{
+      width:100%;flex:1;
+      display:grid;grid-template-columns:20px 1fr;gap:10px;
+      align-items:stretch;
+      z-index:2;
+    }
+
+    .vu{
+      border-radius:14px;border:1px solid #344250;
+      background:linear-gradient(180deg,#0d1116 0%, #141a22 100%);
+      padding:6px 4px;
+      display:flex;flex-direction:column-reverse;gap:3px;align-items:center;
+    }
+    .vuSeg{
+      width:8px;height:14px;border-radius:4px;
+      background:#242c35;border:1px solid #313b46;
+    }
+    .vuSeg.g{background:linear-gradient(180deg,#8dffba,#31d872)}
+    .vuSeg.a{background:linear-gradient(180deg,#ffe5a0,#ffc74d)}
+    .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
+
+    .track{
+      border-radius:22px;border:1px solid #364352;
+      background:linear-gradient(180deg,#0f1419 0%, #181f27 100%);
+      min-height:310px;
+      display:flex;justify-content:center;align-items:center;
+      position:relative;padding:14px 0;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -10px 20px rgba(0,0,0,.18);
+    }
+    .track::before{
+      content:"";
+      position:absolute;top:16px;bottom:16px;left:50%;transform:translateX(-50%);
+      width:8px;border-radius:999px;background:#11161c;border:1px solid #2f3944;
+    }
+
+    .track input[type=range]{
+      -webkit-appearance:none;appearance:none;
+      width:286px;height:32px;transform:rotate(-90deg);background:transparent;
+      position:relative;z-index:2;
+    }
+    .track input[type=range]::-webkit-slider-runnable-track{
+      height:12px;border-radius:999px;
+      background:linear-gradient(90deg,#1b2129,#10141a);
+      border:1px solid #394655;
+    }
+    .track input[type=range]::-webkit-slider-thumb{
+      -webkit-appearance:none;appearance:none;
+      width:52px;height:28px;border-radius:10px;margin-top:-8px;
+      border:1px solid #6a7888;
+      background:linear-gradient(180deg,#ecf2f8 0%, #a8b4bf 46%, #717d89 47%, #d2dce5 100%);
+      box-shadow:0 6px 14px rgba(0,0,0,.35), inset 0 1px 2px rgba(255,255,255,.78);
+    }
+
+    .channelButtons{
+      width:100%;
+      display:grid;grid-template-columns:1fr 1fr;gap:8px;
+      margin-top:10px;z-index:2;
+    }
+    .miniBtn{
+      border-radius:12px;padding:10px 8px;font-size:12px;font-weight:900;
+      background:linear-gradient(180deg,#2a3441 0%, #181f28 100%);
+      color:var(--text);border:1px solid #475566;
+      box-shadow:0 4px 10px rgba(0,0,0,.18);
+    }
+    .miniBtn.gold{
+      background:linear-gradient(180deg,var(--gold2),var(--gold));
+      color:#111;border-color:#c7a15a
+    }
+
+    .addChannelCard{
+      width:188px;
+      border-radius:24px;
+      padding:16px;
+      background:linear-gradient(180deg,#2a3440 0%, #171f28 100%);
+      border:1px dashed #526172;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;
+      min-height:595px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -10px 18px rgba(0,0,0,.18);
+    }
+    .addChannelCard .plus{
+      width:88px;height:88px;border-radius:26px;
+      display:grid;place-items:center;
+      font-size:44px;font-weight:900;color:#111;
+      background:linear-gradient(180deg,var(--gold2),var(--gold));
+      box-shadow:var(--shadow);
+    }
+    .addChannelCard h3{font-size:20px;font-weight:900;margin-top:14px}
+    .addChannelCard p{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+
+    .rotateHint{
+      font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase
+    }
+
+    @media (orientation:portrait){
+      .mixerShell{
+        grid-template-columns:1fr;
+      }
+      .sideRack{
+        order:2;
+      }
+      .centerMixer{
+        order:1;
+      }
+      .consoleHeader{
+        grid-template-columns:1fr;
+      }
+      .abWrap{
+        grid-template-columns:1fr;
+      }
+    }
+
     @media (max-width:1100px){
-      .consoleTop,.layout2{grid-template-columns:1fr}
-      .lcdMain{font-size:40px}
+      .layout2{grid-template-columns:1fr}
     }
     @media (max-width:860px){
       .formGrid,.dockInner{grid-template-columns:1fr}
       .brand h1{font-size:20px}
-      .lcdMain{font-size:32px}
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <div class="topbar">
+    <div class="topbar" id="normalTopbar">
       <div class="topbarInner">
         <div class="brand">
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>ULTRA PRO MIXER · CONSOLE VST · SIDRO · FERMENTATI · LIBRERIE TECNICHE</p>
+            <p>MAXIMUM MIXER · CONSOLE SEPARATA · BANCO 24 CANALI · A/B</p>
           </div>
         </div>
         <div class="actions">
@@ -559,122 +632,37 @@
           <button class="btn" id="importBtn">Importa backup</button>
           <input type="file" id="importFile" accept=".json" style="display:none">
           <button class="btnGold" id="addLotBtnTop">+ Nuovo lotto</button>
+          <button class="btnMixer" id="openMixerBtnTop">Mixer</button>
           <button class="btnDanger" id="resetBtn">Reset</button>
         </div>
       </div>
     </div>
 
-    <!-- CONSOLE -->
-    <section class="section active" id="sec-console">
-      <div class="consoleShell">
-        <div class="consoleScrews">
-          <div class="screw s1"></div>
-          <div class="screw s2"></div>
-          <div class="screw s3"></div>
-          <div class="screw s4"></div>
-        </div>
-
-        <div class="consoleTop">
-          <div class="masterPanel">
-            <div class="masterLabel">Master LCD</div>
-            <div class="lcdScreen">
-              <div class="lcdMain" id="masterText">XA CONSOLE</div>
-              <div class="lcdSub" id="masterSub">Modalità Ultra Pro Mixer. Scroll orizzontale, canali dinamici, aggiunta strip come un vero plugin audio.</div>
-            </div>
-            <div class="toolbar">
-              <button class="btnGold" id="saveMixerLotBtn">Salva lotto mixer</button>
-              <button class="btn" id="addChannelBtn">+ Aggiungi canale</button>
-              <button class="btn" id="saveSceneBtn">Salva scena</button>
-            </div>
-          </div>
-
-          <div class="infoPanel">
-            <div class="masterLabel">Lotto selezionato</div>
-            <div style="font-size:30px;font-weight:900;margin-top:10px" id="lotDisplay">NESSUNO</div>
-            <div class="smallText" id="lotDisplayMeta">Crea o apri un lotto dalla sezione Lotti.</div>
-            <div class="badgeRow" style="margin-top:12px">
-              <span class="badge gold" id="badgeType">Tipo -</span>
-              <span class="badge blue" id="badgeStage">Stato -</span>
-              <span class="badge green" id="badgeChannels">Canali 0</span>
-            </div>
-            <div class="ledRow">
-              <div class="led green"></div>
-              <div class="led green"></div>
-              <div class="led amber"></div>
-              <div class="led blue"></div>
-              <div class="led red" id="alertLed"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mixerHeader">
-          <div>
-            <h2 style="margin:0;font-size:18px;font-weight:900;letter-spacing:.04em">Banco audio Ultra Pro</h2>
-            <div class="sub">Quando premi Console vedi solo il mixer, grande, separato, orizzontale</div>
-          </div>
-          <div class="badgeRow">
-            <span class="badge">Fullscreen feel</span>
-            <span class="badge">Channel strips</span>
-            <span class="badge">Custom VST style</span>
-          </div>
-        </div>
-
-        <div class="mixerViewport">
-          <div class="mixerBoard" id="mixerBoard"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LOTTI -->
-    <section class="section" id="sec-lotti">
-      <div class="page">
-        <div class="card">
-          <div class="cardHead">
-            <div>
-              <h2>Lotti</h2>
-              <div class="sub">Archivio produzione</div>
-            </div>
-            <button class="btnGold" onclick="openLotModal()">+ Nuovo lotto</button>
-          </div>
-          <div class="cardBody">
-            <div class="list" id="lotsList"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SCENE -->
-    <section class="section" id="sec-scene">
-      <div class="page">
-        <div class="card">
-          <div class="cardHead">
-            <div>
-              <h2>Scene console</h2>
-              <div class="sub">Snapshot del mixer</div>
-            </div>
-          </div>
-          <div class="cardBody">
-            <div class="toolbar" style="margin-bottom:12px">
-              <button class="btn" onclick="loadPresetScene('sidro_secco')">SIDRO SECCO</button>
-              <button class="btn" onclick="loadPresetScene('sidro_petnat')">SIDRO PÉT-NAT</button>
-              <button class="btn" onclick="loadPresetScene('lattico_fine')">LATTICO FINE</button>
-              <button class="btn" onclick="loadPresetScene('mela_te')">MELA + TÈ</button>
-            </div>
-            <div class="list" id="scenesList"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LIBRERIA -->
-    <section class="section" id="sec-library">
+    <!-- HOME / LOTTI -->
+    <section class="section active" id="sec-home">
       <div class="page">
         <div class="layout2">
           <div class="card">
             <div class="cardHead">
               <div>
+                <h2>Lotti</h2>
+                <div class="sub">Archivio produzione</div>
+              </div>
+              <div class="toolbar" style="margin-top:0">
+                <button class="btnGold" onclick="openLotModal()">+ Nuovo lotto</button>
+                <button class="btnMixer" onclick="openMixerPage()">Mixer</button>
+              </div>
+            </div>
+            <div class="cardBody">
+              <div class="list" id="lotsList"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cardHead">
+              <div>
                 <h2>Scheda lotto</h2>
-                <div class="sub">Dati generali lotto</div>
+                <div class="sub">Dati generali</div>
               </div>
             </div>
             <div class="cardBody">
@@ -745,12 +733,32 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="layout2">
+          <div class="card">
+            <div class="cardHead">
+              <div>
+                <h2>Scene</h2>
+                <div class="sub">Snapshot mixer</div>
+              </div>
+            </div>
+            <div class="cardBody">
+              <div class="toolbar" style="margin-top:0;margin-bottom:12px">
+                <button class="btn" onclick="loadPresetScene('sidro_secco')">SIDRO SECCO</button>
+                <button class="btn" onclick="loadPresetScene('sidro_petnat')">SIDRO PÉT-NAT</button>
+                <button class="btn" onclick="loadPresetScene('lattico_fine')">LATTICO FINE</button>
+                <button class="btn" onclick="loadPresetScene('mela_te')">MELA + TÈ</button>
+              </div>
+              <div class="list" id="scenesList"></div>
+            </div>
+          </div>
 
           <div class="card">
             <div class="cardHead">
               <div>
                 <h2>Librerie ingredienti</h2>
-                <div class="sub">Bottoni rapidi categorie</div>
+                <div class="sub">Categorie tecniche</div>
               </div>
               <button class="btnGold" id="addLibraryGlobalBtn">+ Aggiungi elemento</button>
             </div>
@@ -761,14 +769,149 @@
         </div>
       </div>
     </section>
+
+    <!-- MIXER FULLSCREEN -->
+    <section class="section" id="sec-mixer">
+      <div class="mixerPage">
+        <div class="mixerTopBar">
+          <div class="mixerTopLeft">
+            <button class="btn" onclick="closeMixerPage()">← Torna</button>
+            <button class="btnGold" onclick="saveMixerLot()">Salva lotto mixer</button>
+            <button class="btn" onclick="saveScene()">Salva scena</button>
+            <button class="btn" onclick="openAddChannelModal()">+ Canale</button>
+          </div>
+          <div class="mixerTopRight">
+            <button class="btn" onclick="setActiveBank('A')">Banco A</button>
+            <button class="btn" onclick="setActiveBank('B')">Banco B</button>
+            <button class="btnMixer" onclick="toggleLandscapeHint()">Ruota schermo</button>
+          </div>
+        </div>
+
+        <div class="mixerShell">
+          <aside class="sideRack">
+            <div class="sideHead">
+              <h3>Side Rack SX</h3>
+              <div class="rotateHint">Bottoni rapidi tecnici</div>
+            </div>
+            <div class="sideBody">
+              <div class="rackGroup">
+                <div class="rackGroupHead">Categorie</div>
+                <div class="rackGroupBody">
+                  <button class="rackBtn" onclick="openLibraryModal('botaniche')">Botaniche<small>fiori, erbe, osmanthus</small></button>
+                  <button class="rackBtn" onclick="openLibraryModal('lieviti')">Lieviti<small>kveik, sidro, neutri</small></button>
+                  <button class="rackBtn" onclick="openLibraryModal('fermenti_lattici')">Fermenti lattici<small>plantarum, helveticus</small></button>
+                  <button class="rackBtn" onclick="openLibraryModal('te')">Tè<small>oolong, verde, bianco</small></button>
+                  <button class="rackBtn" onclick="openLibraryModal('pepe')">Pepe<small>timut, sichuan, cubebe</small></button>
+                </div>
+              </div>
+
+              <div class="rackGroup">
+                <div class="rackGroupHead">Parametri rapidi</div>
+                <div class="rackGroupBody">
+                  <button class="rackBtn" onclick="quickAddPresetChannel('ph')">+ pH<small>acidità</small></button>
+                  <button class="rackBtn" onclick="quickAddPresetChannel('og')">+ OG<small>densità iniziale</small></button>
+                  <button class="rackBtn" onclick="quickAddPresetChannel('fg')">+ FG<small>densità finale</small></button>
+                  <button class="rackBtn" onclick="quickAddPresetChannel('srm')">+ SRM<small>colore</small></button>
+                  <button class="rackBtn" onclick="quickAddPresetChannel('abv')">+ ABV<small>alcol</small></button>
+                  <button class="rackBtn" onclick="quickAddPresetChannel('co2')">+ CO₂<small>gasatura</small></button>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <main class="centerMixer">
+            <div class="consoleHeader">
+              <div class="lcdPanel">
+                <div class="lcdLabel">Master LCD</div>
+                <div class="lcdMain" id="masterText">XA MIXER</div>
+                <div class="lcdSub" id="masterSub">Pagina separata solo mixer. Banco digitale esteso, scroll orizzontale, 24 canali base espandibili.</div>
+              </div>
+
+              <div class="lcdPanel">
+                <div class="lcdLabel">Lotto selezionato</div>
+                <div class="lcdMain" id="lotDisplay">NESSUNO</div>
+                <div class="lcdSub" id="lotDisplayMeta">Apri o crea un lotto.</div>
+                <div class="badgeRow" style="margin-top:10px">
+                  <span class="badge gold" id="badgeType">Tipo -</span>
+                  <span class="badge blue" id="badgeStage">Stato -</span>
+                  <span class="badge green" id="badgeChannels">Canali 0</span>
+                </div>
+                <div class="ledRow">
+                  <div class="led green"></div>
+                  <div class="led green"></div>
+                  <div class="led amber"></div>
+                  <div class="led blue"></div>
+                  <div class="led red" id="alertLed"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="abWrap">
+              <div class="bankPanel activeA" id="bankAInfo">
+                <div class="bankTitle">Banco A</div>
+                <div class="meta" id="bankAText">Nessun lotto assegnato.</div>
+              </div>
+              <div class="bankPanel" id="bankBInfo">
+                <div class="bankTitle">Banco B</div>
+                <div class="meta" id="bankBText">Nessun lotto assegnato.</div>
+              </div>
+            </div>
+
+            <div class="mixerViewport">
+              <div class="mixerBoard" id="mixerBoard"></div>
+            </div>
+          </main>
+
+          <aside class="sideRack">
+            <div class="sideHead">
+              <h3>Side Rack DX</h3>
+              <div class="rotateHint">Confronto, canali, utilità</div>
+            </div>
+            <div class="sideBody">
+              <div class="rackGroup">
+                <div class="rackGroupHead">A/B</div>
+                <div class="rackGroupBody">
+                  <button class="rackBtn" onclick="assignCurrentLotToBank('A')">Assegna lotto a A<small>confronto banco sinistro</small></button>
+                  <button class="rackBtn" onclick="assignCurrentLotToBank('B')">Assegna lotto a B<small>confronto banco destro</small></button>
+                  <button class="rackBtn" onclick="copyBankAToB()">Copia A → B<small>duplicazione rapida</small></button>
+                </div>
+              </div>
+
+              <div class="rackGroup">
+                <div class="rackGroupHead">Canali rapidi</div>
+                <div class="rackGroupBody">
+                  <button class="rackBtn" onclick="quickAddPresetChannel('temp')">+ TEMP<small>temperatura</small></button>
+                  <button class="rackBtn" onclick="quickAddPresetChannel('acidita')">+ Acidità<small>totale</small></button>
+                  <button class="rackBtn" onclick="quickAddPresetChannel('tannino')">+ Tannino<small>struttura</small></button>
+                  <button class="rackBtn" onclick="quickAddPresetChannel('pressione')">+ Pressione<small>psi/bar</small></button>
+                  <button class="rackBtn" onclick="quickAddPresetChannel('dolcezza')">+ Dolcezza<small>equilibrio</small></button>
+                  <button class="rackBtn" onclick="quickAddPresetChannel('secchezza')">+ Secchezza<small>finale</small></button>
+                </div>
+              </div>
+
+              <div class="rackGroup">
+                <div class="rackGroupHead">Ingredienti</div>
+                <div class="rackGroupBody">
+                  <button class="rackBtn" onclick="openLibraryModal('frutta')">Frutta<small>mela, agrumi</small></button>
+                  <button class="rackBtn" onclick="openLibraryModal('zuccheri')">Zuccheri<small>priming, struttura</small></button>
+                  <button class="rackBtn" onclick="openLibraryModal('nutrienti')">Nutrienti<small>fermentazione</small></button>
+                  <button class="rackBtn" onclick="openLibraryModal('acidi')">Acidi<small>malico, citrico, lattico</small></button>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
   </div>
 
-  <div class="dock">
+  <div class="dock" id="normalDock">
     <div class="dockInner">
-      <button class="dockBtn active" data-sec="console">Console</button>
-      <button class="dockBtn" data-sec="lotti">Lotti</button>
-      <button class="dockBtn" data-sec="scene">Scene</button>
-      <button class="dockBtn" data-sec="library">Libreria</button>
+      <button class="dockBtn active" data-sec="home">Home</button>
+      <button class="dockBtn" onclick="openMixerPage()">Mixer</button>
+      <button class="dockBtn" data-action="newlot">Nuovo lotto</button>
+      <button class="dockBtn" data-action="scene">Scene demo</button>
+      <button class="dockBtn" data-action="library">Libreria</button>
     </div>
   </div>
 
@@ -777,7 +920,7 @@
       <div class="modalHead">
         <div>
           <h3 id="modalTitle">Titolo</h3>
-          <div class="smallText" id="modalSub" style="margin:4px 0 0 0"></div>
+          <div class="meta" id="modalSub" style="margin-top:4px"></div>
         </div>
         <button class="closeBtn" onclick="closeModal()">✕</button>
       </div>
@@ -786,75 +929,30 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_ultra_pro_mixer_v1";
-
-    const defaultChannelTemplates = [
-      { key:"ph", name:"pH", type:"Acidità", min:2.5, max:4.5, step:0.01, value:3.20, unit:"" },
-      { key:"temp", name:"TEMP", type:"Temperatura", min:0, max:40, step:0.1, value:22.0, unit:"°" },
-      { key:"sg", name:"SG", type:"Densità", min:0.995, max:1.080, step:0.001, value:1.010, unit:"" },
-      { key:"abv", name:"ABV", type:"Alcol", min:0, max:12, step:0.1, value:5.0, unit:"%" },
-      { key:"co2", name:"CO2", type:"Gasatura", min:0, max:4.5, step:0.1, value:2.5, unit:" vol" }
-    ];
+    const STORAGE_KEY = "xa_maximum_mixer_separate_v1";
 
     const libraryDefaults = {
-      luppoli:[
-        {name:"Saaz", note:"Nobile, delicato"},
-        {name:"Hallertau Mittelfrüh", note:"Fine, erbaceo"},
-        {name:"Cascade", note:"Agrumato"}
-      ],
-      botaniche:[
-        {name:"Genziana", note:"Amaro profondo"},
-        {name:"China", note:"Quinina / tonic"},
-        {name:"Lavanda", note:"Floreale"},
-        {name:"Osmanto", note:"Floreale-fruttato"}
-      ],
-      lieviti:[
-        {name:"Hornindal Kveik", note:"Esters tropicali"},
-        {name:"EC-1118", note:"Pulito e secco"},
-        {name:"SafCider", note:"Per sidro"}
-      ],
-      fermenti_lattici:[
-        {name:"L. plantarum", note:"Acidificazione pulita"},
-        {name:"L. helveticus", note:"Più rotondo"}
-      ],
-      te:[
-        {name:"Oolong", note:"Elegante"},
-        {name:"Bianco", note:"Fine"},
-        {name:"Verde", note:"Fresco"},
-        {name:"Jasmine", note:"Floreale"}
-      ],
-      pepe:[
-        {name:"Timut", note:"Agrumato"},
-        {name:"Sichuan", note:"Elettrico"},
-        {name:"Cubebe", note:"Balsamico"}
-      ],
-      frutta:[
-        {name:"Mela Golden", note:"Morbida"},
-        {name:"Mela Granny", note:"Acida"},
-        {name:"Limone", note:"Brillante"},
-        {name:"Pompelmo", note:"Amaro agrumato"}
-      ],
-      zuccheri:[
-        {name:"Saccarosio", note:"Priming standard"},
-        {name:"Destrosio", note:"Pulito"},
-        {name:"Miele", note:"Aromatico"}
-      ],
-      nutrienti:[
-        {name:"DAP", note:"Azoto assimilabile"},
-        {name:"Nutriente complesso", note:"Supporto fermentazione"}
-      ],
-      acidi:[
-        {name:"Acido malico", note:"Profilo mela"},
-        {name:"Acido citrico", note:"Brillante"},
-        {name:"Acido lattico", note:"Morbido"}
-      ]
+      luppoli:[{name:"Saaz",note:"Nobile, delicato"},{name:"Hallertau Mittelfrüh",note:"Fine, erbaceo"},{name:"Cascade",note:"Agrumato"}],
+      botaniche:[{name:"Genziana",note:"Amaro profondo"},{name:"China",note:"Quinina / tonic"},{name:"Lavanda",note:"Floreale"},{name:"Osmanto",note:"Floreale-fruttato"}],
+      lieviti:[{name:"Hornindal Kveik",note:"Esters tropicali"},{name:"EC-1118",note:"Pulito e secco"},{name:"SafCider",note:"Per sidro"}],
+      fermenti_lattici:[{name:"L. plantarum",note:"Acidificazione pulita"},{name:"L. helveticus",note:"Più rotondo"}],
+      te:[{name:"Oolong",note:"Elegante"},{name:"Bianco",note:"Fine"},{name:"Verde",note:"Fresco"},{name:"Jasmine",note:"Floreale"}],
+      pepe:[{name:"Timut",note:"Agrumato"},{name:"Sichuan",note:"Elettrico"},{name:"Cubebe",note:"Balsamico"}],
+      frutta:[{name:"Mela Golden",note:"Morbida"},{name:"Mela Granny",note:"Acida"},{name:"Limone",note:"Brillante"},{name:"Pompelmo",note:"Amaro agrumato"}],
+      zuccheri:[{name:"Saccarosio",note:"Priming standard"},{name:"Destrosio",note:"Pulito"},{name:"Miele",note:"Aromatico"}],
+      nutrienti:[{name:"DAP",note:"Azoto assimilabile"},{name:"Nutriente complesso",note:"Supporto fermentazione"}],
+      acidi:[{name:"Acido malico",note:"Profilo mela"},{name:"Acido citrico",note:"Brillante"},{name:"Acido lattico",note:"Morbido"}]
     };
 
     const defaultDB = {
       lots: [],
       selectedLotId: null,
       scenes: [],
-      library: structuredClone(libraryDefaults)
+      library: structuredClone(libraryDefaults),
+      activeBank: "A",
+      bankA: null,
+      bankB: null,
+      mixerPageOpen: false
     };
 
     let db = loadDB();
@@ -868,7 +966,11 @@
           lots: Array.isArray(parsed.lots) ? parsed.lots : [],
           selectedLotId: parsed.selectedLotId || null,
           scenes: Array.isArray(parsed.scenes) ? parsed.scenes : [],
-          library: parsed.library || structuredClone(libraryDefaults)
+          library: parsed.library || structuredClone(libraryDefaults),
+          activeBank: parsed.activeBank || "A",
+          bankA: parsed.bankA || null,
+          bankB: parsed.bankB || null,
+          mixerPageOpen: !!parsed.mixerPageOpen
         };
       }catch(e){
         return structuredClone(defaultDB);
@@ -892,22 +994,119 @@
       return Number.isFinite(n) ? n.toFixed(d) : "0.00";
     }
 
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#39;");
+    }
+
     function currentLot(){
       return db.lots.find(l => l.id === db.selectedLotId) || null;
     }
 
-    function createDefaultChannels(){
-      return defaultChannelTemplates.map(ch => ({
-        id: uid("ch"),
-        key: ch.key,
-        name: ch.name,
-        type: ch.type,
-        min: ch.min,
-        max: ch.max,
-        step: ch.step,
-        value: ch.value,
-        unit: ch.unit
-      }));
+    function ensureSelectedLot(){
+      if(!db.selectedLotId && db.lots.length){
+        db.selectedLotId = db.lots[0].id;
+      }
+    }
+
+    function catClassForKey(key){
+      const map = {
+        ph:"acid",
+        og:"tech",
+        fg:"tech",
+        abv:"tech",
+        srm:"color",
+        temp:"tech",
+        acidita:"acid",
+        tannino:"bitter",
+        co2:"gas",
+        pressione:"gas",
+        dolcezza:"sugar",
+        secchezza:"sugar",
+        botanica:"botanical",
+        pepe:"botanical",
+        aroma:"botanical",
+        lattico:"lactic",
+        lievito:"yeast",
+        oolong:"botanical",
+        te:"botanical",
+        malico:"acid"
+      };
+      return map[key] || "tech";
+    }
+
+    function quickPresetTemplate(key){
+      const map = {
+        ph:{name:"pH",type:"Acidità",min:2.5,max:4.5,step:0.01,value:3.20,unit:"",cat:"acid"},
+        og:{name:"OG",type:"Densità iniziale",min:1.000,max:1.120,step:0.001,value:1.048,unit:"",cat:"tech"},
+        fg:{name:"FG",type:"Densità finale",min:0.995,max:1.050,step:0.001,value:1.006,unit:"",cat:"tech"},
+        abv:{name:"ABV",type:"Alcol",min:0,max:15,step:0.1,value:5.0,unit:"%",cat:"tech"},
+        srm:{name:"SRM",type:"Colore",min:1,max:40,step:1,value:6,unit:"",cat:"color"},
+        temp:{name:"TEMP",type:"Temperatura",min:0,max:40,step:0.1,value:22,unit:"°",cat:"tech"},
+        acidita:{name:"ACIDITÀ",type:"Totale",min:0,max:15,step:0.1,value:5.0,unit:" g/L",cat:"acid"},
+        tannino:{name:"TANNINO",type:"Struttura",min:0,max:10,step:0.1,value:4.0,unit:"",cat:"bitter"},
+        co2:{name:"CO₂",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.5,unit:" vol",cat:"gas"},
+        pressione:{name:"PRESSIONE",type:"Sparkling",min:0,max:40,step:0.5,value:16,unit:" PSI",cat:"gas"},
+        dolcezza:{name:"DOLCEZZA",type:"Equilibrio",min:0,max:10,step:0.1,value:4.0,unit:"",cat:"sugar"},
+        secchezza:{name:"SECCHEZZA",type:"Finale",min:0,max:10,step:0.1,value:6.0,unit:"",cat:"sugar"}
+      };
+      return map[key] || null;
+    }
+
+    function createDefault24Channels(){
+      const base = [
+        "ph","og","fg","abv","srm","temp","acidita","tannino","co2","pressione","dolcezza","secchezza"
+      ];
+      const names = [
+        {name:"BOTANICA",type:"Blend",min:0,max:10,step:0.1,value:4.0,unit:"",cat:"botanical"},
+        {name:"PEPE",type:"Spezia",min:0,max:10,step:0.1,value:2.0,unit:"",cat:"botanical"},
+        {name:"FRUTTA",type:"Intensità",min:0,max:10,step:0.1,value:5.0,unit:"",cat:"botanical"},
+        {name:"LIEVITO",type:"Profilo",min:0,max:10,step:0.1,value:6.0,unit:"",cat:"yeast"},
+        {name:"LATTICO",type:"Fermento",min:0,max:10,step:0.1,value:4.0,unit:"",cat:"lactic"},
+        {name:"TÈ",type:"Infusione",min:0,max:10,step:0.1,value:3.0,unit:"",cat:"botanical"},
+        {name:"AMARO",type:"Bilanciamento",min:0,max:10,step:0.1,value:2.0,unit:"",cat:"bitter"},
+        {name:"AROMA",type:"Naso",min:0,max:10,step:0.1,value:5.0,unit:"",cat:"botanical"},
+        {name:"MALICO",type:"Acido",min:0,max:10,step:0.1,value:3.0,unit:" g/L",cat:"acid"},
+        {name:"NUTRIENTE",type:"Fermentazione",min:0,max:10,step:0.1,value:4.0,unit:"",cat:"yeast"},
+        {name:"CORPO",type:"Texture",min:0,max:10,step:0.1,value:4.0,unit:"",cat:"sugar"},
+        {name:"FINALE",type:"Persistenza",min:0,max:10,step:0.1,value:5.0,unit:"",cat:"tech"}
+      ];
+
+      const out = [];
+      base.forEach(k=>{
+        const t = quickPresetTemplate(k);
+        out.push({
+          id: uid("ch"),
+          key:k,
+          name:t.name,
+          type:t.type,
+          min:t.min,
+          max:t.max,
+          step:t.step,
+          value:t.value,
+          unit:t.unit,
+          cat:t.cat
+        });
+      });
+      names.forEach(t=>{
+        out.push({
+          id: uid("ch"),
+          key:t.name.toLowerCase(),
+          name:t.name,
+          type:t.type,
+          min:t.min,
+          max:t.max,
+          step:t.step,
+          value:t.value,
+          unit:t.unit,
+          cat:t.cat
+        });
+      });
+      return out;
     }
 
     function createBlankLotData(){
@@ -922,22 +1121,24 @@
         culture: "",
         recipe: "",
         notes: "",
-        channels: createDefaultChannels()
+        channels: createDefault24Channels()
       };
     }
 
-    function ensureSelectedLot(){
-      if(!db.selectedLotId && db.lots.length){
-        db.selectedLotId = db.lots[0].id;
-      }
+    function formatChannelValue(ch){
+      const step = Number(ch.step);
+      if(step >= 1) return num(ch.value,0) + (ch.unit || "");
+      if(step >= 0.1) return num(ch.value,1) + (ch.unit || "");
+      if(step >= 0.01) return num(ch.value,2) + (ch.unit || "");
+      return num(ch.value,3) + (ch.unit || "");
     }
 
-    function showSection(name){
-      document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-      document.querySelectorAll(".dockBtn").forEach(b=>b.classList.remove("active"));
-      document.getElementById("sec-" + name).classList.add("active");
-      document.querySelector(`.dockBtn[data-sec="${name}"]`)?.classList.add("active");
-      window.scrollTo({top:0,behavior:"smooth"});
+    function channelPercent(ch){
+      const min = Number(ch.min);
+      const max = Number(ch.max);
+      const val = Number(ch.value);
+      if(max <= min) return 0;
+      return Math.max(0, Math.min(100, ((val - min) / (max - min)) * 100));
     }
 
     function buildVU(count){
@@ -952,23 +1153,150 @@
       return html;
     }
 
-    function channelPercent(ch){
-      const min = Number(ch.min);
-      const max = Number(ch.max);
-      const val = Number(ch.value);
-      if(max <= min) return 0;
-      return Math.max(0, Math.min(100, ((val - min) / (max - min)) * 100));
+    function renderHomeSection(){
+      document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+      document.getElementById("sec-home").classList.add("active");
+      document.getElementById("normalTopbar").classList.remove("hidden");
+      document.getElementById("normalDock").classList.remove("hidden");
+      document.body.style.paddingBottom = "90px";
+      db.mixerPageOpen = false;
+      saveDB();
     }
 
-    function formatChannelValue(ch){
-      const step = Number(ch.step);
-      if(step >= 1) return num(ch.value,0) + (ch.unit || "");
-      if(step >= 0.1) return num(ch.value,1) + (ch.unit || "");
-      if(step >= 0.01) return num(ch.value,2) + (ch.unit || "");
-      return num(ch.value,3) + (ch.unit || "");
+    function openMixerPage(){
+      document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+      document.getElementById("sec-mixer").classList.add("active");
+      document.getElementById("normalTopbar").classList.add("hidden");
+      document.getElementById("normalDock").classList.add("hidden");
+      document.body.style.paddingBottom = "0px";
+      db.mixerPageOpen = true;
+      saveDB();
+      renderMixerPage();
+      window.scrollTo({top:0,behavior:"instant"});
     }
 
-    function renderMixer(){
+    function closeMixerPage(){
+      renderHomeSection();
+      renderAllHomeData();
+    }
+
+    function renderSelectedLotInfo(){
+      const lot = currentLot();
+
+      if(!lot){
+        document.getElementById("masterText").textContent = "XA MIXER";
+        document.getElementById("masterSub").textContent = "Pagina separata solo mixer. Banco digitale esteso, scroll orizzontale, 24 canali base espandibili.";
+        document.getElementById("lotDisplay").textContent = "NESSUNO";
+        document.getElementById("lotDisplayMeta").textContent = "Apri o crea un lotto.";
+        document.getElementById("badgeType").textContent = "Tipo -";
+        document.getElementById("badgeStage").textContent = "Stato -";
+        document.getElementById("badgeChannels").textContent = "Canali 0";
+        document.getElementById("alertLed").className = "led red";
+        fillLotForm(null);
+        return;
+      }
+
+      document.getElementById("masterText").textContent = (lot.stage || "READY").toUpperCase();
+      document.getElementById("masterSub").textContent = "Vista mixer totale. Qui vedi solo il banco, in stile mixer digitale, pensato per uso orizzontale.";
+      document.getElementById("lotDisplay").textContent = (lot.name || "LOTTO SENZA NOME").toUpperCase();
+      document.getElementById("lotDisplayMeta").textContent = `${lot.code || "-"} · ${lot.type || "-"} · ${num(lot.volume || 0,1)} L · ${lot.culture || "-"}`;
+      document.getElementById("badgeType").textContent = "Tipo " + (lot.type || "-");
+      document.getElementById("badgeStage").textContent = "Stato " + (lot.stage || "-");
+      document.getElementById("badgeChannels").textContent = "Canali " + ((lot.channels || []).length);
+      document.getElementById("alertLed").className = "led blue";
+      fillLotForm(lot);
+    }
+
+    function fillLotForm(lot){
+      document.getElementById("lotName").value = lot?.name || "";
+      document.getElementById("lotCode").value = lot?.code || "";
+      document.getElementById("lotType").value = lot?.type || "sidro";
+      document.getElementById("lotStage").value = lot?.stage || "programmato";
+      document.getElementById("lotVolume").value = lot?.volume || "";
+      document.getElementById("lotDate").value = lot?.date || today();
+      document.getElementById("lotCulture").value = lot?.culture || "";
+      document.getElementById("lotRecipe").value = lot?.recipe || "";
+      document.getElementById("lotNotes").value = lot?.notes || "";
+    }
+
+    function renderLots(){
+      const wrap = document.getElementById("lotsList");
+      if(!db.lots.length){
+        wrap.innerHTML = `<div class="empty">Nessun lotto inserito.</div>`;
+        return;
+      }
+
+      wrap.innerHTML = db.lots.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).map(l=>`
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(l.name || "Lotto senza nome")}</div>
+          <div class="meta">${escapeHtml(l.code || "-")} · ${escapeHtml(l.type || "-")} · ${num(l.volume || 0,1)} L · ${escapeHtml(l.date || "-")}</div>
+          <div class="badgeRow" style="margin-top:10px">
+            <span class="badge gold">${escapeHtml(l.stage || "-")}</span>
+            <span class="badge blue">Canali ${(l.channels || []).length}</span>
+          </div>
+          <div class="itemActions">
+            <button class="btnGold" onclick="selectLot('${l.id}')">Apri lotto</button>
+            <button class="btnMixer" onclick="selectLotAndOpenMixer('${l.id}')">Apri mixer</button>
+            <button class="btn" onclick="duplicateLot('${l.id}')">Duplica</button>
+            <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderScenes(){
+      const wrap = document.getElementById("scenesList");
+      if(!db.scenes.length){
+        wrap.innerHTML = `<div class="empty">Nessuna scena salvata.</div>`;
+        return;
+      }
+
+      wrap.innerHTML = db.scenes.slice().reverse().map(s=>`
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(s.name)}</div>
+          <div class="meta">${escapeHtml(s.date)} · ${s.channels.length} canali salvati</div>
+          <div class="itemActions">
+            <button class="btnGold" onclick="applyScene('${s.id}')">Carica scena</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function prettyKey(k){
+      return k.replaceAll("_"," ").replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    function renderLibrarySummary(){
+      const wrap = document.getElementById("librarySummary");
+      wrap.innerHTML = Object.keys(db.library).map(k=>{
+        const items = db.library[k] || [];
+        return `
+          <div class="item">
+            <div class="itemTitle">${prettyKey(k)}</div>
+            <div class="meta">${items.length} elementi</div>
+            <div class="badgeRow" style="margin-top:10px">
+              ${items.slice(0,5).map(i=>`<span class="badge">${escapeHtml(i.name)}</span>`).join("")}
+            </div>
+            <div class="itemActions">
+              <button class="btn" onclick="openLibraryModal('${k}')">Apri</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderBankInfo(){
+      const a = db.lots.find(l=>l.id===db.bankA);
+      const b = db.lots.find(l=>l.id===db.bankB);
+
+      document.getElementById("bankAText").textContent = a ? `${a.name} · ${a.type} · ${a.channels.length} canali` : "Nessun lotto assegnato.";
+      document.getElementById("bankBText").textContent = b ? `${b.name} · ${b.type} · ${b.channels.length} canali` : "Nessun lotto assegnato.";
+
+      document.getElementById("bankAInfo").className = "bankPanel" + (db.activeBank === "A" ? " activeA" : "");
+      document.getElementById("bankBInfo").className = "bankPanel" + (db.activeBank === "B" ? " activeB" : "");
+    }
+
+    function renderMixerBoard(){
       const board = document.getElementById("mixerBoard");
       const lot = currentLot();
 
@@ -977,7 +1305,7 @@
           <div class="addChannelCard">
             <div class="plus">+</div>
             <h3>Crea un lotto</h3>
-            <p>Prima crea o apri un lotto. Poi qui vedrai il mixer completo, separato e spettacolare.</p>
+            <p>Prima crea o apri un lotto. Poi qui vedrai il mixer completo separato.</p>
             <div class="toolbar" style="margin-top:14px">
               <button class="btnGold" onclick="openLotModal()">Nuovo lotto</button>
             </div>
@@ -989,8 +1317,9 @@
       const channels = Array.isArray(lot.channels) ? lot.channels : [];
       board.innerHTML = channels.map((ch)=>{
         const percent = channelPercent(ch);
+        const catClass = ch.cat || catClassForKey(ch.key);
         return `
-          <div class="channel">
+          <div class="channel ${catClass}">
             <div class="stripScrew a"></div>
             <div class="stripScrew b"></div>
 
@@ -1039,7 +1368,7 @@
         <div class="addChannelCard">
           <div class="plus">+</div>
           <h3>Aggiungi canale</h3>
-          <p>Crea un nuovo parametro libero, come una strip VST vera.</p>
+          <p>Nuova strip libera, come un vero mixer digitale/VST.</p>
           <div class="toolbar" style="margin-top:14px">
             <button class="btnGold" onclick="openAddChannelModal()">Nuovo canale</button>
           </div>
@@ -1047,108 +1376,100 @@
       `;
     }
 
-    function renderSelectedLotInfo(){
+    function renderMixerPage(){
+      renderSelectedLotInfo();
+      renderBankInfo();
+      renderMixerBoard();
+    }
+
+    function renderAllHomeData(){
+      renderLots();
+      renderScenes();
+      renderLibrarySummary();
+      fillLotForm(currentLot());
+    }
+
+    function renderAll(){
+      ensureSelectedLot();
+      saveDB();
+      renderAllHomeData();
+      if(db.mixerPageOpen){
+        openMixerPage();
+      }else{
+        renderHomeSection();
+      }
+      renderMixerPage();
+    }
+
+    function selectLot(id){
+      db.selectedLotId = id;
+      saveDB();
+      renderAll();
+    }
+
+    function selectLotAndOpenMixer(id){
+      db.selectedLotId = id;
+      saveDB();
+      openMixerPage();
+      renderAll();
+    }
+
+    function duplicateLot(id){
+      const lot = db.lots.find(l => l.id === id);
+      if(!lot) return;
+      const copy = JSON.parse(JSON.stringify(lot));
+      copy.id = uid("lot");
+      copy.name = (lot.name || "Lotto") + " COPY";
+      copy.code = (lot.code || "") + "-COPY";
+      copy.channels = copy.channels.map(ch => ({...ch, id: uid("ch")}));
+      db.lots.unshift(copy);
+      db.selectedLotId = copy.id;
+      saveDB();
+      renderAll();
+    }
+
+    function deleteLot(id){
+      if(!confirm("Eliminare questo lotto?")) return;
+      db.lots = db.lots.filter(l => l.id !== id);
+      if(db.selectedLotId === id) db.selectedLotId = db.lots[0]?.id || null;
+      if(db.bankA === id) db.bankA = null;
+      if(db.bankB === id) db.bankB = null;
+      saveDB();
+      renderAll();
+    }
+
+    function setActiveBank(bank){
+      db.activeBank = bank;
+      saveDB();
+      renderBankInfo();
+    }
+
+    function assignCurrentLotToBank(bank){
       const lot = currentLot();
-
-      if(!lot){
-        document.getElementById("masterText").textContent = "XA CONSOLE";
-        document.getElementById("masterSub").textContent = "Modalità Ultra Pro Mixer. Scroll orizzontale, canali dinamici, aggiunta strip come un vero plugin audio.";
-        document.getElementById("lotDisplay").textContent = "NESSUNO";
-        document.getElementById("lotDisplayMeta").textContent = "Crea o apri un lotto dalla sezione Lotti.";
-        document.getElementById("badgeType").textContent = "Tipo -";
-        document.getElementById("badgeStage").textContent = "Stato -";
-        document.getElementById("badgeChannels").textContent = "Canali 0";
-        document.getElementById("alertLed").className = "led red";
-        fillLotForm(null);
-        return;
-      }
-
-      document.getElementById("masterText").textContent = (lot.stage || "READY").toUpperCase();
-      document.getElementById("masterSub").textContent = "Mixer attivo. In Console vedi solo la regia, con strip canale grandi, scorrevoli e modificabili.";
-      document.getElementById("lotDisplay").textContent = (lot.name || "LOTTO SENZA NOME").toUpperCase();
-      document.getElementById("lotDisplayMeta").textContent = `${lot.code || "-"} · ${lot.type || "-"} · ${num(lot.volume || 0,1)} L · ${lot.culture || "-"}`;
-      document.getElementById("badgeType").textContent = "Tipo " + (lot.type || "-");
-      document.getElementById("badgeStage").textContent = "Stato " + (lot.stage || "-");
-      document.getElementById("badgeChannels").textContent = "Canali " + ((lot.channels || []).length);
-      document.getElementById("alertLed").className = "led blue";
-      fillLotForm(lot);
+      if(!lot) return;
+      if(bank === "A") db.bankA = lot.id;
+      if(bank === "B") db.bankB = lot.id;
+      saveDB();
+      renderBankInfo();
     }
 
-    function fillLotForm(lot){
-      document.getElementById("lotName").value = lot?.name || "";
-      document.getElementById("lotCode").value = lot?.code || "";
-      document.getElementById("lotType").value = lot?.type || "sidro";
-      document.getElementById("lotStage").value = lot?.stage || "programmato";
-      document.getElementById("lotVolume").value = lot?.volume || "";
-      document.getElementById("lotDate").value = lot?.date || today();
-      document.getElementById("lotCulture").value = lot?.culture || "";
-      document.getElementById("lotRecipe").value = lot?.recipe || "";
-      document.getElementById("lotNotes").value = lot?.notes || "";
+    function copyBankAToB(){
+      if(!db.bankA) return;
+      const lot = db.lots.find(l=>l.id===db.bankA);
+      if(!lot) return;
+      const copy = JSON.parse(JSON.stringify(lot));
+      copy.id = uid("lot");
+      copy.name = (lot.name || "Lotto") + " BANK B";
+      copy.code = (lot.code || "") + "-B";
+      copy.channels = copy.channels.map(ch => ({...ch, id: uid("ch")}));
+      db.lots.unshift(copy);
+      db.bankB = copy.id;
+      saveDB();
+      renderAll();
     }
 
-    function renderLots(){
-      const wrap = document.getElementById("lotsList");
-      if(!db.lots.length){
-        wrap.innerHTML = `<div class="empty">Nessun lotto inserito.</div>`;
-        return;
-      }
-
-      wrap.innerHTML = db.lots.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).map(l=>`
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(l.name || "Lotto senza nome")}</div>
-          <div class="meta">${escapeHtml(l.code || "-")} · ${escapeHtml(l.type || "-")} · ${num(l.volume || 0,1)} L · ${escapeHtml(l.date || "-")}</div>
-          <div class="badgeRow" style="margin-top:10px">
-            <span class="badge gold">${escapeHtml(l.stage || "-")}</span>
-            <span class="badge blue">Canali ${(l.channels || []).length}</span>
-          </div>
-          <div class="itemActions">
-            <button class="btnGold" onclick="selectLot('${l.id}')">Apri mixer</button>
-            <button class="btn" onclick="duplicateLot('${l.id}')">Duplica</button>
-            <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function renderScenes(){
-      const wrap = document.getElementById("scenesList");
-      if(!db.scenes.length){
-        wrap.innerHTML = `<div class="empty">Nessuna scena salvata.</div>`;
-        return;
-      }
-
-      wrap.innerHTML = db.scenes.slice().reverse().map(s=>`
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(s.name)}</div>
-          <div class="meta">${escapeHtml(s.date)} · ${s.channels.length} canali salvati</div>
-          <div class="itemActions">
-            <button class="btnGold" onclick="applyScene('${s.id}')">Carica scena</button>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function prettyKey(k){
-      return k.replaceAll("_"," ").replace(/\b\w/g, c => c.toUpperCase());
-    }
-
-    function renderLibrarySummary(){
-      const wrap = document.getElementById("librarySummary");
-      wrap.innerHTML = Object.keys(db.library).map(k=>{
-        const items = db.library[k] || [];
-        return `
-          <div class="item">
-            <div class="itemTitle">${prettyKey(k)}</div>
-            <div class="meta">${items.length} elementi</div>
-            <div class="badgeRow" style="margin-top:10px">
-              ${items.slice(0,5).map(i=>`<span class="badge">${escapeHtml(i.name)}</span>`).join("")}
-            </div>
-            <div class="itemActions">
-              <button class="btn" onclick="openLibraryModal('${k}')">Apri</button>
-            </div>
-          </div>
-        `;
-      }).join("");
+    function toggleLandscapeHint(){
+      alert("Per vedere il mixer disteso al massimo, gira il telefono in orizzontale.");
     }
 
     function openModal(title, sub, html){
@@ -1224,7 +1545,7 @@
       saveDB();
       closeModal();
       renderAll();
-      showSection("console");
+      openMixerPage();
     }
 
     function saveLotDetails(){
@@ -1253,32 +1574,20 @@
       saveLotDetails();
     }
 
-    function selectLot(id){
-      db.selectedLotId = id;
-      saveDB();
-      renderAll();
-      showSection("console");
-    }
-
-    function duplicateLot(id){
-      const lot = db.lots.find(l => l.id === id);
+    function clearCurrentLot(){
+      const lot = currentLot();
       if(!lot) return;
-      const copy = JSON.parse(JSON.stringify(lot));
-      copy.id = uid("lot");
-      copy.name = (lot.name || "Lotto") + " COPY";
-      copy.code = (lot.code || "") + "-COPY";
-      copy.channels = copy.channels.map(ch => ({...ch, id: uid("ch")}));
-      db.lots.unshift(copy);
-      db.selectedLotId = copy.id;
-      saveDB();
-      renderAll();
-      showSection("console");
-    }
-
-    function deleteLot(id){
-      if(!confirm("Eliminare questo lotto?")) return;
-      db.lots = db.lots.filter(l => l.id !== id);
-      if(db.selectedLotId === id) db.selectedLotId = db.lots[0]?.id || null;
+      const fresh = createBlankLotData();
+      lot.name = "";
+      lot.code = "";
+      lot.type = "sidro";
+      lot.stage = "programmato";
+      lot.volume = 0;
+      lot.date = today();
+      lot.culture = "";
+      lot.recipe = "";
+      lot.notes = "";
+      lot.channels = fresh.channels;
       saveDB();
       renderAll();
     }
@@ -1290,7 +1599,7 @@
       if(!ch) return;
       ch.value = Number(value);
       saveDB();
-      renderMixer();
+      renderMixerBoard();
     }
 
     function nudgeChannel(channelId, direction){
@@ -1302,7 +1611,7 @@
       if(ch.value < Number(ch.min)) ch.value = Number(ch.min);
       if(ch.value > Number(ch.max)) ch.value = Number(ch.max);
       saveDB();
-      renderMixer();
+      renderMixerBoard();
     }
 
     function duplicateChannel(channelId){
@@ -1328,6 +1637,31 @@
       renderAll();
     }
 
+    function quickAddPresetChannel(key){
+      const lot = currentLot();
+      if(!lot){
+        alert("Prima seleziona un lotto.");
+        return;
+      }
+      const t = quickPresetTemplate(key);
+      if(!t) return;
+
+      lot.channels.push({
+        id: uid("ch"),
+        key,
+        name: t.name,
+        type: t.type,
+        min: t.min,
+        max: t.max,
+        step: t.step,
+        value: t.value,
+        unit: t.unit,
+        cat: t.cat
+      });
+      saveDB();
+      renderAll();
+    }
+
     function openAddChannelModal(){
       openModal(
         "Nuovo canale mixer",
@@ -1341,6 +1675,27 @@
             <div class="field">
               <label>Tipo/sottotitolo</label>
               <input class="input" id="chType" placeholder="Es. Struttura">
+            </div>
+          </div>
+
+          <div class="formGrid" style="margin-top:12px">
+            <div class="field">
+              <label>Categoria colore</label>
+              <select class="select" id="chCat">
+                <option value="tech">Tech</option>
+                <option value="acid">Acid</option>
+                <option value="sugar">Sugar</option>
+                <option value="bitter">Bitter</option>
+                <option value="botanical">Botanical</option>
+                <option value="yeast">Yeast</option>
+                <option value="lactic">Lactic</option>
+                <option value="color">Color</option>
+                <option value="gas">Gas</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Unità</label>
+              <input class="input" id="chUnit" placeholder="Es. g/L, %, mg/L, °, vol">
             </div>
           </div>
 
@@ -1366,11 +1721,6 @@
             </div>
           </div>
 
-          <div class="field" style="margin-top:12px">
-            <label>Unità</label>
-            <input class="input" id="chUnit" placeholder="Es. g/L, %, mg/L, °, vol">
-          </div>
-
           <div class="toolbar" style="margin-top:14px">
             <button class="btnGold" onclick="createCustomChannel()">Aggiungi canale</button>
           </div>
@@ -1387,6 +1737,7 @@
 
       const name = document.getElementById("chName").value.trim();
       const type = document.getElementById("chType").value.trim();
+      const cat = document.getElementById("chCat").value;
       const min = Number(document.getElementById("chMin").value);
       const max = Number(document.getElementById("chMax").value);
       const step = Number(document.getElementById("chStep").value);
@@ -1411,13 +1762,14 @@
         max,
         step: Number.isFinite(step) && step > 0 ? step : 0.1,
         value: Number.isFinite(value) ? value : min,
-        unit
+        unit,
+        cat
       });
 
       saveDB();
       closeModal();
       renderAll();
-      showSection("console");
+      openMixerPage();
     }
 
     function openEditChannelModal(channelId){
@@ -1443,6 +1795,27 @@
 
           <div class="formGrid" style="margin-top:12px">
             <div class="field">
+              <label>Categoria colore</label>
+              <select class="select" id="editChCat">
+                <option value="tech">Tech</option>
+                <option value="acid">Acid</option>
+                <option value="sugar">Sugar</option>
+                <option value="bitter">Bitter</option>
+                <option value="botanical">Botanical</option>
+                <option value="yeast">Yeast</option>
+                <option value="lactic">Lactic</option>
+                <option value="color">Color</option>
+                <option value="gas">Gas</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Unità</label>
+              <input class="input" id="editChUnit" value="${escapeHtml(ch.unit || "")}">
+            </div>
+          </div>
+
+          <div class="formGrid" style="margin-top:12px">
+            <div class="field">
               <label>Min</label>
               <input class="input" id="editChMin" type="number" step="0.001" value="${ch.min}">
             </div>
@@ -1457,10 +1830,6 @@
               <label>Step</label>
               <input class="input" id="editChStep" type="number" step="0.001" value="${ch.step}">
             </div>
-            <div class="field">
-              <label>Unità</label>
-              <input class="input" id="editChUnit" value="${escapeHtml(ch.unit || "")}">
-            </div>
           </div>
 
           <div class="toolbar" style="margin-top:14px">
@@ -1468,6 +1837,10 @@
           </div>
         `
       );
+      setTimeout(()=>{
+        const sel = document.getElementById("editChCat");
+        if(sel) sel.value = ch.cat || catClassForKey(ch.key);
+      },0);
     }
 
     function saveEditedChannel(channelId){
@@ -1485,6 +1858,7 @@
 
       ch.name = document.getElementById("editChName").value.trim() || ch.name;
       ch.type = document.getElementById("editChType").value.trim() || ch.type;
+      ch.cat = document.getElementById("editChCat").value;
       ch.min = min;
       ch.max = max;
       ch.step = Number(document.getElementById("editChStep").value) || ch.step;
@@ -1496,6 +1870,7 @@
       saveDB();
       closeModal();
       renderAll();
+      openMixerPage();
     }
 
     function saveScene(){
@@ -1525,10 +1900,10 @@
       }
       const scene = db.scenes.find(s => s.id === sceneId);
       if(!scene) return;
+
       lot.channels = JSON.parse(JSON.stringify(scene.channels || [])).map(ch => ({...ch, id: uid("ch")}));
       saveDB();
       renderAll();
-      showSection("console");
     }
 
     function loadPresetScene(name){
@@ -1540,38 +1915,51 @@
 
       const presets = {
         sidro_secco: [
-          {name:"pH", type:"Acidità", min:2.5, max:4.5, step:0.01, value:3.35, unit:""},
-          {name:"TEMP", type:"Temperatura", min:0, max:40, step:0.1, value:18.0, unit:"°"},
-          {name:"SG", type:"Densità", min:0.995, max:1.080, step:0.001, value:1.004, unit:""},
-          {name:"ABV", type:"Alcol", min:0, max:12, step:0.1, value:6.2, unit:"%"},
-          {name:"CO2", type:"Gasatura", min:0, max:4.5, step:0.1, value:2.7, unit:" vol"},
-          {name:"TANNINO", type:"Struttura", min:0, max:10, step:0.1, value:4.2, unit:""}
+          quickPresetTemplate("ph"),
+          quickPresetTemplate("og"),
+          quickPresetTemplate("fg"),
+          quickPresetTemplate("abv"),
+          quickPresetTemplate("srm"),
+          quickPresetTemplate("temp"),
+          quickPresetTemplate("acidita"),
+          quickPresetTemplate("tannino"),
+          quickPresetTemplate("co2"),
+          quickPresetTemplate("pressione"),
+          quickPresetTemplate("dolcezza"),
+          quickPresetTemplate("secchezza")
         ],
         sidro_petnat: [
-          {name:"pH", type:"Acidità", min:2.5, max:4.5, step:0.01, value:3.25, unit:""},
-          {name:"TEMP", type:"Temperatura", min:0, max:40, step:0.1, value:19.0, unit:"°"},
-          {name:"SG", type:"Densità", min:0.995, max:1.080, step:0.001, value:1.008, unit:""},
-          {name:"ABV", type:"Alcol", min:0, max:12, step:0.1, value:5.8, unit:"%"},
-          {name:"CO2", type:"Gasatura", min:0, max:4.5, step:0.1, value:3.2, unit:" vol"},
-          {name:"PRESSIONE", type:"Sparkling", min:0, max:40, step:0.5, value:18, unit:" PSI"}
+          {...quickPresetTemplate("ph"), value:3.25},
+          {...quickPresetTemplate("og"), value:1.050},
+          {...quickPresetTemplate("fg"), value:1.008},
+          {...quickPresetTemplate("abv"), value:5.8},
+          {...quickPresetTemplate("srm"), value:4},
+          {...quickPresetTemplate("temp"), value:19},
+          {...quickPresetTemplate("co2"), value:3.2},
+          {...quickPresetTemplate("pressione"), value:18},
+          {...quickPresetTemplate("dolcezza"), value:3.0},
+          {...quickPresetTemplate("secchezza"), value:7.0}
         ],
         lattico_fine: [
-          {name:"pH", type:"Acidità", min:2.5, max:4.5, step:0.01, value:3.15, unit:""},
-          {name:"TEMP", type:"Temperatura", min:0, max:40, step:0.1, value:23.0, unit:"°"},
-          {name:"SG", type:"Densità", min:0.995, max:1.080, step:0.001, value:1.006, unit:""},
-          {name:"ABV", type:"Alcol", min:0, max:12, step:0.1, value:1.4, unit:"%"},
-          {name:"CO2", type:"Gasatura", min:0, max:4.5, step:0.1, value:2.3, unit:" vol"},
-          {name:"LATTICO", type:"Fermento", min:0, max:10, step:0.1, value:7.5, unit:""},
-          {name:"TÈ", type:"Infusione", min:0, max:10, step:0.1, value:4.0, unit:""}
+          {...quickPresetTemplate("ph"), value:3.15},
+          {...quickPresetTemplate("og"), value:1.022},
+          {...quickPresetTemplate("fg"), value:1.006},
+          {...quickPresetTemplate("abv"), value:1.4},
+          {...quickPresetTemplate("temp"), value:23},
+          {...quickPresetTemplate("co2"), value:2.3},
+          {...quickPresetTemplate("acidita"), value:7.2},
+          {name:"LATTICO",type:"Fermento",min:0,max:10,step:0.1,value:7.5,unit:"",cat:"lactic"},
+          {name:"TÈ",type:"Infusione",min:0,max:10,step:0.1,value:4.0,unit:"",cat:"botanical"}
         ],
         mela_te: [
-          {name:"pH", type:"Acidità", min:2.5, max:4.5, step:0.01, value:3.05, unit:""},
-          {name:"TEMP", type:"Temperatura", min:0, max:40, step:0.1, value:22.0, unit:"°"},
-          {name:"SG", type:"Densità", min:0.995, max:1.080, step:0.001, value:1.010, unit:""},
-          {name:"ABV", type:"Alcol", min:0, max:12, step:0.1, value:1.2, unit:"%"},
-          {name:"CO2", type:"Gasatura", min:0, max:4.5, step:0.1, value:2.5, unit:" vol"},
-          {name:"OOLONG", type:"Tè", min:0, max:10, step:0.1, value:5.2, unit:""},
-          {name:"OSMANTO", type:"Botanica", min:0, max:10, step:0.1, value:4.4, unit:""}
+          {...quickPresetTemplate("ph"), value:3.05},
+          {...quickPresetTemplate("og"), value:1.020},
+          {...quickPresetTemplate("fg"), value:1.010},
+          {...quickPresetTemplate("abv"), value:1.2},
+          {...quickPresetTemplate("temp"), value:22},
+          {...quickPresetTemplate("co2"), value:2.5},
+          {name:"OOLONG",type:"Tè",min:0,max:10,step:0.1,value:5.2,unit:"",cat:"botanical"},
+          {name:"OSMANTO",type:"Botanica",min:0,max:10,step:0.1,value:4.4,unit:"",cat:"botanical"}
         ]
       };
 
@@ -1580,19 +1968,19 @@
 
       lot.channels = preset.map(ch => ({
         id: uid("ch"),
-        key: "preset",
+        key: ch.name.toLowerCase(),
         name: ch.name,
         type: ch.type,
         min: ch.min,
         max: ch.max,
         step: ch.step,
         value: ch.value,
-        unit: ch.unit
+        unit: ch.unit,
+        cat: ch.cat || catClassForKey(ch.name.toLowerCase())
       }));
 
       saveDB();
       renderAll();
-      showSection("console");
     }
 
     function openLibraryModal(key){
@@ -1687,29 +2075,11 @@
       renderLibrarySummary();
     }
 
-    function clearCurrentLot(){
-      const lot = currentLot();
-      if(!lot) return;
-      const fresh = createBlankLotData();
-      lot.name = "";
-      lot.code = "";
-      lot.type = "sidro";
-      lot.stage = "programmato";
-      lot.volume = 0;
-      lot.date = today();
-      lot.culture = "";
-      lot.recipe = "";
-      lot.notes = "";
-      lot.channels = fresh.channels;
-      saveDB();
-      renderAll();
-    }
-
     function exportBackup(){
       const blob = new Blob([JSON.stringify(db,null,2)], {type:"application/json"});
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "xa-ultra-pro-mixer-backup.json";
+      a.download = "xa-maximum-mixer-backup.json";
       a.click();
       URL.revokeObjectURL(a.href);
     }
@@ -1723,12 +2093,15 @@
             lots: Array.isArray(parsed.lots) ? parsed.lots : [],
             selectedLotId: parsed.selectedLotId || null,
             scenes: Array.isArray(parsed.scenes) ? parsed.scenes : [],
-            library: parsed.library || structuredClone(libraryDefaults)
+            library: parsed.library || structuredClone(libraryDefaults),
+            activeBank: parsed.activeBank || "A",
+            bankA: parsed.bankA || null,
+            bankB: parsed.bankB || null,
+            mixerPageOpen: !!parsed.mixerPageOpen
           };
           ensureSelectedLot();
           saveDB();
           renderAll();
-          alert("Backup importato.");
         }catch(err){
           alert("File non valido.");
         }
@@ -1755,16 +2128,6 @@
       lot1.culture = "Hornindal Kveik";
       lot1.recipe = "Succo mela Golden, nutriente, lieve tannino";
       lot1.notes = "Profilo secco, brillante e preciso";
-      lot1.channels = [
-        {id:uid("ch"),key:"ph",name:"pH",type:"Acidità",min:2.5,max:4.5,step:0.01,value:3.28,unit:""},
-        {id:uid("ch"),key:"temp",name:"TEMP",type:"Temperatura",min:0,max:40,step:0.1,value:27.5,unit:"°"},
-        {id:uid("ch"),key:"sg",name:"SG",type:"Densità",min:0.995,max:1.080,step:0.001,value:1.010,unit:""},
-        {id:uid("ch"),key:"abv",name:"ABV",type:"Alcol",min:0,max:12,step:0.1,value:5.5,unit:"%"},
-        {id:uid("ch"),key:"co2",name:"CO2",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.7,unit:" vol"},
-        {id:uid("ch"),key:"tannino",name:"TANNINO",type:"Struttura",min:0,max:10,step:0.1,value:4.2,unit:""},
-        {id:uid("ch"),key:"malico",name:"MALICO",type:"Acido",min:0,max:10,step:0.1,value:3.6,unit:" g/L"},
-        {id:uid("ch"),key:"nutriente",name:"NUTRIENTE",type:"Fermentazione",min:0,max:10,step:0.1,value:5.2,unit:""}
-      ];
 
       const lot2 = createBlankLotData();
       lot2.name = "LATTICO MELA OOLONG OSMANTO";
@@ -1775,45 +2138,30 @@
       lot2.culture = "L. plantarum";
       lot2.recipe = "Succo mela, tè oolong, osmanthus";
       lot2.notes = "Fine dining, acidità pulita";
+
       lot2.channels = [
-        {id:uid("ch"),key:"ph",name:"pH",type:"Acidità",min:2.5,max:4.5,step:0.01,value:3.14,unit:""},
-        {id:uid("ch"),key:"temp",name:"TEMP",type:"Temperatura",min:0,max:40,step:0.1,value:21.0,unit:"°"},
-        {id:uid("ch"),key:"sg",name:"SG",type:"Densità",min:0.995,max:1.080,step:0.001,value:1.008,unit:""},
-        {id:uid("ch"),key:"abv",name:"ABV",type:"Alcol",min:0,max:12,step:0.1,value:1.8,unit:"%"},
-        {id:uid("ch"),key:"co2",name:"CO2",type:"Gasatura",min:0,max:4.5,step:0.1,value:2.3,unit:" vol"},
-        {id:uid("ch"),key:"oolong",name:"OOLONG",type:"Tè",min:0,max:10,step:0.1,value:5.0,unit:""},
-        {id:uid("ch"),key:"osmanto",name:"OSMANTO",type:"Botanica",min:0,max:10,step:0.1,value:4.2,unit:""},
-        {id:uid("ch"),key:"lattico",name:"LATTICO",type:"Fermento",min:0,max:10,step:0.1,value:7.4,unit:""}
+        {...quickPresetTemplate("ph"),id:uid("ch"),key:"ph",cat:"acid",value:3.14},
+        {...quickPresetTemplate("og"),id:uid("ch"),key:"og",cat:"tech",value:1.022},
+        {...quickPresetTemplate("fg"),id:uid("ch"),key:"fg",cat:"tech",value:1.008},
+        {...quickPresetTemplate("abv"),id:uid("ch"),key:"abv",cat:"tech",value:1.8},
+        {...quickPresetTemplate("srm"),id:uid("ch"),key:"srm",cat:"color",value:2},
+        {...quickPresetTemplate("temp"),id:uid("ch"),key:"temp",cat:"tech",value:21.0},
+        {...quickPresetTemplate("co2"),id:uid("ch"),key:"co2",cat:"gas",value:2.3},
+        {id:uid("ch"),key:"lattico",name:"LATTICO",type:"Fermento",min:0,max:10,step:0.1,value:7.4,unit:"",cat:"lactic"},
+        {id:uid("ch"),key:"oolong",name:"OOLONG",type:"Tè",min:0,max:10,step:0.1,value:5.0,unit:"",cat:"botanical"},
+        {id:uid("ch"),key:"osmanto",name:"OSMANTO",type:"Botanica",min:0,max:10,step:0.1,value:4.2,unit:"",cat:"botanical"},
+        {id:uid("ch"),key:"acidita",name:"ACIDITÀ",type:"Totale",min:0,max:15,step:0.1,value:7.1,unit:" g/L",cat:"acid"},
+        {id:uid("ch"),key:"secchezza",name:"SECCHEZZA",type:"Finale",min:0,max:10,step:0.1,value:6.2,unit:"",cat:"sugar"}
       ];
 
       db.lots = [lot1, lot2];
       db.selectedLotId = lot1.id;
+      db.bankA = lot1.id;
+      db.bankB = lot2.id;
+      db.activeBank = "A";
       saveDB();
       renderAll();
     }
-
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#39;");
-    }
-
-    function renderAll(){
-      ensureSelectedLot();
-      saveDB();
-      renderSelectedLotInfo();
-      renderMixer();
-      renderLots();
-      renderScenes();
-      renderLibrarySummary();
-    }
-
-    document.querySelectorAll(".dockBtn").forEach(btn=>{
-      btn.addEventListener("click", ()=>showSection(btn.dataset.sec));
-    });
 
     document.getElementById("demoBtn").addEventListener("click", loadDemo);
     document.getElementById("exportBtn").addEventListener("click", exportBackup);
@@ -1825,12 +2173,25 @@
 
     document.getElementById("resetBtn").addEventListener("click", resetAll);
     document.getElementById("addLotBtnTop").addEventListener("click", openLotModal);
-    document.getElementById("addChannelBtn").addEventListener("click", openAddChannelModal);
-    document.getElementById("saveSceneBtn").addEventListener("click", saveScene);
+    document.getElementById("openMixerBtnTop").addEventListener("click", openMixerPage);
     document.getElementById("saveLotDetailsBtn").addEventListener("click", saveLotDetails);
     document.getElementById("saveMixerLotBtn").addEventListener("click", saveMixerLot);
     document.getElementById("clearLotBtn").addEventListener("click", clearCurrentLot);
     document.getElementById("addLibraryGlobalBtn").addEventListener("click", openAddLibraryGlobal);
+
+    document.querySelector('.dockBtn[data-action="newlot"]').addEventListener("click", openLotModal);
+    document.querySelector('.dockBtn[data-action="scene"]').addEventListener("click", ()=>{
+      if(db.scenes.length){
+        document.getElementById("scenesList").scrollIntoView({behavior:"smooth"});
+      }else{
+        loadPresetScene('sidro_secco');
+      }
+    });
+    document.querySelector('.dockBtn[data-action="library"]').addEventListener("click", ()=>{
+      document.getElementById("librarySummary").scrollIntoView({behavior:"smooth"});
+    });
+
+    document.querySelector('.dockBtn[data-sec="home"]').addEventListener("click", renderHomeSection);
 
     renderAll();
   </script>
