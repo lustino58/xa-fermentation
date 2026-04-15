@@ -31,34 +31,30 @@
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{
-      margin:0;
-      padding:0;
+      margin:0;padding:0;
       background:linear-gradient(180deg,#0a0e13,#10161d);
       color:var(--text);
       font-family:Inter,Arial,sans-serif;
     }
     body{padding-bottom:92px}
-    body.mixer-compact .channel{
-      width:138px;
-      min-width:138px;
-    }
-    body.mixer-compact .track{min-height:210px}
-    body.mixer-compact .track input[type=range]{width:190px}
-    body.mixer-compact .miniLcd .val{font-size:14px}
-
     h1,h2,h3,h4,p{margin:0}
     button,input,select,textarea{font:inherit}
     button{cursor:pointer;border:none}
     img{display:block;max-width:100%}
     canvas{display:block;width:100%}
-    .hidden{display:none !important}
+    .hidden{display:none!important}
+
+    body.mixer-compact .channel{width:138px;min-width:138px}
+    body.mixer-compact .track{min-height:205px}
+    body.mixer-compact .track input[type=range]{width:188px}
+    body.mixer-compact .miniLcd .val{font-size:14px}
+    body.mixer-compact .channelFooterName{font-size:10px;min-height:36px}
 
     .app{max-width:1800px;margin:0 auto;padding:14px}
     .section{display:none}
     .section.active{display:block}
     .page{display:grid;gap:14px}
     .layout2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .layout3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .statsGrid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
 
     .topbar{
@@ -115,11 +111,12 @@
       border-color:#c7a15a;
     }
     .groupAction{
-      padding:8px 10px;
+      padding:7px 10px;
       font-size:11px;
       color:#111;
       background:linear-gradient(180deg,var(--gold2),var(--gold));
       border-color:#c8a15a;
+      box-shadow:none;
     }
 
     .card{
@@ -184,7 +181,7 @@
       display:grid;
       grid-template-columns:1fr 1.25fr .7fr .7fr 1fr auto;
       gap:8px;
-      margin-top:8px
+      margin-top:8px;
     }
 
     .libraryQuickGrid{
@@ -215,10 +212,7 @@
       border:1px solid #334050;
       box-shadow:var(--shadow);
     }
-    .searchBar .icon{
-      font-size:18px;
-      opacity:.85;
-    }
+    .searchBar .icon{font-size:18px;opacity:.85}
     .searchInput{
       width:100%;
       background:transparent;
@@ -228,12 +222,7 @@
       font-size:15px;
     }
 
-    .ratingRow{
-      display:flex;
-      gap:6px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
+    .ratingRow{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
     .starBtn{
       padding:8px 12px;
       min-width:44px;
@@ -282,92 +271,51 @@
     }
 
     .modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.72);
-      display:none;
-      align-items:flex-end;
-      justify-content:center;
-      z-index:120;
-      padding:14px;
+      position:fixed;inset:0;background:rgba(0,0,0,.72);
+      display:none;align-items:flex-end;justify-content:center;z-index:120;padding:14px;
     }
     .modal.show{display:flex}
     .modalBox{
-      width:min(1000px,100%);
-      max-height:92vh;
-      overflow:auto;
-      border-radius:24px;
-      background:linear-gradient(180deg,#181f28,#0f141a);
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:0 18px 40px rgba(0,0,0,.38);
+      width:min(1000px,100%);max-height:92vh;overflow:auto;
+      border-radius:24px;background:linear-gradient(180deg,#181f28,#0f141a);
+      border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 40px rgba(0,0,0,.38);
     }
     .modalHead{
-      position:sticky;top:0;
-      background:rgba(24,31,40,.96);
-      backdrop-filter:blur(10px);
-      padding:16px;
-      border-bottom:1px solid rgba(255,255,255,.05);
-      display:flex;justify-content:space-between;align-items:center;gap:12px;
-      z-index:4;
+      position:sticky;top:0;background:rgba(24,31,40,.96);backdrop-filter:blur(10px);
+      padding:16px;border-bottom:1px solid rgba(255,255,255,.05);
+      display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:4;
     }
     .modalBody{padding:16px}
     .libSearch{margin:12px 0}
     .libList{display:grid;gap:8px}
     .libItem{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:10px;
-      align-items:center;
-      padding:12px;
-      border-radius:16px;
-      background:linear-gradient(180deg,#202836,#151c24);
-      border:1px solid #334050;
+      display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
+      padding:12px;border-radius:16px;background:linear-gradient(180deg,#202836,#151c24);border:1px solid #334050;
     }
     .libItemTitle{font-weight:900}
     .libItemMeta{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
 
     .notesSticky{
-      position:sticky;
-      top:0;
-      z-index:3;
-      padding-bottom:12px;
+      position:sticky;top:0;z-index:3;padding-bottom:12px;
       background:linear-gradient(180deg,#181f28 0%, #181f28 78%, rgba(24,31,40,0));
     }
     .notesCard{
-      border-radius:18px;
-      padding:14px;
-      background:
-        repeating-linear-gradient(
-          180deg,
-          var(--paper) 0px,
-          var(--paper) 28px,
-          var(--paperLine) 29px,
-          var(--paper) 30px
-        );
+      border-radius:18px;padding:14px;
+      background:repeating-linear-gradient(
+        180deg,
+        var(--paper) 0px,
+        var(--paper) 28px,
+        var(--paperLine) 29px,
+        var(--paper) 30px
+      );
       color:var(--paperInk);
       border:1px solid #c8b995;
       box-shadow:0 12px 28px rgba(0,0,0,.22), inset 0 0 0 1px rgba(255,255,255,.35);
     }
-    .notesTitle{
-      font-size:20px;
-      font-weight:900;
-      line-height:1.1;
-      margin-bottom:8px;
-    }
-    .notesMeta{
-      font-size:13px;
-      line-height:1.45;
-      margin-bottom:10px;
-      color:#4c4437;
-      font-weight:700;
-    }
+    .notesTitle{font-size:20px;font-weight:900;line-height:1.1;margin-bottom:8px}
+    .notesMeta{font-size:13px;line-height:1.45;margin-bottom:10px;color:#4c4437;font-weight:700}
     .notesList{display:grid;gap:6px;font-size:14px;line-height:1.45;color:#2a241c}
-    .notesRow{
-      display:grid;
-      grid-template-columns:24px 1fr;
-      gap:8px;
-      align-items:flex-start;
-    }
+    .notesRow{display:grid;grid-template-columns:24px 1fr;gap:8px;align-items:flex-start}
     .notesNum{font-weight:900;color:#534a3d}
     .notesEmpty{font-size:14px;color:#6c6253;font-style:italic}
 
@@ -383,82 +331,40 @@
     }
 
     .mixerOnlyPage,.controlOnlyPage{
-      min-height:100vh;
-      background:linear-gradient(180deg,#090d12,#0e141b);
+      min-height:100vh;background:linear-gradient(180deg,#090d12,#0e141b);
     }
     .mixerTopBar,.controlTopBar{
       position:sticky;top:0;z-index:70;
       display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
-      padding:10px 12px;
-      background:rgba(8,11,14,.96);
-      backdrop-filter:blur(14px);
+      padding:10px 12px;background:rgba(8,11,14,.96);backdrop-filter:blur(14px);
       border-bottom:1px solid rgba(255,255,255,.05);
     }
-    .mixerTopLeft,.mixerTopRight,.controlTopLeft,.controlTopRight{
-      display:flex;gap:8px;flex-wrap:wrap
-    }
+    .mixerTopLeft,.mixerTopRight,.controlTopLeft,.controlTopRight{display:flex;gap:8px;flex-wrap:wrap}
 
     .mixerShell,.controlShell{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:8px;
-      padding:8px;
-      min-height:calc(100vh - 68px);
+      display:grid;grid-template-columns:1fr;gap:8px;padding:8px;min-height:calc(100vh - 68px);
     }
-
     .centerMixer,.centerControl{
-      border-radius:20px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:var(--shadow);
-      background:linear-gradient(180deg,#1b232d,#121820);
-      display:flex;
-      flex-direction:column;
-      min-width:0;
+      border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);background:linear-gradient(180deg,#1b232d,#121820);
+      display:flex;flex-direction:column;min-width:0;
     }
-
     .mixerHeader,.controlHeader{
-      padding:10px;
-      border-bottom:1px solid rgba(255,255,255,.05);
+      padding:10px;border-bottom:1px solid rgba(255,255,255,.05);
       background:linear-gradient(180deg,#232d39,#171f28);
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
+      display:grid;grid-template-columns:1fr 1fr;gap:8px;
     }
-
     .lcdPanel{
-      border-radius:16px;
-      padding:10px;
-      border:1px solid #355530;
+      border-radius:16px;padding:10px;border:1px solid #355530;
       background:linear-gradient(180deg,#11200f,#0a1608);
       box-shadow:inset 0 0 18px rgba(151,255,123,.08);
     }
-    .lcdLabel{
-      font-size:10px;
-      color:#c0ffb0;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-    }
-    .lcdMain{
-      font-size:24px;
-      font-weight:900;
-      line-height:1;
-      margin-top:6px;
-      color:var(--lcd);
-    }
-    .lcdSub{
-      font-size:11px;
-      line-height:1.35;
-      margin-top:6px;
-      color:#c0ffb0;
-      opacity:.92;
-    }
+    .lcdLabel{font-size:10px;color:#c0ffb0;letter-spacing:.14em;text-transform:uppercase}
+    .lcdMain{font-size:24px;font-weight:900;line-height:1;margin-top:6px;color:var(--lcd)}
+    .lcdSub{font-size:11px;line-height:1.35;margin-top:6px;color:#c0ffb0;opacity:.92}
 
     .mixerViewport{
-      flex:1;
-      overflow-x:auto;
-      overflow-y:hidden;
-      padding:10px;
+      flex:1;overflow-x:auto;overflow-y:hidden;padding:8px;
       background:linear-gradient(180deg,#0f141b,#0b0f14);
     }
     .mixerViewport::-webkit-scrollbar{height:12px}
@@ -467,130 +373,98 @@
 
     .mixerBoard{
       display:flex;
-      gap:12px;
+      gap:6px;
       align-items:flex-start;
       min-width:max-content;
       padding-bottom:6px;
     }
-
     .mixerGroupBlock{
       display:flex;
       flex-direction:column;
-      gap:10px;
+      gap:6px;
       min-width:max-content;
     }
-
     .mixerGroupHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:8px;
-      min-width:240px;
-      border-radius:14px;
-      padding:9px 10px;
+      display:flex;align-items:center;justify-content:space-between;gap:8px;
+      min-width:220px;border-radius:14px;padding:8px 10px;
       background:linear-gradient(180deg,#273241,#1a212b);
-      border:1px solid #394758;
-      color:#dbe6f0;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.12em;
-      text-transform:uppercase;
+      border:1px solid #394758;color:#dbe6f0;
+      font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
     }
-
     .mixerGroupChannels{
       display:flex;
-      gap:12px;
+      gap:6px;
       align-items:flex-end;
       min-width:max-content;
     }
 
     .channel{
-      width:168px;
-      min-width:168px;
+      width:164px;
+      min-width:164px;
       border-radius:18px;
-      padding:10px;
+      padding:8px;
       border:1px solid #455567;
       box-shadow:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -14px 22px rgba(0,0,0,.25), 0 10px 22px rgba(0,0,0,.22);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      overflow:hidden;
-      color:#f2f7fc;
+      display:flex;flex-direction:column;align-items:center;overflow:hidden;color:#f2f7fc;
     }
 
     .channel.base-1{background:linear-gradient(180deg,#ffe86a,#ffc928 28%,#6b4f0d)}
     .channel.base-2{background:linear-gradient(180deg,#ffdf52,#f2b400 28%,#6f4b00)}
-
     .channel.fruit-1{background:linear-gradient(180deg,#ff9fd5,#d657a5 28%,#5a1840)}
     .channel.fruit-2{background:linear-gradient(180deg,#ff8bc5,#c24092 28%,#4d1436)}
     .channel.fruit-3{background:linear-gradient(180deg,#ff74b9,#ad2f7f 28%,#431130)}
     .channel.fruit-4{background:linear-gradient(180deg,#f760b0,#92256d 28%,#380d29)}
-
     .channel.tea-1{background:linear-gradient(180deg,#83d8ff,#2f87bd 28%,#123954)}
     .channel.tea-2{background:linear-gradient(180deg,#5ec6ff,#1f6fa8 28%,#103246)}
     .channel.tea-3{background:linear-gradient(180deg,#4ab6ef,#165f92 28%,#0d293d)}
     .channel.tea-4{background:linear-gradient(180deg,#35a7dc,#104f7b 28%,#0a2233)}
-
     .channel.botanical-1{background:linear-gradient(180deg,#ffc57a,#ea8c2d 28%,#6a3000)}
     .channel.botanical-2{background:linear-gradient(180deg,#ffb460,#d97818 28%,#5d2800)}
     .channel.botanical-3{background:linear-gradient(180deg,#ffa247,#c76508 28%,#4f2200)}
     .channel.botanical-4{background:linear-gradient(180deg,#ff922e,#b45500 28%,#451b00)}
-
     .channel.spice-1{background:linear-gradient(180deg,#b7ff9a,#58c533 28%,#1d4b0d)}
     .channel.spice-2{background:linear-gradient(180deg,#9df27e,#45af25 28%,#183f0a)}
     .channel.spice-3{background:linear-gradient(180deg,#87e667,#39931f 28%,#133609)}
     .channel.spice-4{background:linear-gradient(180deg,#74d554,#2f7b19 28%,#102e08)}
-
     .channel.pepper-1{background:linear-gradient(180deg,#ffb18e,#d2643a 28%,#5c2010)}
     .channel.pepper-2{background:linear-gradient(180deg,#ff9f77,#bc5328 28%,#4c190b)}
     .channel.pepper-3{background:linear-gradient(180deg,#f88b63,#a5441f 28%,#3f1307)}
     .channel.pepper-4{background:linear-gradient(180deg,#ea774f,#8d3716 28%,#331005)}
-
     .channel.hop-1{background:linear-gradient(180deg,#d8ff73,#87cc21 28%,#2d4f0a)}
     .channel.hop-2{background:linear-gradient(180deg,#c6f85e,#74b815 28%,#264507)}
     .channel.hop-3{background:linear-gradient(180deg,#b1e648,#64a30d 28%,#213b06)}
     .channel.hop-4{background:linear-gradient(180deg,#9ad335,#538a08 28%,#1a3104)}
-
     .channel.yeast-1{background:linear-gradient(180deg,#9fe8ff,#47b6e6 28%,#124766)}
     .channel.yeast-2{background:linear-gradient(180deg,#88dcff,#35a4d2 28%,#103d58)}
     .channel.yeast-3{background:linear-gradient(180deg,#6fcfff,#2790bc 28%,#0d344b)}
     .channel.yeast-4{background:linear-gradient(180deg,#59c1f2,#1f7ba4 28%,#0b2b40)}
-
     .channel.lactic-1{background:linear-gradient(180deg,#83ffe8,#27c4a5 28%,#0d4c40)}
     .channel.lactic-2{background:linear-gradient(180deg,#64f2da,#17af92 28%,#0b4136)}
     .channel.lactic-3{background:linear-gradient(180deg,#48e0c9,#0d967d 28%,#09362d)}
     .channel.lactic-4{background:linear-gradient(180deg,#34cdb7,#087f69 28%,#072d25)}
-
     .channel.add-1{background:linear-gradient(180deg,#dfe7f0,#8b9aab 28%,#33404b)}
     .channel.add-2{background:linear-gradient(180deg,#d0dbe7,#7a8b9d 28%,#2b3741)}
     .channel.add-3{background:linear-gradient(180deg,#c3cfdb,#6a7b8d 28%,#24303a)}
     .channel.add-4{background:linear-gradient(180deg,#b7c4d2,#5d6d7e 28%,#1f2831)}
-
     .channel.param-1{background:linear-gradient(180deg,#c7a6ff,#7b4fd8 28%,#2d1657)}
     .channel.param-2{background:linear-gradient(180deg,#b78fff,#6a3dca 28%,#26124c)}
     .channel.param-3{background:linear-gradient(180deg,#a87aff,#5b2fc0 28%,#200f42)}
     .channel.param-4{background:linear-gradient(180deg,#9b68f2,#4d26aa 28%,#1b0d39)}
 
     .channelTop{
-      width:100%;
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:6px;
-      margin-bottom:6px;
+      width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:6px;
     }
-
     .channelType{
-      font-size:10px;
+      font-size:11px;
       color:#ffffff;
       text-transform:uppercase;
-      letter-spacing:.08em;
-      line-height:1.25;
-      min-height:28px;
+      letter-spacing:.06em;
+      line-height:1.2;
+      min-height:30px;
       font-weight:900;
-      text-shadow:0 1px 2px rgba(0,0,0,.55);
+      text-shadow:0 1px 2px rgba(0,0,0,.6);
+      word-break:break-word;
     }
-
     .tinyIconBtn{
       width:24px;height:24px;border-radius:8px;
       background:linear-gradient(180deg,#2b3642,#1a212b);
@@ -599,18 +473,14 @@
     }
 
     .miniLcd{
-      width:100%;
-      border-radius:12px;
-      background:linear-gradient(180deg,#12200f,#0b1508);
-      border:1px solid #355530;
-      padding:8px 6px;
-      text-align:center;
+      width:100%;border-radius:12px;background:linear-gradient(180deg,#12200f,#0b1508);
+      border:1px solid #355530;padding:8px 6px;text-align:center;
     }
     .miniLcd .lbl{font-size:9px;color:#baffab;letter-spacing:.08em;text-transform:uppercase}
     .miniLcd .val{font-size:18px;font-weight:900;margin-top:2px;color:var(--lcd)}
 
     .knob{
-      width:64px;height:64px;border-radius:50%;margin:10px 0 8px;
+      width:60px;height:60px;border-radius:50%;margin:8px 0 6px;
       background:radial-gradient(circle at 30% 30%,#5a6673 0%,#39434e 32%,#232a33 58%,#151a20 100%);
       border:2px solid #536172;position:relative;
     }
@@ -620,27 +490,15 @@
     }
 
     .tinyMeter{
-      width:88%;
-      height:8px;
-      border-radius:999px;
-      background:#0c1014;
-      border:1px solid #2f3a47;
-      overflow:hidden;
-      margin-bottom:8px;
+      width:88%;height:8px;border-radius:999px;background:#0c1014;border:1px solid #2f3a47;overflow:hidden;margin-bottom:8px;
     }
     .tinyFill{
-      height:100%;
-      width:0%;
+      height:100%;width:0%;
       background:linear-gradient(90deg,#2ee47f 0%, #a4ff64 45%, #ffd45d 75%, #ff6b6b 100%);
     }
 
     .faderWrap{
-      width:100%;
-      flex:1;
-      display:grid;
-      grid-template-columns:18px 1fr;
-      gap:8px;
-      align-items:stretch;
+      width:100%;flex:1;display:grid;grid-template-columns:18px 1fr;gap:8px;align-items:stretch;
     }
     .vu{
       border-radius:12px;border:1px solid #344250;background:linear-gradient(180deg,#0d1116,#141a22);
@@ -652,185 +510,93 @@
     .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
 
     .track{
-      border-radius:16px;
-      border:1px solid #364352;
-      background:linear-gradient(180deg,#0f1419,#181f27);
-      min-height:270px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      position:relative;
-      padding:10px 0;
+      border-radius:16px;border:1px solid #364352;background:linear-gradient(180deg,#0f1419,#181f27);
+      min-height:260px;display:flex;justify-content:center;align-items:center;position:relative;padding:10px 0;
     }
     .track::before{
-      content:"";
-      position:absolute;
-      top:14px;bottom:14px;left:50%;
-      transform:translateX(-50%);
-      width:6px;border-radius:999px;
-      background:#11161c;border:1px solid #2f3944;
+      content:"";position:absolute;top:14px;bottom:14px;left:50%;transform:translateX(-50%);
+      width:6px;border-radius:999px;background:#11161c;border:1px solid #2f3944;
     }
     .track input[type=range]{
-      -webkit-appearance:none;
-      appearance:none;
-      width:255px;
-      height:28px;
-      transform:rotate(-90deg);
-      background:transparent;
-      position:relative;
-      z-index:2;
+      -webkit-appearance:none;appearance:none;width:245px;height:28px;transform:rotate(-90deg);
+      background:transparent;position:relative;z-index:2;
     }
     .track input[type=range]::-webkit-slider-runnable-track{
-      height:10px;
-      border-radius:999px;
-      background:linear-gradient(90deg,#1b2129,#10141a);
-      border:1px solid #394655;
+      height:10px;border-radius:999px;background:linear-gradient(90deg,#1b2129,#10141a);border:1px solid #394655;
     }
     .track input[type=range]::-webkit-slider-thumb{
-      -webkit-appearance:none;
-      appearance:none;
-      width:44px;
-      height:24px;
-      border-radius:8px;
-      margin-top:-8px;
-      border:1px solid #6a7888;
-      background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
+      -webkit-appearance:none;appearance:none;width:44px;height:24px;border-radius:8px;margin-top:-8px;
+      border:1px solid #6a7888;background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
     }
 
     .channelButtons{
-      width:100%;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:6px;
-      margin-top:8px;
+      width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;
     }
     .channelFooterName{
-      width:100%;
-      margin-top:8px;
-      border-radius:12px;
-      padding:8px 6px;
-      background:rgba(0,0,0,.22);
-      border:1px solid rgba(255,255,255,.12);
-      font-size:11px;
-      font-weight:900;
-      line-height:1.2;
-      text-align:center;
-      min-height:42px;
-      display:grid;
-      place-items:center;
-      word-break:break-word;
+      width:100%;margin-top:8px;border-radius:12px;padding:8px 6px;
+      background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.12);
+      font-size:11px;font-weight:900;line-height:1.2;text-align:center;min-height:42px;
+      display:grid;place-items:center;word-break:break-word;
     }
     .channelEditWide{
-      width:100%;
-      margin-top:6px;
-      border-radius:10px;
-      padding:8px 6px;
-      font-size:11px;
-      font-weight:900;
+      width:100%;margin-top:6px;border-radius:10px;padding:8px 6px;font-size:11px;font-weight:900;
       background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
-      color:#111;
-      border:1px solid #7e8a95;
+      color:#111;border:1px solid #7e8a95;
     }
 
     .monitorWrap{
-      padding:12px;
-      display:grid;
-      gap:12px;
-      background:linear-gradient(180deg,#0f141b,#0b0f14);
+      padding:12px;display:grid;gap:12px;background:linear-gradient(180deg,#0f141b,#0b0f14);
     }
-
-    .eqHeader{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
     .chartWrap{
-      border-radius:18px;
-      padding:14px;
-      background:linear-gradient(180deg,#111722,#151f2a);
-      border:1px solid #334050;
-      min-height:380px;
+      border-radius:18px;padding:14px;background:linear-gradient(180deg,#111722,#151f2a);
+      border:1px solid #334050;min-height:380px;
       box-shadow:inset 0 0 28px rgba(126,188,255,.06), inset 0 0 55px rgba(86,223,141,.04);
     }
-
-    .chartLegend{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-bottom:10px;
-      color:var(--muted);
-      font-size:12px;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:999px;display:inline-block;margin-right:6px;vertical-align:middle
-    }
+    .chartLegend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;color:var(--muted);font-size:12px}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block;margin-right:6px;vertical-align:middle}
 
     .metricPanelGrid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
+      display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
     }
-
-    .metricPanel{
-      border-radius:18px;
-      padding:14px;
-      border:1px solid rgba(255,255,255,.08);
+    .metricDual{
+      border-radius:18px;padding:14px;border:1px solid rgba(255,255,255,.08);
       box-shadow:0 0 24px rgba(0,0,0,.18), inset 0 0 16px rgba(255,255,255,.04);
     }
-    .metricPanel h4{
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      margin-bottom:8px;
+    .metricDual h4{
+      font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;
     }
-    .metricPanel .big{
-      font-size:28px;
-      font-weight:900;
-      line-height:1;
+    .metricSplit{
+      display:grid;grid-template-columns:1fr 1fr;gap:10px;
     }
-    .metricPanel .small{
-      margin-top:8px;
-      font-size:12px;
-      line-height:1.45;
-      opacity:.95;
+    .metricMini{
+      border-radius:14px;padding:10px;border:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.18);
     }
+    .metricMini .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.12em;opacity:.92}
+    .metricMini .big{font-size:24px;font-weight:900;line-height:1;margin-top:6px}
+    .metricMini .small{font-size:11px;margin-top:6px;line-height:1.35;opacity:.95}
     .metric-yellow{background:linear-gradient(180deg,#5f4c12,#2d2307);color:#ffe17f}
     .metric-green{background:linear-gradient(180deg,#114f30,#072815);color:#9dffbe}
     .metric-blue{background:linear-gradient(180deg,#143d67,#0a223a);color:#a9d6ff}
     .metric-purple{background:linear-gradient(180deg,#44206a,#220f36);color:#d7b8ff}
+    .metric-orange{background:linear-gradient(180deg,#6d3d10,#351c07);color:#ffcb8e}
+    .metric-pink{background:linear-gradient(180deg,#6a1f45,#330f22);color:#ffc0df}
 
     .printSheet{
-      border-radius:18px;
-      background:#fffdf8;
-      color:#111;
-      padding:18px;
-      border:1px solid #d8cba7;
+      border-radius:18px;background:#fffdf8;color:#111;padding:18px;border:1px solid #d8cba7;
     }
-    .printSheet h3{
-      font-size:22px;
-      font-weight:900;
-      margin-bottom:10px;
-    }
-    .printSheet .line{
-      font-size:14px;
-      line-height:1.6;
-      margin-bottom:6px;
-    }
+    .printSheet h3{font-size:22px;font-weight:900;margin-bottom:10px}
+    .printSheet .line{font-size:14px;line-height:1.6;margin-bottom:6px}
 
     @media print{
       body *{visibility:hidden}
       #printArea, #printArea *{visibility:visible}
-      #printArea{
-        position:absolute;
-        left:0;top:0;width:100%;
-        background:#fff;
-        padding:20px;
-      }
+      #printArea{position:absolute;left:0;top:0;width:100%;background:#fff;padding:20px}
     }
 
     @media (max-width:1100px){
-      .layout2,.layout3,.statsGrid,.recipeTypeGrid,.libraryQuickGrid,.sensoryGrid,.mixerHeader,.controlHeader,.eqHeader,.metricPanelGrid{grid-template-columns:1fr}
+      .layout2,.statsGrid,.recipeTypeGrid,.libraryQuickGrid,.sensoryGrid,.mixerHeader,.controlHeader,.metricPanelGrid{grid-template-columns:1fr}
+      .metricSplit{grid-template-columns:1fr}
     }
     @media (max-width:860px){
       .formGrid,.ingredientRow{grid-template-columns:1fr}
@@ -846,7 +612,7 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>ULTIMATE · RICETTE · MIXER · CONTROLLO FERMENTAZIONE · STAMPA · STELLE</p>
+            <p>RICETTE · MIXER · CONTROLLO FERMENTAZIONE · CALORIE · ZUCCHERI RESIDUI</p>
           </div>
         </div>
         <div class="actions">
@@ -869,8 +635,8 @@
           <div class="stat"><div class="k">Ricette</div><div class="v" id="statRecipes">0</div><div class="s">salvate</div></div>
           <div class="stat"><div class="k">Lotti</div><div class="v" id="statLots">0</div><div class="s">totali</div></div>
           <div class="stat"><div class="k">Media stelle</div><div class="v" id="statStars">0.0</div><div class="s">ricette</div></div>
-          <div class="stat"><div class="k">Lieviti libreria</div><div class="v" id="statYeasts">0</div><div class="s">custom inclusi</div></div>
-          <div class="stat"><div class="k">Luppoli libreria</div><div class="v" id="statHops">0</div><div class="s">custom inclusi</div></div>
+          <div class="stat"><div class="k">Lieviti libreria</div><div class="v" id="statYeasts">0</div><div class="s">totali</div></div>
+          <div class="stat"><div class="k">Luppoli libreria</div><div class="v" id="statHops">0</div><div class="s">totali</div></div>
           <div class="stat"><div class="k">Log fermentazione</div><div class="v" id="statLogs">0</div><div class="s">totali</div></div>
         </div>
 
@@ -996,7 +762,7 @@
 
             <div style="margin-top:20px">
               <div class="itemTitle">Librerie ingredienti</div>
-              <div class="meta">Puoi aggiungere e salvare anche luppoli e lieviti nuovi</div>
+              <div class="meta">Aggiunta multipla. Puoi lasciare aperta la libreria e inserire più ingredienti senza chiudere.</div>
               <div class="libraryQuickGrid">
                 <button class="libBtn" type="button" onclick="openIngredientLibrary('luppoli')">Luppoli ON</button>
                 <button class="libBtn" type="button" onclick="openIngredientLibrary('frutta')">Frutta ON</button>
@@ -1031,22 +797,22 @@
 
             <div style="margin-top:20px">
               <div class="itemTitle">Parametri principali</div>
-              <div class="meta">Questi parametri andranno nel mixer e nel controllo fermentazione</div>
+              <div class="meta">Il valore iniziale resta fisso. I valori dinamici li aggiornerai dal controllo fermentazione.</div>
 
               <div class="formGrid" style="margin-top:12px">
                 <div class="field"><label>pH iniziale</label><input class="input" id="param_ph_start" type="number" step="0.01"></div>
-                <div class="field"><label>pH finale</label><input class="input" id="param_ph_end" type="number" step="0.01"></div>
+                <div class="field"><label>OG iniziale</label><input class="input" id="param_og" type="number" step="0.001"></div>
               </div>
               <div class="formGrid" style="margin-top:12px">
-                <div class="field"><label>OG</label><input class="input" id="param_og" type="number" step="0.001"></div>
-                <div class="field"><label>FG</label><input class="input" id="param_fg" type="number" step="0.001"></div>
+                <div class="field"><label>Temperatura iniziale °C</label><input class="input" id="param_temp" type="number" step="0.1"></div>
+                <div class="field"><label>CO₂ iniziale</label><input class="input" id="param_co2" type="number" step="0.1"></div>
+              </div>
+              <div class="formGrid" style="margin-top:12px">
+                <div class="field"><label>FG target</label><input class="input" id="param_fg" type="number" step="0.001"></div>
+                <div class="field"><label>pH finale target</label><input class="input" id="param_ph_end" type="number" step="0.01"></div>
               </div>
               <div class="formGrid" style="margin-top:12px">
                 <div class="field"><label>ABV %</label><input class="input" id="param_abv" type="number" step="0.1"></div>
-                <div class="field"><label>Temperatura °C</label><input class="input" id="param_temp" type="number" step="0.1"></div>
-              </div>
-              <div class="formGrid" style="margin-top:12px">
-                <div class="field"><label>CO₂ vol</label><input class="input" id="param_co2" type="number" step="0.1"></div>
                 <div class="field"><label>SRM / Colore</label><input class="input" id="param_srm" type="number" step="1"></div>
               </div>
               <div class="formGrid" style="margin-top:12px">
@@ -1123,7 +889,8 @@
               </div>
               <div class="formGrid" style="margin-top:12px">
                 <div class="field"><label>Tipo</label><input class="input" id="lot_type"></div>
-                <div class="field"><label>Stato</label>
+                <div class="field">
+                  <label>Stato</label>
                   <select class="select" id="lot_stage">
                     <option value="programmato">Programmato</option>
                     <option value="primaria">Primaria</option>
@@ -1159,7 +926,7 @@
       <div class="mixerTopBar">
         <div class="mixerTopLeft">
           <button class="btnDanger" onclick="goBackToMain()">Mixer OFF</button>
-          <button class="btnGold" onclick="saveLotMetaFromCurrent()">Salva lotto</button>
+          <button class="btnGold" onclick="saveState();alert('Lotto salvato.')">Salva lotto</button>
           <button class="btn" onclick="saveScene()">Salva scena</button>
           <button class="btn" onclick="openAddChannel()">+ Canale</button>
         </div>
@@ -1213,7 +980,7 @@
             <div class="lcdPanel">
               <div class="lcdLabel">Controllo fermentazione</div>
               <div class="lcdMain" id="control_title">FERMENTATION CONTROL</div>
-              <div class="lcdSub" id="control_sub">Pagina separata solo per grafici e andamento fermentazione.</div>
+              <div class="lcdSub" id="control_sub">Valori iniziali fissi + valori dinamici aggiornabili.</div>
             </div>
             <div class="lcdPanel">
               <div class="lcdLabel">Lotto</div>
@@ -1225,37 +992,111 @@
           <div class="monitorWrap">
             <div class="toolbar">
               <button class="chipBtn active" id="metric_ph" onclick="setChartMetric('ph')">pH</button>
-              <button class="chipBtn" id="metric_gravity" onclick="setChartMetric('gravity')">Densità</button>
+              <button class="chipBtn" id="metric_gravity" onclick="setChartMetric('gravity')">SG / Densità</button>
               <button class="chipBtn" id="metric_temp" onclick="setChartMetric('temp')">Temperatura</button>
               <button class="chipBtn" id="metric_co2" onclick="setChartMetric('co2')">CO₂</button>
               <button class="chipBtn" id="metric_combo" onclick="setChartMetric('combo')">Combo</button>
             </div>
 
-            <div class="eqHeader">
-              <div class="chartWrap">
-                <div class="chartLegend" id="chartLegend"></div>
-                <canvas id="fermentationChart" width="1400" height="420"></canvas>
+            <div class="chartWrap">
+              <div class="chartLegend" id="chartLegend"></div>
+              <canvas id="fermentationChart" width="1400" height="420"></canvas>
+            </div>
+
+            <div class="metricPanelGrid">
+              <div class="metricDual metric-yellow">
+                <h4>pH</h4>
+                <div class="metricSplit">
+                  <div class="metricMini">
+                    <div class="lbl">Start fisso</div>
+                    <div class="big" id="metricPhStart">-</div>
+                    <div class="small">pH iniziale ricetta</div>
+                  </div>
+                  <div class="metricMini">
+                    <div class="lbl">Corrente</div>
+                    <div class="big" id="metricPhNow">-</div>
+                    <div class="small">ultimo pH rilevato</div>
+                  </div>
+                </div>
               </div>
-              <div class="metricPanelGrid">
-                <div class="metricPanel metric-yellow">
-                  <h4>pH Start → Now</h4>
-                  <div class="big" id="metricPhNow">-</div>
-                  <div class="small" id="metricPhMeta">-</div>
+
+              <div class="metricDual metric-green">
+                <h4>Gravità</h4>
+                <div class="metricSplit">
+                  <div class="metricMini">
+                    <div class="lbl">OG fisso</div>
+                    <div class="big" id="metricOgStart">-</div>
+                    <div class="small">densità iniziale</div>
+                  </div>
+                  <div class="metricMini">
+                    <div class="lbl">SG corrente</div>
+                    <div class="big" id="metricSgNow">-</div>
+                    <div class="small">densità aggiornata</div>
+                  </div>
                 </div>
-                <div class="metricPanel metric-green">
-                  <h4>Densità Start → Now</h4>
-                  <div class="big" id="metricGravNow">-</div>
-                  <div class="small" id="metricGravMeta">-</div>
+              </div>
+
+              <div class="metricDual metric-blue">
+                <h4>Temperatura</h4>
+                <div class="metricSplit">
+                  <div class="metricMini">
+                    <div class="lbl">Start fisso</div>
+                    <div class="big" id="metricTempStart">-</div>
+                    <div class="small">temperatura iniziale</div>
+                  </div>
+                  <div class="metricMini">
+                    <div class="lbl">Corrente</div>
+                    <div class="big" id="metricTempNow">-</div>
+                    <div class="small">ultima temperatura</div>
+                  </div>
                 </div>
-                <div class="metricPanel metric-blue">
-                  <h4>Temp Start → Now</h4>
-                  <div class="big" id="metricTempNow">-</div>
-                  <div class="small" id="metricTempMeta">-</div>
+              </div>
+
+              <div class="metricDual metric-purple">
+                <h4>CO₂</h4>
+                <div class="metricSplit">
+                  <div class="metricMini">
+                    <div class="lbl">Start fisso</div>
+                    <div class="big" id="metricCo2Start">-</div>
+                    <div class="small">co₂ iniziale</div>
+                  </div>
+                  <div class="metricMini">
+                    <div class="lbl">Corrente</div>
+                    <div class="big" id="metricCo2Now">-</div>
+                    <div class="small">ultimo valore</div>
+                  </div>
                 </div>
-                <div class="metricPanel metric-purple">
-                  <h4>CO₂ Start → Now</h4>
-                  <div class="big" id="metricCo2Now">-</div>
-                  <div class="small" id="metricCo2Meta">-</div>
+              </div>
+
+              <div class="metricDual metric-orange">
+                <h4>Zuccheri residui</h4>
+                <div class="metricSplit">
+                  <div class="metricMini">
+                    <div class="lbl">Stima attuale</div>
+                    <div class="big" id="metricResidualSugar">-</div>
+                    <div class="small">g/L stimati</div>
+                  </div>
+                  <div class="metricMini">
+                    <div class="lbl">FG target</div>
+                    <div class="big" id="metricFgTarget">-</div>
+                    <div class="small">valore finale atteso</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="metricDual metric-pink">
+                <h4>Calorie</h4>
+                <div class="metricSplit">
+                  <div class="metricMini">
+                    <div class="lbl">Stima attuale</div>
+                    <div class="big" id="metricCalories">-</div>
+                    <div class="small">kcal / 100 ml</div>
+                  </div>
+                  <div class="metricMini">
+                    <div class="lbl">ABV ricetta</div>
+                    <div class="big" id="metricAbv">-</div>
+                    <div class="small">% alcol teorico</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1291,7 +1132,6 @@
 
         <div class="toolbar" style="margin-bottom:12px">
           <button class="btnGold" type="button" onclick="closeIngredientLibrary()">Fine aggiunta</button>
-          <button class="btn" type="button" onclick="refreshLibraryNotes()">Aggiorna bloc notes</button>
         </div>
 
         <div class="libList" id="ingredientLibraryList"></div>
@@ -1302,7 +1142,7 @@
   <div class="modal" id="recipePreviewModal">
     <div class="modalBox">
       <div class="modalHead">
-        <div><h3>Anteprima ricetta live</h3><div class="sub">Quando la apri tu</div></div>
+        <div><h3>Anteprima ricetta live</h3><div class="sub">Anteprima manuale</div></div>
         <button class="btnDanger" type="button" onclick="closeRecipePreviewModal()">OFF</button>
       </div>
       <div class="modalBody">
@@ -1322,7 +1162,7 @@
   <div class="modal" id="customIngredientModal">
     <div class="modalBox">
       <div class="modalHead">
-        <div><h3 id="customIngredientTitle">Nuovo ingrediente personalizzato</h3><div class="sub">Aggiungi subito alla ricetta e salva in libreria se vuoi</div></div>
+        <div><h3>Nuovo ingrediente personalizzato</h3><div class="sub">Aggiungi subito e salva in libreria se vuoi</div></div>
         <button class="btnDanger" type="button" onclick="closeCustomIngredientModal()">OFF</button>
       </div>
       <div class="modalBody">
@@ -1370,7 +1210,7 @@
   <div class="modal" id="fermentationLogModal">
     <div class="modalBox">
       <div class="modalHead">
-        <div><h3>Nuova rilevazione fermentazione</h3><div class="sub">Per grafico e storico lotto</div></div>
+        <div><h3>Nuova rilevazione fermentazione</h3><div class="sub">Aggiorna i valori dinamici</div></div>
         <button class="btnDanger" type="button" onclick="closeFermentationLogModal()">OFF</button>
       </div>
       <div class="modalBody">
@@ -1379,12 +1219,12 @@
           <div class="field"><label>Ora</label><input id="log_time" class="input" type="time"></div>
         </div>
         <div class="formGrid" style="margin-top:12px">
-          <div class="field"><label>pH</label><input id="log_ph" class="input" type="number" step="0.01"></div>
-          <div class="field"><label>Densità</label><input id="log_gravity" class="input" type="number" step="0.001"></div>
+          <div class="field"><label>pH corrente</label><input id="log_ph" class="input" type="number" step="0.01"></div>
+          <div class="field"><label>SG / densità corrente</label><input id="log_gravity" class="input" type="number" step="0.001"></div>
         </div>
         <div class="formGrid" style="margin-top:12px">
-          <div class="field"><label>Temperatura °C</label><input id="log_temp" class="input" type="number" step="0.1"></div>
-          <div class="field"><label>CO₂ / pressione</label><input id="log_co2" class="input" type="number" step="0.1"></div>
+          <div class="field"><label>Temperatura corrente °C</label><input id="log_temp" class="input" type="number" step="0.1"></div>
+          <div class="field"><label>CO₂ / pressione corrente</label><input id="log_co2" class="input" type="number" step="0.1"></div>
         </div>
         <div class="field" style="margin-top:12px"><label>Note</label><input id="log_note" class="input"></div>
         <div class="toolbar" style="margin-top:16px">
@@ -1397,9 +1237,9 @@
   <div id="printArea" class="hidden"></div>
 
   <script>
-    const STORAGE_KEY = "xa_fermentation_pro_ultimate_v1";
-    const MIXER_COMPACT_KEY = "xa_fermentation_mixer_compact_v1";
-    const MIXER_GROUPS_KEY = "xa_fermentation_group_state_v1";
+    const STORAGE_KEY = "xa_fermentation_pro_ultimate_v2";
+    const MIXER_COMPACT_KEY = "xa_fermentation_mixer_compact_v2";
+    const MIXER_GROUPS_KEY = "xa_fermentation_group_state_v2";
 
     const INGREDIENT_BROWSER = {
       luppoli: [
@@ -1506,13 +1346,7 @@
     let mixerGroupState = loadMixerGroupState();
 
     function getDefaultState(){
-      return {
-        recipes: [],
-        lots: [],
-        scenes: [],
-        selectedLotId: null,
-        selectedRecipeId: null
-      };
+      return { recipes: [], lots: [], scenes: [], selectedLotId: null, selectedRecipeId: null };
     }
 
     function loadState(){
@@ -1533,11 +1367,8 @@
     }
 
     function loadMixerGroupState(){
-      try{
-        return JSON.parse(localStorage.getItem(MIXER_GROUPS_KEY) || "{}");
-      }catch(e){
-        return {};
-      }
+      try{ return JSON.parse(localStorage.getItem(MIXER_GROUPS_KEY) || "{}"); }
+      catch(e){ return {}; }
     }
 
     function saveMixerGroupState(){ localStorage.setItem(MIXER_GROUPS_KEY, JSON.stringify(mixerGroupState)); }
@@ -1545,8 +1376,7 @@
     function uid(prefix="id"){ return prefix + "_" + Math.random().toString(36).slice(2,10); }
     function today(){ return new Date().toISOString().slice(0,10); }
     function nowTime(){ const d=new Date(); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
-    function num(v,d=2){ const n=Number(v); return Number.isFinite(n) ? n.toFixed(d) : "0.00"; }
-
+    function num(v,d=2){ const n=Number(v); return Number.isFinite(n) ? n.toFixed(d) : "-"; }
     function escapeHtml(str){
       return String(str ?? "")
         .replaceAll("&","&amp;")
@@ -1682,32 +1512,24 @@
       const type = recipeTypeLabel(currentRecipeType);
       const ings = getCurrentEditorIngredients();
 
-      const liveTitle = document.getElementById("liveBarTitle");
-      const liveMeta = document.getElementById("liveBarMeta");
-      const previewTitle = document.getElementById("previewRecipeTitle");
-      const previewMeta = document.getElementById("previewRecipeMeta");
-      const previewNotes = document.getElementById("previewRecipeNotes");
-      const wrap = document.getElementById("previewRecipeIngredients");
-
-      if(liveTitle) liveTitle.textContent = name;
-      if(liveMeta) liveMeta.textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture} · Ingredienti: ${ings.length} · Stelle: ${currentRecipeRating || 0}`;
-      if(previewTitle) previewTitle.textContent = name;
-      if(previewMeta) previewMeta.textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture} · Stelle: ${currentRecipeRating || 0}`;
-      if(previewNotes) previewNotes.textContent = notes;
+      document.getElementById("liveBarTitle").textContent = name;
+      document.getElementById("liveBarMeta").textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture} · Ingredienti: ${ings.length} · Stelle: ${currentRecipeRating || 0}`;
+      document.getElementById("previewRecipeTitle").textContent = name;
+      document.getElementById("previewRecipeMeta").textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture} · Stelle: ${currentRecipeRating || 0}`;
+      document.getElementById("previewRecipeNotes").textContent = notes;
       renderImageBox("previewRecipeImage", currentRecipeImageData);
 
-      if(wrap){
-        wrap.innerHTML = ings.length ? ings.map(i => `
-          <div class="item" style="margin-bottom:8px">
-            <div class="itemTitle">${escapeHtml(i.name)}</div>
-            <div class="meta">
-              Categoria: ${escapeHtml(i.category)}<br>
-              Quantità: ${escapeHtml(i.qty || "-")} ${escapeHtml(i.unit || "")}<br>
-              Note: ${escapeHtml(i.note || "-")}
-            </div>
+      const wrap = document.getElementById("previewRecipeIngredients");
+      wrap.innerHTML = ings.length ? ings.map(i => `
+        <div class="item" style="margin-bottom:8px">
+          <div class="itemTitle">${escapeHtml(i.name)}</div>
+          <div class="meta">
+            Categoria: ${escapeHtml(i.category)}<br>
+            Quantità: ${escapeHtml(i.qty || "-")} ${escapeHtml(i.unit || "")}<br>
+            Note: ${escapeHtml(i.note || "-")}
           </div>
-        `).join("") : `<div class="item"><div class="meta">Nessun ingrediente aggiunto.</div></div>`;
-      }
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessun ingrediente aggiunto.</div></div>`;
     }
 
     function refreshLibraryNotes(){
@@ -1837,7 +1659,6 @@
       const dose = Number(document.getElementById("custom_dose").value) || 0;
       const unit = document.getElementById("custom_unit").value.trim() || "g/L";
       const note = document.getElementById("custom_note").value.trim();
-
       if(!name){ alert("Scrivi il nome dell'ingrediente."); return; }
 
       if(saveToLibrary){
@@ -1847,8 +1668,7 @@
 
       const rowCategory = browserCategoryToRowCategory(cat);
       document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({
-        category: rowCategory,
-        name, qty:dose, unit, note
+        category: rowCategory, name, qty:dose, unit, note
       }));
 
       renderLiveRecipePreview();
@@ -1871,8 +1691,7 @@
 
     function clearRecipeImage(){
       currentRecipeImageData = "";
-      const input = document.getElementById("recipe_image_file");
-      if(input) input.value = "";
+      document.getElementById("recipe_image_file").value = "";
       renderLiveRecipePreview();
     }
 
@@ -1886,12 +1705,12 @@
         }
       };
       pushParam("param_ph_start","pH iniziale","acidità",2.5,6,0.01,p("param_ph_start"),"");
-      pushParam("param_ph_end","pH finale","acidità",2.5,6,0.01,p("param_ph_end"),"");
-      pushParam("param_og","OG","densità iniziale",1,1.12,0.001,p("param_og"),"");
-      pushParam("param_fg","FG","densità finale",0.995,1.05,0.001,p("param_fg"),"");
+      pushParam("param_ph_end","pH finale target","acidità",2.5,6,0.01,p("param_ph_end"),"");
+      pushParam("param_og","OG iniziale","densità iniziale",1,1.12,0.001,p("param_og"),"");
+      pushParam("param_fg","FG target","densità finale",0.995,1.05,0.001,p("param_fg"),"");
       pushParam("param_abv","ABV","alcol",0,15,0.1,p("param_abv"),"%");
-      pushParam("param_temp","Temperatura","temperatura",0,40,0.1,p("param_temp"),"°C");
-      pushParam("param_co2","CO₂","gasatura",0,4.5,0.1,p("param_co2")," vol");
+      pushParam("param_temp","Temperatura iniziale","temperatura",0,40,0.1,p("param_temp"),"°C");
+      pushParam("param_co2","CO₂ iniziale","gasatura",0,4.5,0.1,p("param_co2"),"");
       pushParam("param_srm","SRM","colore",1,40,1,p("param_srm"),"");
       pushParam("param_tonica","Acqua tonica","tonica",0,10,0.1,p("param_tonica"),"");
       pushParam("param_tonic_bitter","Tonic bitter","amaro tonica",0,20,0.1,p("param_tonic_bitter"),"");
@@ -2010,15 +1829,8 @@
 
     function renderRecipeStars(rating){
       let html = "";
-      for(let i=1;i<=5;i++){
-        html += `<span class="badge">${i <= rating ? "★" : "☆"}</span>`;
-      }
+      for(let i=1;i<=5;i++) html += `<span class="badge">${i <= rating ? "★" : "☆"}</span>`;
       return html;
-    }
-
-    function hasSensory(recipe){
-      const s = recipe?.sensory || {};
-      return !!(s.visual || s.aroma || s.taste || s.body || s.finish || s.faults);
     }
 
     function openRecipeView(id){
@@ -2053,8 +1865,7 @@
             <div class="meta">
               Ingredienti: ${(recipe.ingredients || []).length}<br>
               Parametri: ${(recipe.params || []).length}<br>
-              Voto: ${recipe.rating || 0}/5<br>
-              Scheda sensoriale: ${hasSensory(recipe) ? "compilata" : "vuota"}
+              Voto: ${recipe.rating || 0}/5
             </div>
           </div>
         </div>
@@ -2135,36 +1946,25 @@
         key:"base",
         name: recipe.base || "Base",
         type:"base",
-        min:0,
-        max:100,
-        step:1,
-        value:100,
-        unit:"%",
-        visualClass:"base-1",
-        group:"01_base",
-        sortName:"00_base"
+        min:0,max:100,step:1,value:100,unit:"%",
+        visualClass:"base-1",group:"01_base",sortName:"00_base"
       };
     }
 
     function ingredientGroupInfo(category){
       const map = {
-        frutta:{group:"02_frutta", prefix:"fruit", label:"FRUTTA"},
-        te:{group:"03_te", prefix:"tea", label:"TE"},
-        botaniche:{group:"04_botaniche", prefix:"botanical", label:"BOTANICHE"},
-        spezie:{group:"05_spezie", prefix:"spice", label:"SPEZIE"},
-        pepe:{group:"06_pepi", prefix:"pepper", label:"PEPI"},
-        luppoli:{group:"07_luppoli", prefix:"hop", label:"LUPPOLI / DRY HOPPING"},
-        lieviti:{group:"08_lieviti", prefix:"yeast", label:"LIEVITI"},
-        fermenti_lattici:{group:"09_lattici", prefix:"lactic", label:"FERMENTI LATTICI"},
-        aggiunte:{group:"10_aggiunte", prefix:"add", label:"AGGIUNTE"},
-        base:{group:"01_base", prefix:"base", label:"BASE"}
+        frutta:{group:"02_frutta", prefix:"fruit"},
+        te:{group:"03_te", prefix:"tea"},
+        botaniche:{group:"04_botaniche", prefix:"botanical"},
+        spezie:{group:"05_spezie", prefix:"spice"},
+        pepe:{group:"06_pepi", prefix:"pepper"},
+        luppoli:{group:"07_luppoli", prefix:"hop"},
+        lieviti:{group:"08_lieviti", prefix:"yeast"},
+        fermenti_lattici:{group:"09_lattici", prefix:"lactic"},
+        aggiunte:{group:"10_aggiunte", prefix:"add"},
+        base:{group:"01_base", prefix:"base"}
       };
-      return map[category] || {group:"10_aggiunte", prefix:"add", label:"AGGIUNTE"};
-    }
-
-    function paramVisual(index){
-      const n = (index % 4) + 1;
-      return "param-" + n;
+      return map[category] || {group:"10_aggiunte", prefix:"add"};
     }
 
     function visualForIngredient(category, indexInGroup){
@@ -2173,19 +1973,18 @@
       return `${info.prefix}-${n}`;
     }
 
+    function paramVisual(index){
+      return `param-${(index % 4) + 1}`;
+    }
+
     function recipeToChannels(recipe){
       const channels = [buildBaseChannel(recipe)];
-      const groupCounts = {
-        frutta:0, te:0, botaniche:0, spezie:0, pepe:0, luppoli:0,
-        lieviti:0, fermenti_lattici:0, aggiunte:0
-      };
+      const groupCounts = {frutta:0, te:0, botaniche:0, spezie:0, pepe:0, luppoli:0, lieviti:0, fermenti_lattici:0, aggiunte:0};
 
       (recipe.ingredients || []).forEach(i => {
         const cat = i.category || "aggiunte";
         if(groupCounts[cat] === undefined) groupCounts[cat] = 0;
         const info = ingredientGroupInfo(cat);
-        const visualClass = visualForIngredient(cat, groupCounts[cat]);
-
         channels.push({
           id: uid("ch"),
           key:"ing_"+i.name.toLowerCase().replace(/\s+/g,"_"),
@@ -2196,11 +1995,10 @@
           step:0.1,
           value:Number(i.qty) || 0,
           unit:" " + (i.unit || "g/L"),
-          visualClass,
+          visualClass:visualForIngredient(cat, groupCounts[cat]),
           group:info.group,
           sortName:i.name.toLowerCase()
         });
-
         groupCounts[cat] += 1;
       });
 
@@ -2221,11 +2019,7 @@
         });
       });
 
-      channels.sort((a,b) => {
-        if(a.group !== b.group) return a.group.localeCompare(b.group);
-        return (a.sortName || "").localeCompare(b.sortName || "");
-      });
-
+      channels.sort((a,b) => a.group !== b.group ? a.group.localeCompare(b.group) : (a.sortName || "").localeCompare(b.sortName || ""));
       return channels;
     }
 
@@ -2283,13 +2077,6 @@
       renderMixer();
     }
 
-    function saveLotMetaFromCurrent(){
-      const lot = mixerLot() || currentLot();
-      if(!lot) return;
-      saveState();
-      alert("Lotto salvato.");
-    }
-
     function selectLot(id){
       state.selectedLotId = id;
       saveState();
@@ -2314,12 +2101,10 @@
       document.getElementById("statRecipes").textContent = state.recipes.length;
       document.getElementById("statLots").textContent = state.lots.length;
       const ratings = state.recipes.map(r => Number(r.rating || 0)).filter(x => x > 0);
-      const avg = ratings.length ? (ratings.reduce((a,b)=>a+b,0)/ratings.length).toFixed(1) : "0.0";
-      document.getElementById("statStars").textContent = avg;
+      document.getElementById("statStars").textContent = ratings.length ? (ratings.reduce((a,b)=>a+b,0)/ratings.length).toFixed(1) : "0.0";
       document.getElementById("statYeasts").textContent = (INGREDIENT_BROWSER.lieviti || []).length;
       document.getElementById("statHops").textContent = (INGREDIENT_BROWSER.luppoli || []).length;
-      const totalLogs = state.lots.reduce((a,l)=>a + (Array.isArray(l.logs)?l.logs.length:0), 0);
-      document.getElementById("statLogs").textContent = totalLogs;
+      document.getElementById("statLogs").textContent = state.lots.reduce((a,l)=>a + (Array.isArray(l.logs)?l.logs.length:0), 0);
     }
 
     function recipeThumbHtml(recipe){
@@ -2500,19 +2285,14 @@
 
     function renderMixer(){
       const lot = mixerLot();
-      const title = document.getElementById("mixer_title");
-      const sub = document.getElementById("mixer_sub");
-      const lotName = document.getElementById("mixer_lot_name");
-      const lotMeta = document.getElementById("mixer_lot_meta");
-      const compactBtn = document.getElementById("compactMixerBtn");
       const board = document.getElementById("mixerBoard");
       if(!board) return;
 
-      if(title) title.textContent = lot ? (lot.stage || "READY").toUpperCase() : "XA MIXER";
-      if(sub) sub.textContent = lot ? "Mixer leggibile, gruppi apri/chiudi, fader corretti." : "Apri o crea un lotto.";
-      if(lotName) lotName.textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
-      if(lotMeta) lotMeta.textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${lot.recipeName || "-"} · ${lot.channels.length} canali` : "Apri o crea un lotto.";
-      if(compactBtn) compactBtn.textContent = document.body.classList.contains("mixer-compact") ? "NORMALE" : "RIDUCI";
+      document.getElementById("mixer_title").textContent = lot ? (lot.stage || "READY").toUpperCase() : "XA MIXER";
+      document.getElementById("mixer_sub").textContent = lot ? "Canali compatti, senza spazi larghi inutili." : "Apri o crea un lotto.";
+      document.getElementById("mixer_lot_name").textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
+      document.getElementById("mixer_lot_meta").textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${lot.recipeName || "-"} · ${lot.channels.length} canali` : "Apri o crea un lotto.";
+      document.getElementById("compactMixerBtn").textContent = document.body.classList.contains("mixer-compact") ? "NORMALE" : "RIDUCI";
 
       if(!lot){
         board.innerHTML = `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
@@ -2520,11 +2300,9 @@
       }
 
       const grouped = groupChannels(lot.channels);
-      let html = "";
-
-      grouped.forEach(([groupKey, items]) => {
+      board.innerHTML = grouped.map(([groupKey, items]) => {
         const open = isGroupOpen(groupKey);
-        html += `
+        return `
           <div class="mixerGroupBlock">
             <div class="mixerGroupHeader">
               <span>${escapeHtml(groupLabelFromKey(groupKey))}</span>
@@ -2533,9 +2311,8 @@
             <div class="mixerGroupChannels" style="${open ? '' : 'display:none;'}">
               ${items.map(ch => {
                 const pct = Math.max(0, Math.min(100, ((Number(ch.value)-Number(ch.min)) / ((Number(ch.max)-Number(ch.min)) || 1)) * 100));
-                const visualClass = ch.visualClass || "param-1";
                 return `
-                  <div class="channel ${visualClass}">
+                  <div class="channel ${ch.visualClass || "param-1"}">
                     <div class="channelTop">
                       <div class="channelType">${escapeHtml(ch.name)}</div>
                       <button class="tinyIconBtn" onclick="editChannel('${ch.id}')">✎</button>
@@ -2569,9 +2346,7 @@
             </div>
           </div>
         `;
-      });
-
-      board.innerHTML = html;
+      }).join("");
     }
 
     function updateChannel(id, value){
@@ -2643,8 +2418,6 @@
 
       let visualClass = "add-1";
       let group = "10_aggiunte";
-      let type = name;
-
       if(category === "base"){ visualClass = "base-1"; group = "01_base"; }
       else if(category === "frutta"){ visualClass = "fruit-1"; group = "02_frutta"; }
       else if(category === "te"){ visualClass = "tea-1"; group = "03_te"; }
@@ -2659,18 +2432,16 @@
       lot.channels.push({
         id: uid("ch"),
         key: name.toLowerCase().replace(/\s+/g,"_"),
-        name, type, min, max, step, value,
+        name,
+        type: name,
+        min,max,step,value,
         unit:" " + unit,
         visualClass,
         group,
         sortName:name.toLowerCase()
       });
 
-      lot.channels.sort((a,b) => {
-        if(a.group !== b.group) return a.group.localeCompare(b.group);
-        return (a.sortName || "").localeCompare(b.sortName || "");
-      });
-
+      lot.channels.sort((a,b) => a.group !== b.group ? a.group.localeCompare(b.group) : (a.sortName || "").localeCompare(b.sortName || ""));
       saveState();
       renderMixer();
       renderAll();
@@ -2738,11 +2509,8 @@
     }
 
     function restoreCompactMixer(){
-      if(localStorage.getItem(MIXER_COMPACT_KEY) === "1"){
-        document.body.classList.add("mixer-compact");
-      }else{
-        document.body.classList.remove("mixer-compact");
-      }
+      if(localStorage.getItem(MIXER_COMPACT_KEY) === "1") document.body.classList.add("mixer-compact");
+      else document.body.classList.remove("mixer-compact");
     }
 
     function updateControlHeader(){
@@ -2819,7 +2587,7 @@
         <div class="item">
           <div class="itemTitle">${escapeHtml(l.date)} ${escapeHtml(l.time)}</div>
           <div class="meta">
-            pH: ${l.ph ?? "-"} · Densità: ${l.gravity ?? "-"} · Temp: ${l.temp ?? "-"} °C · CO₂: ${l.co2 ?? "-"}<br>
+            pH: ${l.ph ?? "-"} · SG: ${l.gravity ?? "-"} · Temp: ${l.temp ?? "-"} °C · CO₂: ${l.co2 ?? "-"}<br>
             Note: ${escapeHtml(l.note || "-")}
           </div>
           <div class="itemActions">
@@ -2857,31 +2625,71 @@
       points.forEach((p,idx) => {
         const x = chart.x + (chart.w * (points.length === 1 ? 0.5 : idx/(points.length-1)));
         const y = chart.y + chart.h - ((p.y - minY) / ((maxY-minY)||1)) * chart.h;
-        ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.arc(x,y,5,0,Math.PI*2);
-        ctx.fill();
+        ctx.fillStyle = color;
         ctx.shadowColor = color;
-        ctx.shadowBlur = 14;
+        ctx.shadowBlur = 16;
+        ctx.arc(x,y,5,0,Math.PI*2);
         ctx.fill();
         ctx.shadowBlur = 0;
       });
     }
 
+    function getStartParam(lot, keyName){
+      if(!lot) return null;
+      const ch = (lot.channels || []).find(c => c.key === keyName);
+      return ch ? Number(ch.value) : null;
+    }
+
+    function estimateResidualSugarFromSG(sg){
+      if(sg == null || Number.isNaN(Number(sg))) return null;
+      const plato = (-616.868) + 1111.14 * sg - 630.272 * Math.pow(sg,2) + 135.997 * Math.pow(sg,3);
+      return Math.max(0, plato * 10);
+    }
+
+    function estimateCalories(abv, residualSugar){
+      if(abv == null || Number.isNaN(Number(abv))) return null;
+      const alcoholKcal = Number(abv) * 0.79 * 7;
+      const sugarKcal = residualSugar != null ? (Number(residualSugar) / 100) * 4 : 0;
+      return alcoholKcal + sugarKcal;
+    }
+
     function updateMetricPanels(lot){
       const logs = lot?.logs || [];
-      const first = logs[0] || {};
       const last = logs[logs.length - 1] || {};
 
-      const setPanel = (nowId, metaId, start, now, unit="") => {
-        document.getElementById(nowId).textContent = now != null ? `${now}${unit}` : "-";
-        document.getElementById(metaId).textContent = start != null && now != null ? `Start ${start}${unit} → Now ${now}${unit}` : "Nessun dato";
+      const phStart = getStartParam(lot, "param_ph_start");
+      const ogStart = getStartParam(lot, "param_og");
+      const tempStart = getStartParam(lot, "param_temp");
+      const co2Start = getStartParam(lot, "param_co2");
+      const fgTarget = getStartParam(lot, "param_fg");
+      const abv = getStartParam(lot, "param_abv");
+
+      const phNow = last.ph ?? null;
+      const sgNow = last.gravity ?? null;
+      const tempNow = last.temp ?? null;
+      const co2Now = last.co2 ?? null;
+      const residualSugar = estimateResidualSugarFromSG(sgNow);
+      const calories = estimateCalories(abv, residualSugar);
+
+      const setText = (id, val, decimals=2, suffix="") => {
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.textContent = val == null ? "-" : `${Number(val).toFixed(decimals)}${suffix}`;
       };
 
-      setPanel("metricPhNow","metricPhMeta", first.ph, last.ph, "");
-      setPanel("metricGravNow","metricGravMeta", first.gravity, last.gravity, "");
-      setPanel("metricTempNow","metricTempMeta", first.temp, last.temp, "°");
-      setPanel("metricCo2Now","metricCo2Meta", first.co2, last.co2, "");
+      setText("metricPhStart", phStart, 2);
+      setText("metricPhNow", phNow, 2);
+      setText("metricOgStart", ogStart, 3);
+      setText("metricSgNow", sgNow, 3);
+      setText("metricTempStart", tempStart, 1, "°");
+      setText("metricTempNow", tempNow, 1, "°");
+      setText("metricCo2Start", co2Start, 1);
+      setText("metricCo2Now", co2Now, 1);
+      setText("metricResidualSugar", residualSugar, 1);
+      setText("metricFgTarget", fgTarget, 3);
+      setText("metricCalories", calories, 1);
+      setText("metricAbv", abv, 1, "%");
     }
 
     function drawFermentationChart(){
@@ -2893,14 +2701,14 @@
       updateMetricPanels(lot);
 
       ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.fillStyle = "#0d131b";
+      ctx.fillStyle = "#0c1219";
       ctx.fillRect(0,0,canvas.width,canvas.height);
 
-      const chart = {x:70,y:30,w:canvas.width-110,h:canvas.height-90};
+      const chart = {x:70,y:28,w:canvas.width-110,h:canvas.height-90};
 
       for(let i=0;i<=8;i++){
         const y = chart.y + (chart.h/8)*i;
-        ctx.strokeStyle = i===8 ? "rgba(255,255,255,.22)" : "rgba(126,188,255,.08)";
+        ctx.strokeStyle = i===8 ? "rgba(255,255,255,.20)" : "rgba(126,188,255,.10)";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(chart.x,y);
@@ -2909,14 +2717,14 @@
       }
       for(let i=0;i<=10;i++){
         const x = chart.x + (chart.w/10)*i;
-        ctx.strokeStyle = "rgba(103,230,207,.06)";
+        ctx.strokeStyle = "rgba(103,230,207,.07)";
         ctx.beginPath();
         ctx.moveTo(x,chart.y);
         ctx.lineTo(x,chart.y+chart.h);
         ctx.stroke();
       }
 
-      ctx.strokeStyle = "rgba(255,255,255,.3)";
+      ctx.strokeStyle = "rgba(255,255,255,.30)";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(chart.x,chart.y);
@@ -2927,7 +2735,7 @@
       const legend = document.getElementById("chartLegend");
       if(!lot || !(lot.logs||[]).length){
         legend.innerHTML = `<span>Nessun dato fermentazione.</span>`;
-        ctx.fillStyle = "rgba(255,255,255,.65)";
+        ctx.fillStyle = "rgba(255,255,255,.72)";
         ctx.font = "24px Arial";
         ctx.fillText("Nessuna rilevazione", chart.x + 40, chart.y + 100);
         return;
@@ -2943,12 +2751,12 @@
 
       let used = [];
       if(currentChartMetric === "ph") used = [{key:"ph", color:"#ffe36e", label:"pH"}];
-      if(currentChartMetric === "gravity") used = [{key:"gravity", color:"#9fd0ff", label:"Densità"}];
+      if(currentChartMetric === "gravity") used = [{key:"gravity", color:"#9fd0ff", label:"SG / Densità"}];
       if(currentChartMetric === "temp") used = [{key:"temp", color:"#8fffbc", label:"Temperatura"}];
       if(currentChartMetric === "co2") used = [{key:"co2", color:"#d1b0ff", label:"CO₂"}];
       if(currentChartMetric === "combo") used = [
         {key:"ph", color:"#ffe36e", label:"pH"},
-        {key:"gravity", color:"#9fd0ff", label:"Densità"},
+        {key:"gravity", color:"#9fd0ff", label:"SG / Densità"},
         {key:"temp", color:"#8fffbc", label:"Temperatura"},
         {key:"co2", color:"#d1b0ff", label:"CO₂"}
       ];
@@ -2980,20 +2788,6 @@
       }
 
       legend.innerHTML = used.map(s => `<span><span class="dot" style="background:${s.color}"></span>${s.label}</span>`).join("");
-    }
-
-    function openMixerPageForLot(lotId){
-      const url = new URL(window.location.href);
-      url.searchParams.set("view","mixer");
-      url.searchParams.set("lot", lotId);
-      window.location.href = url.toString();
-    }
-
-    function openControlPageForLot(lotId){
-      const url = new URL(window.location.href);
-      url.searchParams.set("view","control");
-      url.searchParams.set("lot", lotId);
-      window.location.href = url.toString();
     }
 
     function renderMainPage(){
@@ -3029,7 +2823,7 @@
         base: "Succo di mela",
         style: "Secco botanico",
         culture: "Hornindal Kveik",
-        notes: "Demo completa con mixer, controllo fermentazione, stampa, stelle e scheda sensoriale.",
+        notes: "Demo completa con ricerca ricetta, mixer compatto e controllo fermentazione.",
         image: "",
         rating: 4,
         ingredients: [
@@ -3042,15 +2836,15 @@
         ],
         params: [
           {key:"param_ph_start", name:"pH iniziale", type:"acidità", min:2.5, max:6, step:0.01, value:3.50, unit:""},
-          {key:"param_ph_end", name:"pH finale", type:"acidità", min:2.5, max:6, step:0.01, value:3.15, unit:""},
-          {key:"param_og", name:"OG", type:"densità iniziale", min:1, max:1.12, step:0.001, value:1.048, unit:""},
-          {key:"param_fg", name:"FG", type:"densità finale", min:0.995, max:1.05, step:0.001, value:1.006, unit:""},
+          {key:"param_ph_end", name:"pH finale target", type:"acidità", min:2.5, max:6, step:0.01, value:3.15, unit:""},
+          {key:"param_og", name:"OG iniziale", type:"densità iniziale", min:1, max:1.12, step:0.001, value:1.048, unit:""},
+          {key:"param_fg", name:"FG target", type:"densità finale", min:0.995, max:1.05, step:0.001, value:1.006, unit:""},
           {key:"param_abv", name:"ABV", type:"alcol", min:0, max:15, step:0.1, value:5.3, unit:"%"},
-          {key:"param_temp", name:"Temperatura", type:"temperatura", min:0, max:40, step:0.1, value:21.5, unit:"°C"},
-          {key:"param_co2", name:"CO₂", type:"gasatura", min:0, max:4.5, step:0.1, value:2.4, unit:" vol"},
+          {key:"param_temp", name:"Temperatura iniziale", type:"temperatura", min:0, max:40, step:0.1, value:21.5, unit:"°C"},
+          {key:"param_co2", name:"CO₂ iniziale", type:"gasatura", min:0, max:4.5, step:0.1, value:0.2, unit:""},
           {key:"param_srm", name:"SRM", type:"colore", min:1, max:40, step:1, value:4, unit:""}
         ],
-        sensory: {
+        sensory:{
           visual:"Giallo dorato, limpido, brillante.",
           aroma:"Mela fresca, agrumi, lieve floreale.",
           taste:"Secco, amaro fine, acidità elegante.",
@@ -3060,37 +2854,7 @@
         }
       };
 
-      const recipe2 = {
-        id: uid("recipe"),
-        type: "te",
-        name: "XA TÈ FERMENTATO JASMINE",
-        base: "Tè Jasmine",
-        style: "Floreale e secco",
-        culture: "L. plantarum",
-        notes: "Seconda demo.",
-        image: "",
-        rating: 5,
-        ingredients: [
-          {category:"te", name:"Jasmine", qty:2.5, unit:"g/L", note:"floreale"},
-          {category:"botaniche", name:"Osmanto", qty:0.2, unit:"g/L", note:"fruttato"},
-          {category:"fermenti_lattici", name:"L. plantarum", qty:0.1, unit:"g/L", note:"acidificazione"}
-        ],
-        params: [
-          {key:"param_ph_start", name:"pH iniziale", type:"acidità", min:2.5, max:6, step:0.01, value:4.10, unit:""},
-          {key:"param_ph_end", name:"pH finale", type:"acidità", min:2.5, max:6, step:0.01, value:3.35, unit:""},
-          {key:"param_temp", name:"Temperatura", type:"temperatura", min:0, max:40, step:0.1, value:24.0, unit:"°C"}
-        ],
-        sensory: {
-          visual:"Chiaro, brillante.",
-          aroma:"Floreale intenso.",
-          taste:"Acido pulito e delicato.",
-          body:"Leggero.",
-          finish:"Lungo, pulito.",
-          faults:"Nessuno."
-        }
-      };
-
-      state.recipes = [recipe1, recipe2];
+      state.recipes = [recipe1];
       state.selectedRecipeId = recipe1.id;
 
       const lot1 = {
@@ -3117,30 +2881,7 @@
         ]
       };
 
-      const lot2 = {
-        id: uid("lot"),
-        recipeId: recipe2.id,
-        recipeName: recipe2.name,
-        name: "LOTTO XA 02",
-        code: "XA-02",
-        type: recipeTypeLabel(recipe2.type),
-        stage: "maturazione",
-        volume: 15,
-        date: today(),
-        culture: recipe2.culture,
-        recipeText: `Base: ${recipe2.base} · ` + recipe2.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
-        notes: recipe2.notes,
-        rating: recipe2.rating,
-        channels: recipeToChannels(recipe2),
-        logs: [
-          {id:uid("log"), date:"2026-04-10", time:"11:00", ph:4.10, gravity:null, temp:24.0, co2:0.1, note:"partenza"},
-          {id:uid("log"), date:"2026-04-11", time:"11:00", ph:3.88, gravity:null, temp:24.2, co2:0.5, note:"acidifica"},
-          {id:uid("log"), date:"2026-04-12", time:"11:00", ph:3.55, gravity:null, temp:24.0, co2:1.0, note:"floreale"},
-          {id:uid("log"), date:"2026-04-13", time:"11:00", ph:3.35, gravity:null, temp:23.8, co2:1.4, note:"stabile"}
-        ]
-      };
-
-      state.lots = [lot1, lot2];
+      state.lots = [lot1];
       state.selectedLotId = lot1.id;
       saveState();
       initApp();
@@ -3189,11 +2930,9 @@
       ensureSelected();
       renderAll();
 
-      if(isMixerMode()){
-        renderMixerPageOnly();
-      }else if(isControlMode()){
-        renderControlPageOnly();
-      }else{
+      if(isMixerMode()) renderMixerPageOnly();
+      else if(isControlMode()) renderControlPageOnly();
+      else {
         renderMainPage();
         showSection("home");
       }
