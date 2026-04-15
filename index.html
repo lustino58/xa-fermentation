@@ -21,6 +21,7 @@
       --teal:#67e6cf;
       --purple:#b58cff;
       --orange:#f2a65a;
+      --pink:#ff8fbc;
       --shadow:0 16px 36px rgba(0,0,0,.35);
       --lcd:#99ff7e;
       --paper:#f3ecd9;
@@ -77,7 +78,7 @@
 
     .actions,.toolbar{display:flex;gap:8px;flex-wrap:wrap}
 
-    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn,.chipBtn,.miniBtn,.eqBtn{
+    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn,.chipBtn,.miniBtn{
       border-radius:14px;
       padding:12px 14px;
       font-weight:900;
@@ -89,7 +90,7 @@
     .btnGold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c8a15a}
     .btnDanger{background:linear-gradient(180deg,#6a2a2a,#431717);color:#ffd3d3;border-color:#7a3131}
     .btnMixer{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111;border-color:#62ddc4}
-    .libBtn,.chipBtn,.eqBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text)}
+    .libBtn,.chipBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text)}
     .miniBtn{
       padding:8px 8px;
       border-radius:10px;
@@ -186,7 +187,6 @@
     .liveBarTitle{font-size:18px;font-weight:900}
     .liveBarMeta{font-size:12px;color:var(--muted);line-height:1.45}
 
-    /* MIXER */
     .mixerOnlyPage,.controlOnlyPage{
       min-height:100vh;
       background:linear-gradient(180deg,#090d12,#0e141b);
@@ -502,7 +502,6 @@
       border:1px solid #7e8a95;
     }
 
-    /* FERMENT EQ */
     .pluginShell{
       padding:12px;
       display:grid;
@@ -584,6 +583,99 @@
         inset 0 0 30px rgba(126,188,255,.06),
         0 0 24px rgba(103,230,207,.05);
     }
+
+    .eqNumericGrid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    .eqNumCard{
+      border-radius:18px;
+      padding:14px;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.04),
+        0 0 24px rgba(0,0,0,.18),
+        0 0 24px rgba(255,255,255,.03);
+      overflow:hidden;
+      position:relative;
+    }
+    .eqNumCard.ph{
+      background:linear-gradient(180deg,rgba(103,230,207,.20),rgba(12,33,29,.95));
+      box-shadow:0 0 24px rgba(103,230,207,.16), inset 0 0 20px rgba(103,230,207,.06);
+    }
+    .eqNumCard.gravity{
+      background:linear-gradient(180deg,rgba(126,188,255,.20),rgba(11,24,39,.95));
+      box-shadow:0 0 24px rgba(126,188,255,.16), inset 0 0 20px rgba(126,188,255,.06);
+    }
+    .eqNumCard.temp{
+      background:linear-gradient(180deg,rgba(242,166,90,.20),rgba(37,23,13,.95));
+      box-shadow:0 0 24px rgba(242,166,90,.16), inset 0 0 20px rgba(242,166,90,.06);
+    }
+    .eqNumCard.co2{
+      background:linear-gradient(180deg,rgba(255,143,188,.20),rgba(38,16,26,.95));
+      box-shadow:0 0 24px rgba(255,143,188,.16), inset 0 0 20px rgba(255,143,188,.06);
+    }
+    .eqNumCard.yeast{
+      background:linear-gradient(180deg,rgba(199,166,255,.20),rgba(25,16,39,.95));
+      box-shadow:0 0 24px rgba(199,166,255,.16), inset 0 0 20px rgba(199,166,255,.06);
+    }
+    .eqNumCard.state{
+      background:linear-gradient(180deg,rgba(240,212,155,.18),rgba(38,31,18,.95));
+      box-shadow:0 0 24px rgba(240,212,155,.16), inset 0 0 20px rgba(240,212,155,.06);
+    }
+
+    .eqNumHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+    }
+    .eqNumTitle{
+      font-size:14px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.10em;
+    }
+    .eqNumDot{
+      width:12px;height:12px;border-radius:999px;
+      box-shadow:0 0 12px currentColor;
+    }
+    .eqNumBody{
+      display:grid;
+      gap:8px;
+    }
+    .eqLine{
+      display:grid;
+      grid-template-columns:78px 1fr;
+      gap:8px;
+      align-items:center;
+    }
+    .eqLineLabel{
+      font-size:11px;
+      color:#d6dbe3;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-weight:800;
+    }
+    .eqLineVal{
+      font-size:16px;
+      font-weight:900;
+      line-height:1.15;
+      color:#fff;
+      text-shadow:0 0 10px rgba(255,255,255,.08);
+    }
+    .eqStart{color:#ffd968}
+    .eqCurrentPh{color:#67e6cf}
+    .eqCurrentGrav{color:#7ebcff}
+    .eqCurrentTemp{color:#f2a65a}
+    .eqCurrentCo2{color:#ff8fbc}
+    .eqCurrentYeast{color:#c7a6ff}
+    .eqDeltaPos{color:#8effb8}
+    .eqDeltaNeg{color:#ffd38a}
+    .eqDeltaNeutral{color:#d8e4f1}
 
     .pluginModules{
       display:grid;
@@ -824,10 +916,12 @@
     @media (max-width:1200px){
       .pluginTop{grid-template-columns:1fr}
       .pluginModules{grid-template-columns:repeat(3,1fr)}
+      .eqNumericGrid{grid-template-columns:repeat(2,1fr)}
     }
     @media (max-width:980px){
       .layout2,.statsGrid,.mixerHeader,.controlHeader,.recipeTypeGrid,.libraryQuickGrid{grid-template-columns:1fr}
       .pluginModules{grid-template-columns:repeat(2,1fr)}
+      .eqNumericGrid{grid-template-columns:1fr}
     }
     @media (max-width:860px){
       .formGrid,.ingredientRow{grid-template-columns:1fr}
@@ -1164,7 +1258,7 @@
         <div class="controlTopLeft">
           <button class="btnDanger" onclick="closeControlPage()">EQ OFF</button>
           <button class="btnGold" onclick="openFermentationLogModal()">+ Rilevazione</button>
-          <button class="btn" onclick="drawFermentationChart()">Aggiorna</button>
+          <button class="btn" onclick="drawFermentationChart();renderEQNumericPanels();">Aggiorna</button>
         </div>
         <div class="controlTopRight">
           <button class="btn" onclick="openMixerPage()">Mixer ON</button>
@@ -1209,6 +1303,8 @@
                 <div class="eqCanvasWrap">
                   <canvas id="fermentationChart" width="1400" height="420"></canvas>
                 </div>
+
+                <div class="eqNumericGrid" id="eqNumericGrid"></div>
               </section>
 
               <aside class="pluginMeter">
@@ -1386,9 +1482,9 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_fermentation_complete_v18";
+    const STORAGE_KEY = "xa_fermentation_complete_v19";
     const MIXER_COMPACT_KEY = "xa_fermentation_mixer_compact";
-    const MIXER_GROUPS_KEY = "xa_fermentation_group_state_v4";
+    const MIXER_GROUPS_KEY = "xa_fermentation_group_state_v5";
 
     const INGREDIENT_BROWSER = {
       luppoli: [
@@ -2168,6 +2264,7 @@
       renderAll();
       updateControlHeader();
       renderEQPanels();
+      renderEQNumericPanels();
     }
 
     function selectLot(id){
@@ -2178,6 +2275,7 @@
       drawFermentationChart();
       renderFermentationLogs();
       renderEQPanels();
+      renderEQNumericPanels();
     }
 
     function deleteLot(id){
@@ -2190,6 +2288,7 @@
       drawFermentationChart();
       renderFermentationLogs();
       renderEQPanels();
+      renderEQNumericPanels();
     }
 
     function renderStats(){
@@ -2275,6 +2374,7 @@
       renderFermentationLogs();
       drawFermentationChart();
       renderEQPanels();
+      renderEQNumericPanels();
     }
 
     function renderLotMeta(){
@@ -2650,6 +2750,7 @@
       renderStats();
       updateControlHeader();
       renderEQPanels();
+      renderEQNumericPanels();
     }
 
     function deleteFermentationLog(id){
@@ -2662,6 +2763,7 @@
       renderStats();
       updateControlHeader();
       renderEQPanels();
+      renderEQNumericPanels();
     }
 
     function renderFermentationLogs(){
@@ -2699,6 +2801,7 @@
         if(el) el.classList.toggle("active", m === metric);
       });
       drawFermentationChart();
+      renderEQNumericPanels();
     }
 
     function drawFermentationChart(){
@@ -3062,6 +3165,127 @@
       `).join("");
     }
 
+    function fmtNullable(v, d=2, suffix=""){
+      if(v === null || v === undefined || v === "" || Number.isNaN(Number(v))) return "-";
+      return Number(v).toFixed(d) + suffix;
+    }
+
+    function deltaClass(delta){
+      if(delta === null) return "eqDeltaNeutral";
+      if(delta > 0) return "eqDeltaPos";
+      if(delta < 0) return "eqDeltaNeg";
+      return "eqDeltaNeutral";
+    }
+
+    function fmtDelta(delta, d=2, suffix=""){
+      if(delta === null) return "-";
+      const sign = delta > 0 ? "+" : "";
+      return sign + Number(delta).toFixed(d) + suffix;
+    }
+
+    function renderEQNumericPanels(){
+      const wrap = document.getElementById("eqNumericGrid");
+      if(!wrap) return;
+
+      const data = currentEqStats();
+      if(!data){
+        wrap.innerHTML = `<div class="eqNumCard state"><div class="eqNumHead"><div class="eqNumTitle">Nessun lotto</div><div class="eqNumDot" style="color:#f0d49b;background:#f0d49b"></div></div><div class="eqNumBody"><div class="eqLine"><div class="eqLineLabel">Stato</div><div class="eqLineVal">Seleziona un lotto</div></div></div></div>`;
+        return;
+      }
+
+      const {lot,first,last,status,profile,logs} = data;
+
+      const phStart = first.ph ?? null;
+      const phNow = last.ph ?? null;
+      const phDelta = phStart !== null && phNow !== null ? Number(phNow) - Number(phStart) : null;
+
+      const gStart = first.gravity ?? null;
+      const gNow = last.gravity ?? null;
+      const gDelta = gStart !== null && gNow !== null ? Number(gNow) - Number(gStart) : null;
+
+      const tStart = first.temp ?? null;
+      const tNow = last.temp ?? null;
+      const tDelta = tStart !== null && tNow !== null ? Number(tNow) - Number(tStart) : null;
+
+      const cStart = first.co2 ?? null;
+      const cNow = last.co2 ?? null;
+      const cDelta = cStart !== null && cNow !== null ? Number(cNow) - Number(cStart) : null;
+
+      wrap.innerHTML = `
+        <div class="eqNumCard ph">
+          <div class="eqNumHead">
+            <div class="eqNumTitle">pH</div>
+            <div class="eqNumDot" style="color:#67e6cf;background:#67e6cf"></div>
+          </div>
+          <div class="eqNumBody">
+            <div class="eqLine"><div class="eqLineLabel">Start</div><div class="eqLineVal eqStart">${fmtNullable(phStart,2)}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Attuale</div><div class="eqLineVal eqCurrentPh">${fmtNullable(phNow,2)}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Delta</div><div class="eqLineVal ${deltaClass(phDelta)}">${fmtDelta(phDelta,2)}</div></div>
+          </div>
+        </div>
+
+        <div class="eqNumCard gravity">
+          <div class="eqNumHead">
+            <div class="eqNumTitle">Densità</div>
+            <div class="eqNumDot" style="color:#7ebcff;background:#7ebcff"></div>
+          </div>
+          <div class="eqNumBody">
+            <div class="eqLine"><div class="eqLineLabel">Start</div><div class="eqLineVal eqStart">${fmtNullable(gStart,3)}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Attuale</div><div class="eqLineVal eqCurrentGrav">${fmtNullable(gNow,3)}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Delta</div><div class="eqLineVal ${deltaClass(gDelta)}">${fmtDelta(gDelta,3)}</div></div>
+          </div>
+        </div>
+
+        <div class="eqNumCard temp">
+          <div class="eqNumHead">
+            <div class="eqNumTitle">Temperatura</div>
+            <div class="eqNumDot" style="color:#f2a65a;background:#f2a65a"></div>
+          </div>
+          <div class="eqNumBody">
+            <div class="eqLine"><div class="eqLineLabel">Start</div><div class="eqLineVal eqStart">${fmtNullable(tStart,1," °C")}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Attuale</div><div class="eqLineVal eqCurrentTemp">${fmtNullable(tNow,1," °C")}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Delta</div><div class="eqLineVal ${deltaClass(tDelta)}">${fmtDelta(tDelta,1," °C")}</div></div>
+          </div>
+        </div>
+
+        <div class="eqNumCard co2">
+          <div class="eqNumHead">
+            <div class="eqNumTitle">CO₂ / Pressione</div>
+            <div class="eqNumDot" style="color:#ff8fbc;background:#ff8fbc"></div>
+          </div>
+          <div class="eqNumBody">
+            <div class="eqLine"><div class="eqLineLabel">Start</div><div class="eqLineVal eqStart">${fmtNullable(cStart,1)}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Attuale</div><div class="eqLineVal eqCurrentCo2">${fmtNullable(cNow,1)}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Delta</div><div class="eqLineVal ${deltaClass(cDelta)}">${fmtDelta(cDelta,1)}</div></div>
+          </div>
+        </div>
+
+        <div class="eqNumCard yeast">
+          <div class="eqNumHead">
+            <div class="eqNumTitle">Lievito / Cultura</div>
+            <div class="eqNumDot" style="color:#c7a6ff;background:#c7a6ff"></div>
+          </div>
+          <div class="eqNumBody">
+            <div class="eqLine"><div class="eqLineLabel">Ricetta</div><div class="eqLineVal eqCurrentYeast">${escapeHtml(lot.culture || "-")}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Profilo</div><div class="eqLineVal eqCurrentYeast">${escapeHtml(profile.yeast)}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Rilevazioni</div><div class="eqLineVal eqCurrentYeast">${logs.length}</div></div>
+          </div>
+        </div>
+
+        <div class="eqNumCard state">
+          <div class="eqNumHead">
+            <div class="eqNumTitle">Stato fermentazione</div>
+            <div class="eqNumDot" style="color:#f0d49b;background:#f0d49b"></div>
+          </div>
+          <div class="eqNumBody">
+            <div class="eqLine"><div class="eqLineLabel">Stage</div><div class="eqLineVal eqStart">${escapeHtml(lot.stage || "-")}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Status</div><div class="eqLineVal eqCurrentTemp">${escapeHtml(status)}</div></div>
+            <div class="eqLine"><div class="eqLineLabel">Target temp</div><div class="eqLineVal eqCurrentTemp">${escapeHtml(profile.temp)}</div></div>
+          </div>
+        </div>
+      `;
+    }
+
     function applyCompactMixerState(){
       const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
       document.body.classList.toggle("mixer-compact", compact);
@@ -3155,10 +3379,10 @@
         notes: recipe1.notes,
         channels: recipeToChannels(recipe1),
         logs: [
-          {id:uid("log"), date:today(), time:"08:00", ph:3.72, gravity:1.048, temp:27.5, co2:0.2, note:"inizio"},
-          {id:uid("log"), date:today(), time:"12:00", ph:3.58, gravity:1.041, temp:28.6, co2:0.6, note:"partenza"},
-          {id:uid("log"), date:today(), time:"16:00", ph:3.42, gravity:1.033, temp:29.2, co2:1.1, note:"attiva"},
-          {id:uid("log"), date:today(), time:"20:00", ph:3.31, gravity:1.022, temp:29.0, co2:1.7, note:"forte"},
+          {id:uid("log"), date:today(), time:"08:00", ph:4.20, gravity:1.048, temp:27.5, co2:0.2, note:"inizio"},
+          {id:uid("log"), date:today(), time:"12:00", ph:3.95, gravity:1.041, temp:28.6, co2:0.6, note:"partenza"},
+          {id:uid("log"), date:today(), time:"16:00", ph:3.70, gravity:1.033, temp:29.2, co2:1.1, note:"attiva"},
+          {id:uid("log"), date:today(), time:"20:00", ph:3.45, gravity:1.022, temp:29.0, co2:1.7, note:"forte"},
           {id:uid("log"), date:today(), time:"23:00", ph:3.22, gravity:1.014, temp:28.4, co2:2.1, note:"in discesa"}
         ]
       };
@@ -3194,6 +3418,7 @@
       renderFermentationLogs();
       renderEQPanels();
       setChartMetric(currentChartMetric);
+      renderEQNumericPanels();
     }
 
     function renderAll(){
