@@ -11,7 +11,6 @@
       --panel:#151c25;
       --panel2:#1b2330;
       --line:#324050;
-      --line2:#41556c;
       --text:#eef4fa;
       --muted:#9aacbd;
       --gold:#d2ae6d;
@@ -24,6 +23,9 @@
       --orange:#f2a65a;
       --shadow:0 16px 36px rgba(0,0,0,.35);
       --lcd:#99ff7e;
+      --paper:#f3ecd9;
+      --paperLine:#d7ccb0;
+      --paperInk:#2a241c;
     }
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -75,7 +77,7 @@
 
     .actions,.toolbar{display:flex;gap:8px;flex-wrap:wrap}
 
-    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn,.chipBtn,.miniBtn,.groupAction{
+    .btn,.btnGold,.btnDanger,.btnMixer,.typeBtn,.libBtn,.chipBtn,.miniBtn,.eqBtn{
       border-radius:14px;
       padding:12px 14px;
       font-weight:900;
@@ -87,12 +89,7 @@
     .btnGold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;border-color:#c8a15a}
     .btnDanger{background:linear-gradient(180deg,#6a2a2a,#431717);color:#ffd3d3;border-color:#7a3131}
     .btnMixer{background:linear-gradient(180deg,#b8fff1,#65e6ce);color:#111;border-color:#62ddc4}
-    .libBtn,.chipBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text)}
-    .chipBtn.active{
-      background:linear-gradient(180deg,var(--gold2),var(--gold));
-      color:#111;
-      border-color:#c8a15a;
-    }
+    .libBtn,.chipBtn,.eqBtn{background:linear-gradient(180deg,#2e3a49,#1a212b);color:var(--text)}
     .miniBtn{
       padding:8px 8px;
       border-radius:10px;
@@ -189,6 +186,7 @@
     .liveBarTitle{font-size:18px;font-weight:900}
     .liveBarMeta{font-size:12px;color:var(--muted);line-height:1.45}
 
+    /* MIXER */
     .mixerOnlyPage,.controlOnlyPage{
       min-height:100vh;
       background:linear-gradient(180deg,#090d12,#0e141b);
@@ -504,6 +502,7 @@
       border:1px solid #7e8a95;
     }
 
+    /* FERMENT EQ */
     .pluginShell{
       padding:12px;
       display:grid;
@@ -568,7 +567,6 @@
       font-size:14px;
       min-width:220px;
     }
-
     .eqCanvasWrap{
       border-radius:18px;
       background:
@@ -724,26 +722,10 @@
       padding:16px;
       border-bottom:1px solid rgba(255,255,255,.05);
       display:flex;justify-content:space-between;align-items:center;gap:12px;
+      z-index:4;
     }
     .modalBody{padding:16px}
-    .libSearch{margin-top:10px;margin-bottom:12px}
-    .libraryStickyBar{
-      position:sticky;
-      top:0;
-      z-index:5;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      padding:10px 0 14px;
-      background:linear-gradient(180deg,#181f28 0%, #181f28 70%, rgba(24,31,40,0));
-    }
-    .libraryStickyBar .bigAddNote{
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.35;
-    }
+    .libSearch{margin:12px 0}
     .libList{display:grid;gap:8px}
     .libItem{
       display:grid;
@@ -757,6 +739,66 @@
     }
     .libItemTitle{font-weight:900}
     .libItemMeta{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+    .notesSticky{
+      position:sticky;
+      top:0;
+      z-index:3;
+      padding-bottom:12px;
+      background:linear-gradient(180deg,#181f28 0%, #181f28 78%, rgba(24,31,40,0));
+    }
+    .notesCard{
+      border-radius:18px;
+      padding:14px;
+      background:
+        repeating-linear-gradient(
+          180deg,
+          var(--paper) 0px,
+          var(--paper) 28px,
+          var(--paperLine) 29px,
+          var(--paper) 30px
+        );
+      color:var(--paperInk);
+      border:1px solid #c8b995;
+      box-shadow:
+        0 12px 28px rgba(0,0,0,.22),
+        inset 0 0 0 1px rgba(255,255,255,.35);
+    }
+    .notesTitle{
+      font-size:20px;
+      font-weight:900;
+      line-height:1.1;
+      margin-bottom:8px;
+    }
+    .notesMeta{
+      font-size:13px;
+      line-height:1.45;
+      margin-bottom:10px;
+      color:#4c4437;
+      font-weight:700;
+    }
+    .notesList{
+      display:grid;
+      gap:6px;
+      font-size:14px;
+      line-height:1.45;
+      color:#2a241c;
+    }
+    .notesRow{
+      display:grid;
+      grid-template-columns:24px 1fr;
+      gap:8px;
+      align-items:flex-start;
+    }
+    .notesNum{
+      font-weight:900;
+      color:#534a3d;
+    }
+    .notesEmpty{
+      font-size:14px;
+      color:#6c6253;
+      font-style:italic;
+    }
 
     .previewCard{display:grid;gap:10px}
     .previewImage{
@@ -804,7 +846,7 @@
           <div class="logo">XA</div>
           <div>
             <h1>XA FERMENTATION PRO</h1>
-            <p>MIXER LEGGIBILE · LIBRERIA PRO · FERMENTATION EQ</p>
+            <p>MIXER LEGGIBILE · BLOCCO NOTES RICETTA · FERMENTATION EQ</p>
           </div>
         </div>
         <div class="actions">
@@ -931,7 +973,7 @@
 
             <div style="margin-top:20px">
               <div class="itemTitle">Librerie ingredienti</div>
-              <div class="meta">Aggiunta multipla senza chiudere la libreria</div>
+              <div class="meta">Dentro la libreria trovi sempre il blocco notes aggiornato della ricetta in costruzione</div>
               <div class="libraryQuickGrid">
                 <button class="libBtn" type="button" onclick="openIngredientLibrary('luppoli')">Luppoli ON</button>
                 <button class="libBtn" type="button" onclick="openIngredientLibrary('frutta')">Frutta ON</button>
@@ -1207,13 +1249,23 @@
         <button class="btnDanger" type="button" onclick="closeIngredientLibrary()">OFF</button>
       </div>
       <div class="modalBody">
-        <div class="libraryStickyBar">
-          <div class="bigAddNote">
-            Usa il pulsante grande <strong>+ Aggiungi</strong> per inserire più ingredienti di fila.
+        <div class="notesSticky">
+          <div class="notesCard">
+            <div class="notesTitle" id="notesRecipeTitle">Nuova ricetta</div>
+            <div class="notesMeta" id="notesRecipeMeta">Tipo: - · Base: - · Cultura: -</div>
+            <div class="notesList" id="notesRecipeList">
+              <div class="notesEmpty">Nessun ingrediente aggiunto.</div>
+            </div>
           </div>
-          <button class="btnGold" type="button" onclick="closeIngredientLibrary()">Fine aggiunta</button>
         </div>
+
         <input id="ingredientSearch" class="input libSearch" placeholder="Cerca ingrediente..." oninput="renderIngredientLibraryList()">
+
+        <div class="toolbar" style="margin-bottom:12px">
+          <button class="btnGold" type="button" onclick="closeIngredientLibrary()">Fine aggiunta</button>
+          <button class="btn" type="button" onclick="refreshLibraryNotes()">Aggiorna bloc notes</button>
+        </div>
+
         <div class="libList" id="ingredientLibraryList"></div>
       </div>
     </div>
@@ -1450,12 +1502,7 @@
         const raw = localStorage.getItem(STORAGE_KEY);
         if(!raw) return getDefaultState();
         const parsed = JSON.parse(raw);
-        const normalizeLots = (parsed.lots || []).map(l => ({
-          ...l,
-          logs:Array.isArray(l.logs)?l.logs:[],
-          channels:Array.isArray(l.channels)?l.channels:[],
-          recipeSnapshot:l.recipeSnapshot || null
-        }));
+        const normalizeLots = (parsed.lots || []).map(l => ({...l, logs:Array.isArray(l.logs)?l.logs:[]}));
         return {
           recipes: Array.isArray(parsed.recipes) ? parsed.recipes : [],
           lots: normalizeLots,
@@ -1514,23 +1561,6 @@
       return "Ricetta";
     }
 
-    function groupLabel(group){
-      const map = {
-        "01_base":"Base",
-        "02_frutta":"Frutta",
-        "03_te":"Tè",
-        "04_botaniche":"Botaniche",
-        "05_spezie":"Spezie",
-        "06_pepi":"Pepi",
-        "07_luppoli":"Luppoli",
-        "08_lieviti":"Lieviti",
-        "09_lattici":"Fermenti lattici",
-        "10_aggiunte":"Aggiunte",
-        "11_parametri":"Parametri"
-      };
-      return map[group] || group;
-    }
-
     function showSection(name){
       document.querySelectorAll("#app-normal .section").forEach(s => s.classList.remove("active"));
       const target = document.getElementById("sec-" + name);
@@ -1558,12 +1588,13 @@
         if(type==="tonica") base.value="Acqua";
       }
       renderLiveRecipePreview();
+      refreshLibraryNotes();
     }
 
     function ingredientRowHtml(i={}){
       return `
         <div class="ingredientRow">
-          <select class="select ing_cat" onchange="renderLiveRecipePreview()">
+          <select class="select ing_cat" onchange="renderLiveRecipePreview();refreshLibraryNotes();">
             <option value="luppoli" ${i.category==="luppoli"?'selected':''}>Luppoli</option>
             <option value="frutta" ${i.category==="frutta"?'selected':''}>Frutta</option>
             <option value="te" ${i.category==="te"?'selected':''}>Tè</option>
@@ -1574,11 +1605,11 @@
             <option value="fermenti_lattici" ${i.category==="fermenti_lattici"?'selected':''}>Fermenti lattici</option>
             <option value="aggiunte" ${i.category==="aggiunte"?'selected':''}>Aggiunte</option>
           </select>
-          <input class="input ing_name" value="${escapeHtml(i.name || "")}" placeholder="Ingrediente" oninput="renderLiveRecipePreview()">
-          <input class="input ing_qty" type="number" step="0.01" value="${i.qty ?? ""}" placeholder="0" oninput="renderLiveRecipePreview()">
-          <input class="input ing_unit" value="${escapeHtml(i.unit || "g/L")}" placeholder="g/L" oninput="renderLiveRecipePreview()">
-          <input class="input ing_note" value="${escapeHtml(i.note || "")}" placeholder="Note" oninput="renderLiveRecipePreview()">
-          <button class="btnDanger" type="button" onclick="this.parentNode.remove();renderLiveRecipePreview();">✕</button>
+          <input class="input ing_name" value="${escapeHtml(i.name || "")}" placeholder="Ingrediente" oninput="renderLiveRecipePreview();refreshLibraryNotes();">
+          <input class="input ing_qty" type="number" step="0.01" value="${i.qty ?? ""}" placeholder="0" oninput="renderLiveRecipePreview();refreshLibraryNotes();">
+          <input class="input ing_unit" value="${escapeHtml(i.unit || "g/L")}" placeholder="g/L" oninput="renderLiveRecipePreview();refreshLibraryNotes();">
+          <input class="input ing_note" value="${escapeHtml(i.note || "")}" placeholder="Note" oninput="renderLiveRecipePreview();refreshLibraryNotes();">
+          <button class="btnDanger" type="button" onclick="this.parentNode.remove();renderLiveRecipePreview();refreshLibraryNotes();">✕</button>
         </div>
       `;
     }
@@ -1635,8 +1666,46 @@
       }
     }
 
-    function openRecipePreviewModal(){ renderLiveRecipePreview(); document.getElementById("recipePreviewModal").classList.add("show"); }
-    function closeRecipePreviewModal(){ document.getElementById("recipePreviewModal").classList.remove("show"); }
+    function refreshLibraryNotes(){
+      const title = document.getElementById("notesRecipeTitle");
+      const meta = document.getElementById("notesRecipeMeta");
+      const list = document.getElementById("notesRecipeList");
+      if(!title || !meta || !list) return;
+
+      const name = document.getElementById("recipe_name")?.value?.trim() || "Nuova ricetta";
+      const base = document.getElementById("recipe_base")?.value?.trim() || "-";
+      const culture = document.getElementById("recipe_culture")?.value?.trim() || "-";
+      const type = recipeTypeLabel(currentRecipeType);
+      const ings = getCurrentEditorIngredients();
+
+      title.textContent = name;
+      meta.textContent = `Tipo: ${type} · Base: ${base} · Cultura: ${culture}`;
+
+      if(!ings.length){
+        list.innerHTML = `<div class="notesEmpty">Nessun ingrediente aggiunto.</div>`;
+        return;
+      }
+
+      list.innerHTML = ings.map((i,idx) => `
+        <div class="notesRow">
+          <div class="notesNum">${idx + 1}.</div>
+          <div>
+            <strong>${escapeHtml(i.name)}</strong>
+            ${i.qty ? ` — ${escapeHtml(i.qty)} ${escapeHtml(i.unit || "")}` : ""}
+            ${i.note ? ` · ${escapeHtml(i.note)}` : ""}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function openRecipePreviewModal(){
+      renderLiveRecipePreview();
+      document.getElementById("recipePreviewModal").classList.add("show");
+    }
+
+    function closeRecipePreviewModal(){
+      document.getElementById("recipePreviewModal").classList.remove("show");
+    }
 
     function browserCategoryToRowCategory(key){
       const map = {
@@ -1660,6 +1729,7 @@
       document.getElementById("ingredientSearch").value = "";
       closeRecipePreviewModal();
       document.getElementById("ingredientModal").classList.add("show");
+      refreshLibraryNotes();
       renderIngredientLibraryList();
     }
 
@@ -1705,6 +1775,7 @@
       }));
 
       renderLiveRecipePreview();
+      refreshLibraryNotes();
 
       const search = document.getElementById("ingredientSearch");
       if(search){
@@ -1747,6 +1818,7 @@
       }));
 
       renderLiveRecipePreview();
+      refreshLibraryNotes();
       closeCustomIngredientModal();
     }
 
@@ -1755,7 +1827,10 @@
       const ok = ["image/jpeg","image/png"].includes(file.type) || /\.(jpg|jpeg|png)$/i.test(file.name);
       if(!ok){ alert("Carica solo JPG, JPEG o PNG."); return; }
       const reader = new FileReader();
-      reader.onload = e => { currentRecipeImageData = e.target.result || ""; renderLiveRecipePreview(); };
+      reader.onload = e => {
+        currentRecipeImageData = e.target.result || "";
+        renderLiveRecipePreview();
+      };
       reader.readAsDataURL(file);
     }
 
@@ -1770,23 +1845,23 @@
       const params = [];
       const p = id => document.getElementById(id)?.value;
 
-      const pushParam = (domId,key,name,type,min,max,step,value,unit) => {
+      const pushParam = (key,name,type,min,max,step,value,unit) => {
         if(value !== "" && value !== null && value !== undefined){
           const n = Number(value);
-          if(!Number.isNaN(n)) params.push({domId,key,name,type,min,max,step,value:n,unit});
+          if(!Number.isNaN(n)) params.push({key,name,type,min,max,step,value:n,unit});
         }
       };
 
-      pushParam("param_ph_start","param_ph_start","pH iniziale","acidità",2.5,6,0.01,p("param_ph_start"),"");
-      pushParam("param_ph_end","param_ph_end","pH finale","acidità",2.5,6,0.01,p("param_ph_end"),"");
-      pushParam("param_og","param_og","OG","densità",1,1.12,0.001,p("param_og"),"");
-      pushParam("param_fg","param_fg","FG","densità",0.995,1.05,0.001,p("param_fg"),"");
-      pushParam("param_abv","param_abv","ABV","alcol",0,15,0.1,p("param_abv"),"%");
-      pushParam("param_temp","param_temp","Temperatura","temperatura",0,40,0.1,p("param_temp"),"°C");
-      pushParam("param_co2","param_co2","CO₂","gasatura",0,4.5,0.1,p("param_co2")," vol");
-      pushParam("param_srm","param_srm","SRM","colore",1,40,1,p("param_srm"),"");
-      pushParam("param_tonica","param_tonica","Acqua tonica","tonica",0,10,0.1,p("param_tonica"),"");
-      pushParam("param_tonic_bitter","param_tonic_bitter","Tonic bitter","amaro tonica",0,20,0.1,p("param_tonic_bitter"),"");
+      pushParam("param_ph_start","pH iniziale","acidità",2.5,6,0.01,p("param_ph_start"),"");
+      pushParam("param_ph_end","pH finale","acidità",2.5,6,0.01,p("param_ph_end"),"");
+      pushParam("param_og","OG","densità iniziale",1,1.12,0.001,p("param_og"),"");
+      pushParam("param_fg","FG","densità finale",0.995,1.05,0.001,p("param_fg"),"");
+      pushParam("param_abv","ABV","alcol",0,15,0.1,p("param_abv"),"%");
+      pushParam("param_temp","Temperatura","temperatura",0,40,0.1,p("param_temp"),"°C");
+      pushParam("param_co2","CO₂","gasatura",0,4.5,0.1,p("param_co2")," vol");
+      pushParam("param_srm","SRM","colore",1,40,1,p("param_srm"),"");
+      pushParam("param_tonica","Acqua tonica","tonica",0,10,0.1,p("param_tonica"),"");
+      pushParam("param_tonic_bitter","Tonic bitter","amaro tonica",0,20,0.1,p("param_tonic_bitter"),"");
       return params;
     }
 
@@ -1834,10 +1909,16 @@
       showSection("recipe-edit");
       bindLiveInputs();
       renderLiveRecipePreview();
+      refreshLibraryNotes();
     }
 
     function bindLiveInputs(){
-      document.querySelectorAll(".live-watch").forEach(el => { el.oninput = renderLiveRecipePreview; });
+      document.querySelectorAll(".live-watch").forEach(el => {
+        el.oninput = () => {
+          renderLiveRecipePreview();
+          refreshLibraryNotes();
+        };
+      });
     }
 
     function gatherRecipeFromEditor(){
@@ -1911,7 +1992,7 @@
             <div class="meta">
               Ingredienti: ${recipe.ingredients.length}<br>
               Parametri: ${recipe.params.length}<br>
-              Canali mixer generati: ${recipeToChannels(recipe).length}
+              Canali mixer generati: ${recipe.ingredients.length + recipe.params.length + 1}
             </div>
           </div>
         </div>
@@ -1922,7 +2003,7 @@
               <div class="itemTitle">${escapeHtml(i.name)}</div>
               <div class="meta">${escapeHtml(i.category)} · ${num(i.qty,2)} ${escapeHtml(i.unit)} · ${escapeHtml(i.note || "-")}</div>
             </div>
-          `).join("") || `<div class="item"><div class="meta">Nessun ingrediente.</div></div>`}
+          `).join("")}
         </div>
       `;
       showSection("recipe-view");
@@ -1967,7 +2048,7 @@
         aggiunte:{group:"10_aggiunte", prefix:"add"},
         base:{group:"01_base", prefix:"base"}
       };
-      return map[category] || {group:"10_aggiunte", prefix:"add"};
+      return map[category] || {group:"99_altro", prefix:"add"};
     }
 
     function paramVisual(index){
@@ -2012,124 +2093,91 @@
       });
 
       (recipe.params || []).forEach((p, idx) => {
-        const max = Number.isFinite(Number(p.max)) ? Number(p.max) : Math.max(10, Number(p.value) * 2 || 10);
-        const min = Number.isFinite(Number(p.min)) ? Number(p.min) : 0;
         channels.push({
           id: uid("ch"),
-          key:p.key || ("param_" + idx),
+          key:p.key,
           name:p.name,
-          type:p.type || "parametro",
-          min,
-          max,
-          step:Number(p.step) || 0.1,
-          value:Number(p.value) || 0,
+          type:p.type,
+          min:Number(p.min),
+          max:Number(p.max),
+          step:Number(p.step),
+          value:Number(p.value),
           unit:p.unit || "",
           visualClass:paramVisual(idx),
           group:"11_parametri",
-          sortName:(p.name || "").toLowerCase()
+          sortName:p.name.toLowerCase()
         });
+      });
+
+      channels.sort((a,b) => {
+        if(a.group !== b.group) return a.group.localeCompare(b.group);
+        return (a.sortName || "").localeCompare(b.sortName || "");
       });
 
       return channels;
     }
 
-    function createLotFromRecipe(recipe){
-      const channels = recipeToChannels(recipe);
-      return {
+    function openLotCreator(recipeId=null){
+      const rid = recipeId || state.selectedRecipeId || state.recipes[0]?.id || "";
+      if(!state.recipes.length){ alert("Prima crea una ricetta."); return; }
+      const recipe = getRecipe(rid);
+      if(!recipe){ alert("Ricetta non trovata."); return; }
+
+      const name = prompt("Nome lotto", recipe.name + " LOTTO");
+      if(name === null) return;
+      const code = prompt("Codice lotto", "") || "";
+      const volume = Number(prompt("Volume litri", "20")) || 0;
+
+      const lot = {
         id: uid("lot"),
         recipeId: recipe.id,
-        recipeSnapshot: JSON.parse(JSON.stringify(recipe)),
-        name: recipe.name + " Lotto",
-        code: "XA-" + Math.random().toString(36).slice(2,6).toUpperCase(),
+        recipeName: recipe.name,
+        name: name || recipe.name + " LOTTO",
+        code,
         type: recipeTypeLabel(recipe.type),
         stage: "programmato",
-        volume: 20,
+        volume,
         date: today(),
         culture: recipe.culture || "",
-        recipeText: `${recipe.name} · ${recipe.base || "-"} · ${recipe.style || "-"}`,
+        recipeText: `Base: ${recipe.base || "-"} · ` + recipe.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
         notes: recipe.notes || "",
-        channels,
+        channels: recipeToChannels(recipe),
         logs:[]
       };
-    }
-
-    function openLotCreator(recipeId = null){
-      let recipe = recipeId ? getRecipe(recipeId) : getRecipe(state.selectedRecipeId);
-      if(!recipe && state.recipes.length) recipe = state.recipes[0];
-
-      let lot;
-      if(recipe){
-        lot = createLotFromRecipe(recipe);
-      }else{
-        lot = {
-          id: uid("lot"),
-          recipeId: null,
-          recipeSnapshot: null,
-          name: "Nuovo lotto",
-          code: "XA-" + Math.random().toString(36).slice(2,6).toUpperCase(),
-          type: "Lotto libero",
-          stage: "programmato",
-          volume: 20,
-          date: today(),
-          culture: "",
-          recipeText: "",
-          notes: "",
-          channels: [],
-          logs:[]
-        };
-      }
 
       state.lots.unshift(lot);
       state.selectedLotId = lot.id;
       saveState();
       renderAll();
       showSection("lots");
-      fillLotMetaForm(lot);
-    }
-
-    function fillLotMetaForm(lot){
-      if(!lot) return;
-      document.getElementById("lot_name").value = lot.name || "";
-      document.getElementById("lot_code").value = lot.code || "";
-      document.getElementById("lot_type").value = lot.type || "";
-      document.getElementById("lot_stage").value = lot.stage || "programmato";
-      document.getElementById("lot_volume").value = lot.volume ?? "";
-      document.getElementById("lot_date").value = lot.date || today();
-      document.getElementById("lot_culture").value = lot.culture || "";
-      document.getElementById("lot_recipe_text").value = lot.recipeText || "";
-      document.getElementById("lot_notes").value = lot.notes || "";
     }
 
     function saveLotMeta(){
-      const lot = currentLot() || mixerLot() || controlLot();
-      if(!lot){ alert("Nessun lotto selezionato."); return; }
-
-      const mainMode = !isMixerMode() && !isControlMode();
-
-      if(mainMode){
-        lot.name = document.getElementById("lot_name").value.trim() || lot.name;
-        lot.code = document.getElementById("lot_code").value.trim() || lot.code;
-        lot.type = document.getElementById("lot_type").value.trim() || lot.type;
-        lot.stage = document.getElementById("lot_stage").value || lot.stage;
-        lot.volume = Number(document.getElementById("lot_volume").value) || lot.volume;
-        lot.date = document.getElementById("lot_date").value || lot.date;
-        lot.culture = document.getElementById("lot_culture").value.trim();
-        lot.recipeText = document.getElementById("lot_recipe_text").value.trim();
-        lot.notes = document.getElementById("lot_notes").value.trim();
-      }
-
+      const lot = currentLot();
+      if(!lot) return;
+      lot.name = document.getElementById("lot_name").value.trim() || lot.name;
+      lot.code = document.getElementById("lot_code").value.trim();
+      lot.type = document.getElementById("lot_type").value.trim() || lot.type;
+      lot.stage = document.getElementById("lot_stage").value;
+      lot.volume = Number(document.getElementById("lot_volume").value) || 0;
+      lot.date = document.getElementById("lot_date").value || today();
+      lot.culture = document.getElementById("lot_culture").value.trim();
+      lot.recipeText = document.getElementById("lot_recipe_text").value.trim();
+      lot.notes = document.getElementById("lot_notes").value.trim();
       saveState();
       renderAll();
-      if(mainMode) alert("Lotto salvato.");
+      updateControlHeader();
+      renderEQPanels();
     }
 
     function selectLot(id){
       state.selectedLotId = id;
       saveState();
-      const lot = getLot(id);
-      if(lot) fillLotMetaForm(lot);
       renderAll();
-      showSection("lots");
+      updateControlHeader();
+      drawFermentationChart();
+      renderFermentationLogs();
+      renderEQPanels();
     }
 
     function deleteLot(id){
@@ -2138,329 +2186,410 @@
       if(state.selectedLotId === id) state.selectedLotId = state.lots[0]?.id || null;
       saveState();
       renderAll();
+      updateControlHeader();
+      drawFermentationChart();
+      renderFermentationLogs();
+      renderEQPanels();
     }
 
-    function saveScene(){
-      const lot = mixerLot() || currentLot();
-      if(!lot){ alert("Nessun lotto selezionato."); return; }
-      state.scenes.unshift({
-        id: uid("scene"),
-        lotId: lot.id,
-        name: lot.name + " · scena",
-        date: new Date().toLocaleString("it-IT"),
-        channels: JSON.parse(JSON.stringify(lot.channels || []))
-      });
-      saveState();
-      renderAll();
-      alert("Scena salvata.");
+    function renderStats(){
+      document.getElementById("statRecipes").textContent = state.recipes.length;
+      document.getElementById("statLots").textContent = state.lots.length;
+      document.getElementById("statScenes").textContent = state.scenes.length;
+      const totalLogs = state.lots.reduce((a,l)=>a + (Array.isArray(l.logs)?l.logs.length:0), 0);
+      document.getElementById("statLogs").textContent = totalLogs;
+      document.getElementById("statChannels").textContent = currentLot()?.channels?.length || 0;
     }
 
-    function applyScene(sceneId){
-      const scene = state.scenes.find(s => s.id === sceneId);
-      const lot = currentLot();
-      if(!scene || !lot) return;
-      lot.channels = JSON.parse(JSON.stringify(scene.channels || []));
-      saveState();
-      renderAll();
-      alert("Scena caricata sul lotto selezionato.");
-    }
-
-    function deleteScene(sceneId){
-      if(!confirm("Eliminare questa scena?")) return;
-      state.scenes = state.scenes.filter(s => s.id !== sceneId);
-      saveState();
-      renderAll();
-    }
-
-    function getGroupOrder(group){
-      const order = {
-        "01_base":1,
-        "02_frutta":2,
-        "03_te":3,
-        "04_botaniche":4,
-        "05_spezie":5,
-        "06_pepi":6,
-        "07_luppoli":7,
-        "08_lieviti":8,
-        "09_lattici":9,
-        "10_aggiunte":10,
-        "11_parametri":11
-      };
-      return order[group] || 99;
-    }
-
-    function buildGroupedChannels(channels){
-      const groups = {};
-      (channels || []).forEach(ch => {
-        if(!groups[ch.group]) groups[ch.group] = [];
-        groups[ch.group].push(ch);
-      });
-      return Object.entries(groups)
-        .sort((a,b)=>getGroupOrder(a[0]) - getGroupOrder(b[0]))
-        .map(([group, items]) => ({
-          group,
-          items: items.sort((a,b)=>(a.sortName || a.name).localeCompare((b.sortName || b.name), "it"))
-        }));
-    }
-
-    function getChannelPercent(ch){
-      const min = Number(ch.min) || 0;
-      const max = Number(ch.max) || 1;
-      const value = Number(ch.value) || 0;
-      if(max <= min) return 0;
-      return Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
-    }
-
-    function renderVU(percent){
-      const segments = [];
-      for(let i=0;i<14;i++){
-        const threshold = ((i+1)/14)*100;
-        let cls = "";
-        if(percent >= threshold){
-          if(i < 9) cls = "g";
-          else if(i < 12) cls = "a";
-          else cls = "r";
-        }
-        segments.push(`<div class="vuSeg ${cls}"></div>`);
-      }
-      return segments.join("");
-    }
-
-    function renderChannel(ch, lotId){
-      const percent = getChannelPercent(ch);
-      const valueDisplay = Number(ch.value).toFixed(ch.step < 1 ? 2 : 0);
-
-      return `
-        <div class="channel ${escapeHtml(ch.visualClass || "add-1")}">
-          <div class="channelTop">
-            <div class="channelTitleBox">
-              <div class="channelTopName">${escapeHtml(ch.name)}</div>
-              <div class="channelType">${escapeHtml(ch.type)}</div>
-            </div>
-            <button class="tinyIconBtn" type="button" onclick="editChannelPrompt('${lotId}','${ch.id}')">✎</button>
+    function renderHomeRecipes(){
+      const wrap = document.getElementById("homeRecipesList");
+      const items = state.recipes.slice(0,4);
+      wrap.innerHTML = items.length ? items.map(r => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(r.name)}</div>
+          <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
+          ${recipeThumbHtml(r)}
+          <div class="itemActions">
+            <button class="btn" onclick="openRecipeView('${r.id}')">Apri</button>
+            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
           </div>
-
-          <div class="miniLcd">
-            <div class="lbl">Valore</div>
-            <div class="val">${escapeHtml(valueDisplay)}${escapeHtml(ch.unit || "")}</div>
-          </div>
-
-          <div class="knob"></div>
-
-          <div class="tinyMeter"><div class="tinyFill" style="width:${percent}%"></div></div>
-
-          <div class="faderWrap">
-            <div class="vu">${renderVU(percent)}</div>
-            <div class="track">
-              <input type="range"
-                min="${escapeHtml(String(ch.min ?? 0))}"
-                max="${escapeHtml(String(ch.max ?? 100))}"
-                step="${escapeHtml(String(ch.step ?? 1))}"
-                value="${escapeHtml(String(ch.value ?? 0))}"
-                oninput="updateChannelValue('${lotId}','${ch.id}', this.value)">
-            </div>
-          </div>
-
-          <div class="channelButtons">
-            <button class="miniBtn" onclick="nudgeChannel('${lotId}','${ch.id}', -1)">-</button>
-            <button class="miniBtn gold" onclick="nudgeChannel('${lotId}','${ch.id}', 1)">+</button>
-          </div>
-
-          <div class="channelFooterName">${escapeHtml(ch.name)}</div>
-          <button class="channelEditWide" onclick="editChannelPrompt('${lotId}','${ch.id}')">MODIFICA</button>
         </div>
-      `;
+      `).join("") : `<div class="item"><div class="meta">Nessuna ricetta.</div></div>`;
     }
 
-    function renderMixerBoard(){
-      const lot = mixerLot();
-      const board = document.getElementById("mixerBoard");
-      if(!board) return;
-
-      if(!lot){
-        board.innerHTML = `<div class="item"><div class="itemTitle">Nessun lotto</div><div class="meta">Crea o seleziona un lotto prima di aprire il mixer.</div></div>`;
-        return;
-      }
-
-      const groups = buildGroupedChannels(lot.channels || []);
-      document.getElementById("mixer_lot_name").textContent = lot.name || "LOTTO";
-      document.getElementById("mixer_lot_meta").textContent = `${lot.type || "-"} · ${lot.stage || "-"} · ${num(lot.volume || 0,1)} L · ${lot.channels.length} canali`;
-
-      board.innerHTML = groups.map(g => {
-        const collapsed = !!mixerGroupState[g.group];
-        return `
-          <div class="mixerGroupBlock">
-            <div class="mixerGroupHeader">
-              <span>${escapeHtml(groupLabel(g.group))}</span>
-              <button class="groupAction" onclick="toggleGroup('${g.group}')">${collapsed ? "Apri" : "Chiudi"}</button>
-            </div>
-            <div class="mixerGroupChannels" style="${collapsed ? 'display:none' : ''}">
-              ${g.items.map(ch => renderChannel(ch, lot.id)).join("")}
-            </div>
+    function renderRecipes(){
+      const wrap = document.getElementById("recipesList");
+      wrap.innerHTML = state.recipes.length ? state.recipes.map(r => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(r.name)}</div>
+          <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${r.ingredients.length} ingredienti · ${r.params.length} parametri</div>
+          ${recipeThumbHtml(r)}
+          <div class="itemActions">
+            <button class="btn" onclick="openRecipeView('${r.id}')">Vedi ricetta</button>
+            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
+            <button class="btnMixer" onclick="openLotCreator('${r.id}')">Crea lotto</button>
+            <button class="btnDanger" onclick="deleteRecipe('${r.id}')">Elimina</button>
           </div>
-        `;
-      }).join("");
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessuna ricetta salvata.</div></div>`;
     }
 
-    function updateChannelValue(lotId, channelId, value){
-      const lot = getLot(lotId);
-      if(!lot) return;
-      const ch = (lot.channels || []).find(c => c.id === channelId);
-      if(!ch) return;
-      ch.value = Number(value);
-      saveState();
-      if(isMixerMode()) renderMixerBoard();
-      if(isControlMode()) drawFermentationChart();
-      renderAll();
+    function renderHomeLots(){
+      const wrap = document.getElementById("homeLotsList");
+      const items = state.lots.slice(0,4);
+      wrap.innerHTML = items.length ? items.map(l => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(l.name)}</div>
+          <div class="meta">${escapeHtml(l.type || "-")} · ${escapeHtml(l.recipeName || "-")} · ${l.channels.length} canali · ${(l.logs||[]).length} log</div>
+          <div class="itemActions">
+            <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
+            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">Mixer ON</button>
+            <button class="btn" onclick="openControlPageForLot('${l.id}')">Fermentation EQ</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
     }
 
-    function nudgeChannel(lotId, channelId, dir){
-      const lot = getLot(lotId);
-      if(!lot) return;
-      const ch = (lot.channels || []).find(c => c.id === channelId);
-      if(!ch) return;
-      const step = Number(ch.step) || 1;
-      const min = Number(ch.min) || 0;
-      const max = Number(ch.max) || 100;
-      ch.value = Math.max(min, Math.min(max, Number(ch.value || 0) + (step * dir)));
-      saveState();
-      if(isMixerMode()) renderMixerBoard();
-      if(isControlMode()) drawFermentationChart();
-      renderAll();
+    function renderLots(){
+      const wrap = document.getElementById("lotsList");
+      wrap.innerHTML = state.lots.length ? state.lots.map(l => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(l.name)}</div>
+          <div class="meta">
+            Codice: ${escapeHtml(l.code || "-")}<br>
+            Tipo: ${escapeHtml(l.type || "-")}<br>
+            Ricetta: ${escapeHtml(l.recipeName || "-")}<br>
+            Canali: ${l.channels.length}<br>
+            Registro fermentazione: ${(l.logs||[]).length}
+          </div>
+          <div class="itemActions">
+            <button class="btn" onclick="selectLot('${l.id}')">Seleziona</button>
+            <button class="btnMixer" onclick="openMixerPageForLot('${l.id}')">Mixer ON</button>
+            <button class="btn" onclick="openControlPageForLot('${l.id}')">Fermentation EQ</button>
+            <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
+
+      renderLotMeta();
+      renderFermentationLogs();
+      drawFermentationChart();
+      renderEQPanels();
     }
 
-    function editChannelPrompt(lotId, channelId){
-      const lot = getLot(lotId);
-      if(!lot) return;
-      const ch = (lot.channels || []).find(c => c.id === channelId);
-      if(!ch) return;
-
-      const newName = prompt("Nome canale:", ch.name);
-      if(newName === null) return;
-      const newValue = prompt("Valore:", ch.value);
-      if(newValue === null) return;
-
-      ch.name = newName.trim() || ch.name;
-      const n = Number(newValue);
-      if(!Number.isNaN(n)) ch.value = n;
-
-      saveState();
-      if(isMixerMode()) renderMixerBoard();
-      renderAll();
+    function renderLotMeta(){
+      const lot = currentLot();
+      document.getElementById("lot_name").value = lot?.name || "";
+      document.getElementById("lot_code").value = lot?.code || "";
+      document.getElementById("lot_type").value = lot?.type || "";
+      document.getElementById("lot_stage").value = lot?.stage || "programmato";
+      document.getElementById("lot_volume").value = lot?.volume || "";
+      document.getElementById("lot_date").value = lot?.date || today();
+      document.getElementById("lot_culture").value = lot?.culture || "";
+      document.getElementById("lot_recipe_text").value = lot?.recipeText || "";
+      document.getElementById("lot_notes").value = lot?.notes || "";
     }
 
-    function openAddChannel(){
-      const lot = mixerLot() || currentLot();
-      if(!lot){ alert("Nessun lotto selezionato."); return; }
-
-      const name = prompt("Nome nuovo canale:");
-      if(!name) return;
-      const type = prompt("Tipo canale (es. botaniche, spezie, frutta, parametro):", "aggiunte") || "aggiunte";
-      const unit = prompt("Unità:", "g/L") || "g/L";
-      const max = Number(prompt("Valore massimo:", "10")) || 10;
-
-      let group = "10_aggiunte";
-      let visualClass = "add-1";
-
-      const normalized = type.toLowerCase();
-      if(normalized.includes("frutta")) { group="02_frutta"; visualClass="fruit-1"; }
-      else if(normalized.includes("tè") || normalized.includes("te")) { group="03_te"; visualClass="tea-1"; }
-      else if(normalized.includes("botan")) { group="04_botaniche"; visualClass="botanical-1"; }
-      else if(normalized.includes("spez")) { group="05_spezie"; visualClass="spice-1"; }
-      else if(normalized.includes("pep")) { group="06_pepi"; visualClass="pepper-1"; }
-      else if(normalized.includes("lupp")) { group="07_luppoli"; visualClass="hop-1"; }
-      else if(normalized.includes("liev")) { group="08_lieviti"; visualClass="yeast-1"; }
-      else if(normalized.includes("latt")) { group="09_lattici"; visualClass="lactic-1"; }
-      else if(normalized.includes("param")) { group="11_parametri"; visualClass="param-1"; unit=""; }
-
-      lot.channels.push({
-        id: uid("ch"),
-        key:"custom_"+Date.now(),
-        name:name.trim(),
-        type:type.trim(),
-        min:0,
-        max,
-        step:0.1,
-        value:0,
-        unit,
-        visualClass,
-        group,
-        sortName:name.toLowerCase()
-      });
-
-      saveState();
-      renderMixerBoard();
-      renderAll();
+    function renderScenes(){
+      const wrap = document.getElementById("scenesList");
+      wrap.innerHTML = state.scenes.length ? state.scenes.slice().reverse().map(s => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(s.name)}</div>
+          <div class="meta">${escapeHtml(s.date)} · ${s.channels.length} canali</div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessuna scena salvata.</div></div>`;
     }
 
-    function toggleGroup(group){
-      mixerGroupState[group] = !mixerGroupState[group];
+    function formatChannelValue(ch){
+      const step = Number(ch.step);
+      if(step >= 1) return num(ch.value,0) + (ch.unit || "");
+      if(step >= 0.1) return num(ch.value,1) + (ch.unit || "");
+      if(step >= 0.01) return num(ch.value,2) + (ch.unit || "");
+      return num(ch.value,3) + (ch.unit || "");
+    }
+
+    function buildVU(count){
+      let html = "";
+      for(let i=1;i<=16;i++){
+        let cls = "vuSeg";
+        if(i <= count) cls += i <= 10 ? " g" : i <= 13 ? " a" : " r";
+        html += `<div class="${cls}"></div>`;
+      }
+      return html;
+    }
+
+    function groupLabelFromKey(group){
+      const map = {
+        "01_base":"BASE",
+        "02_frutta":"FRUTTA",
+        "03_te":"TE",
+        "04_botaniche":"BOTANICHE",
+        "05_spezie":"SPEZIE",
+        "06_pepi":"PEPI",
+        "07_luppoli":"LUPPOLI / DRY HOPPING",
+        "08_lieviti":"LIEVITI",
+        "09_lattici":"FERMENTI LATTICI",
+        "10_aggiunte":"AGGIUNTE",
+        "11_parametri":"PARAMETRI TECNICI"
+      };
+      return map[group] || group;
+    }
+
+    function isGroupOpen(groupKey){
+      if(mixerGroupState[groupKey] === undefined) return true;
+      return !!mixerGroupState[groupKey];
+    }
+
+    function toggleGroup(groupKey){
+      mixerGroupState[groupKey] = !isGroupOpen(groupKey);
       saveMixerGroupState();
-      renderMixerBoard();
+      renderMixer();
     }
 
     function expandAllGroups(){
-      mixerGroupState = {};
+      const lot = mixerLot();
+      if(!lot) return;
+      [...new Set(lot.channels.map(c => c.group))].forEach(g => mixerGroupState[g] = true);
       saveMixerGroupState();
-      renderMixerBoard();
+      renderMixer();
     }
 
     function collapseAllGroups(){
       const lot = mixerLot();
       if(!lot) return;
-      buildGroupedChannels(lot.channels || []).forEach(g => { mixerGroupState[g.group] = true; });
+      [...new Set(lot.channels.map(c => c.group))].forEach(g => mixerGroupState[g] = false);
       saveMixerGroupState();
-      renderMixerBoard();
+      renderMixer();
     }
 
-    function toggleCompactMixer(){
-      document.body.classList.toggle("mixer-compact");
-      const on = document.body.classList.contains("mixer-compact");
-      localStorage.setItem(MIXER_COMPACT_KEY, on ? "1" : "0");
-      const btn = document.getElementById("compactMixerBtn");
-      if(btn) btn.textContent = on ? "ESPANDI" : "RIDUCI";
+    function groupChannels(channels){
+      const groups = {};
+      channels.forEach(ch => {
+        if(!groups[ch.group]) groups[ch.group] = [];
+        groups[ch.group].push(ch);
+      });
+      return Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0]));
     }
 
-    function applyCompactMixerPreference(){
-      const on = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
-      document.body.classList.toggle("mixer-compact", on);
-      const btn = document.getElementById("compactMixerBtn");
-      if(btn) btn.textContent = on ? "ESPANDI" : "RIDUCI";
+    function renderMixer(){
+      const lot = mixerLot();
+      document.getElementById("mixer_title").textContent = lot ? (lot.stage || "READY").toUpperCase() : "XA MIXER";
+      document.getElementById("mixer_sub").textContent = lot ? "Mixer corretto, gruppi apri/chiudi, fader leggibili." : "Apri o crea un lotto.";
+      document.getElementById("mixer_lot_name").textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
+      document.getElementById("mixer_lot_meta").textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${lot.recipeName || "-"} · ${lot.channels.length} canali` : "Apri o crea un lotto.";
+
+      document.getElementById("compactMixerBtn").textContent = document.body.classList.contains("mixer-compact") ? "NORMALE" : "RIDUCI";
+
+      const board = document.getElementById("mixerBoard");
+      if(!lot){
+        board.innerHTML = `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
+        return;
+      }
+
+      const grouped = groupChannels(lot.channels);
+      let html = "";
+
+      grouped.forEach(([groupKey, items]) => {
+        const open = isGroupOpen(groupKey);
+        html += `
+          <div class="mixerGroupBlock">
+            <div class="mixerGroupHeader">
+              <span>${escapeHtml(groupLabelFromKey(groupKey))}</span>
+              <button class="groupAction" onclick="toggleGroup('${groupKey}')">${open ? 'CHIUDI' : 'APRI'}</button>
+            </div>
+            <div class="mixerGroupChannels" style="${open ? '' : 'display:none;'}">
+              ${items.map(ch => {
+                const pct = Math.max(0, Math.min(100, ((Number(ch.value)-Number(ch.min)) / ((Number(ch.max)-Number(ch.min)) || 1)) * 100));
+                const visualClass = ch.visualClass || "param-1";
+                return `
+                  <div class="channel ${visualClass}">
+                    <div class="channelTop">
+                      <div class="channelTitleBox">
+                        <div class="channelTopName">${escapeHtml(ch.name)}</div>
+                        <div class="channelType">${escapeHtml(ch.type)}</div>
+                      </div>
+                      <button class="tinyIconBtn" onclick="editChannel('${ch.id}')">✎</button>
+                    </div>
+
+                    <div class="miniLcd">
+                      <div class="lbl">Value</div>
+                      <div class="val">${formatChannelValue(ch)}</div>
+                    </div>
+
+                    <div class="knob"></div>
+                    <div class="tinyMeter"><div class="tinyFill" style="width:${pct}%"></div></div>
+
+                    <div class="faderWrap">
+                      <div class="vu">${buildVU(Math.round((pct/100)*16))}</div>
+                      <div class="track">
+                        <input type="range" min="${ch.min}" max="${ch.max}" step="${ch.step}" value="${ch.value}" oninput="updateChannel('${ch.id}', this.value)" />
+                      </div>
+                    </div>
+
+                    <div class="channelButtons">
+                      <button class="miniBtn" onclick="nudgeChannel('${ch.id}', -1)">-</button>
+                      <button class="miniBtn gold" onclick="nudgeChannel('${ch.id}', 1)">+</button>
+                    </div>
+
+                    <div class="channelFooterName">${escapeHtml(ch.name)}</div>
+                    <button class="channelEditWide" onclick="editChannel('${ch.id}')">Modifica</button>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          </div>
+        `;
+      });
+
+      board.innerHTML = html;
+    }
+
+    function updateChannel(id, value){
+      const lot = mixerLot();
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
+      ch.value = Number(value);
+      saveState();
+      renderMixer();
+    }
+
+    function nudgeChannel(id, dir){
+      const lot = mixerLot();
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
+      ch.value = Number(ch.value) + (Number(ch.step) * dir);
+      if(ch.value < Number(ch.min)) ch.value = Number(ch.min);
+      if(ch.value > Number(ch.max)) ch.value = Number(ch.max);
+      saveState();
+      renderMixer();
+    }
+
+    function editChannel(id){
+      const lot = mixerLot();
+      if(!lot) return;
+      const ch = lot.channels.find(x => x.id === id);
+      if(!ch) return;
+
+      const name = prompt("Nome ingrediente / parametro", ch.name);
+      if(name === null) return;
+      const value = prompt("Valore attuale", ch.value);
+      if(value === null) return;
+      const unit = prompt("Unità", String(ch.unit || "").trim());
+      if(unit === null) return;
+      const min = prompt("Valore minimo", ch.min);
+      if(min === null) return;
+      const max = prompt("Valore massimo", ch.max);
+      if(max === null) return;
+      const step = prompt("Step", ch.step);
+      if(step === null) return;
+
+      ch.name = name;
+      ch.value = Number(value);
+      ch.unit = unit ? " " + unit : "";
+      ch.min = Number(min);
+      ch.max = Number(max);
+      ch.step = Number(step);
+
+      saveState();
+      renderMixer();
+      renderAll();
+    }
+
+    function openAddChannel(){
+      const lot = mixerLot();
+      if(!lot) return;
+
+      const name = prompt("Nome canale");
+      if(!name) return;
+      const type = prompt("Tipo canale", "ingrediente") || "ingrediente";
+      const category = prompt("Categoria gruppo: base / frutta / te / botaniche / spezie / pepe / luppoli / lieviti / fermenti_lattici / aggiunte / parametri", "aggiunte") || "aggiunte";
+      const min = Number(prompt("Valore minimo", "0")) || 0;
+      const max = Number(prompt("Valore massimo", "10")) || 10;
+      const step = Number(prompt("Step", "0.1")) || 0.1;
+      const value = Number(prompt("Valore iniziale", "1")) || 1;
+      const unit = prompt("Unità", "g/L") || "g/L";
+
+      let visualClass = "add-1";
+      let group = "10_aggiunte";
+
+      if(category === "base"){ visualClass = "base-1"; group = "01_base"; }
+      else if(category === "frutta"){ visualClass = "fruit-1"; group = "02_frutta"; }
+      else if(category === "te"){ visualClass = "tea-1"; group = "03_te"; }
+      else if(category === "botaniche"){ visualClass = "botanical-1"; group = "04_botaniche"; }
+      else if(category === "spezie"){ visualClass = "spice-1"; group = "05_spezie"; }
+      else if(category === "pepe"){ visualClass = "pepper-1"; group = "06_pepi"; }
+      else if(category === "luppoli"){ visualClass = "hop-1"; group = "07_luppoli"; }
+      else if(category === "lieviti"){ visualClass = "yeast-1"; group = "08_lieviti"; }
+      else if(category === "fermenti_lattici"){ visualClass = "lactic-1"; group = "09_lattici"; }
+      else if(category === "parametri"){ visualClass = "param-1"; group = "11_parametri"; }
+
+      lot.channels.push({
+        id: uid("ch"),
+        key: name.toLowerCase().replace(/\s+/g,"_"),
+        name, type, min, max, step, value,
+        unit:" " + unit,
+        visualClass,
+        group,
+        sortName:name.toLowerCase()
+      });
+
+      lot.channels.sort((a,b) => {
+        if(a.group !== b.group) return a.group.localeCompare(b.group);
+        return (a.sortName || "").localeCompare(b.sortName || "");
+      });
+
+      saveState();
+      renderMixer();
+      renderAll();
+    }
+
+    function saveScene(){
+      const lot = mixerLot();
+      if(!lot) return;
+      state.scenes.push({
+        id: uid("scene"),
+        name: "SCENA " + (lot.name || "LOTTO"),
+        date: today(),
+        channels: JSON.parse(JSON.stringify(lot.channels))
+      });
+      saveState();
+      renderAll();
+      renderMixer();
+      alert("Scena salvata.");
+    }
+
+    function openMixerPageForLot(lotId){
+      const url = new URL(window.location.href);
+      url.searchParams.set("view","mixer");
+      url.searchParams.set("lot", lotId);
+      window.location.href = url.toString();
     }
 
     function openMixerPage(){
-      const lot = currentLot() || mixerLot();
-      if(!lot){
-        if(state.lots.length){
-          state.selectedLotId = state.lots[0].id;
-          saveState();
-        }else{
-          alert("Crea prima un lotto.");
-          return;
-        }
-      }
-      const selected = currentLot() || mixerLot();
+      const lot = currentLot();
+      if(!lot){ alert("Seleziona prima un lotto."); return; }
+      openMixerPageForLot(lot.id);
+    }
+
+    function openControlPageForLot(lotId){
       const url = new URL(window.location.href);
-      url.searchParams.set("view","mixer");
-      if(selected) url.searchParams.set("lot", selected.id);
+      url.searchParams.set("view","control");
+      url.searchParams.set("lot", lotId);
       window.location.href = url.toString();
     }
 
     function openControlPage(){
-      const lot = currentLot() || mixerLot() || controlLot();
-      if(!lot){
-        if(state.lots.length){
-          state.selectedLotId = state.lots[0].id;
-          saveState();
-        }else{
-          alert("Crea prima un lotto.");
-          return;
-        }
-      }
-      const selected = currentLot() || mixerLot() || controlLot();
+      const lot = currentLot();
+      if(!lot){ alert("Seleziona prima un lotto."); return; }
+      openControlPageForLot(lot.id);
+    }
+
+    function closeControlPage(){
       const url = new URL(window.location.href);
-      url.searchParams.set("view","control");
-      if(selected) url.searchParams.set("lot", selected.id);
+      url.searchParams.delete("view");
+      url.searchParams.delete("lot");
       window.location.href = url.toString();
     }
 
@@ -2471,13 +2600,18 @@
       window.location.href = url.toString();
     }
 
-    function closeControlPage(){
-      goBackToMain();
+    function updateControlHeader(){
+      const lot = controlLot();
+      const nameEl = document.getElementById("control_lot_name");
+      const metaEl = document.getElementById("control_lot_meta");
+      if(!nameEl || !metaEl) return;
+      nameEl.textContent = lot ? (lot.name || "LOTTO").toUpperCase() : "NESSUNO";
+      metaEl.textContent = lot ? `${lot.code || "-"} · ${lot.type || "-"} · ${(lot.logs||[]).length} rilevazioni` : "Seleziona un lotto.";
     }
 
     function openFermentationLogModal(){
       const lot = controlLot() || currentLot();
-      if(!lot){ alert("Nessun lotto selezionato."); return; }
+      if(!lot){ alert("Seleziona prima un lotto."); return; }
       document.getElementById("log_date").value = today();
       document.getElementById("log_time").value = nowTime();
       document.getElementById("log_ph").value = "";
@@ -2494,390 +2628,456 @@
 
     function saveFermentationLog(){
       const lot = controlLot() || currentLot();
-      if(!lot){ alert("Nessun lotto selezionato."); return; }
+      if(!lot){ alert("Seleziona prima un lotto."); return; }
 
       lot.logs.push({
         id: uid("log"),
         date: document.getElementById("log_date").value || today(),
         time: document.getElementById("log_time").value || nowTime(),
-        ph: Number(document.getElementById("log_ph").value) || null,
-        gravity: Number(document.getElementById("log_gravity").value) || null,
-        temp: Number(document.getElementById("log_temp").value) || null,
-        co2: Number(document.getElementById("log_co2").value) || null,
+        ph: document.getElementById("log_ph").value === "" ? null : Number(document.getElementById("log_ph").value),
+        gravity: document.getElementById("log_gravity").value === "" ? null : Number(document.getElementById("log_gravity").value),
+        temp: document.getElementById("log_temp").value === "" ? null : Number(document.getElementById("log_temp").value),
+        co2: document.getElementById("log_co2").value === "" ? null : Number(document.getElementById("log_co2").value),
         note: document.getElementById("log_note").value.trim()
       });
 
-      lot.logs.sort((a,b)=>(a.date + " " + a.time).localeCompare(b.date + " " + b.time));
+      lot.logs.sort((a,b)=>(`${a.date} ${a.time}`).localeCompare(`${b.date} ${b.time}`));
+      state.selectedLotId = lot.id;
       saveState();
       closeFermentationLogModal();
+      renderFermentationLogs();
       drawFermentationChart();
-      renderAll();
+      renderStats();
+      updateControlHeader();
+      renderEQPanels();
+    }
+
+    function deleteFermentationLog(id){
+      const lot = controlLot() || currentLot();
+      if(!lot) return;
+      lot.logs = (lot.logs || []).filter(x => x.id !== id);
+      saveState();
+      renderFermentationLogs();
+      drawFermentationChart();
+      renderStats();
+      updateControlHeader();
+      renderEQPanels();
+    }
+
+    function renderFermentationLogs(){
+      const wrap = document.getElementById("fermentationLogList");
+      const lot = controlLot() || currentLot();
+      if(!wrap) return;
+
+      if(!lot){
+        wrap.innerHTML = `<div class="item"><div class="meta">Seleziona un lotto.</div></div>`;
+        return;
+      }
+
+      const logs = lot.logs || [];
+      wrap.innerHTML = logs.length ? logs.map(l => `
+        <div class="item">
+          <div class="itemTitle">${escapeHtml(l.date)} ${escapeHtml(l.time)}</div>
+          <div class="meta">
+            pH: ${l.ph ?? "-"}<br>
+            Densità: ${l.gravity ?? "-"}<br>
+            Temperatura: ${l.temp ?? "-"} °C<br>
+            CO₂ / pressione: ${l.co2 ?? "-"}<br>
+            Note: ${escapeHtml(l.note || "-")}
+          </div>
+          <div class="itemActions">
+            <button class="btnDanger" onclick="deleteFermentationLog('${l.id}')">Elimina</button>
+          </div>
+        </div>
+      `).join("") : `<div class="item"><div class="meta">Nessuna rilevazione fermentazione.</div></div>`;
     }
 
     function setChartMetric(metric){
       currentChartMetric = metric;
       ["combo","ph","gravity","temp","co2"].forEach(m => {
-        const btn = document.getElementById("metric_" + m);
-        if(btn) btn.classList.toggle("active", m === metric);
+        const el = document.getElementById("metric_" + m);
+        if(el) el.classList.toggle("active", m === metric);
       });
       drawFermentationChart();
-    }
-
-    function normalizeLogsForChart(lot){
-      const logs = (lot?.logs || []).slice().sort((a,b)=>(a.date + " " + a.time).localeCompare(b.date + " " + b.time));
-      if(logs.length) return logs;
-
-      const recipe = lot?.recipeSnapshot;
-      if(!recipe) return [];
-
-      const map = {};
-      (recipe.params || []).forEach(p => { map[p.key] = p.value; });
-
-      return [
-        {date: lot.date || today(), time:"08:00", ph: map.param_ph_start ?? 4.2, gravity: map.param_og ?? 1.045, temp: map.param_temp ?? 20, co2: map.param_co2 ?? 0.2, note:"inizio"},
-        {date: lot.date || today(), time:"14:00", ph: map.param_ph_end ? ((map.param_ph_start ?? 4.2) - 0.3) : 3.9, gravity: map.param_fg ? ((map.param_og ?? 1.045) - 0.01) : 1.030, temp: map.param_temp ?? 20, co2: (map.param_co2 ?? 0.2) + 0.4, note:"attività"},
-        {date: lot.date || today(), time:"20:00", ph: map.param_ph_end ?? 3.5, gravity: map.param_fg ?? 1.005, temp: map.param_temp ?? 20, co2: map.param_co2 ?? 2.2, note:"stabile"}
-      ];
-    }
-
-    function metricConfig(metric){
-      const cfg = {
-        ph:{label:"pH", color:"#67e6cf", min:2.5, max:6},
-        gravity:{label:"Densità", color:"#f0d49b", min:0.995, max:1.12},
-        temp:{label:"Temperatura", color:"#7ebcff", min:0, max:40},
-        co2:{label:"CO₂", color:"#b58cff", min:0, max:4.5}
-      };
-      return cfg[metric];
-    }
-
-    function drawLine(ctx, pts, color, w){
-      if(pts.length < 2) return;
-      ctx.beginPath();
-      ctx.lineWidth = w;
-      ctx.strokeStyle = color;
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.moveTo(pts[0].x, pts[0].y);
-      for(let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x, pts[i].y);
-      ctx.stroke();
     }
 
     function drawFermentationChart(){
       const canvas = document.getElementById("fermentationChart");
       if(!canvas) return;
       const ctx = canvas.getContext("2d");
+
       const lot = controlLot() || currentLot();
-      const logs = normalizeLogsForChart(lot);
+      const logs = (lot?.logs || []).slice();
 
-      const w = canvas.width;
-      const h = canvas.height;
-      const pad = {l:58,r:24,t:24,b:42};
+      const W = canvas.width;
+      const H = canvas.height;
 
-      ctx.clearRect(0,0,w,h);
+      ctx.clearRect(0,0,W,H);
 
-      ctx.strokeStyle = "rgba(160,190,220,0.16)";
+      const bg = ctx.createLinearGradient(0,0,0,H);
+      bg.addColorStop(0,"#16202b");
+      bg.addColorStop(.55,"#0f1822");
+      bg.addColorStop(1,"#0a1017");
+      ctx.fillStyle = bg;
+      ctx.fillRect(0,0,W,H);
+
+      const glow1 = ctx.createRadialGradient(W*0.35,H*0.18,10,W*0.35,H*0.18,260);
+      glow1.addColorStop(0,"rgba(126,188,255,.18)");
+      glow1.addColorStop(1,"rgba(126,188,255,0)");
+      ctx.fillStyle = glow1;
+      ctx.fillRect(0,0,W,H);
+
+      const glow2 = ctx.createRadialGradient(W*0.68,H*0.35,10,W*0.68,H*0.35,320);
+      glow2.addColorStop(0,"rgba(103,230,207,.14)");
+      glow2.addColorStop(1,"rgba(103,230,207,0)");
+      ctx.fillStyle = glow2;
+      ctx.fillRect(0,0,W,H);
+
+      const left = 86;
+      const right = 28;
+      const top = 34;
+      const bottom = 64;
+      const w = W - left - right;
+      const h = H - top - bottom;
+
+      ctx.fillStyle = "rgba(5,10,16,.35)";
+      ctx.fillRect(left, top, w, h);
+
+      ctx.strokeStyle = "rgba(160,200,235,.16)";
       ctx.lineWidth = 1;
-      for(let i=0;i<6;i++){
-        const y = pad.t + ((h - pad.t - pad.b)/5)*i;
+      for(let i=0;i<=6;i++){
+        const y = top + (h/6)*i;
         ctx.beginPath();
-        ctx.moveTo(pad.l, y);
-        ctx.lineTo(w-pad.r, y);
+        ctx.moveTo(left,y);
+        ctx.lineTo(left+w,y);
         ctx.stroke();
       }
-      for(let i=0;i<8;i++){
-        const x = pad.l + ((w - pad.l - pad.r)/7)*i;
+      for(let i=0;i<=10;i++){
+        const x = left + (w/10)*i;
         ctx.beginPath();
-        ctx.moveTo(x, pad.t);
-        ctx.lineTo(x, h-pad.b);
+        ctx.moveTo(x,top);
+        ctx.lineTo(x,top+h);
         ctx.stroke();
       }
 
-      if(!logs.length){
-        ctx.fillStyle = "#a9b9c9";
-        ctx.font = "bold 22px Arial";
-        ctx.fillText("Nessuna rilevazione disponibile", 90, 220);
+      ctx.strokeStyle = "rgba(190,220,245,.24)";
+      ctx.lineWidth = 1.2;
+      ctx.strokeRect(left, top, w, h);
+
+      ctx.fillStyle = "#edf5ff";
+      ctx.font = "bold 24px Arial";
+      ctx.fillText("Fermentation EQ Curve", left, 22);
+
+      ctx.fillStyle = "#9fb3c7";
+      ctx.font = "14px Arial";
+      ctx.fillText("Andamento fermentazione retroilluminato", left + 230, 22);
+
+      if(!lot || !logs.length){
+        ctx.fillStyle = "#d7e6f5";
+        ctx.font = "bold 28px Arial";
+        ctx.fillText("Nessun dato fermentazione", left + 30, top + 80);
+
+        ctx.fillStyle = "#8fa5ba";
+        ctx.font = "16px Arial";
+        ctx.fillText("Premi + Rilevazione per iniziare a costruire la curva.", left + 30, top + 112);
         return;
       }
 
-      const plotWidth = w - pad.l - pad.r;
-      const plotHeight = h - pad.t - pad.b;
-      const xFor = (i, total) => pad.l + (total===1 ? plotWidth/2 : (plotWidth/(total-1))*i);
-      const yFor = (v,min,max) => {
-        const ratio = (v - min) / (max - min);
-        return pad.t + plotHeight - (Math.max(0, Math.min(1, ratio)) * plotHeight);
+      function range(values){
+        if(!values.length) return {min:0,max:1};
+        let min = Math.min(...values);
+        let max = Math.max(...values);
+        if(min === max){ min -= 1; max += 1; }
+        return {min,max};
+      }
+
+      function plotY(v,min,max){
+        return top + h - (((v - min) / (max - min)) * h);
+      }
+
+      function drawAxisLabels(min,max,color){
+        ctx.fillStyle = color;
+        ctx.font = "bold 13px Arial";
+        for(let i=0;i<=6;i++){
+          const value = max - ((max-min)/6)*i;
+          const y = top + (h/6)*i;
+          ctx.fillText(value.toFixed(2), 16, y + 4);
+        }
+      }
+
+      function drawBottomLabels(){
+        ctx.fillStyle = "#d7e6f5";
+        ctx.font = "13px Arial";
+        logs.forEach((log,i)=>{
+          const x = left + (logs.length===1 ? w/2 : (i/(logs.length-1))*w);
+          const label = (log.time || log.date || "").slice(0,5) || "—";
+          ctx.fillText(label, x - 14, top + h + 26);
+        });
+      }
+
+      function buildSeries(metric){
+        return logs.map((l,i)=>({
+          i,
+          value:l[metric]
+        })).filter(x => x.value !== null && x.value !== undefined && !Number.isNaN(Number(x.value)));
+      }
+
+      function drawSeries(metric, color, glowColor, label){
+        const series = buildSeries(metric);
+        if(!series.length) return null;
+
+        const values = series.map(p => Number(p.value));
+        const {min,max} = range(values);
+
+        ctx.save();
+        ctx.strokeStyle = glowColor;
+        ctx.lineWidth = 10;
+        ctx.shadowColor = glowColor;
+        ctx.shadowBlur = 18;
+        ctx.beginPath();
+        series.forEach((pt,idx)=>{
+          const x = left + (logs.length===1 ? w/2 : (pt.i/(logs.length-1))*w);
+          const y = plotY(Number(pt.value),min,max);
+          if(idx===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        series.forEach((pt,idx)=>{
+          const x = left + (logs.length===1 ? w/2 : (pt.i/(logs.length-1))*w);
+          const y = plotY(Number(pt.value),min,max);
+          if(idx===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        ctx.restore();
+
+        series.forEach(pt=>{
+          const x = left + (logs.length===1 ? w/2 : (pt.i/(logs.length-1))*w);
+          const y = plotY(Number(pt.value),min,max);
+
+          ctx.save();
+          ctx.shadowColor = glowColor;
+          ctx.shadowBlur = 18;
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.arc(x,y,5,0,Math.PI*2);
+          ctx.fill();
+          ctx.restore();
+
+          ctx.fillStyle = "#f3f8ff";
+          ctx.font = "bold 12px Arial";
+          ctx.fillText(String(pt.value), x + 8, y - 8);
+        });
+
+        return {label,color,min,max};
+      }
+
+      const legend = [];
+
+      if(currentChartMetric === "combo"){
+        const a = drawSeries("ph", "#67e6cf", "rgba(103,230,207,.55)", "pH");
+        const b = drawSeries("gravity", "#7ebcff", "rgba(126,188,255,.55)", "Densità");
+        const c = drawSeries("temp", "#f2a65a", "rgba(242,166,90,.55)", "Temperatura");
+        [a,b,c].filter(Boolean).forEach(x=>legend.push(x));
+        drawAxisLabels(0, 10, "#9fded4");
+      } else if(currentChartMetric === "ph"){
+        const a = drawSeries("ph", "#67e6cf", "rgba(103,230,207,.55)", "pH");
+        if(a){ legend.push(a); drawAxisLabels(a.min,a.max,"#9fded4"); }
+      } else if(currentChartMetric === "gravity"){
+        const a = drawSeries("gravity", "#7ebcff", "rgba(126,188,255,.55)", "Densità");
+        if(a){ legend.push(a); drawAxisLabels(a.min,a.max,"#a9d1ff"); }
+      } else if(currentChartMetric === "temp"){
+        const a = drawSeries("temp", "#f2a65a", "rgba(242,166,90,.55)", "Temperatura");
+        if(a){ legend.push(a); drawAxisLabels(a.min,a.max,"#ffd2a2"); }
+      } else if(currentChartMetric === "co2"){
+        const a = drawSeries("co2", "#ff8fbc", "rgba(255,143,188,.55)", "CO₂");
+        if(a){ legend.push(a); drawAxisLabels(a.min,a.max,"#ffc5da"); }
+      }
+
+      drawBottomLabels();
+
+      let lx = W - 230;
+      let ly = 22;
+      legend.forEach((item, idx) => {
+        const yy = ly + idx*26;
+        ctx.fillStyle = "rgba(9,14,20,.72)";
+        ctx.fillRect(lx - 10, yy - 12, 190, 22);
+        ctx.fillStyle = item.color;
+        ctx.fillRect(lx, yy - 7, 20, 8);
+        ctx.fillStyle = "#edf5ff";
+        ctx.font = "bold 14px Arial";
+        ctx.fillText(item.label, lx + 30, yy);
+      });
+
+      ctx.fillStyle = "#cfe0f1";
+      ctx.font = "bold 14px Arial";
+      ctx.fillText("Tempo / rilevazioni", left + w - 150, H - 16);
+    }
+
+    function yeastProfileFromCulture(culture){
+      const c = (culture || "").toLowerCase();
+      if(c.includes("kveik")) return {
+        yeast:"Kveik",
+        temp:"25–35°C",
+        ph:"3.2–4.2",
+        atten:"alta",
+        speed:"molto rapida",
+        prediction:"Fermentazione energica, esteri possibili, buon rendimento a caldo."
       };
-
-      const metricsToDraw = currentChartMetric === "combo" ? ["ph","gravity","temp","co2"] : [currentChartMetric];
-
-      metricsToDraw.forEach(metric => {
-        const cfg = metricConfig(metric);
-        const pts = logs.map((log, i) => {
-          const raw = Number(log[metric]);
-          const fallback = metric === "ph" ? 4 : metric === "gravity" ? 1.02 : metric === "temp" ? 20 : 1;
-          const value = Number.isFinite(raw) ? raw : fallback;
-          return { x:xFor(i, logs.length), y:yFor(value, cfg.min, cfg.max), value };
-        });
-
-        drawLine(ctx, pts, cfg.color, metric === currentChartMetric ? 4 : 3);
-
-        pts.forEach(p => {
-          ctx.beginPath();
-          ctx.fillStyle = cfg.color;
-          ctx.arc(p.x, p.y, 5, 0, Math.PI*2);
-          ctx.fill();
-          ctx.beginPath();
-          ctx.fillStyle = "rgba(255,255,255,.14)";
-          ctx.arc(p.x, p.y, 11, 0, Math.PI*2);
-          ctx.fill();
-        });
-      });
-
-      ctx.fillStyle = "#dce8f4";
-      ctx.font = "12px Arial";
-      logs.forEach((log, i) => {
-        const x = xFor(i, logs.length);
-        const label = `${log.date?.slice(5) || ""} ${log.time || ""}`.trim();
-        ctx.fillText(label, x - 26, h - 14);
-      });
-
-      const legend = metricsToDraw.map(m => metricConfig(m));
-      legend.forEach((cfg, i) => {
-        const x = pad.l + i*160;
-        ctx.fillStyle = cfg.color;
-        ctx.fillRect(x, 6, 18, 8);
-        ctx.fillStyle = "#dce8f4";
-        ctx.font = "bold 12px Arial";
-        ctx.fillText(cfg.label, x + 24, 14);
-      });
-
-      renderEqSidePanels(lot, logs);
+      if(c.includes("ec-1118")) return {
+        yeast:"EC-1118",
+        temp:"15–24°C",
+        ph:"3.0–4.0",
+        atten:"molto alta",
+        speed:"rapida",
+        prediction:"Pulita, secca, affidabile, molto forte su sidri e basi zuccherine."
+      };
+      if(c.includes("safcider")) return {
+        yeast:"SafCider",
+        temp:"12–24°C",
+        ph:"3.1–4.0",
+        atten:"alta",
+        speed:"media",
+        prediction:"Profilo sidro più controllato, più pulito e lineare."
+      };
+      if(c.includes("plantarum")) return {
+        yeast:"L. plantarum",
+        temp:"28–37°C",
+        ph:"3.0–4.5",
+        atten:"acidificazione",
+        speed:"rapida",
+        prediction:"Acidifica velocemente. Monitorare pH e temperatura con attenzione."
+      };
+      return {
+        yeast:"Profilo generico",
+        temp:"Da definire",
+        ph:"Da definire",
+        atten:"Variabile",
+        speed:"Variabile",
+        prediction:"Inserisci una cultura precisa per una lettura più utile."
+      };
     }
 
-    function calcActivityLevel(logs){
-      if(logs.length < 2) return 25;
-      const last = logs[logs.length-1];
-      const prev = logs[logs.length-2];
+    function currentEqStats(){
+      const lot = controlLot() || currentLot();
+      if(!lot) return null;
+      const logs = lot.logs || [];
+      const last = logs[logs.length - 1] || {};
+      const first = logs[0] || {};
+      const profile = yeastProfileFromCulture(lot.culture);
 
-      let score = 0;
-      if(Number.isFinite(last.gravity) && Number.isFinite(prev.gravity)) score += Math.min(40, Math.abs((prev.gravity - last.gravity) * 1000) * 2);
-      if(Number.isFinite(last.co2) && Number.isFinite(prev.co2)) score += Math.min(30, Math.abs(last.co2 - prev.co2) * 10);
-      if(Number.isFinite(last.ph) && Number.isFinite(prev.ph)) score += Math.min(20, Math.abs(prev.ph - last.ph) * 20);
-      if(Number.isFinite(last.temp)) score += 10;
-      return Math.max(8, Math.min(100, Math.round(score)));
+      let status = "Stabile";
+      if(logs.length >= 2){
+        const g1 = first.gravity ?? null;
+        const g2 = last.gravity ?? null;
+        if(g1 !== null && g2 !== null){
+          const drop = Number(g1) - Number(g2);
+          if(drop > 0.015) status = "Fermentazione attiva";
+          else if(drop > 0.005) status = "Fermentazione in corso";
+          else status = "Fermentazione lenta / finale";
+        }
+      }
+
+      return {lot,logs,last,first,profile,status};
     }
 
-    function renderEqSidePanels(lot, logs){
-      const last = logs[logs.length-1] || {};
-      const prev = logs[logs.length-2] || {};
-      const status = document.getElementById("eqStatusPanel");
-      const meters = document.getElementById("activityMeters");
-      const modules = document.getElementById("pluginModules");
-      const logList = document.getElementById("fermentationLogList");
+    function renderEQPanels(){
+      const statusWrap = document.getElementById("eqStatusPanel");
+      const metersWrap = document.getElementById("activityMeters");
+      const modulesWrap = document.getElementById("pluginModules");
+      if(!statusWrap || !metersWrap || !modulesWrap) return;
 
-      if(!status || !meters || !modules || !logList) return;
+      const data = currentEqStats();
+      if(!data){
+        statusWrap.innerHTML = `<div class="statusLine"><strong>Stato</strong><span>Nessun lotto selezionato.</span></div>`;
+        metersWrap.innerHTML = "";
+        modulesWrap.innerHTML = "";
+        return;
+      }
 
-      const activity = calcActivityLevel(logs);
-      const attenuation = (Number.isFinite(last.gravity) && Number.isFinite(prev.gravity))
-        ? Math.max(0, ((prev.gravity - last.gravity) * 1000)).toFixed(1)
-        : "0.0";
-      const stability = logs.length >= 3 ? "buona" : "iniziale";
+      const {lot,last,profile,status,logs} = data;
 
-      status.innerHTML = `
-        <div class="statusLine"><strong>Lotto</strong><span>${escapeHtml(lot?.name || "—")}</span></div>
-        <div class="statusLine"><strong>Fase</strong><span>${escapeHtml(lot?.stage || "—")}</span></div>
-        <div class="statusLine"><strong>Attività</strong><span>${activity}%</span></div>
-        <div class="statusLine"><strong>Ultimo pH</strong><span>${last.ph ?? "—"}</span></div>
-        <div class="statusLine"><strong>Ultima densità</strong><span>${last.gravity ?? "—"}</span></div>
-        <div class="statusLine"><strong>Stabilità</strong><span>${stability}</span></div>
+      statusWrap.innerHTML = `
+        <div class="statusLine"><strong>Lievito / Cultura</strong><span>${escapeHtml(lot.culture || "-")}</span></div>
+        <div class="statusLine"><strong>Profilo</strong><span>${escapeHtml(profile.yeast)}</span></div>
+        <div class="statusLine"><strong>Stato fermentazione</strong><span>${escapeHtml(status)}</span></div>
+        <div class="statusLine"><strong>Predizione</strong><span>${escapeHtml(profile.prediction)}</span></div>
       `;
 
-      const buildMeter = (label, level) => {
-        const segs = [];
-        for(let i=0;i<16;i++){
-          const threshold = ((i+1)/16)*100;
-          let cls = "";
-          if(level >= threshold){
-            if(i < 10) cls = "g";
-            else if(i < 13) cls = "a";
-            else cls = "r";
-          }
-          segs.push(`<div class="bigSeg ${cls}"></div>`);
-        }
-        return `<div><div class="bigMeter">${segs.join("")}</div><div class="meterLabel">${escapeHtml(label)}</div></div>`;
+      const meterVal = (value, max) => {
+        const pct = Math.max(0, Math.min(1, Number(value || 0) / max));
+        return Math.round(pct * 18);
       };
 
-      meters.innerHTML = buildMeter("Activity", activity) + buildMeter("Drop", Math.min(100, Number(attenuation) * 6));
+      const phLevel = meterVal(last.ph || 0, 6);
+      const activityLevel = logs.length >= 2 && last.gravity !== null && logs[0].gravity !== null
+        ? meterVal((Number(logs[0].gravity) - Number(last.gravity)) * 1000, 30)
+        : 0;
 
-      const recipe = lot?.recipeSnapshot || {};
-      const pMap = {};
-      (recipe.params || []).forEach(p => { pMap[p.key] = p.value; });
+      function buildBigMeter(level, label){
+        let html = `<div><div class="bigMeter">`;
+        for(let i=1;i<=18;i++){
+          let cls = "bigSeg";
+          if(i <= level) cls += i <= 11 ? " g" : i <= 15 ? " a" : " r";
+          html += `<div class="${cls}"></div>`;
+        }
+        html += `</div><div class="meterLabel">${label}</div></div>`;
+        return html;
+      }
 
-      const moduleData = [
-        {name:"pH Engine", a:last.ph ?? pMap.param_ph_end ?? 3.5, b:"target " + (pMap.param_ph_end ?? "—")},
-        {name:"Gravity Drive", a:last.gravity ?? pMap.param_fg ?? 1.005, b:"drop " + attenuation},
-        {name:"Temp Control", a:last.temp ?? pMap.param_temp ?? 20, b:"°C"},
-        {name:"CO₂ Build", a:last.co2 ?? pMap.param_co2 ?? 2.2, b:"vol"},
-        {name:"Yeast Motion", a:activity + "%", b:lot?.culture || "—"},
-        {name:"Batch State", a:lot?.stage || "—", b:logs.length + " log"}
+      metersWrap.innerHTML = buildBigMeter(phLevel, "pH") + buildBigMeter(activityLevel, "Activity");
+
+      const mods = [
+        {title:"Yeast", a:"Profilo", av:profile.yeast, b:"Speed", bv:profile.speed},
+        {title:"Temp", a:"Target", av:profile.temp, b:"Last", bv:(last.temp ?? "-") + " °C"},
+        {title:"pH", a:"Target", av:profile.ph, b:"Last", bv:(last.ph ?? "-")},
+        {title:"Gravity", a:"Start", av:(data.first.gravity ?? "-"), b:"Last", bv:(last.gravity ?? "-")},
+        {title:"CO₂", a:"Last", av:(last.co2 ?? "-"), b:"Logs", bv:String(logs.length)},
+        {title:"Prediction", a:"Atten.", av:profile.atten, b:"Stage", bv:status}
       ];
 
-      modules.innerHTML = moduleData.map((m, idx) => `
+      modulesWrap.innerHTML = mods.map(m => `
         <div class="moduleCard">
           <div class="moduleHead">
-            <h4>${escapeHtml(m.name)}</h4>
-            <div class="sub">Module ${idx+1}</div>
+            <h4>${escapeHtml(m.title)}</h4>
+            <button class="miniBtn gold">ON</button>
           </div>
           <div class="moduleKnobs">
             <div class="knobBlock">
               <div class="smallKnob"></div>
-              <div class="knobLabel">Main</div>
-              <div class="knobValue">${escapeHtml(String(m.a))}</div>
+              <div class="knobLabel">${escapeHtml(m.a)}</div>
+              <div class="knobValue">${escapeHtml(m.av)}</div>
             </div>
             <div class="knobBlock">
               <div class="smallKnob"></div>
-              <div class="knobLabel">Info</div>
-              <div class="knobValue">${escapeHtml(String(m.b))}</div>
+              <div class="knobLabel">${escapeHtml(m.b)}</div>
+              <div class="knobValue">${escapeHtml(m.bv)}</div>
             </div>
           </div>
         </div>
       `).join("");
-
-      logList.innerHTML = logs.slice().reverse().map(log => `
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(log.date || "")} ${escapeHtml(log.time || "")}</div>
-          <div class="meta">
-            pH: ${log.ph ?? "-"} · Densità: ${log.gravity ?? "-"} · Temperatura: ${log.temp ?? "-"} °C · CO₂: ${log.co2 ?? "-"}<br>
-            ${escapeHtml(log.note || "-")}
-          </div>
-        </div>
-      `).join("") || `<div class="item"><div class="meta">Nessuna rilevazione.</div></div>`;
-
-      document.getElementById("control_lot_name").textContent = lot?.name || "NESSUNO";
-      document.getElementById("control_lot_meta").textContent = `${lot?.type || "-"} · ${lot?.stage || "-"} · ${logs.length} rilevazioni`;
     }
 
-    function renderHome(){
-      const recipes = state.recipes.slice(0,3);
-      const lots = state.lots.slice(0,3);
-
-      document.getElementById("homeRecipesList").innerHTML = recipes.length ? recipes.map(r => `
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(r.name)}</div>
-          <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · ${escapeHtml(r.base || "-")} · ${r.ingredients.length} ingredienti</div>
-          ${recipeThumbHtml(r)}
-          <div class="itemActions">
-            <button class="btn" onclick="openRecipeView('${r.id}')">Apri</button>
-            <button class="btnGold" onclick="openLotCreator('${r.id}')">Crea lotto</button>
-          </div>
-        </div>
-      `).join("") : `<div class="item"><div class="meta">Nessuna ricetta salvata.</div></div>`;
-
-      document.getElementById("homeLotsList").innerHTML = lots.length ? lots.map(l => `
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(l.name)}</div>
-          <div class="meta">${escapeHtml(l.type || "-")} · ${escapeHtml(l.stage || "-")} · ${num(l.volume || 0,1)} L · ${l.channels.length} canali</div>
-          <div class="itemActions">
-            <button class="btn" onclick="selectLot('${l.id}')">Apri</button>
-            <button class="btnMixer" onclick="state.selectedLotId='${l.id}';saveState();openMixerPage()">Mixer</button>
-            <button class="btn" onclick="state.selectedLotId='${l.id}';saveState();openControlPage()">EQ</button>
-          </div>
-        </div>
-      `).join("") : `<div class="item"><div class="meta">Nessun lotto creato.</div></div>`;
+    function applyCompactMixerState(){
+      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
+      document.body.classList.toggle("mixer-compact", compact);
+      const btn = document.getElementById("compactMixerBtn");
+      if(btn) btn.textContent = compact ? "NORMALE" : "RIDUCI";
     }
 
-    function renderRecipesList(){
-      document.getElementById("recipesList").innerHTML = state.recipes.length ? state.recipes.map(r => `
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(r.name)}</div>
-          <div class="meta">${escapeHtml(recipeTypeLabel(r.type))} · Base: ${escapeHtml(r.base || "-")} · Cultura: ${escapeHtml(r.culture || "-")} · Ingredienti: ${r.ingredients.length}</div>
-          ${recipeThumbHtml(r)}
-          <div class="itemActions">
-            <button class="btn" onclick="openRecipeView('${r.id}')">Apri</button>
-            <button class="btnGold" onclick="openRecipeEditor('${r.id}')">Modifica</button>
-            <button class="btnMixer" onclick="openLotCreator('${r.id}')">Crea lotto</button>
-            <button class="btnDanger" onclick="deleteRecipe('${r.id}')">Elimina</button>
-          </div>
-        </div>
-      `).join("") : `<div class="item"><div class="meta">Nessuna ricetta.</div></div>`;
-    }
-
-    function renderLotsList(){
-      document.getElementById("lotsList").innerHTML = state.lots.length ? state.lots.map(l => `
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(l.name)}</div>
-          <div class="meta">
-            Codice: ${escapeHtml(l.code || "-")}<br>
-            Tipo: ${escapeHtml(l.type || "-")}<br>
-            Stato: ${escapeHtml(l.stage || "-")}<br>
-            Volume: ${num(l.volume || 0,1)} L<br>
-            Canali: ${l.channels?.length || 0} · Log: ${l.logs?.length || 0}
-          </div>
-          <div class="itemActions">
-            <button class="btn" onclick="selectLot('${l.id}')">Apri</button>
-            <button class="btnMixer" onclick="state.selectedLotId='${l.id}';saveState();openMixerPage()">Mixer</button>
-            <button class="btn" onclick="state.selectedLotId='${l.id}';saveState();openControlPage()">EQ</button>
-            <button class="btnDanger" onclick="deleteLot('${l.id}')">Elimina</button>
-          </div>
-        </div>
-      `).join("") : `<div class="item"><div class="meta">Nessun lotto.</div></div>`;
-
-      const lot = currentLot();
-      fillLotMetaForm(lot || {
-        name:"",code:"",type:"",stage:"programmato",volume:"",date:today(),culture:"",recipeText:"",notes:""
-      });
-    }
-
-    function renderScenesList(){
-      document.getElementById("scenesList").innerHTML = state.scenes.length ? state.scenes.map(s => `
-        <div class="item">
-          <div class="itemTitle">${escapeHtml(s.name)}</div>
-          <div class="meta">${escapeHtml(s.date || "-")} · ${s.channels?.length || 0} canali</div>
-          <div class="itemActions">
-            <button class="btn" onclick="applyScene('${s.id}')">Carica sul lotto selezionato</button>
-            <button class="btnDanger" onclick="deleteScene('${s.id}')">Elimina</button>
-          </div>
-        </div>
-      `).join("") : `<div class="item"><div class="meta">Nessuna scena salvata.</div></div>`;
-    }
-
-    function updateStats(){
-      const totalLogs = state.lots.reduce((a,l)=>a + (l.logs?.length || 0), 0);
-      const selected = currentLot();
-      document.getElementById("statRecipes").textContent = state.recipes.length;
-      document.getElementById("statLots").textContent = state.lots.length;
-      document.getElementById("statScenes").textContent = state.scenes.length;
-      document.getElementById("statLogs").textContent = totalLogs;
-      document.getElementById("statChannels").textContent = selected?.channels?.length || 0;
-    }
-
-    function renderAll(){
-      ensureSelected();
-      renderHome();
-      renderRecipesList();
-      renderLotsList();
-      renderScenesList();
-      updateStats();
-
-      if(isMixerMode()){
-        document.getElementById("app-normal").classList.add("hidden");
-        document.getElementById("app-control-only").classList.add("hidden");
-        document.getElementById("app-mixer-only").classList.remove("hidden");
-        applyCompactMixerPreference();
-        renderMixerBoard();
-      } else if(isControlMode()){
-        document.getElementById("app-normal").classList.add("hidden");
-        document.getElementById("app-mixer-only").classList.add("hidden");
-        document.getElementById("app-control-only").classList.remove("hidden");
-        drawFermentationChart();
-      } else {
-        document.getElementById("app-mixer-only").classList.add("hidden");
-        document.getElementById("app-control-only").classList.add("hidden");
-        document.getElementById("app-normal").classList.remove("hidden");
-      }
+    function toggleCompactMixer(){
+      const compact = localStorage.getItem(MIXER_COMPACT_KEY) === "1";
+      localStorage.setItem(MIXER_COMPACT_KEY, compact ? "0" : "1");
+      applyCompactMixerState();
+      renderMixer();
     }
 
     function exportBackup(){
-      const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
+      const blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = "xa-fermentation-backup.json";
@@ -2885,120 +3085,158 @@
       URL.revokeObjectURL(a.href);
     }
 
-    function importBackupFile(file){
-      if(!file) return;
+    function importBackup(file){
       const reader = new FileReader();
       reader.onload = e => {
         try{
-          const imported = JSON.parse(e.target.result);
-          if(!imported || typeof imported !== "object") throw new Error("Formato non valido");
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(imported));
-          state = loadState();
-          renderAll();
-          alert("Backup importato.");
+          state = JSON.parse(e.target.result);
+          state.lots = (state.lots || []).map(l => ({...l, logs:Array.isArray(l.logs)?l.logs:[]}));
+          saveState();
+          init();
         }catch(err){
-          alert("File backup non valido.");
+          alert("Backup non valido.");
         }
       };
       reader.readAsText(file);
     }
 
     function resetAll(){
-      if(!confirm("Vuoi davvero azzerare tutto?")) return;
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(MIXER_GROUPS_KEY);
+      if(!confirm("Cancellare tutti i dati?")) return;
       state = getDefaultState();
-      mixerGroupState = {};
-      renderAll();
-      showSection("home");
+      saveState();
+      init();
     }
 
     function loadDemo(){
-      const demoRecipe = {
+      state = getDefaultState();
+
+      const recipe1 = {
         id: uid("recipe"),
-        type:"sidro",
-        name:"XA Apple Botanical",
-        base:"Succo di mela",
-        style:"Sidro botanico secco",
-        culture:"Hornindal Kveik",
-        notes:"Demo completa con botaniche, spezie e controllo fermentazione.",
-        image:"",
-        ingredients:[
-          {category:"frutta", name:"Mela Granny", qty:50, unit:"g/L", note:"base fresca"},
-          {category:"botaniche", name:"China", qty:0.6, unit:"g/L", note:"amaro"},
-          {category:"botaniche", name:"Timo", qty:0.15, unit:"g/L", note:"erbaceo"},
-          {category:"spezie", name:"Coriandolo", qty:0.4, unit:"g/L", note:"agrumato"},
-          {category:"pepe", name:"Pepe Timut", qty:0.15, unit:"g/L", note:"pompelmo"},
-          {category:"lieviti", name:"Hornindal Kveik", qty:0.25, unit:"g/L", note:"tropicale"},
-          {category:"aggiunte", name:"Nutriente complesso", qty:0.3, unit:"g/L", note:"supporto"}
+        type: "sidro",
+        name: "SIDRO XA BLOCCO NOTES DEMO",
+        base: "Succo di mela",
+        style: "Secco botanico speziato",
+        culture: "Hornindal Kveik",
+        notes: "Demo completa con bloc notes ricetta in costruzione.",
+        image: "",
+        ingredients: [
+          {category:"frutta", name:"Mela Golden", qty:50, unit:"g/L", note:"base fruttata"},
+          {category:"frutta", name:"Pera", qty:20, unit:"g/L", note:"morbidezza"},
+          {category:"te", name:"Oolong", qty:3, unit:"g/L", note:"elegante"},
+          {category:"botaniche", name:"China", qty:0.6, unit:"g/L", note:"amaro tonic"},
+          {category:"spezie", name:"Cardamomo", qty:0.15, unit:"g/L", note:"balsamico"},
+          {category:"pepe", name:"Pepe Timut", qty:0.15, unit:"g/L", note:"agrumato"},
+          {category:"lieviti", name:"Hornindal Kveik", qty:0.25, unit:"g/L", note:"tropicale"}
         ],
-        params:[
-          {key:"param_ph_start", name:"pH iniziale", type:"acidità", min:2.5, max:6, step:0.01, value:4.1, unit:""},
-          {key:"param_ph_end", name:"pH finale", type:"acidità", min:2.5, max:6, step:0.01, value:3.35, unit:""},
-          {key:"param_og", name:"OG", type:"densità", min:1, max:1.12, step:0.001, value:1.045, unit:""},
-          {key:"param_fg", name:"FG", type:"densità", min:0.995, max:1.05, step:0.001, value:1.006, unit:""},
-          {key:"param_abv", name:"ABV", type:"alcol", min:0, max:15, step:0.1, value:5.1, unit:"%"},
-          {key:"param_temp", name:"Temperatura", type:"temperatura", min:0, max:40, step:0.1, value:29, unit:"°C"},
-          {key:"param_co2", name:"CO₂", type:"gasatura", min:0, max:4.5, step:0.1, value:2.4, unit:" vol"}
+        params: [
+          {key:"param_ph_start",name:"pH iniziale",type:"acidità",min:2.5,max:6,step:0.01,value:3.50,unit:""},
+          {key:"param_ph_end",name:"pH finale",type:"acidità",min:2.5,max:6,step:0.01,value:3.18,unit:""},
+          {key:"param_og",name:"OG",type:"densità iniziale",min:1,max:1.12,step:0.001,value:1.048,unit:""},
+          {key:"param_fg",name:"FG",type:"densità finale",min:0.995,max:1.05,step:0.001,value:1.006,unit:""},
+          {key:"param_temp",name:"Temperatura",type:"temperatura",min:0,max:40,step:0.1,value:29,unit:"°C"}
         ]
       };
 
-      const demoLot = createLotFromRecipe(demoRecipe);
-      demoLot.name = "XA Apple Botanical Demo";
-      demoLot.stage = "primaria";
-      demoLot.logs = [
-        {id:uid("log"), date:today(), time:"08:00", ph:4.10, gravity:1.045, temp:28.5, co2:0.2, note:"inoculo"},
-        {id:uid("log"), date:today(), time:"13:00", ph:3.88, gravity:1.032, temp:29.0, co2:0.8, note:"partenza"},
-        {id:uid("log"), date:today(), time:"18:00", ph:3.60, gravity:1.018, temp:29.2, co2:1.5, note:"attiva"},
-        {id:uid("log"), date:today(), time:"22:00", ph:3.35, gravity:1.006, temp:28.8, co2:2.4, note:"quasi stabile"}
-      ];
+      state.recipes = [recipe1];
+      state.selectedRecipeId = recipe1.id;
 
-      state.recipes = [demoRecipe];
-      state.lots = [demoLot];
-      state.scenes = [];
-      state.selectedRecipeId = demoRecipe.id;
-      state.selectedLotId = demoLot.id;
-      saveState();
-      renderAll();
-      showSection("home");
-      alert("Demo caricata.");
-    }
-
-    function bindUi(){
-      document.getElementById("demoBtn").onclick = loadDemo;
-      document.getElementById("exportBtn").onclick = exportBackup;
-      document.getElementById("importBtn").onclick = () => document.getElementById("importFile").click();
-      document.getElementById("importFile").addEventListener("change", e => importBackupFile(e.target.files[0]));
-      document.getElementById("newRecipeBtnTop").onclick = () => openRecipeEditor();
-      document.getElementById("newLotBtnTop").onclick = () => openLotCreator();
-      document.getElementById("openMixerBtnTop").onclick = openMixerPage;
-      document.getElementById("openControlBtnTop").onclick = openControlPage;
-      document.getElementById("resetBtn").onclick = resetAll;
-      document.getElementById("saveRecipeBtn").onclick = saveRecipe;
-      document.getElementById("saveRecipeBtnBottom").onclick = saveRecipe;
-      document.getElementById("saveLotMetaBtn").onclick = saveLotMeta;
-      document.getElementById("addIngredientBtn").onclick = () => {
-        document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({category:"frutta"}));
-        renderLiveRecipePreview();
+      const lot1 = {
+        id: uid("lot"),
+        recipeId: recipe1.id,
+        recipeName: recipe1.name,
+        name: "SIDRO XA LOTTO NOTE 01",
+        code: "XA-NOTE-01",
+        type: recipeTypeLabel(recipe1.type),
+        stage: "primaria",
+        volume: 24,
+        date: today(),
+        culture: recipe1.culture,
+        recipeText: `Base: ${recipe1.base} · ` + recipe1.ingredients.map(i => `${i.name} ${num(i.qty,2)} ${i.unit}`).join(" · "),
+        notes: recipe1.notes,
+        channels: recipeToChannels(recipe1),
+        logs: [
+          {id:uid("log"), date:today(), time:"08:00", ph:3.72, gravity:1.048, temp:27.5, co2:0.2, note:"inizio"},
+          {id:uid("log"), date:today(), time:"12:00", ph:3.58, gravity:1.041, temp:28.6, co2:0.6, note:"partenza"},
+          {id:uid("log"), date:today(), time:"16:00", ph:3.42, gravity:1.033, temp:29.2, co2:1.1, note:"attiva"},
+          {id:uid("log"), date:today(), time:"20:00", ph:3.31, gravity:1.022, temp:29.0, co2:1.7, note:"forte"},
+          {id:uid("log"), date:today(), time:"23:00", ph:3.22, gravity:1.014, temp:28.4, co2:2.1, note:"in discesa"}
+        ]
       };
-      document.getElementById("recipe_image_file").addEventListener("change", e => handleRecipeImageFile(e.target.files[0]));
 
-      ["ingredientModal","recipePreviewModal","customIngredientModal","fermentationLogModal"].forEach(id => {
-        const modal = document.getElementById(id);
-        modal.addEventListener("click", e => {
-          if(e.target === modal) modal.classList.remove("show");
-        });
-      });
+      state.lots = [lot1];
+      state.selectedLotId = lot1.id;
+      saveState();
+      init();
     }
 
-    bindUi();
-    ensureSelected();
-    renderAll();
-    bindLiveInputs();
-
-    if(!state.recipes.length && !state.lots.length && !isMixerMode() && !isControlMode()){
-      openRecipeEditor();
+    function initNormal(){
+      ensureSelected();
+      document.getElementById("app-normal").classList.remove("hidden");
+      document.getElementById("app-mixer-only").classList.add("hidden");
+      document.getElementById("app-control-only").classList.add("hidden");
+      showSection("home");
+      renderAll();
     }
+
+    function initMixer(){
+      document.getElementById("app-normal").classList.add("hidden");
+      document.getElementById("app-mixer-only").classList.remove("hidden");
+      document.getElementById("app-control-only").classList.add("hidden");
+      applyCompactMixerState();
+      renderMixer();
+    }
+
+    function initControl(){
+      document.getElementById("app-normal").classList.add("hidden");
+      document.getElementById("app-mixer-only").classList.add("hidden");
+      document.getElementById("app-control-only").classList.remove("hidden");
+      updateControlHeader();
+      renderFermentationLogs();
+      renderEQPanels();
+      setChartMetric(currentChartMetric);
+    }
+
+    function renderAll(){
+      renderStats();
+      renderHomeRecipes();
+      renderRecipes();
+      renderHomeLots();
+      renderLots();
+      renderScenes();
+    }
+
+    function init(){
+      if(isMixerMode()) initMixer();
+      else if(isControlMode()) initControl();
+      else initNormal();
+    }
+
+    document.getElementById("demoBtn").addEventListener("click", loadDemo);
+    document.getElementById("exportBtn").addEventListener("click", exportBackup);
+    document.getElementById("importBtn").addEventListener("click", ()=>document.getElementById("importFile").click());
+    document.getElementById("importFile").addEventListener("change", e => {
+      const file = e.target.files[0];
+      if(file) importBackup(file);
+    });
+    document.getElementById("newRecipeBtnTop").addEventListener("click", ()=>openRecipeEditor());
+    document.getElementById("newLotBtnTop").addEventListener("click", ()=>openLotCreator());
+    document.getElementById("openMixerBtnTop").addEventListener("click", openMixerPage);
+    document.getElementById("openControlBtnTop").addEventListener("click", openControlPage);
+    document.getElementById("resetBtn").addEventListener("click", resetAll);
+    document.getElementById("saveRecipeBtn").addEventListener("click", saveRecipe);
+    document.getElementById("saveRecipeBtnBottom").addEventListener("click", saveRecipe);
+    document.getElementById("addIngredientBtn").addEventListener("click", ()=>{
+      document.getElementById("ingredientsWrap").insertAdjacentHTML("beforeend", ingredientRowHtml({}));
+      renderLiveRecipePreview();
+      refreshLibraryNotes();
+    });
+    document.getElementById("saveLotMetaBtn").addEventListener("click", saveLotMeta);
+    document.getElementById("recipe_image_file").addEventListener("change", e => {
+      const file = e.target.files && e.target.files[0];
+      if(file) handleRecipeImageFile(file);
+    });
+
+    init();
   </script>
 </body>
 </html>
