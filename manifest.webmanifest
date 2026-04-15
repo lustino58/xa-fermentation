@@ -7,7 +7,7 @@
   "display": "standalone",
   "background_color": "#0a0e13",
   "theme_color": "#0a0e13",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "icons": [
     {
       "src": "/xa-fermentation/icon-192.png",
