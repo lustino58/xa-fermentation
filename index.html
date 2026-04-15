@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="it">
-<head> 
+<head>
   <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#0a0e13">
-<link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#0a0e13">
+  <link rel="apple-touch-icon" href="icon-192.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>XA Fermentation Pro Ultimate</title>
@@ -47,11 +47,11 @@
     canvas{display:block;width:100%}
     .hidden{display:none!important}
 
-    body.mixer-compact .channel{width:138px;min-width:138px}
-    body.mixer-compact .track{min-height:205px}
-    body.mixer-compact .track input[type=range]{width:188px}
-    body.mixer-compact .miniLcd .val{font-size:14px}
-    body.mixer-compact .channelFooterName{font-size:10px;min-height:36px}
+    body.mixer-compact .channel{width:116px;min-width:116px}
+    body.mixer-compact .track{min-height:180px}
+    body.mixer-compact .track input[type=range]{width:160px}
+    body.mixer-compact .miniLcd .val{font-size:13px}
+    body.mixer-compact .channelFooterName{font-size:10px;min-height:34px}
 
     .app{max-width:1800px;margin:0 auto;padding:14px}
     .section{display:none}
@@ -334,7 +334,10 @@
     }
 
     .mixerOnlyPage,.controlOnlyPage{
-      min-height:100vh;background:linear-gradient(180deg,#090d12,#0e141b);
+      min-height:100vh;
+      width:100%;
+      background:linear-gradient(180deg,#090d12,#0e141b);
+      overflow-x:hidden;
     }
     .mixerTopBar,.controlTopBar{
       position:sticky;top:0;z-index:70;
@@ -345,15 +348,15 @@
     .mixerTopLeft,.mixerTopRight,.controlTopLeft,.controlTopRight{display:flex;gap:8px;flex-wrap:wrap}
 
     .mixerShell,.controlShell{
-      display:grid;grid-template-columns:1fr;gap:8px;padding:8px;min-height:calc(100vh - 68px);
+      display:grid;grid-template-columns:1fr;gap:4px;padding:4px;min-height:calc(100vh - 68px);
     }
     .centerMixer,.centerControl{
-      border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.06);
       box-shadow:var(--shadow);background:linear-gradient(180deg,#1b232d,#121820);
       display:flex;flex-direction:column;min-width:0;
     }
     .mixerHeader,.controlHeader{
-      padding:10px;border-bottom:1px solid rgba(255,255,255,.05);
+      padding:8px;border-bottom:1px solid rgba(255,255,255,.05);
       background:linear-gradient(180deg,#232d39,#171f28);
       display:grid;grid-template-columns:1fr 1fr;gap:8px;
     }
@@ -367,7 +370,7 @@
     .lcdSub{font-size:11px;line-height:1.35;margin-top:6px;color:#c0ffb0;opacity:.92}
 
     .mixerViewport{
-      flex:1;overflow-x:auto;overflow-y:hidden;padding:8px;
+      flex:1;overflow-x:auto;overflow-y:hidden;padding:4px;
       background:linear-gradient(180deg,#0f141b,#0b0f14);
     }
     .mixerViewport::-webkit-scrollbar{height:12px}
@@ -376,36 +379,48 @@
 
     .mixerBoard{
       display:flex;
-      gap:6px;
+      gap:3px;
       align-items:flex-start;
       min-width:max-content;
-      padding-bottom:6px;
+      padding-bottom:4px;
     }
     .mixerGroupBlock{
       display:flex;
       flex-direction:column;
-      gap:6px;
-      min-width:max-content;
+      gap:4px;
+      min-width:auto;
+      align-items:flex-start;
     }
     .mixerGroupHeader{
-      display:flex;align-items:center;justify-content:space-between;gap:8px;
-      min-width:220px;border-radius:14px;padding:8px 10px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:6px;
+      min-width:0;
+      width:auto;
+      max-width:100%;
+      border-radius:14px;
+      padding:8px 10px;
       background:linear-gradient(180deg,#273241,#1a212b);
-      border:1px solid #394758;color:#dbe6f0;
-      font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+      border:1px solid #394758;
+      color:#dbe6f0;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
     }
     .mixerGroupChannels{
       display:flex;
-      gap:6px;
+      gap:3px;
       align-items:flex-end;
       min-width:max-content;
     }
 
     .channel{
-      width:164px;
-      min-width:164px;
+      width:132px;
+      min-width:132px;
       border-radius:18px;
-      padding:8px;
+      padding:7px;
       border:1px solid #455567;
       box-shadow:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -14px 22px rgba(0,0,0,.25), 0 10px 22px rgba(0,0,0,.22);
       display:flex;flex-direction:column;align-items:center;overflow:hidden;color:#f2f7fc;
@@ -455,17 +470,17 @@
     .channel.param-4{background:linear-gradient(180deg,#9b68f2,#4d26aa 28%,#1b0d39)}
 
     .channelTop{
-      width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:6px;
+      width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-bottom:5px;
     }
     .channelType{
       font-size:11px;
       color:#ffffff;
       text-transform:uppercase;
-      letter-spacing:.06em;
-      line-height:1.2;
-      min-height:30px;
+      letter-spacing:.04em;
+      line-height:1.12;
+      min-height:28px;
       font-weight:900;
-      text-shadow:0 1px 2px rgba(0,0,0,.6);
+      text-shadow:0 1px 2px rgba(0,0,0,.7);
       word-break:break-word;
     }
     .tinyIconBtn{
@@ -483,17 +498,17 @@
     .miniLcd .val{font-size:18px;font-weight:900;margin-top:2px;color:var(--lcd)}
 
     .knob{
-      width:60px;height:60px;border-radius:50%;margin:8px 0 6px;
+      width:56px;height:56px;border-radius:50%;margin:7px 0 5px;
       background:radial-gradient(circle at 30% 30%,#5a6673 0%,#39434e 32%,#232a33 58%,#151a20 100%);
       border:2px solid #536172;position:relative;
     }
     .knob::after{
       content:"";position:absolute;left:50%;top:6px;transform:translateX(-50%);
-      width:7px;height:18px;border-radius:999px;background:linear-gradient(180deg,var(--gold2),var(--gold));
+      width:7px;height:16px;border-radius:999px;background:linear-gradient(180deg,var(--gold2),var(--gold));
     }
 
     .tinyMeter{
-      width:88%;height:8px;border-radius:999px;background:#0c1014;border:1px solid #2f3a47;overflow:hidden;margin-bottom:8px;
+      width:88%;height:8px;border-radius:999px;background:#0c1014;border:1px solid #2f3a47;overflow:hidden;margin-bottom:7px;
     }
     .tinyFill{
       height:100%;width:0%;
@@ -501,48 +516,48 @@
     }
 
     .faderWrap{
-      width:100%;flex:1;display:grid;grid-template-columns:18px 1fr;gap:8px;align-items:stretch;
+      width:100%;flex:1;display:grid;grid-template-columns:16px 1fr;gap:5px;align-items:stretch;
     }
     .vu{
       border-radius:12px;border:1px solid #344250;background:linear-gradient(180deg,#0d1116,#141a22);
-      padding:4px 3px;display:flex;flex-direction:column-reverse;gap:2px;align-items:center;
+      padding:3px 2px;display:flex;flex-direction:column-reverse;gap:2px;align-items:center;
     }
-    .vuSeg{width:8px;height:13px;border-radius:3px;background:#242c35;border:1px solid #313b46}
+    .vuSeg{width:7px;height:11px;border-radius:3px;background:#242c35;border:1px solid #313b46}
     .vuSeg.g{background:linear-gradient(180deg,#8dffba,#31d872)}
     .vuSeg.a{background:linear-gradient(180deg,#ffe5a0,#ffc74d)}
     .vuSeg.r{background:linear-gradient(180deg,#ffb4b4,#ff5e5e)}
 
     .track{
       border-radius:16px;border:1px solid #364352;background:linear-gradient(180deg,#0f1419,#181f27);
-      min-height:260px;display:flex;justify-content:center;align-items:center;position:relative;padding:10px 0;
+      min-height:218px;display:flex;justify-content:center;align-items:center;position:relative;padding:8px 0;
     }
     .track::before{
-      content:"";position:absolute;top:14px;bottom:14px;left:50%;transform:translateX(-50%);
+      content:"";position:absolute;top:12px;bottom:12px;left:50%;transform:translateX(-50%);
       width:6px;border-radius:999px;background:#11161c;border:1px solid #2f3944;
     }
     .track input[type=range]{
-      -webkit-appearance:none;appearance:none;width:245px;height:28px;transform:rotate(-90deg);
+      -webkit-appearance:none;appearance:none;width:196px;height:28px;transform:rotate(-90deg);
       background:transparent;position:relative;z-index:2;
     }
     .track input[type=range]::-webkit-slider-runnable-track{
       height:10px;border-radius:999px;background:linear-gradient(90deg,#1b2129,#10141a);border:1px solid #394655;
     }
     .track input[type=range]::-webkit-slider-thumb{
-      -webkit-appearance:none;appearance:none;width:44px;height:24px;border-radius:8px;margin-top:-8px;
+      -webkit-appearance:none;appearance:none;width:40px;height:22px;border-radius:8px;margin-top:-7px;
       border:1px solid #6a7888;background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
     }
 
     .channelButtons{
-      width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;
+      width:100%;display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:7px;
     }
     .channelFooterName{
-      width:100%;margin-top:8px;border-radius:12px;padding:8px 6px;
+      width:100%;margin-top:7px;border-radius:12px;padding:7px 5px;
       background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.12);
-      font-size:11px;font-weight:900;line-height:1.2;text-align:center;min-height:42px;
+      font-size:10px;font-weight:900;line-height:1.15;text-align:center;min-height:38px;
       display:grid;place-items:center;word-break:break-word;
     }
     .channelEditWide{
-      width:100%;margin-top:6px;border-radius:10px;padding:8px 6px;font-size:11px;font-weight:900;
+      width:100%;margin-top:5px;border-radius:10px;padding:7px 5px;font-size:10px;font-weight:900;
       background:linear-gradient(180deg,#ecf2f8,#a8b4bf 46%,#717d89 47%,#d2dce5 100%);
       color:#111;border:1px solid #7e8a95;
     }
@@ -604,6 +619,28 @@
     @media (max-width:860px){
       .formGrid,.ingredientRow{grid-template-columns:1fr}
       body{padding-bottom:120px}
+    }
+    @media (max-width:900px){
+      .mixerViewport{padding:3px}
+      .mixerBoard{gap:2px}
+      .mixerGroupBlock{gap:3px}
+      .mixerGroupChannels{gap:2px}
+      .channel{width:118px;min-width:118px}
+      .track{min-height:192px}
+      .track input[type=range]{width:170px}
+      .channelType{font-size:10px}
+      .mixerTopBar{padding:8px}
+      .mixerTopLeft,.mixerTopRight{gap:6px}
+    }
+    @media (orientation:portrait){
+      .mixerBoard{gap:2px}
+      .mixerGroupChannels{gap:2px}
+      .channel{width:112px;min-width:112px}
+      .track{min-height:182px}
+      .track input[type=range]{width:160px}
+      .knob{width:50px;height:50px}
+      .miniLcd .val{font-size:16px}
+      .channelFooterName{font-size:10px;min-height:34px}
     }
   </style>
 </head>
@@ -2967,13 +3004,13 @@
     });
 
     initApp();
-  </script> 
+  </script>
   <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js");
-  });
-}
-</script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js");
+      });
+    }
+  </script>
 </body>
 </html>
