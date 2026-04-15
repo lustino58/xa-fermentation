@@ -232,15 +232,18 @@
       display:flex;
       gap:12px;
       align-items:flex-start;
-      min-width:max-content;
+      width:max-content;
+      min-width:100%;
       padding-bottom:6px;
     }
 
     .mixerGroupBlock{
-      display:flex;
+      display:inline-flex;
       flex-direction:column;
       gap:10px;
-      min-width:max-content;
+      width:auto;
+      min-width:0;
+      flex:0 0 auto;
     }
 
     .mixerGroupHeader{
@@ -248,7 +251,8 @@
       align-items:center;
       justify-content:space-between;
       gap:8px;
-      min-width:240px;
+      width:100%;
+      min-width:0;
       border-radius:14px;
       padding:9px 10px;
       background:linear-gradient(180deg,#273241,#1a212b);
@@ -264,7 +268,9 @@
       display:flex;
       gap:12px;
       align-items:flex-end;
-      min-width:max-content;
+      width:auto;
+      min-width:0;
+      flex-wrap:nowrap;
     }
 
     .groupAction{
@@ -277,6 +283,7 @@
       border:1px solid #c8a15a;
       box-shadow:var(--shadow);
       cursor:pointer;
+      flex:0 0 auto;
     }
 
     .channel{
@@ -291,6 +298,7 @@
       align-items:center;
       overflow:hidden;
       color:#f2f7fc;
+      flex:0 0 auto;
     }
 
     .channel.base-1{background:linear-gradient(180deg,#ffe86a,#ffc928 28%,#6b4f0d)}
@@ -1087,7 +1095,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "xa_fermentation_complete_v14";
+    const STORAGE_KEY = "xa_fermentation_complete_v15";
     const MIXER_COMPACT_KEY = "xa_fermentation_mixer_compact";
     const MIXER_GROUPS_KEY = "xa_fermentation_group_state_v2";
 
